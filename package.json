@@ -1,0 +1,22 @@
+{
+  "name": "schoollighthouse",
+  "version": "1.0.0",
+  "description": "口袋大学",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k-skye/SchoolLightHouse.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/k-skye/SchoolLightHouse/issues"
+  },
+  "homepage": "https://github.com/k-skye/SchoolLightHouse#readme",
+  "dependencies": {
+    "@antv/wx-f2": "^2.0.0"
+  }
+}

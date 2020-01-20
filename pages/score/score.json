@@ -1,0 +1,6 @@
+{
+    "navigationBarTitleText": "成绩查询",
+    "usingComponents": {
+        "f2": "@antv/wx-f2"
+    }
+}

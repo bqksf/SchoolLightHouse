@@ -1,13 +1,147 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
-    <block wx:else>
-      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
-  </view>
+<view class="page">
+    <view class="pg-head" style="margin-top:{{statusBarHeight}}px">
+        <view class="weui-flex">
+            <view class="weui-flex__item">
+                <view class="head-title" wx:if="{{showFirstLogin}}">
+                    <span class="bigTitle">未绑定学号</span>
+                </view>
+                <view class="head-title" wx:else>
+                    今天
+                    <span class="bigTitle" wx:if="{{noClass == 0}}">{{todayClassNum}}节课</span>
+                    <span class="bigTitle" wx:else>无课</span>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="card-style" wx:if="{{notice != '暂时没有通知'}}">
+        <view class="weui-flex">
+            <view class="notice-icon">
+                <span class="icon-info"></span>
+            </view>
+            <view class="weui-flex__item">
+                <view class="notice">{{notice}}</view>
+            </view>
+        </view>
+    </view>
+    <view class="card-style">
+        <view class="weui-cells__title">当前课表</view>
+        <view class="no-class" wx:if="{{showFirstLogin}}">请先绑定学号以显示今天课表</view>
+        <view class="no-class" wx:if="{{!showFirstLogin && noClass}}">
+            似乎没课，休息下吧～点击查看明日课表
+        </view>
+        <view class="has-class" wx:else>
+            <view class="weui-flex" style="align-items: center;" wx:for="{{todayClassArr}}" wx:key="index">
+                <view class="weui-flex__item" wx:for="{{item}}" wx:key="index">
+                    <view class="class">{{item.time}}</view>
+                </view>
+                <view class="weui-flex__item" wx:for="{{item}}" wx:key="index">
+                    <view class="class">{{item.name}}</view>
+                </view>
+                <view class="weui-flex__item" wx:for="{{item}}" wx:key="index">
+                    <view class="class">{{item.place}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="pg-menus">
+        <view class="weui-flex">
+            <view class="weui-flex__item">
+                <view class="menu" hover-class="menu-hover" bindtap="tapScheduleButton">
+                    <view class="menu-imgs">
+                        <image class="menu-img" src="../../images/layout.png"></image>
+                    </view>
+                    课表
+                    <view class="menu-tip">本周 {{weekClassNum}} 节(未开放)</view>
+                </view>
+            </view>
+            <view class="weui-flex__item">
+                <view class="menu" hover-class="menu-hover" bindtap="tapScoreButton">
+                    <view class="menu-imgs">
+                        <image class="menu-img" src="../../images/clipboard.png"></image>
+                    </view>
+                    成绩
+                    <view class="menu-tip">已考 {{scoreNum}} 科</view>
+                </view>
+            </view>
+            <view class="weui-flex__item">
+                <view class="menu" hover-class="menu-hover" bindtap="tapExamButton">
+                    <view class="menu-imgs">
+                        <image class="menu-img" src="../../images/edit-.png"></image>
+                    </view>
+                    考试
+                    <view class="menu-tip">还有 {{examNum}} 门(未开放)</view>
+                </view>
+            </view>
+        </view>
+        <view class="weui-flex">
+            <view class="weui-flex__item">
+                <view class="menu" hover-class="menu-hover" bindtap="tapBookButton">
+                    <view class="menu-imgs">
+                        <image class="menu-img" src="../../images/book.png"></image>
+                    </view>
+                    图书
+                    <view class="menu-tip">已借 {{bookNum}} 本(未开放)</view>
+                </view>
+            </view>
+            <view class="weui-flex__item">
+                <view class="menu" hover-class="menu-hover" bindtap="tapCalendarButton">
+                    <view class="menu-imgs">
+                        <image class="menu-img" src="../../images/calendar.png"></image>
+                    </view>
+                    校历
+                    <view class="menu-tip">开学 0 周(未开放)</view>
+                    <!-- {{weekNum}} -->
+                </view>
+            </view>
+            <view class="weui-flex__item">
+                <view class="menu" hover-class="menu-hover" bindtap="tapSchoolCardButton">
+                    <view class="menu-imgs">
+                        <image class="menu-img" src="../../images/creditcard.png"></image>
+                    </view>
+                    校卡
+                    <view class="menu-tip">余额 0 元(未开放)</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="toolbox-button">
+        <view class="weui-flex">
+            <view class="weui-flex__item">
+                <button plain bindtap="tapShowToolsButton">
+                    <image class="tool-img" src="../../images/tool.png"></image>
+                    工具箱
+                </button>
+            </view>
+        </view>
+    </view>
+    <view class="toolbox" hidden="{{showToolBox}}">
+        <view class="pg-menus">
+            <view class="weui-flex">
+                <view class="weui-flex__item">
+                    <view class="toolbox-title">工具箱</view>
+                </view>
+            </view>
+            <view class="weui-flex">
+                <view class="weui-flex__item">
+                    <view class="menu" hover-class="menu-hover" bindtap="tapQiangKeButton">
+                        <view class="menu-imgs">
+                            <image class="menu-img" src="../../images/motorbike.png"></image>
+                        </view>
+                        抢课
+                        <view class="menu-tip">体育/通选课</view>
+                    </view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="menu" hover-class="menu-hover" bindtap="tapPingJiaoButton">
+                        <view class="menu-imgs">
+                            <image class="menu-img" src="../../images/commentcheckoutline.png"></image>
+                        </view>
+                        评教
+                        <view class="menu-tip">一键评价老师</view>
+                    </view>
+                </view>
+                <view class="weui-flex__item"></view>
+            </view>
+        </view>
+    </view>
 </view>

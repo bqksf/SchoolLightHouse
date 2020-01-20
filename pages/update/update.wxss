@@ -1,0 +1,35 @@
+.index-hd {
+    padding: 80rpx;
+    text-align: center;
+}
+
+.index-bd {
+    padding: 0 30rpx 40rpx;
+}
+
+.index-ft {
+    padding-bottom: 20rpx;
+    text-align: center;
+}
+
+.index-logo {
+    width: 86rpx;
+    height: 86rpx;
+}
+
+.index-desc {
+    margin-top: 20rpx;
+    font-size: 28rpx;
+    font-weight: 500;
+}
+
+.weui-msg__desc {
+    text-align: left;
+    margin-bottom: 10px;
+    font-size: 24rpx;
+}
+
+.update-title {
+    color: #171a20;
+    font-size: 26rpx;
+}
