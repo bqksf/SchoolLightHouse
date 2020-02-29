@@ -3,10 +3,12 @@
     "pages/index/index",
     "pages/mine/mine",
     "pages/bindnumber/bindnumber",
-    "pages/score/score",
-    "pages/about/about",
-    "pages/update/update",
-    "pages/bindhelp/bindhelp"
+    "pages/index/score/score",
+    "pages/mine/about/about",
+    "pages/mine/update/update",
+    "pages/bindnumber/bindhelp/bindhelp",
+    "pages/index/exam/exam",
+    "pages/index/schedule/schedule"
   ],
   "window": {
     "backgroundTextStyle": "dark",

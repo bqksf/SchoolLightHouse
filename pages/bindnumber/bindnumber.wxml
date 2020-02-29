@@ -1,7 +1,4 @@
 <view class="container">
-    <we-dialog title="{{dialogTitle}}" istrue="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
-        <view>{{dialogContent}}</view>
-    </we-dialog>
     <view class="index-hd">
         <image class="index-logo" src="/images/score-logo.png"></image>
         <view class="index-desc">绑定学号</view>
@@ -55,9 +52,12 @@
                 <input id="weuiAgree" type="checkbox" class="weui-agree__checkbox" />
                 <span class="weui-agree__text">
                     绑定即表示您已同意
-                    <navigator class="weui-agree__link" url="/pages/bindhelp/bindhelp">
+                    <navigator class="weui-agree__link" url="/pages/bindnumber/bindhelp/bindhelp">
                         《用户协议》
                     </navigator>
+                </span>
+                <span class="weui-agree__text">
+                    <text>\n</text>暂时只支持华广，3月后支持其他学校，可联系客服了解详情
                 </span>
             </label>
         </view>

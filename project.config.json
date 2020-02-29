@@ -24,7 +24,7 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.9.4",
+	"libVersion": "2.10.0",
 	"appid": "wxf203d0e6cfbed41a",
 	"projectname": "PacketSchool",
 	"debugOptions": {

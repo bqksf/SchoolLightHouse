@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/k-skye/SchoolLightHouse#readme",
   "dependencies": {
-    "@antv/wx-f2": "^2.0.0"
+    "@antv/wx-f2": "^2.0.1"
   }
 }

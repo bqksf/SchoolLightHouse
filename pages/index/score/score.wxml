@@ -1,0 +1,79 @@
+<wxs module="wxs">
+var showFen = function(data) {
+    if(typeof(data) == 'number'){
+        return '分';
+    }else{
+        return '';
+    }
+}
+
+module.exports.showFen = showFen;
+</wxs>
+<we-dialog title="{{dialogTitle}}" istrue="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
+    <text>{{dialogContent}}</text>
+</we-dialog>
+<view class="page">
+    <view class="pg-head">
+        <view class="choose" hover-class="choose-hover">
+            <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+                <view class="choose-box">
+                    <view class="choose-name">{{currentChoose}}</view>
+                    <view class="choose-icon">
+                        <image class="choose-img" src="../../../images/down.png"></image>
+                    </view>
+                </view>
+            </picker>
+        </view>
+        <div class="chart-icon">
+            <button plain bindtap="tapIcon" wx:if="{{!showChart}}">
+                <image class="chart-img" src="../../../images/areachart.png" ></image>
+            </button>
+            <button type="primary" bindtap="tapIcon" wx:else>
+                <image class="chart-img" src="../../../images/areachart-on.png" ></image>
+            </button>
+        </div>
+    </view>
+    <view class="charts" wx:if="{{showChart}}">
+        <f2 onInit="{{onInitDoubleLineChart}}" />
+        <view class="chart-title">学分绩点折线图</view>
+        <view class="tap-tip">(点击可查看详细数据)</view>
+        <f2 onInit="{{onInitZhuChart}}" />
+        <f2 onInit="{{onInitBingChart}}" />
+        <view class="chart-title2">成绩饼状/柱形图</view>
+        <view class="tap-tip">(点击可查看详细数据)</view>
+    </view>
+    <view class="pg-content" wx:else>
+        <view class="border-score" wx:for="{{scoreArr}}" wx:key="index">
+            <view class="score-card" hover-class="score-hover" bindtap="tapScoreCard" data-item="{{item}}">
+                <view class="score-name">{{item.lesson_name}}</view>
+                <view class="score-others-box">
+                    <view class="score-other-box">
+                        <view class="score-usual">
+                            平时 {{item.usually_score}}{{wxs.showFen(item.usually_score)}}
+                        </view>
+                        <view class="score-last">
+                            期末 {{item.last_score}}{{wxs.showFen(item.last_score)}}
+                        </view>
+                    </view>
+                    <view class="score-total">
+                        <font style="font-size: 40rpx;color:#171a20;">{{item.score}}</font>
+                        {{wxs.showFen(item.score)}}
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot"></view>
+    <view class="all-score-card">
+        <view class="weui-flex">
+            <view class="weui-flex__item">
+                <view class="score">{{totalCredit}}</view>
+                <view class="title">总学分</view>
+            </view>
+            <view class="weui-flex__item">
+                <view class="score">{{totalPoint}}</view>
+                <view class="title">总绩点</view>
+            </view>
+        </view>
+    </view>
+</view>

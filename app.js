@@ -1,86 +1,92 @@
-import request from '/utils/request.js';
-
+const AV = require('./utils/av-weapp-min.js');
+AV.init({
+	appId: 'UxfyuN3Flo7PAOOYoLg7CGkh-9Nh9j0Va',
+	appKey: 'ii5IeTaCTc9N5q9Qf2HXuzvW',
+	serverURLs: "https://gxdt.kanux.cn",
+});
+import { jsonify, isQQApp, showErrorModal } from '/utils/index.js';
+var avUser = null;//存放user变量
 App({
-  /* 全局数据区 */
-  globalData: {
-    firstlogin: 1,
-    userOpenid: "",
-    userSK: "a4d456c728303e7a67f81f135af88cb2",
-    appID: "wx192c11ca6a1e5f22",
-    appSecert: "852b336aed0f299c336807fced14ae35",
-    studentInfoData: null,
-    needChangePassword: 0,
-    studyData: null
-  },
-  /* app.js全局启动前 */
-  onLaunch() {
-    //获取openid
-    this.globalData.userOpenid = wx.getStorageSync('openid') || "";
-    !this.globalData.userOpenid && this.getUserOpenid();
-    //获取用户信息
-    this.getUserInfoData();
-  },
-  /* 函数区 */
-  getUserInfoData() {
-    request.get('Student.getStudentInfo', {
-      openid: this.globalData.userOpenid
-    }).then(res => {
-      this.globalData.studentInfoData = res;
-      this.globalData.firstlogin = !res.stuID ? 1 : 0;
-      this.globalData.needChangePassword = parseInt(res.needChangePass);
-      if (this.globalData.firstlogin == 0) {
-        //获取学习数据
-        const SD = wx.getStorageSync('studyData') || "";
-        const nowTime = Math.round(new Date().getTime() / 1000);
-        //如果缓存大于一天或SD为null，就更新数据
-        if (((nowTime - SD.addStorTime) > 86400) || !SD) {
-          request.get('Studydata.GetOneStudyData', {
-            openid: this.globalData.userOpenid
-          }).then(rs => {
-            this.globalData.studyData = rs;
-            rs.addStorTime = Math.round(new Date().getTime() / 1000);
-            wx.setStorage({
-              key: 'studyData',
-              data: rs
-            });
-            res.studyData = rs;
-            if (this.userInfoReadyCallback) {
-              this.userInfoReadyCallback(res);
-            }
-          }).catch();
-        } else {
-          this.globalData.studyData = SD;
-          res.studyData = SD;
-          if (this.userInfoReadyCallback) {
-            this.userInfoReadyCallback(res);
-          }
-        }
-      }
-    }).catch();
-  }
-  ,
-  getUserOpenid() {
-    wx.login({
-      success: res => {
-        if (res.code) {
-          request.get('Student.APPgetOpenid', {
-            code: res.code
-          }).then(res => {
-            console.log("wxlogin.code请求Openid", res);
-            this.globalData.userOpenid = res.openid;
-            wx.setStorageSync('openid', res.openid);
-            this.globalData.firstlogin = res.firstlogin;
-            this.getUserInfoData();
-          }).catch();
-        } else {
-          console.log("从微信服务器获取用户登录wxlogin.code失败！" + res.errMsg);
-          this.errorMsg("错误", "从微信服务器获取用户登录code失败");
-        }
-      },
-      fail: () => {
-        console.log("用户wxlogin无网络" + res.errMsg);
-        this.errorMsg("错误", "您的网络环境可能存在问题，请检查");
-      }
-    });
-  }
+	/* 全局数据区 */
+	globalData: {
+		firstlogin: 1,
+		needChangePassword: 0,
+		studyData: null,
+		user: null,
+		weekNum: 0
+	},
+	/* app.js全局启动前 */
+	onLaunch() {
+		this.login_getUserInfo();
+	},
+	login_getUserInfo() {
+		avUser = AV.User.current();
+		if (!avUser) {
+			this.login();
+		} else {
+			this.globalData.user = jsonify(avUser);
+			this.getUserInfo();
+		}
+	},
+	login() {
+		const loginFN = isQQApp ? AV.User.loginWithQQApp : AV.User.loginWithWeapp({
+			preferUnionId: true,
+		});
+		loginFN.then(user => {
+			avUser = user;
+			this.globalData.user = jsonify(avUser);
+			// console.log(avUser);
+			// AV.Cloud.run('hello').then(data => {
+			//   console.log(data)
+			// }).catch(error => {
+			//   showErrorModal(error.message);
+			// });
+			this.getUserInfo();
+		}).catch(error => {
+			showErrorModal(error.message);
+		});
+	},
+	getUserInfo() {
+		//获取用户信息
+		this.globalData.firstlogin = this.globalData.user.userInfo ? 0 : 1;
+		this.globalData.needChangePassword = this.globalData.user.needChangePass;
+		if (this.globalData.firstlogin == 0) {
+			//获取学习数据
+			this.getStudyData();
+		}
+	},
+	getStudyData() {
+		let studyData = wx.getStorageSync('studyData') || "";
+		const nowTime = Math.round(new Date().getTime() / 1000);
+		//如果缓存大于一天或SD为null，就更新数据
+		if (((nowTime - studyData.addStorTime) > (86400*7)) || !studyData) {
+			let query = new AV.Query('study_data');
+			query.equalTo('user', avUser).first().then((study_data) => {
+				studyData = jsonify(study_data);
+				this.globalData.studyData = studyData;
+				studyData.addStorTime = Math.round(new Date().getTime() / 1000);
+				wx.setStorage({
+					key: 'studyData',
+					data: studyData
+				});
+				this.okCallBack(studyData);
+			}).catch(error => {
+				showErrorModal(error.message);
+			});
+
+		} else {
+			this.globalData.studyData = studyData;
+			this.okCallBack(studyData);
+		}
+	},
+	okCallBack(studyData) {
+		let res = {
+			'studyData': studyData,
+			'firstlogin': this.globalData.firstlogin,
+			'needChangePassword': this.globalData.needChangePassword
+		}
+		if (this.userInfoReadyCallback) {
+			this.userInfoReadyCallback(res);
+		}
+	}
 })

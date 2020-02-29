@@ -1,0 +1,81 @@
+page{
+    padding-bottom: constant(safe-area-inset-bottom);
+    padding-bottom: env(safe-area-inset-bottom);
+}
+
+.pg-head{
+    margin: 0 20rpx;
+    display: flex;
+    justify-content: space-between;
+    top: 0;
+    background-color: white;
+    padding-bottom: 15rpx;
+}
+
+.date-title{
+    display: flex;
+    align-items: center;
+    font-size: 40rpx;
+    font-weight: 500;
+    padding-left: 15rpx;
+}
+
+.chart-icon{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+button:not([size='mini']) {
+    height: 70rpx;
+    min-height: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pg-content{
+    margin: 0 15rpx;
+}
+
+.table-title{
+    margin: 5px;
+    padding: 0 10px;
+    text-align: center;
+    height: 2.3em;
+    line-height: 2.3em;
+    color: #171a20;
+    font-size: 30rpx;
+}
+
+.table-content{
+    color: #666;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100%;
+    text-align: center;
+    font-size: 30rpx;
+}
+
+.weui-flex {
+    border-radius: 15rpx;
+}    
+
+button {
+    font-size: 30rpx !important;
+}
+
+.remind-color{
+    background-color: #f8f8f8;
+}
+
+.remind-font{
+    color: #171a20;
+}
+
+.table-line{
+    margin: 10rpx 5rpx;
+    padding: 5rpx;
+}

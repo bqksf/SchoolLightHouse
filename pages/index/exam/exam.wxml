@@ -1,0 +1,56 @@
+<wxs module="wxs">
+var showRemind = function(data) {
+    if(data == 1){
+        return 'remind-color';
+    }else{
+        return '';
+    }
+}
+var showRemind2 = function(data) {
+    if(data == 1){
+        return 'remind-font';
+    }else{
+        return '';
+    }
+}
+
+module.exports.showRemind = showRemind;
+module.exports.showRemind2 = showRemind2;
+</wxs>
+<view class="page">
+    <view class="pg-head">
+        <div class="date-title">{{yearTitle}}学年</div>
+        <div class="chart-icon">
+            <button plain bindtap="tapIcon" wx:if="{{!mindStatus}}">考试提醒 ｜ 关</button>
+            <button type="primary" bindtap="tapIcon" wx:else>考试提醒 ｜ 开</button>
+        </div>
+    </view>
+    <view class="pg-content">
+        <div class="table-titles">
+            <view class="weui-flex">
+                <view class="weui-flex__item">
+                    <view class="table-title">科目</view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="table-title">地点座位号</view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="table-title">时间</view>
+                </view>
+            </view>
+        </div>
+        <view class="table-contents">
+            <view class="weui-flex table-line {{wxs.showRemind(item.isNow)}}" wx:for="{{examArr}}" wx:key="index">
+                <view class="weui-flex__item">
+                    <view class="table-content {{wxs.showRemind2(item.isNow)}}">{{item.lesson_name}}</view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="table-content {{wxs.showRemind2(item.isNow)}}">{{item.location}} - {{item.sit_id}}</view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="table-content {{wxs.showRemind2(item.isNow)}}">{{item.day}} {{item.time}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

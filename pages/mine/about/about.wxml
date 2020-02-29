@@ -1,0 +1,21 @@
+<view class="page">
+    <view class="weui-msg">
+        <view class="weui-msg__icon-area">
+            <image class="index-logo" src="/images/award.png"></image>
+            <view class="index-desc">「高校灯塔」v1.2</view>
+        </view>
+        <view class="weui-msg__text-area">
+            <view class="weui-msg__desc">校园灯塔是 华广大二软工四班程序员老康 的创业项目之一。</view>
+            <view class="weui-msg__desc">基于AI实现大学课程表成绩查询，考试提醒等功能，校内互助代拿快递，打饭、帮帮跑腿服务，旨在化身灯塔，为同学们提供便利。</view>
+            <view class="weui-msg__desc">我们生活在一个信息过载的时代，使用着质量参差不齐、五彩斑斓的APP</view>
+            <view class="weui-msg__desc">米开朗基罗曾说：<b style="font-weight:500">“美就是净化过剩的过程。人生就是如此，要想活的美，就得删繁就简，去掉多余的东西。”</b></view>
+            <view class="weui-msg__desc">于是计划做以 简单纯净 为设计理念的程序，化繁为简，less is more.</view>
+            <view class="weui-msg__desc">目前的功能正在逐渐增加中，可能会有影响使用的BUG，如果你在使用中有任何问题或改进建议，可联系客服或程序员老康wx：4396933。</view>
+        </view>
+        <view class="weui-msg__extra-area">
+            <view class="weui-footer">
+                <view class="weui-footer__text">©2020 高校灯塔</view>
+            </view>
+        </view>
+    </view>
+</view>

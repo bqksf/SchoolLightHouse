@@ -1,0 +1,69 @@
+<wxs module="wxs">
+var showRemind = function(dayOfTheWeek,index,currentWeekNum,trueWeekNum) {
+    if(dayOfTheWeek-1 == index){
+        if(currentWeekNum == trueWeekNum){
+            return 'remind-color remind-font';
+        }
+    }else{
+        return ''+trueWeekNum;
+    }
+}
+
+module.exports.showRemind = showRemind;
+</wxs>
+<we-dialog title="{{dialogTitle}}" istrue="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
+    <text>{{dialogContent}}</text>
+</we-dialog>
+<view class="page">
+    <view class="pg-head">
+        <div class="date-title">
+            <button class="mini-button" type="default" bindtap="tapLeftButton">
+                <image class="choose-img" src="../../../images/chevron-left.png"></image>
+            </button>
+            <view class="date-text">
+                第 {{currentWeekNum}} 周
+            </view>
+            <button class="mini-button" type="default" bindtap="tapRightButton">
+                <image class="choose-img" src="../../../images/chevron-right.png"></image>
+            </button>
+        </div>
+        <div class="chart-icon">
+            <button plain bindtap="tapIcon" wx:if="{{!mindStatus}}">上课提醒 ｜ 关</button>
+            <button type="primary" bindtap="tapIcon" wx:else>上课提醒 ｜ 开</button>
+        </div>
+    </view>
+    <view class="pg-content">
+        <div class="table-titles">
+            <view class="weui-flex">
+                <view class="weui-flex__item">
+                    <view class="table-title">一</view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="table-title">二</view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="table-title">三</view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="table-title">四</view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="table-title">五</view>
+                </view>
+                <!-- <view class="weui-flex__item">
+                    <view class="table-title">六</view>
+                </view>
+                <view class="weui-flex__item">
+                    <view class="table-title">日</view>
+                </view> -->
+            </view>
+        </div>
+        <view class="table-contents">
+            <view class="weui-flex flex-col {{wxs.showRemind(dayOfTheWeek,index,currentWeekNum,trueWeekNum)}}" wx:for="{{scheduleArr}}" wx:key="index">
+                <view class="table-content " wx:for="{{item}}" wx:key="index" data-schedule="{{item}}" bindtap="tapOneSchedule">
+                    <text>{{item.name}}\n{{item.place}}</text>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>

@@ -1,5 +1,4 @@
 var app = getApp();
-import request from '../../utils/request.js'
 
 Page({
     data: {
@@ -11,24 +10,21 @@ Page({
         currentSize: 0,
     },
     onLoad() {
-        this.getStorageNum(), this.getBindnumber();
+        // this.getStorageNum(), this.getBindnumber();
     },
-    onShow(){
+    onShow() {
         !app.globalData.firstlogin && (this.getStudentInfo());
     },
     getStudentInfo() {
-        request.get('Student.GetStudentInfo', {
-            openid: app.globalData.userOpenid
-          }).then(res => {
-            this.setData({
-                studentInfo: {
-                    image: res.avatar,
-                    name: res.name,
-                    stuid: res.stuID
-                }
-            });
-            app.globalData.userInfo = res;
-          }).catch();
+        //暂时用缓存来解决重复读
+        //绑定后的返回我的界面来不及读取global，会造成空值
+        this.setData({
+            studentInfo: {
+                image: app.globalData.user.avatarUrl ||  "/images/user.png",
+                name: app.globalData.user.nickName || "恭喜",
+                stuid: app.globalData.user.stuID || "已绑定成功"
+            }
+        });
     },
     tapHead() {
         this.data.studentInfo.stuid === "未绑定学号" ? wx.navigateTo({
@@ -113,5 +109,18 @@ Page({
                 isBinding: !1
             });
         } catch (t) { }
+    },
+    onShareAppMessage() {
+        return {
+            title: "高校灯塔(小程序)",
+            path: "pages/index/index",
+            success: function (t) {
+                wx.showToast({
+                    title: "分享成功",
+                    icon: "success",
+                    mask: !0
+                });
+            }
+        };
     }
 });

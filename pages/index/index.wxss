@@ -2,6 +2,12 @@
   text-align: center;
 }
 
+.toolbox-button{
+  display: flex;
+  justify-content: center;
+}
+
+
 .head-title{
   margin: 5px;
   padding: 0 10px;
@@ -37,7 +43,6 @@
 }
 
 .class{
-  margin: 5px;
   padding: 20rpx 0;
   text-align: center;
 /*   height: 3.3em;
@@ -87,8 +92,8 @@
 }
 
 button:not([size='mini']){
-  width: auto;
-  margin: 15px;
+  width: 100% !important;
+  margin: 15px !important;
   align-items: center;
   justify-content: center;
   display: flex;
@@ -114,7 +119,9 @@ button:not([size='mini']){
 
 .weui-cells__title {
   font-size: 26rpx;
-  color: #171a20;
+  color: #666;
   padding-top: 10rpx;
   font-weight: 200;
+  margin-bottom: 0px;
+  text-align: right;
 }
