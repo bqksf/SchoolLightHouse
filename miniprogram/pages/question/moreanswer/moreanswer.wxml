@@ -1,0 +1,40 @@
+<view class="page">
+    <view class="user">
+        <image class="user-img" src="{{answer.author.avatar}}" mode="aspectFill" />
+        <view class="user-info">
+            <view class="name">{{answer.author.name}}</view>
+            <view class="info">{{answer.time}} · {{answer.author.classs}}</view>
+        </view>
+    </view>
+    <view class="content">
+        <text class="content-text">{{answer.content}}</text>
+    </view>
+    <view class="weui-loadmore weui-loadmore_line weui-loadmore_dot"></view>
+    <view class="title">全部回复</view>
+    <view class="answer" wx:for="{{replysArr}}" wx:key="index">
+        <view class="user">
+            <image class="user-img" src="{{item.author.avatar}}" mode="aspectFill" />
+            <view class="user-info">
+                <view class="name">{{item.author.name}} 回复 {{item.to.name}}</view>
+            </view>
+        </view>
+        <view class="content-answer">
+            <text class="content-text">{{item.content}}</text>
+            <view class="tips">
+                <view class="tip-reply">{{item.time}} · <span bindtap="tapReply" data-item="{{item}}">回复</span></view>
+                <view class="tip-good" wx:if="{{!item.isMelike}}" bindtap="tapGoodToTrue" data-item="{{item}}" data-index="{{index}}">
+                    <image class="icon-good" src="../../../images/triangle.png" mode="aspectFill" />
+                    <view class="text-good">赞同 {{item.like}}</view>
+                </view>
+                <view class="tip-good-true" wx:else bindtap="tapGoodToFalse" data-item="{{item}}" data-index="{{index}}">
+                    <image class="icon-good" src="../../../images/triangle-blue.png" mode="aspectFill" />
+                    <view class="text-good">赞同 {{item.like+1}}</view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="send">
+        <textarea class="send-text" bindinput="replyInput" auto-height="true" fixed="true" placeholder="{{replyTip}}" name="textarea" value="{{replyValue}}" />
+        <view class="send-button" bindtap="tapReplyButton">回复</view>
+    </view>
+</view>

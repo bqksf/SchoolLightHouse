@@ -1,0 +1,8 @@
+{
+    "navigationStyle": "custom",
+    "enablePullDownRefresh": true,
+    "usingComponents": {
+      "navBar": "/components/navBar/navBar",
+      "scroll": "/components/scroll/index"
+    }
+}

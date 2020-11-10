@@ -1,0 +1,56 @@
+{
+  "pages": [
+    "pages/question/question",
+    "pages/question/search/search",
+    "pages/mine/mine",
+    "pages/index/index",
+    "pages/question/moreanswer/moreanswer",
+    "pages/question/answer/answer",
+    "pages/bindnumber/bindnumber",
+    "pages/index/score/score",
+    "pages/mine/about/about",
+    "pages/mine/update/update",
+    "pages/bindnumber/bindhelp/bindhelp",
+    "pages/index/exam/exam",
+    "pages/index/schedule/schedule",
+    "pages/question/ask/ask"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "高校灯塔",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f8f8f8"
+  },
+  "tabBar": {
+    "color": "#bfbfbf",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "selectedColor": "#000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "学习",
+        "iconPath": "images/learn.png",
+        "selectedIconPath": "images/learn-on.png"
+      },
+      {
+        "pagePath": "pages/question/question",
+        "text": "问问",
+        "iconPath": "images/compass.png",
+        "selectedIconPath": "images/compass-on.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "images/mine.png",
+        "selectedIconPath": "images/mine-on.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "we-dialog": "/components/dialog/dialog"
+  }
+}

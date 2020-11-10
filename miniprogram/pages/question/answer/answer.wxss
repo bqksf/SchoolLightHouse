@@ -1,0 +1,137 @@
+.user-img{
+    width: 70rpx;
+    height: 70rpx;
+    border-radius: 999rpx;
+    margin-right: 20rpx;
+}
+
+.main{
+    margin-bottom: env(safe-area-inset-bottom);
+    padding-bottom: 80rpx;
+}
+
+.user{
+    display: flex;
+    align-items: center;
+    margin: 0 30rpx;
+}
+
+.name{
+    font-size: 30rpx;
+    font-weight: 450;
+}
+
+.info{
+    font-size: 20rpx;
+    line-height: 25rpx;
+    color: #666;
+}
+
+.content{
+    margin: 30rpx;
+    font-size: 32rpx;
+    color: #171a20;
+}
+
+
+.icons{
+    margin: 10rpx;
+    padding: 10rpx;
+    border-radius: 10rpx;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.icon{
+    height: 1em;
+    width: 1em;
+}
+.icon-text{
+    margin-left: 10rpx;
+}
+
+.tips{
+    color: #a2a3a5;
+    font-size: 25rpx;
+    margin: 10rpx 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.content-answer{
+    margin: 10rpx 30rpx 0rpx 30rpx;
+    font-size: 30rpx;
+    color: #171a20;
+    padding-left: 100rpx;
+}
+
+.buttons{
+    margin: 0 60rpx;
+}
+
+.title{
+    margin: 50rpx 30rpx 30rpx 30rpx;
+    font-size: 35rpx;
+    font-weight: 450;
+}
+
+.reply{
+    margin: 0;
+    padding: 15rpx;
+    color: #666;
+    font-size: 28rpx;
+}
+
+.reply-tip{
+    display: inline-block;
+    color: #171a20;
+}
+
+.reply-more{
+    color: #171a20;
+    margin-top: 5rpx;
+}
+
+.icon-good{
+    width: 26rpx;
+    height: 26rpx;
+    margin-right: 8rpx;
+}
+
+.tip-good{
+    display: flex;
+    align-items: center;
+}
+
+.tip-good-true{
+    display: flex;
+    align-items: center;
+    color: #3e6ae1;
+}
+
+.send{
+    position: fixed;
+    bottom: env(safe-area-inset-bottom);
+    width: 100vw;
+    padding: 15rpx 30rpx;
+    padding-right: 0;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.send-text{
+    width: 80%;
+    background-color: #f8f8f8;
+    border-radius: 10rpx;
+    padding: 10rpx;
+}
+
+.send-button{
+    flex-grow: 1;
+    text-align: center;
+    color: #3e6ae1;
+}

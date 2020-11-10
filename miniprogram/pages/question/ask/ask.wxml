@@ -1,0 +1,40 @@
+<view class="page">
+    <view class="weui-cells__title">问题</view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">
+                <textarea class="weui-textarea" focus bindinput="titleInput" maxlength="50" placeholder="输入你想提的问题，请先确保问题没有被他人提过" style="height: 3.3em;font-size:40rpx" />
+            </view>
+        </view>
+    </view>
+    <view class="weui-cells__title">补充说明（选填）</view>
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">
+                <textarea class="weui-textarea" bindinput="contentInput" placeholder="对问题补充说明，可上传最多3张图片（选填）" style="height: 6.6em" />
+            </view>
+        </view>
+    </view>
+    <view class="weui-cells__title">补充图片（选填）</view>
+    <view class="weui-cells">
+        <view class="weui-cell">
+            <view class="weui-cell__bd">
+                <view class="weui-uploader">
+                    <view class="weui-uploader__bd">
+                        <view class="weui-uploader__files" id="uploaderFiles">
+                            <block wx:for="{{files}}" wx:key="*this">
+                                <view class="weui-uploader__file" bindtap="previewImage" id="{{item}}">
+                                    <image class="weui-uploader__img" src="{{item}}" mode="aspectFill" />
+                                </view>
+                            </block>
+                        </view>
+                        <view class="weui-uploader__input-box">
+                            <view class="weui-uploader__input" bindtap="chooseImage"></view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <button type="primary" bindtap="tapSubmitButton">发布问题</button>
+</view>
