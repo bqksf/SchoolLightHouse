@@ -18,7 +18,7 @@
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
-    "uglifyFileName": false,
+    "uglifyFileName": true,
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
@@ -37,11 +37,12 @@
     "packNpmRelationList": [],
     "minifyWXSS": true
   },
-  "libVersion": "2.10.3",
+  "libVersion": "2.10.4",
   "appid": "wxf203d0e6cfbed41a",
   "projectname": "PacketSchool",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
     "search": {
       "list": []

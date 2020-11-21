@@ -22,12 +22,22 @@ export function jsonify(target)
 const systemInfo = wx.getSystemInfoSync();
 export const isQQApp = systemInfo && systemInfo.AppPlatform === 'qq';
 
-export function showErrorModal(content){
-  wx.showModal({
-    title: '错误',
-    content: content,
-    showCancel: false,
-  });
+export function showErrorModal(content,e){
+  if (e) {
+    if (e instanceof Error) e = e.toString();
+    e = JSON.stringify(e);
+    wx.showModal({
+      title: '错误',
+      content: content+'：'+e,
+      showCancel: false,
+    });
+  }else{
+    wx.showModal({
+      title: '错误',
+      content: content,
+      showCancel: false,
+    });
+  }
 };
   
 export function dateFormat( date ) {

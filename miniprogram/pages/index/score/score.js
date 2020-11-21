@@ -211,7 +211,7 @@ Page({
         showChart: 0
     },
     onLoad() {
-        this.initData(JSON.parse(app.globalData.studyData.score));
+        this.initData(app.globalData.studyData.score);
     },
     tapIcon() {
         let index = this.data.index;

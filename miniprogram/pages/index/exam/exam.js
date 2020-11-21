@@ -12,7 +12,7 @@ Page({
 
         const { exam } = app.globalData.studyData;
         if (exam) {
-            this.initData(JSON.parse(exam));
+            this.initData(exam);
         } else {
             //TODO 无数据提示
         }

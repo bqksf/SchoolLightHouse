@@ -1,119 +1,135 @@
 import { getWhichWeek } from "../../utils/study-date.js";
-var app = getApp();
-import { jsonify, showErrorModal } from '../../utils/index.js';
-const AV = require('../../utils/av-weapp-min.js');
+import { showErrorModal } from '../../utils/index.js';
+
+let app = getApp();
+let db = wx.cloud.database({
+    env: 'release-5gt6h0dtd3a72b90'
+});
 
 Page({
     data: {
         statusBarHeight: wx.getSystemInfoSync().statusBarHeight,
-        noClass: 1,
-        showToolBox: 1,
+        noClass: true,
+        showToolBox: true,
         notice: "暂时没有通知",
-        allModalStatus: '', //所有按钮统一提示功能
+        allModalStatus: null, //所有按钮统一错误处理
+        serverErrorStr: '',
         todayClassNum: 1,
         weekClassNum: 0,
         scoreNum: 0,
         examNum: 0,
         weekNum: 0,
         todayClassArr: [],
-        showFirstLogin: 1,
         bookNum: 0
     },
     onLoad() {
         //针对第一次进入页面
-        if (!app.globalData.studyData) {
-            app.userInfoReadyCallback = res => { //app.js异步回调方法，获取不到数据时使用
-                const { firstlogin, needChangePassword, studyData } = res;
-                showErrorModal(studyData);
-                if (firstlogin == 0) {
-                    this.setData({
-                        showFirstLogin: 0,
-                        allModalStatus: '暂时没有通知'
-                    });
-                    //TODO 服务器公告
-                    if (parseInt(needChangePassword) == 1) {
-                        this.setData({
-                            notice: "检测到您教务系统密码已更改，请到个人资料页修改为新密码才能继续使用",
-                            allModalStatus: '密码错误'
-                        });
-                    } else {
-                        this.initData(studyData);
-                    }
+        if (!app.globalData._openid) {
+            app.userInfoReadyCallback = res => { // app.js异步回调方法，获取不到数据时使用
+                const { _openid, firstlogin, userInfo } = res;
+                if (!firstlogin) {
+                    this.initData(_openid, userInfo);
                 } else {
                     this.setData({
-                        allModalStatus: '未绑定账号'
+                        allModalStatus: 'noBind'
                     });
                 }
             };
-        }
-    },
-    onShow() {
-        //针对反复进入页面
-        if (app.globalData.firstlogin == 0) {
-            this.setData({
-                showFirstLogin: 0,
-                allModalStatus: '暂时没有通知'
-            });
-            //检测密码
-            if (app.globalData.needChangePassword == 1) {
+        }else{
+            if (!app.globalData.firstlogin) {
+                this.initData(app.globalData._openid, app.globalData.userInfo);
+            } else {
                 this.setData({
-                    notice: "检测到您教务系统密码已更改，请到个人资料页修改为新密码才能继续使用",
-                    allModalStatus: '密码错误'
+                    allModalStatus: 'noBind'
                 });
-            } else {
-                this.initData(app.globalData.studyData);
             }
         }
-        if (app.globalData.firstlogin == 1) {
-            this.setData({
-                allModalStatus: '未绑定账号'
+    },
+    async initData(_openid, userInfo) {
+        if (_openid) {
+            wx.showLoading({
+                title: '获取学习数据'
             });
-        }
-    },
-    initData(data) {
-        if (data) {
-            //第几周
-            let startTime = wx.getStorageSync('startTime') || null;
-            //暂时用缓存来解决重复读
-            if (!startTime) {
-                let query = new AV.Query('school');
-                query.equalTo('name', '华南理工大学广州学院').first().then((res) => {
-                    startTime = res.get('startDate');
-                    wx.setStorage({
-                        key: 'startTime',
-                        data: startTime
-                    });
-                    this.initData2(startTime, data);
-                }).catch(error => {
-                    showErrorModal(error.message);
+            // 获取本学期开始时间
+            try {
+                const { schoolCode } = userInfo;
+                const schoolResp = await db.collection('school').where({
+                    code: schoolCode
+                }).get();
+                const { startTime } = schoolResp.data[0];
+                console.log('学期开始时间：' + startTime);
+                await this.initData2(startTime);
+            } catch (e) {
+                showErrorModal('获取学期时间失败', e);
+                this.setData({
+                    allModalStatus: 'serverError',
+                    serverErrorStr: '获取学期时间失败' + JSON.stringify(e)
                 });
-            } else {
-                this.initData2(startTime, data);
             }
-            //没有数据，服务器错误，交给点击按钮的时候再提示
+            wx.hideLoading();
         }
     },
-    initData2(startTime, data) {
+    async initData2(startTime) {
+        // 计算第几周
         const weekNum = getWhichWeek(startTime);
-        //let weekNum = 20;
+        //TEST let weekNum = 20;
         this.setData({
             weekNum: weekNum
         });
         app.globalData.weekNum = weekNum;
-
-        if (data.schedule) {
-            //有课程数据
-            this.handleScheduleData(JSON.parse(data.schedule), weekNum);
+        try {
+            const studyData = await this.getStudyData();
+            // console.log('获取到的学习数据：' + JSON.stringify(studyData));
+            // 未绑定
+            if (studyData.status === 'error' && studyData.msg === 'noBind') {
+                this.setData({
+                    allModalStatus: 'noBind'
+                });
+                return;
+            }
+            const { data } = studyData;
+            // 设置全局变量
+            app.globalData.studyData = data;
+            // 是否需要更改教务系统绑定密码
+            if (data.needChangePassword === true) {
+                this.setData({
+                    notice: "检测到您教务系统密码已更改，请到个人资料页修改为新密码才能继续使用。",
+                    allModalStatus: 'passwordError'
+                });
+                return;
+            }
+            // 解析学习数据
+            if (data.schedule) {
+                //有课程数据
+                this.handleScheduleData(data.schedule, weekNum);
+            }
+            if (data.score) {
+                //搬自score成绩查询页面，后期可能优化
+                //构造以学期名字，内容为课程数据的对象
+                this.handleScoreData(data.score);
+            }
+            if (data.examTime) {
+                //有考试数据
+                this.handleExamData(data.examTime);
+            }
+            // TODO 服务器公告
+            this.setData({
+                notice: '暂时没有通知'
+            });
+        } catch (e) {
+            showErrorModal('获取学习信息失败', e);
+            this.setData({
+                allModalStatus: 'serverError',
+                serverErrorStr: '获取学习信息失败' + JSON.stringify(e)
+            });
+            return;
         }
-        if (data.score) {
-            //搬自score成绩查询页面，后期可能优化
-            //构造以学期名字，内容为课程数据的对象
-            this.handleScoreData(JSON.parse(data.score));
-        }
-        if (data.exam) {
-            //有考试数据
-            this.handleExamData(JSON.parse(data.exam));
-        }
+    },
+    async getStudyData() {
+        const studyDataResp = await wx.cloud.callFunction({
+            name: 'getStudyData'
+        });
+        return studyDataResp.result;
     },
     handleExamData(exam) {
         const dataKeysArr = Object.keys(exam);
@@ -207,64 +223,69 @@ Page({
         })
     },
     tapSchoolCardButton() {
-        if (this.checkAllModalStatus() == 0) {//全局弹窗控制
+        if (this.checkAllModalStatus()) {//全局弹窗控制
             this.showNotComplete();
             return;
-            if (!app.globalData.studyData.schedule) {
-                this.wxShowModal(data.error + '，如有疑问请联系客服');
-            }
         }
     },
     tapBookButton() {
-        if (this.checkAllModalStatus() == 0) {//全局弹窗控制
+        if (this.checkAllModalStatus()) {//全局弹窗控制
             this.showNotComplete();
             return;
-            if (!app.globalData.studyData.schedule) {
-                this.wxShowModal(data.error + '，如有疑问请联系客服');
-            }
         }
     },
     tapScheduleButton() {
-        if (this.checkAllModalStatus() == 0) {//全局弹窗控制
+        if (this.checkAllModalStatus()) {//全局弹窗控制
             if (!app.globalData.studyData.schedule) {
-                this.wxShowModal(data.error + '，如有疑问请联系客服');
+                this.wxShowModal('暂无课程表数据，如有疑问请联系客服');
             } else {
-                wx.navigateTo({
-                    url: '../index/schedule/schedule'
-                });
+                if ('error' in app.globalData.studyData.schedule) {
+                    showErrorModal('获取课程表数据失败', app.globalData.studyData.schedule.error)
+                } else {
+                    wx.navigateTo({
+                        url: '../index/schedule/schedule'
+                    });
+                }
             }
         }
     },
     tapScoreButton() {
-        if (this.checkAllModalStatus() == 0) {//全局弹窗控制
+        if (this.checkAllModalStatus()) {//全局弹窗控制
             if (!app.globalData.studyData.score) {
-                /* this.wxShowModal(data.error + '，如有疑问请联系客服'); */
                 this.wxShowModal('学校可能暂时关闭了成绩查询接口，ps：此功能的目的不是为了第一时间查询成绩，而是对你的成绩做详细的数据分析，绘制出很多直观图表。');
             } else {
-                wx.navigateTo({
-                    url: '../index/score/score'
-                });
+                if ('error' in app.globalData.studyData.score) {
+                    showErrorModal('获取考试成绩数据失败', app.globalData.studyData.score.error)
+                } else {
+                    wx.navigateTo({
+                        url: '../index/score/score'
+                    });
+                }
             }
         }
     },
     tapExamButton() {
-        if (this.checkAllModalStatus() == 0) {//全局弹窗控制
-            if (!app.globalData.studyData.exam) {
-                this.wxShowModal(data.error + '，如有疑问请联系客服');
+        if (this.checkAllModalStatus()) {//全局弹窗控制
+            if (!app.globalData.studyData.examTime) {
+                this.wxShowModal('暂无考试时间数据，如有疑问请联系客服');
             } else {
-                wx.navigateTo({
-                    url: '../index/exam/exam'
-                });
+                if ('error' in app.globalData.studyData.examTime) {
+                    showErrorModal('获取考试成绩数据失败', app.globalData.studyData.examTime.error)
+                } else {
+                    wx.navigateTo({
+                        url: '../index/exam/exam'
+                    });
+                }
             }
         }
     },
     tapQiangKeButton() {
-        if (this.checkAllModalStatus() == 0) {//全局弹窗控制
+        if (this.checkAllModalStatus()) {//全局弹窗控制
             this.showNotComplete();
         }
     },
     tapPingJiaoButton() {
-        if (this.checkAllModalStatus() == 0) {//全局弹窗控制
+        if (this.checkAllModalStatus()) {//全局弹窗控制
             this.showNotComplete();
         }
     },
@@ -274,20 +295,23 @@ Page({
         });
     },
     showNotComplete() {
-        this.wxShowModal('此功能未开放，尽情期待！Ps：其他功能会在疫情结束后开发完毕，3月回校后就可以使用啦～大家还有什么需要的功能可以加交流群告诉我！');
+        this.wxShowModal('此功能未开放，尽情期待！大家还有什么急用需要的功能可以加交流群告诉我们！');
     },
     checkAllModalStatus() {
         switch (this.data.allModalStatus) {
-            case '密码错误':
+            case 'serverError':
+                this.wxShowModal('服务器错误：' + this.data.serverErrorStr);
+                return false;
+            case 'passwordError':
                 this.wxShowModal('由于密码错误，无法获取数据，请先去资料页修改为您绑定的新密码');
-                return -1;
-            case '未绑定账号':
+                return false;
+            case 'noBind':
                 wx.navigateTo({
                     url: '../bindnumber/bindnumber'
                 });
-                return -2;
+                return false;
             default:
-                return 0;
+                return true;
         }
     },
     wxShowModal(content) {
@@ -300,12 +324,7 @@ Page({
     },
     onPullDownRefresh() {
         wx.vibrateShort();
-        wx.setStorage({
-            key: 'studyData',
-            data: ""
-        });
-        app.getUserInfoData();
-        this.onShow();
+        this.onLoad();
         wx.stopPullDownRefresh();
     },
     onShareAppMessage() {

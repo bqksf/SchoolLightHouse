@@ -2,12 +2,12 @@
     <view class="pg-head" style="margin-top:{{statusBarHeight}}px">
         <view class="weui-flex">
             <view class="weui-flex__item">
-                <view class="head-title" wx:if="{{showFirstLogin}}">
+                <view class="head-title" wx:if="{{allModalStatus === 'noBind'}}">
                     <span class="bigTitle">未绑定学号</span>
                 </view>
                 <view class="head-title" wx:else>
                     今天
-                    <span class="bigTitle" wx:if="{{noClass == 0}}">{{todayClassNum}}节课</span>
+                    <span class="bigTitle" wx:if="{{noClass === false}}">{{todayClassNum}}节课</span>
                     <span class="bigTitle" wx:else>无课</span>
                 </view>
             </view>

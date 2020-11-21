@@ -27,7 +27,7 @@ Page({
             trueWeekNum: weekNum
         });
         if (schedule) {
-            this.initData(JSON.parse(schedule), weekNum);
+            this.initData(schedule, weekNum);
         } else {
             //TODO 无数据提示
         }

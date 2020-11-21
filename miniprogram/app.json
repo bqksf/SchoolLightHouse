@@ -1,9 +1,9 @@
 {
   "pages": [
+    "pages/index/index",
     "pages/question/question",
     "pages/question/search/search",
     "pages/mine/mine",
-    "pages/index/index",
     "pages/question/moreanswer/moreanswer",
     "pages/question/answer/answer",
     "pages/bindnumber/bindnumber",

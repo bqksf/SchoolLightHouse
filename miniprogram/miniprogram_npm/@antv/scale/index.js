@@ -1,10 +1,10 @@
 module.exports = (function() {
 var __MODS__ = {};
-var __DEFINE__ = function(modId, func, req) { var m = { exports: {} }; __MODS__[modId] = { status: 0, func: func, req: req, m: m }; };
-var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = { exports: {} }; __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); if(typeof m.exports === "object") { __MODS__[modId].m.exports.__proto__ = m.exports.__proto__; Object.keys(m.exports).forEach(function(k) { __MODS__[modId].m.exports[k] = m.exports[k]; var desp = Object.getOwnPropertyDescriptor(m.exports, k); if(desp && desp.configurable) Object.defineProperty(m.exports, k, { set: function(val) { __MODS__[modId].m.exports[k] = val; }, get: function() { return __MODS__[modId].m.exports[k]; } }); }); if(m.exports.__esModule) Object.defineProperty(__MODS__[modId].m.exports, "__esModule", { value: true }); } else { __MODS__[modId].m.exports = m.exports; } } return __MODS__[modId].m.exports; };
+var __DEFINE__ = function(modId, func, req) { var m = { exports: {}, _tempexports: {} }; __MODS__[modId] = { status: 0, func: func, req: req, m: m }; };
+var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1579056720726, function(require, module, exports) {
+__DEFINE__(1605424195668, function(require, module, exports) {
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
@@ -1678,8 +1678,16 @@ module.exports = function (info) {
     min = Math.max(AutoUtil.snapMultiple(min, interval, 'floor'), minLimit); // 向下逼近
 
     count = Math.round((max - min) / interval);
-    min = AutoUtil.fixedBase(min, interval);
+    min = AutoUtil.fixedBase(min, interval); // 当min为负数的时候，fixedBase后，min可能会大于minLimit，导致最终产出的tick是大于minLimit的，所以必须进行修正
+
     max = AutoUtil.fixedBase(max, interval);
+    var prevMin = null;
+
+    while (min > minLimit && minLimit > -Infinity && (prevMin === null || min < prevMin)) {
+      // 保证计算出来的刻度最小值 min， 不大于数据最小值 min
+      prevMin = min;
+      min = AutoUtil.fixedBase(min - interval, interval);
+    }
   } else {
     avgCount = parseInt(avgCount, 10); // 取整
 
@@ -1706,7 +1714,7 @@ module.exports = function (info) {
     var prevMinTick = null; // 如果减去intervl, fixBase后，新的minTick没有小于之前的值，就退出，防止死循环
 
     while (minTick > min && (prevMinTick === null || minTick < prevMinTick)) {
-      // 保证计算出来的刻度最小值 minTick 不小于数据最大值 min
+      // 保证计算出来的刻度最小值 minTick 不大于数据最小值 min
       prevMinTick = minTick;
       minTick = AutoUtil.fixedBase(minTick - interval, interval); // 防止超常浮点数计算问题
     }
@@ -2712,6 +2720,6 @@ module.exports = Pow;
 });
 //# sourceMappingURL=scale.js.map
 }, function(modId) {var map = {}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1579056720726);
+return __REQUIRE__(1605424195668);
 })()
 //# sourceMappingURL=index.js.map
