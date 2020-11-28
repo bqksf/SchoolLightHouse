@@ -1,4 +1,3 @@
-const AV = require('../../../utils/av-weapp-min.js');
 import { showErrorModal, dateFormat } from '../../../utils/index.js';
 Page({
     data: {

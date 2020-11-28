@@ -28,8 +28,8 @@ module.exports.showRemind = showRemind;
             </button>
         </div>
         <div class="chart-icon">
-            <button plain bindtap="tapIcon" wx:if="{{!mindStatus}}">上课提醒 ｜ 关</button>
-            <button type="primary" bindtap="tapIcon" wx:else>上课提醒 ｜ 开</button>
+            <button plain bindtap="tapIcon" wx:if="{{!mindStatus}}" style="width: 100%;">上课提醒 ｜ 关</button>
+            <button type="primary" bindtap="tapIcon" style="width: 100%;" wx:else>上课提醒 ｜ 开</button>
         </div>
     </view>
     <view class="pg-content">

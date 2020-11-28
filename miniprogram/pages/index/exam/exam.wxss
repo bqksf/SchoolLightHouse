@@ -21,6 +21,7 @@ page{
 }
 
 .chart-icon{
+    width: 300rpx;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -29,7 +30,7 @@ page{
 button:not([size='mini']) {
     height: 70rpx;
     min-height: 0;
-    width: 100%;
+    width: 100% !important;
     display: flex;
     align-items: center;
     justify-content: center;

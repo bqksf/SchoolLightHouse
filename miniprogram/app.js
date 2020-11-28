@@ -1,9 +1,4 @@
 import { showErrorModal } from '/utils/index.js';
-import { promisifyAll } from 'miniprogram-api-promise';
-
-const wxp = {}
-promisifyAll(wx, wxp)
-// promise化所有wxAPI
 
 let db = null;
 
@@ -11,12 +6,12 @@ App({
 	/* 全局数据区 */
 	globalData: {
 		firstlogin: true,
-		needChangePassword: 0,
+		needChangePassword: false,
 		studyData: null,
 		weekNum: 0,
 		_openid: null,
 		userInfo: {},
-		db: null	// 云开发数据库引用
+		isNoBind: false
 	},
 	async onLaunch() {
 		this.cloudInit();
@@ -36,6 +31,10 @@ App({
 				});
 				this.globalData._openid = openidResp.result;
 				console.log('获取到openid：' + this.globalData._openid);
+				wx.setStorage({
+					key: '_openid',
+					data: this.globalData._openid
+				});
 			}
 		}
 		catch (e) {
@@ -67,37 +66,8 @@ App({
 		} catch (e) {
 			showErrorModal('获取用户信息失败', e);
 		}
-		this.globalData.firstlogin = '_id' in this.globalData.userInfo ? false : true;
-		// this.globalData.needChangePassword = this.globalData.user.needChangePass;
-		// if (this.globalData.firstlogin == 0) {
-		// 	//获取学习数据
-		// 	this.getStudyData();
-		// }
+		this.globalData.firstlogin = (this.globalData.userInfo && '_id' in this.globalData.userInfo) ? false : true;
 	},
-	// getStudyData() {
-	// 	let studyData = wx.getStorageSync('studyData') || "";
-	// 	const nowTime = Math.round(new Date().getTime() / 1000);
-	// 	//如果缓存大于一天或SD为null，就更新数据
-	// 	if (((nowTime - studyData.addStorTime) > (86400 * 1)) || !studyData) {
-	// 		let query = new AV.Query('study_data');
-	// 		query.equalTo('user', avUser).first().then((study_data) => {
-	// 			studyData = jsonify(study_data);
-	// 			this.globalData.studyData = studyData;
-	// 			studyData.addStorTime = Math.round(new Date().getTime() / 1000);
-	// 			wx.setStorage({
-	// 				key: 'studyData',
-	// 				data: studyData
-	// 			});
-	// 			this.okCallBack(studyData);
-	// 		}).catch(error => {
-	// 			showErrorModal(error.message);
-	// 		});
-
-	// 	} else {
-	// 		this.globalData.studyData = studyData;
-	// 		this.okCallBack(studyData);
-	// 	}
-	// },
 	okCallBack() {
 		let res = {
 			'_openid': this.globalData._openid,

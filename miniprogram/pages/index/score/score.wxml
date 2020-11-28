@@ -34,6 +34,7 @@ module.exports.showFen = showFen;
         </div>
     </view>
     <view class="charts" wx:if="{{showChart}}">
+        <view class="chartHeight">
         <f2 onInit="{{onInitDoubleLineChart}}" />
         <view class="chart-title">学分绩点折线图</view>
         <view class="tap-tip">(点击可查看详细数据)</view>
@@ -41,6 +42,7 @@ module.exports.showFen = showFen;
         <f2 onInit="{{onInitBingChart}}" />
         <view class="chart-title2">成绩饼状/柱形图</view>
         <view class="tap-tip">(点击可查看详细数据)</view>
+    </view>
     </view>
     <view class="pg-content" wx:else>
         <view class="border-score" wx:for="{{scoreArr}}" wx:key="index">

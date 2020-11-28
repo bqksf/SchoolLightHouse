@@ -5,7 +5,6 @@
                 <image class="head-image" mode="aspectFill" src="{{studentInfo.image}}"></image>
                 <view>
                     <view class="user-name">{{studentInfo.name}}</view>
-                    <view class="user-no">{{studentInfo.stuid}}</view>
                 </view>
             </view>
         </view>
@@ -20,13 +19,13 @@
             </view>
             <view class="weui-flex__item">
                 <view class="question-tip">
-                    <view class="question-num">12</view>
+                    <view class="question-num">999</view>
                     <view class="question-text">获赞</view>
                 </view>
             </view>
             <view class="weui-flex__item">
                 <view class="question-tip">
-                    <view class="question-num">13</view>
+                    <view class="question-num">66</view>
                     <view class="question-text">回复</view>
                 </view>
             </view>
@@ -34,6 +33,13 @@
     </view>
     <view class="page__bd">
         <view class="weui-cells weui-cells_after-title">
+            <navigator class="weui-cell weui-cell_access" hoverClass="weui-cell_active" url="{{navigateUrl}}">
+                <view class="weui-cell__hd">
+                    <image src="../../images/globe.png" class="menu-logo"></image>
+                </view>
+                <view class="weui-cell__bd">{{navigateTitle}}</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </navigator>
             <navigator class="weui-cell weui-cell_access" hoverClass="weui-cell_active" url="../mine/update/update">
                 <view class="weui-cell__hd">
                     <image src="../../images/qingdan.png" class="menu-logo"></image>

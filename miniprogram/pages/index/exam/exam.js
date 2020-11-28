@@ -9,10 +9,9 @@ Page({
         yearTitle: ""
     },
     onLoad() {
-
-        const { exam } = app.globalData.studyData;
-        if (exam) {
-            this.initData(exam);
+        const { examTime } = app.globalData.studyData;
+        if (examTime) {
+            this.initData(examTime);
         } else {
             //TODO 无数据提示
         }
@@ -25,7 +24,7 @@ Page({
     },
     remindChange() {
         //TODO 考试提醒
-        showErrorModal('此功能将在3月中旬开放，考试前会在AI未来校园公众号提醒你～');
+        showErrorModal('此功能即将开放，考试前会在高校灯塔公众号提醒你～');
     },
     initData(data) {
         const dataKeysArr = Object.keys(data);

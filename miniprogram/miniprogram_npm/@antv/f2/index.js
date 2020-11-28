@@ -4,87 +4,151 @@ var __DEFINE__ = function(modId, func, req) { var m = { exports: {}, _tempexport
 var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1605424195573, function(require, module, exports) {
+__DEFINE__(1606535077056, function(require, module, exports) {
 
+
+exports.__esModule = true;
+exports["default"] = exports.Component = void 0;
+
+var _core = require("./core");
+
+exports.Global = _core.Global;
+exports.Chart = _core.Chart;
+exports.Shape = _core.Shape;
+exports.G = _core.G;
+exports.Util = _core.Util;
+exports.Helper = _core.Helper;
+exports.track = _core.track;
+
+require("./geom/");
+
+require("./geom/adjust/");
+
+require("./coord/polar");
+
+require("./component/axis/circle");
+
+require("./component/guide/arc");
+
+require("./component/guide/html");
+
+require("./component/guide/line");
+
+require("./component/guide/rect");
+
+require("./component/guide/text");
+
+require("./component/guide/tag");
+
+require("./component/guide/point");
+
+var _marker = _interopRequireDefault(require("./component/marker"));
+
+var Tooltip = _interopRequireWildcard(require("./plugin/tooltip"));
+
+var Guide = _interopRequireWildcard(require("./plugin/guide"));
+
+var Legend = _interopRequireWildcard(require("./plugin/legend"));
+
+var Animation = _interopRequireWildcard(require("./animation/detail"));
+
+var _animate = _interopRequireDefault(require("./animation/animate"));
+
+exports.Animate = _animate["default"];
+
+require("./interaction/new/index");
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 /**
  * Default, without interactins
  */
-var F2 = require('./core');
+// polar coordinate
+// the axis for polar coordinate
+var Component = {
+  Marker: _marker["default"]
+}; // register plugins
 
-require('./geom/');
+exports.Component = Component;
 
-require('./geom/adjust/');
-
-require('./coord/polar'); // polar coordinate
-
-
-require('./component/axis/circle'); // the axis for polar coordinate
-
-
-require('./scale/time-cat'); // timeCat scale
+_core.Chart.plugins.register([Tooltip, Legend, Guide, Animation]); // 默认添加交互
 
 
-require('./component/guide/arc');
-
-require('./component/guide/html');
-
-require('./component/guide/line');
-
-require('./component/guide/rect');
-
-require('./component/guide/text');
-
-require('./component/guide/tag');
-
-require('./component/guide/point');
-
-var Tooltip = require('./plugin/tooltip');
-
-var Guide = require('./plugin/guide');
-
-var Legend = require('./plugin/legend');
-
-var Animation = require('./animation/detail');
-
-F2.Animate = require('./animation/animate'); // register plugins
-
-F2.Chart.plugins.register([Tooltip, Legend, Guide, Animation]);
-module.exports = F2;
-}, function(modId) {var map = {"./core":1605424195574,"./geom/":1605424195620,"./geom/adjust/":1605424195636,"./coord/polar":1605424195640,"./component/axis/circle":1605424195641,"./scale/time-cat":1605424195642,"./component/guide/arc":1605424195643,"./component/guide/html":1605424195645,"./component/guide/line":1605424195646,"./component/guide/rect":1605424195647,"./component/guide/text":1605424195648,"./component/guide/tag":1605424195649,"./component/guide/point":1605424195650,"./plugin/tooltip":1605424195651,"./plugin/guide":1605424195656,"./plugin/legend":1605424195657,"./animation/detail":1605424195658,"./animation/animate":1605424195662}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195574, function(require, module, exports) {
+var _default = {
+  Component: Component,
+  Global: _core.Global,
+  Chart: _core.Chart,
+  Shape: _core.Shape,
+  G: _core.G,
+  Util: _core.Util,
+  Helper: _core.Helper,
+  track: _core.track,
+  Animate: _animate["default"]
+};
+exports["default"] = _default;
+}, function(modId) {var map = {"./core":1606535077057,"./geom/":1606535077114,"./geom/adjust/":1606535077130,"./coord/polar":1606535077134,"./component/axis/circle":1606535077135,"./component/guide/arc":1606535077136,"./component/guide/html":1606535077138,"./component/guide/line":1606535077139,"./component/guide/rect":1606535077140,"./component/guide/text":1606535077141,"./component/guide/tag":1606535077142,"./component/guide/point":1606535077143,"./component/marker":1606535077144,"./plugin/tooltip":1606535077145,"./plugin/guide":1606535077149,"./plugin/legend":1606535077150,"./animation/detail":1606535077151,"./animation/animate":1606535077155,"./interaction/new/index":1606535077159}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077057, function(require, module, exports) {
 
 
-var Core = {};
+exports.__esModule = true;
+exports.Helper = exports.Util = exports.G = exports.track = exports.version = void 0;
 
-var Global = require('./global');
+var _global = _interopRequireDefault(require("./global"));
 
-Core.Global = Global;
-Core.version = Global.version;
-Core.Chart = require('./chart/chart');
-Core.Shape = require('./geom/shape/shape');
-Core.G = require('./graphic/index');
-Core.Util = require('./util/common'); // Core.track = function(enable) {
-//   Global.trackable = enable;
-// };
-// require('./track');
-// 2018-12-27 关闭打点
+exports.Global = _global["default"];
 
-Core.track = function () {
+var _chart = _interopRequireDefault(require("./chart/chart"));
+
+exports.Chart = _chart["default"];
+
+var _shape = _interopRequireDefault(require("./geom/shape/shape"));
+
+exports.Shape = _shape["default"];
+
+var G = _interopRequireWildcard(require("./graphic/index"));
+
+exports.G = G;
+
+var Util = _interopRequireWildcard(require("./util/common"));
+
+exports.Util = Util;
+
+var Helper = _interopRequireWildcard(require("./util/helper"));
+
+exports.Helper = Helper;
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var track = function track() {
   return null;
 };
 
-module.exports = Core;
-}, function(modId) { var map = {"./global":1605424195575,"./chart/chart":1605424195579,"./geom/shape/shape":1605424195591,"./graphic/index":1605424195598,"./util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195575, function(require, module, exports) {
+exports.track = track;
+var version = _global["default"].version;
+exports.version = version;
+}, function(modId) { var map = {"./global":1606535077058,"./chart/chart":1606535077063,"./geom/shape/shape":1606535077081,"./graphic/index":1606535077090,"./util/common":1606535077060,"./util/helper":1606535077113}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077058, function(require, module, exports) {
 
 
-var Theme = require('./theme');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Util = require('./util/common');
+var _theme = _interopRequireDefault(require("./theme"));
+
+var _common = require("./util/common");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var Global = {
-  version: '3.5.0',
+  version: '3.7.8',
   scales: {},
   widthRatio: {
     column: 1 / 2,
@@ -95,21 +159,25 @@ var Global = {
 };
 
 Global.setTheme = function (theme) {
-  Util.deepMix(this, theme);
+  (0, _common.deepMix)(Global, theme);
 };
 
-Global.setTheme(Theme);
-module.exports = Global;
-}, function(modId) { var map = {"./theme":1605424195576,"./util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195576, function(require, module, exports) {
+Global.setTheme(_theme["default"]);
+var _default = Global;
+exports["default"] = _default;
+}, function(modId) { var map = {"./theme":1606535077059,"./util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077059, function(require, module, exports) {
 
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("./util/common");
 
 /**
  * @fileOverview default theme
  * @author dxq613@gail.com
  */
-var Util = require('./util/common');
-
 var color1 = '#E8E8E8'; // color of axis-line and axis-grid
 
 var color2 = '#808080'; // color of axis label
@@ -147,19 +215,19 @@ var Theme = {
   axis: {
     common: defaultAxis,
     // common axis configuration
-    bottom: Util.mix({}, defaultAxis, {
+    bottom: (0, _common.mix)({}, defaultAxis, {
       grid: null
     }),
-    left: Util.mix({}, defaultAxis, {
+    left: (0, _common.mix)({}, defaultAxis, {
       line: null
     }),
-    right: Util.mix({}, defaultAxis, {
+    right: (0, _common.mix)({}, defaultAxis, {
       line: null
     }),
-    circle: Util.mix({}, defaultAxis, {
+    circle: (0, _common.mix)({}, defaultAxis, {
       line: null
     }),
-    radius: Util.mix({}, defaultAxis, {
+    radius: (0, _common.mix)({}, defaultAxis, {
       labelOffset: 4
     })
   },
@@ -179,252 +247,337 @@ var Theme = {
   },
   _defaultAxis: defaultAxis
 };
-module.exports = Theme;
-}, function(modId) { var map = {"./util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195577, function(require, module, exports) {
+var _default = Theme;
+exports["default"] = _default;
+}, function(modId) { var map = {"./util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077060, function(require, module, exports) {
 
+
+exports.__esModule = true;
+var _exportNames = {
+  isObjectValueEqual: true,
+  parsePadding: true,
+  directionEnabled: true,
+  toTimeStamp: true,
+  upperFirst: true,
+  lowerFirst: true,
+  isString: true,
+  isNumber: true,
+  isBoolean: true,
+  isFunction: true,
+  isDate: true,
+  isArray: true,
+  isNil: true,
+  isObject: true,
+  isPlainObject: true,
+  isEqual: true,
+  deepMix: true,
+  mix: true,
+  each: true,
+  uniq: true,
+  find: true,
+  Array: true
+};
+exports.isObjectValueEqual = isObjectValueEqual;
+exports.parsePadding = parsePadding;
+exports.directionEnabled = directionEnabled;
+exports.toTimeStamp = toTimeStamp;
+exports.Array = void 0;
+
+var _util = require("@antv/util");
+
+exports.upperFirst = _util.upperFirst;
+exports.lowerFirst = _util.lowerFirst;
+exports.isString = _util.isString;
+exports.isNumber = _util.isNumber;
+exports.isBoolean = _util.isBoolean;
+exports.isFunction = _util.isFunction;
+exports.isDate = _util.isDate;
+exports.isArray = _util.isArray;
+exports.isNil = _util.isNil;
+exports.isObject = _util.isObject;
+exports.isPlainObject = _util.isPlainObject;
+exports.isEqual = _util.isEqual;
+exports.deepMix = _util.deepMix;
+exports.mix = _util.mix;
+exports.each = _util.each;
+exports.uniq = _util.uniq;
+exports.find = _util.find;
+
+var ArrayUtil = _interopRequireWildcard(require("./array"));
+
+exports.Array = ArrayUtil;
+
+var _dom = require("./dom");
+
+Object.keys(_dom).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  if (Object.prototype.hasOwnProperty.call(_exportNames, key)) return;
+  if (key in exports && exports[key] === _dom[key]) return;
+  exports[key] = _dom[key];
+});
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 /**
  * @fileOverview Utility for F2
  * @author dxq613 @gmail.com
  * @author sima.zhang1990@gmail.com
  */
-var DomUtil = require('./dom');
+function isObjectValueEqual(a, b) {
+  // for vue.js
+  a = Object.assign({}, a);
+  b = Object.assign({}, b);
+  var aProps = Object.getOwnPropertyNames(a);
+  var bProps = Object.getOwnPropertyNames(b);
 
-var Util = {
-  upperFirst: require('@antv/util/lib/string/upper-first'),
-  lowerFirst: require('@antv/util/lib/string/lower-first'),
-  isString: require('@antv/util/lib/type/is-string'),
-  isNumber: require('@antv/util/lib/type/is-number'),
-  isBoolean: require('@antv/util/lib/type/is-boolean'),
-  isFunction: require('@antv/util/lib/type/is-function'),
-  isDate: require('@antv/util/lib/type/is-date'),
-  isArray: require('@antv/util/lib/type/is-array'),
-  isNil: require('@antv/util/lib/type/is-nil'),
-  isObject: require('@antv/util/lib/type/is-object'),
-  isPlainObject: require('@antv/util/lib/type/is-plain-object'),
-  deepMix: require('@antv/util/lib/deep-mix'),
-  mix: require('@antv/util/lib/mix'),
-  each: require('@antv/util/lib/each'),
-  uniq: require('@antv/util/lib/array/uniq'),
-  isObjectValueEqual: function isObjectValueEqual(a, b) {
-    // for vue.js
-    a = Object.assign({}, a);
-    b = Object.assign({}, b);
-    var aProps = Object.getOwnPropertyNames(a);
-    var bProps = Object.getOwnPropertyNames(b);
-
-    if (aProps.length !== bProps.length) {
-      return false;
-    }
-
-    for (var i = 0, len = aProps.length; i < len; i++) {
-      var propName = aProps[i];
-
-      if (a[propName] !== b[propName]) {
-        return false;
-      }
-    }
-
-    return true;
-  },
-  wrapBehavior: function wrapBehavior(obj, action) {
-    if (obj['_wrap_' + action]) {
-      return obj['_wrap_' + action];
-    }
-
-    var method = function method(e) {
-      obj[action](e);
-    };
-
-    obj['_wrap_' + action] = method;
-    return method;
-  },
-  getWrapBehavior: function getWrapBehavior(obj, action) {
-    return obj['_wrap_' + action];
-  },
-  parsePadding: function parsePadding(padding) {
-    var top;
-    var right;
-    var bottom;
-    var left;
-
-    if (Util.isNumber(padding) || Util.isString(padding)) {
-      top = bottom = left = right = padding;
-    } else if (Util.isArray(padding)) {
-      top = padding[0];
-      right = !Util.isNil(padding[1]) ? padding[1] : padding[0];
-      bottom = !Util.isNil(padding[2]) ? padding[2] : padding[0];
-      left = !Util.isNil(padding[3]) ? padding[3] : right;
-    }
-
-    return [top, right, bottom, left];
-  },
-  directionEnabled: function directionEnabled(mode, dir) {
-    if (mode === undefined) {
-      return true;
-    } else if (typeof mode === 'string') {
-      return mode.indexOf(dir) !== -1;
-    }
-
+  if (aProps.length !== bProps.length) {
     return false;
   }
-};
-Util.Array = {
-  merge: function merge(dataArray) {
-    var rst = [];
 
-    for (var i = 0, len = dataArray.length; i < len; i++) {
-      rst = rst.concat(dataArray[i]);
+  for (var i = 0, len = aProps.length; i < len; i++) {
+    var propName = aProps[i];
+
+    if (a[propName] !== b[propName]) {
+      return false;
     }
+  }
 
-    return rst;
-  },
-  values: function values(data, name) {
-    var rst = [];
-    var tmpMap = {};
+  return true;
+}
 
-    for (var i = 0, len = data.length; i < len; i++) {
-      var obj = data[i];
-      var value = obj[name];
+function parsePadding(padding) {
+  var top;
+  var right;
+  var bottom;
+  var left;
 
-      if (!Util.isNil(value)) {
-        if (!Util.isArray(value)) {
-          if (!tmpMap[value]) {
-            rst.push(value);
-            tmpMap[value] = true;
-          }
-        } else {
-          Util.each(value, function (val) {
-            if (!tmpMap[val]) {
-              rst.push(val);
-              tmpMap[val] = true;
-            }
-          });
-        }
-      }
-    }
+  if ((0, _util.isNumber)(padding) || (0, _util.isString)(padding)) {
+    top = bottom = left = right = padding;
+  } else if ((0, _util.isArray)(padding)) {
+    top = padding[0];
+    right = !(0, _util.isNil)(padding[1]) ? padding[1] : padding[0];
+    bottom = !(0, _util.isNil)(padding[2]) ? padding[2] : padding[0];
+    left = !(0, _util.isNil)(padding[3]) ? padding[3] : right;
+  }
 
-    return rst;
-  },
-  firstValue: function firstValue(data, name) {
-    var rst = null;
+  return [top, right, bottom, left];
+}
 
-    for (var i = 0, len = data.length; i < len; i++) {
-      var obj = data[i];
-      var value = obj[name];
+function directionEnabled(mode, dir) {
+  if (mode === undefined) {
+    return true;
+  } else if (typeof mode === 'string') {
+    return mode.indexOf(dir) !== -1;
+  }
 
-      if (!Util.isNil(value)) {
-        if (Util.isArray(value)) {
-          rst = value[0];
-        } else {
-          rst = value;
-        }
+  return false;
+}
 
-        break;
-      }
-    }
-
-    return rst;
-  },
-  group: function group(data, fields, appendConditions) {
-    if (appendConditions === void 0) {
-      appendConditions = {};
-    }
-
-    if (!fields) {
-      return [data];
-    }
-
-    var groups = Util.Array.groupToMap(data, fields);
-    var array = [];
-
-    if (fields.length === 1 && appendConditions[fields[0]]) {
-      var values = appendConditions[fields[0]];
-      Util.each(values, function (value) {
-        value = '_' + value;
-        array.push(groups[value]);
-      });
+function toTimeStamp(value) {
+  if ((0, _util.isString)(value)) {
+    if (value.indexOf('T') > 0) {
+      value = new Date(value).getTime();
     } else {
-      for (var i in groups) {
-        array.push(groups[i]);
-      }
+      // new Date('2010/01/10') 和 new Date('2010-01-10') 的差别在于:
+      // 如果仅有年月日时，前者是带有时区的: Fri Jan 10 2020 02:40:13 GMT+0800 (中国标准时间)
+      // 后者会格式化成 Sun Jan 10 2010 08:00:00 GMT+0800 (中国标准时间)
+      value = new Date(value.replace(/-/gi, '/')).getTime();
     }
+  }
 
-    return array;
-  },
-  groupToMap: function groupToMap(data, fields) {
-    if (!fields) {
-      return {
-        0: data
-      };
-    }
+  if ((0, _util.isDate)(value)) {
+    value = value.getTime();
+  }
 
-    var callback = function callback(row) {
-      var unique = '_';
+  return value;
+}
+}, function(modId) { var map = {"./array":1606535077061,"./dom":1606535077062}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077061, function(require, module, exports) {
 
-      for (var i = 0, l = fields.length; i < l; i++) {
-        unique += row[fields[i]] && row[fields[i]].toString();
-      }
 
-      return unique;
-    };
+exports.__esModule = true;
+exports.merge = merge;
+exports.values = values;
+exports.firstValue = firstValue;
+exports.group = group;
+exports.groupToMap = groupToMap;
+exports.remove = remove;
+exports.getRange = getRange;
 
-    var groups = {};
+var _util = require("@antv/util");
 
-    for (var i = 0, len = data.length; i < len; i++) {
-      var row = data[i];
-      var key = callback(row);
+function merge(dataArray) {
+  var rst = [];
 
-      if (groups[key]) {
-        groups[key].push(row);
+  for (var i = 0, len = dataArray.length; i < len; i++) {
+    rst = rst.concat(dataArray[i]);
+  }
+
+  return rst;
+}
+
+function values(data, name) {
+  var rst = [];
+  var tmpMap = {};
+
+  for (var i = 0, len = data.length; i < len; i++) {
+    var obj = data[i];
+    var value = obj[name];
+
+    if (!(0, _util.isNil)(value)) {
+      if (!(0, _util.isArray)(value)) {
+        if (!tmpMap[value]) {
+          rst.push(value);
+          tmpMap[value] = true;
+        }
       } else {
-        groups[key] = [row];
+        (0, _util.each)(value, function (val) {
+          if (!tmpMap[val]) {
+            rst.push(val);
+            tmpMap[val] = true;
+          }
+        });
       }
     }
+  }
 
-    return groups;
-  },
-  remove: function remove(arr, obj) {
-    if (!arr) {
-      return;
+  return rst;
+}
+
+function firstValue(data, name) {
+  var rst = null;
+
+  for (var i = 0, len = data.length; i < len; i++) {
+    var obj = data[i];
+    var value = obj[name];
+
+    if (!(0, _util.isNil)(value)) {
+      if ((0, _util.isArray)(value)) {
+        rst = value[0];
+      } else {
+        rst = value;
+      }
+
+      break;
     }
+  }
 
-    var index = arr.indexOf(obj);
+  return rst;
+}
 
-    if (index !== -1) {
-      arr.splice(index, 1);
-    }
-  },
-  getRange: function getRange(values) {
-    if (!values.length) {
-      return {
-        min: 0,
-        max: 0
-      };
-    }
-
-    var max = Math.max.apply(null, values);
-    var min = Math.min.apply(null, values);
+function groupToMap(data, fields) {
+  if (!fields) {
     return {
-      min: min,
-      max: max
+      0: data
     };
   }
-};
-Util.mix(Util, DomUtil);
-module.exports = Util;
-}, function(modId) { var map = {"./dom":1605424195578}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195578, function(require, module, exports) {
+
+  var callback = function callback(row) {
+    var unique = '_';
+
+    for (var i = 0, l = fields.length; i < l; i++) {
+      unique += row[fields[i]] && row[fields[i]].toString();
+    }
+
+    return unique;
+  };
+
+  var groups = {};
+
+  for (var i = 0, len = data.length; i < len; i++) {
+    var row = data[i];
+    var key = callback(row);
+
+    if (groups[key]) {
+      groups[key].push(row);
+    } else {
+      groups[key] = [row];
+    }
+  }
+
+  return groups;
+}
+
+function group(data, fields, appendConditions) {
+  if (appendConditions === void 0) {
+    appendConditions = {};
+  }
+
+  if (!fields) {
+    return [data];
+  }
+
+  var groups = groupToMap(data, fields);
+  var array = [];
+
+  if (fields.length === 1 && appendConditions[fields[0]]) {
+    var _values = appendConditions[fields[0]];
+    (0, _util.each)(_values, function (value) {
+      value = '_' + value;
+      array.push(groups[value]);
+    });
+  } else {
+    for (var i in groups) {
+      array.push(groups[i]);
+    }
+  }
+
+  return array;
+}
+
+function remove(arr, obj) {
+  if (!arr) {
+    return;
+  }
+
+  var index = arr.indexOf(obj);
+
+  if (index !== -1) {
+    arr.splice(index, 1);
+  }
+}
+
+function getRange(values) {
+  if (!values.length) {
+    return {
+      min: 0,
+      max: 0
+    };
+  }
+
+  var max = Math.max.apply(null, values);
+  var min = Math.min.apply(null, values);
+  return {
+    min: min,
+    max: max
+  };
+}
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077062, function(require, module, exports) {
 
 
-var DomUtil;
+exports.__esModule = true;
+exports.isCanvasElement = isCanvasElement;
+exports.getPixelRatio = getPixelRatio;
+exports.getStyle = getStyle;
+exports.getWidth = getWidth;
+exports.getHeight = getHeight;
+exports.getDomById = getDomById;
+exports.getRelativePosition = getRelativePosition;
+exports.addEventListener = addEventListener;
+exports.removeEventListener = removeEventListener;
+exports.createEvent = createEvent;
+exports.measureText = measureText;
+exports.isBrowser = exports.isNode = exports.isMy = exports.isWx = void 0;
+
 /**
  * Detects support for options object argument in addEventListener.
  * https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/addEventListener#Safely_detecting_option_support
  * @private
  */
-
 var supportsEventListenerOptions = function () {
   var supports = false;
 
@@ -446,8 +599,103 @@ var supportsEventListenerOptions = function () {
 var eventListenerOptions = supportsEventListenerOptions ? {
   passive: true
 } : false;
+/* global wx, my */
+// weixin miniprogram
 
-function createEvent(type, chart, x, y, nativeEvent) {
+var isWx = typeof wx === 'object' && typeof wx.getSystemInfoSync === 'function'; // ant miniprogram
+
+exports.isWx = isWx;
+var isMy = typeof my === 'object' && typeof my.getSystemInfoSync === 'function'; // in node
+
+exports.isMy = isMy;
+var isNode = typeof global && !typeof window; // in browser
+
+exports.isNode = isNode;
+var isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof window.sessionStorage !== 'undefined';
+exports.isBrowser = isBrowser;
+
+function isCanvasElement(el) {
+  if (!el || typeof el !== 'object') return false;
+
+  if (el.nodeType === 1 && el.nodeName) {
+    // HTMLCanvasElement
+    return true;
+  } // CanvasElement
+
+
+  return !!el.isCanvasElement;
+}
+
+function getPixelRatio() {
+  return window && window.devicePixelRatio || 1;
+}
+
+function getStyle(el, property) {
+  return el.currentStyle ? el.currentStyle[property] : document.defaultView.getComputedStyle(el, null).getPropertyValue(property);
+}
+
+function getWidth(el) {
+  var width = getStyle(el, 'width');
+
+  if (width === 'auto') {
+    width = el.offsetWidth;
+  }
+
+  return parseFloat(width);
+}
+
+function getHeight(el) {
+  var height = getStyle(el, 'height');
+
+  if (height === 'auto') {
+    height = el.offsetHeight;
+  }
+
+  return parseFloat(height);
+}
+
+function getDomById(id) {
+  if (!id) {
+    return null;
+  }
+
+  return document.getElementById(id);
+}
+
+function getRelativePosition(point, canvas) {
+  var canvasDom = canvas.get('el');
+  if (!canvasDom) return point;
+
+  var _canvasDom$getBoundin = canvasDom.getBoundingClientRect(),
+      top = _canvasDom$getBoundin.top,
+      right = _canvasDom$getBoundin.right,
+      bottom = _canvasDom$getBoundin.bottom,
+      left = _canvasDom$getBoundin.left;
+
+  var paddingLeft = parseFloat(getStyle(canvasDom, 'padding-left'));
+  var paddingTop = parseFloat(getStyle(canvasDom, 'padding-top'));
+  var paddingRight = parseFloat(getStyle(canvasDom, 'padding-right'));
+  var paddingBottom = parseFloat(getStyle(canvasDom, 'padding-bottom'));
+  var width = right - left - paddingLeft - paddingRight;
+  var height = bottom - top - paddingTop - paddingBottom;
+  var pixelRatio = canvas.get('pixelRatio');
+  var mouseX = (point.x - left - paddingLeft) / width * canvasDom.width / pixelRatio;
+  var mouseY = (point.y - top - paddingTop) / height * canvasDom.height / pixelRatio;
+  return {
+    x: mouseX,
+    y: mouseY
+  };
+}
+
+function addEventListener(source, type, listener) {
+  source.addEventListener(type, listener, eventListenerOptions);
+}
+
+function removeEventListener(source, type, listener) {
+  source.removeEventListener(type, listener, eventListenerOptions);
+}
+
+function createEventObj(type, chart, x, y, nativeEvent) {
   return {
     type: type,
     chart: chart,
@@ -457,7 +705,7 @@ function createEvent(type, chart, x, y, nativeEvent) {
   };
 }
 
-function fromNativeEvent(event, chart) {
+function createEvent(event, chart) {
   var type = event.type;
   var clientPoint; // 说明是touch相关事件
 
@@ -473,7 +721,7 @@ function fromNativeEvent(event, chart) {
         clientY = touch.clientY; // 小程序环境会有x,y，这里就直接返回
 
     if (x && y) {
-      return createEvent(type, chart, x, y, event);
+      return createEventObj(type, chart, x, y, event);
     }
 
     clientPoint = {
@@ -491,145 +739,52 @@ function fromNativeEvent(event, chart) {
 
   var canvas = chart.get('canvas'); // 通过clientX, clientY 计算x, y
 
-  var point = DomUtil.getRelativePosition(clientPoint, canvas);
-  return createEvent(type, chart, point.x, point.y, event);
+  var point = getRelativePosition(clientPoint, canvas);
+  return createEventObj(type, chart, point.x, point.y, event);
 }
 
-DomUtil = {
-  /* global wx, my */
-  isWx: typeof wx === 'object' && typeof wx.getSystemInfoSync === 'function',
-  // weixin miniprogram
-  isMy: typeof my === 'object' && typeof my.getSystemInfoSync === 'function',
-  // ant miniprogram
-  isNode: typeof module !== 'undefined' && typeof module.exports !== 'undefined',
-  // in node
-  isBrowser: typeof window !== 'undefined' && typeof window.document !== 'undefined' && typeof window.sessionStorage !== 'undefined',
-  // in browser
-  isCanvasElement: function isCanvasElement(el) {
-    if (!el || typeof el !== 'object') return false;
-
-    if (el.nodeType === 1 && el.nodeName) {
-      // HTMLCanvasElement
-      return true;
-    } // CanvasElement
-
-
-    return !!el.isCanvasElement;
-  },
-  getPixelRatio: function getPixelRatio() {
-    return window && window.devicePixelRatio || 1;
-  },
-  getStyle: function getStyle(el, property) {
-    return el.currentStyle ? el.currentStyle[property] : document.defaultView.getComputedStyle(el, null).getPropertyValue(property);
-  },
-  getWidth: function getWidth(el) {
-    var width = this.getStyle(el, 'width');
-
-    if (width === 'auto') {
-      width = el.offsetWidth;
-    }
-
-    return parseFloat(width);
-  },
-  getHeight: function getHeight(el) {
-    var height = this.getStyle(el, 'height');
-
-    if (height === 'auto') {
-      height = el.offsetHeight;
-    }
-
-    return parseFloat(height);
-  },
-  getDomById: function getDomById(id) {
-    if (!id) {
-      return null;
-    }
-
-    return document.getElementById(id);
-  },
-  getRelativePosition: function getRelativePosition(point, canvas) {
-    var canvasDom = canvas.get('el');
-
-    var _canvasDom$getBoundin = canvasDom.getBoundingClientRect(),
-        top = _canvasDom$getBoundin.top,
-        right = _canvasDom$getBoundin.right,
-        bottom = _canvasDom$getBoundin.bottom,
-        left = _canvasDom$getBoundin.left;
-
-    var paddingLeft = parseFloat(this.getStyle(canvasDom, 'padding-left'));
-    var paddingTop = parseFloat(this.getStyle(canvasDom, 'padding-top'));
-    var paddingRight = parseFloat(this.getStyle(canvasDom, 'padding-right'));
-    var paddingBottom = parseFloat(this.getStyle(canvasDom, 'padding-bottom'));
-    var width = right - left - paddingLeft - paddingRight;
-    var height = bottom - top - paddingTop - paddingBottom;
-    var pixelRatio = canvas.get('pixelRatio');
-    var mouseX = (point.x - left - paddingLeft) / width * canvasDom.width / pixelRatio;
-    var mouseY = (point.y - top - paddingTop) / height * canvasDom.height / pixelRatio;
-    return {
-      x: mouseX,
-      y: mouseY
-    };
-  },
-  addEventListener: function addEventListener(source, type, listener) {
-    source.addEventListener(type, listener, eventListenerOptions);
-  },
-  removeEventListener: function removeEventListener(source, type, listener) {
-    source.removeEventListener(type, listener, eventListenerOptions);
-  },
-  createEvent: function createEvent(event, chart) {
-    return fromNativeEvent(event, chart);
-  },
-  measureText: function measureText(text, font, ctx) {
-    if (!ctx) {
-      ctx = document.createElement('canvas').getContext('2d');
-    }
-
-    ctx.font = font || '12px sans-serif';
-    return ctx.measureText(text);
+function measureText(text, font, ctx) {
+  if (!ctx) {
+    ctx = document.createElement('canvas').getContext('2d');
   }
-};
-module.exports = DomUtil;
+
+  ctx.font = font || '12px sans-serif';
+  return ctx.measureText(text);
+}
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195579, function(require, module, exports) {
+__DEFINE__(1606535077063, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+var _const = require("./const");
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _base = _interopRequireDefault(require("../base"));
 
-var Base = require('../base');
+var _plot = _interopRequireDefault(require("./plot"));
 
-var Plot = require('./plot');
+var _common = require("../util/common");
 
-var Util = require('../util/common');
+var _index = _interopRequireDefault(require("../coord/index"));
 
-var Coord = require('../coord/index');
+var _base2 = _interopRequireDefault(require("../geom/base"));
 
-var Geom = require('../geom/base');
+var _scale = _interopRequireDefault(require("./controller/scale"));
 
-var ScaleController = require('./controller/scale');
+var _axis = _interopRequireDefault(require("./controller/axis"));
 
-var AxisController = require('./controller/axis');
+var _global = _interopRequireDefault(require("../global"));
 
-var Global = require('../global');
+var _index2 = require("../graphic/index");
 
-var _require = require('../graphic/index'),
-    Canvas = _require.Canvas;
+var _helper = require("../util/helper");
 
-var Helper = require('../util/helper');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-function isFullCircle(coord) {
-  var startAngle = coord.startAngle;
-  var endAngle = coord.endAngle;
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-  if (!Util.isNil(startAngle) && !Util.isNil(endAngle) && endAngle - startAngle < Math.PI * 2) {
-    return false;
-  }
-
-  return true;
-}
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 function compare(a, b) {
   return a - b;
@@ -637,7 +792,7 @@ function compare(a, b) {
 
 function _isScaleExist(scales, compareScale) {
   var flag = false;
-  Util.each(scales, function (scale) {
+  (0, _common.each)(scales, function (scale) {
     var scaleValues = [].concat(scale.values);
     var compareScaleValues = [].concat(compareScale.values);
 
@@ -649,10 +804,8 @@ function _isScaleExist(scales, compareScale) {
   return flag;
 }
 
-var Chart =
-/*#__PURE__*/
-function (_Base) {
-  (0, _inheritsLoose2["default"])(Chart, _Base);
+var Chart = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Chart, _Base);
 
   Chart.initPlugins = function initPlugins() {
     return {
@@ -752,12 +905,13 @@ function (_Base) {
        * @type {String}
        */
       id: null,
+      rendered: false,
 
       /**
        * padding
        * @type {Array|Number}
        */
-      padding: Global.padding,
+      padding: _global["default"].padding,
 
       /**
        * data
@@ -776,30 +930,36 @@ function (_Base) {
        * geometry instances
        * @type {Array}
        */
-      geoms: null,
+      geoms: [],
 
       /**
        * scale configuration
        * @type {Object}
        */
       colDefs: null,
-      pixelRatio: Global.pixelRatio,
+      pixelRatio: _global["default"].pixelRatio,
 
       /**
        * filter options
        * @type {Object}
        */
       filters: null,
-      appendPadding: Global.appendPadding
+      appendPadding: _global["default"].appendPadding
     };
   };
 
   _proto._syncYScales = function _syncYScales() {
+    var syncY = this.get('syncY');
+
+    if (!syncY) {
+      return;
+    }
+
     var geoms = this.get('geoms');
     var syncScales = [];
     var min = [];
     var max = [];
-    Util.each(geoms, function (geom) {
+    (0, _common.each)(geoms, function (geom) {
       var yScale = geom.getYScale();
 
       if (yScale.isLinear) {
@@ -810,7 +970,7 @@ function (_Base) {
     });
     min = Math.min.apply(null, min);
     max = Math.max.apply(null, max);
-    Util.each(syncScales, function (scale) {
+    (0, _common.each)(syncScales, function (scale) {
       scale.change({
         min: min
       });
@@ -823,13 +983,13 @@ function (_Base) {
   _proto._getFieldsForLegend = function _getFieldsForLegend() {
     var fields = [];
     var geoms = this.get('geoms');
-    Util.each(geoms, function (geom) {
+    (0, _common.each)(geoms, function (geom) {
       var attrOptions = geom.get('attrOptions');
       var attrCfg = attrOptions.color;
 
-      if (attrCfg && attrCfg.field && Util.isString(attrCfg.field)) {
+      if (attrCfg && attrCfg.field && (0, _common.isString)(attrCfg.field)) {
         var arr = attrCfg.field.split('*');
-        Util.each(arr, function (item) {
+        (0, _common.each)(arr, function (item) {
           if (fields.indexOf(item) === -1) {
             fields.push(item);
           }
@@ -839,50 +999,30 @@ function (_Base) {
     return fields;
   };
 
-  _proto._createScale = function _createScale(field, data) {
-    var scaleController = this.get('scaleController');
-    return scaleController.createScale(field, data);
-  };
+  _proto._getScaleData = function _getScaleData(field) {
+    var data = this.get('data');
+    var filteredData = this.get('filteredData');
+
+    if (filteredData.length) {
+      var legendFields = this._getFieldsForLegend();
+
+      if (legendFields.indexOf(field) === -1) {
+        data = filteredData;
+      }
+    }
+
+    return data;
+  } // _updateScales() {
+  //   const scaleController = this.get('scaleController');
+  //   scaleController.updateScales();
+  //   this._adjustScale();
+  // }
+  ;
 
   _proto._adjustScale = function _adjustScale() {
     var self = this;
-    var coord = self.get('coord');
-    var xScale = self.getXScale();
-    var yScales = self.getYScales();
-    var scales = [];
-    xScale && scales.push(xScale);
-    scales = scales.concat(yScales);
-    var inFullCircle = coord.isPolar && isFullCircle(coord);
-    var scaleController = self.get('scaleController');
-    var colDefs = scaleController.defs;
-    Util.each(scales, function (scale) {
-      if ((scale.isCategory || scale.isIdentity) && scale.values && !(colDefs[scale.field] && colDefs[scale.field].range)) {
-        var count = scale.values.length;
-        var range;
+    var scaleController = self.get('scaleController'); // 看起来是为了让柱状图最小或最大都默认从0开始
 
-        if (count === 1) {
-          range = [0.5, 1];
-        } else {
-          var widthRatio = 1;
-          var offset = 0;
-
-          if (inFullCircle) {
-            if (!coord.transposed) {
-              range = [0, 1 - 1 / count];
-            } else {
-              widthRatio = Global.widthRatio.multiplePie;
-              offset = 1 / count * widthRatio;
-              range = [offset / 2, 1 - offset / 2];
-            }
-          } else {
-            offset = 1 / count * 1 / 2;
-            range = [offset, 1 - offset];
-          }
-        }
-
-        scale.range = range;
-      }
-    });
     var geoms = this.get('geoms');
 
     for (var i = 0; i < geoms.length; i++) {
@@ -890,22 +1030,7 @@ function (_Base) {
 
       if (geom.get('type') === 'interval') {
         var yScale = geom.getYScale();
-        var field = yScale.field,
-            min = yScale.min,
-            max = yScale.max,
-            type = yScale.type;
-
-        if (!(colDefs[field] && colDefs[field].min) && type !== 'time') {
-          if (min > 0) {
-            yScale.change({
-              min: 0
-            });
-          } else if (max <= 0) {
-            yScale.change({
-              max: 0
-            });
-          }
-        }
+        scaleController.adjustStartZero(yScale);
       }
     }
   };
@@ -929,22 +1054,21 @@ function (_Base) {
   };
 
   _proto._clearInner = function _clearInner() {
-    this.set('scales', {});
-    this.set('legendItems', null);
-
     this._clearGeoms();
 
     Chart.plugins.notify(this, 'clearInner');
+    this.emit(_const.EVENT_CLEAR_INNER);
     this.get('axisController') && this.get('axisController').clear();
   };
 
-  _proto._execFilter = function _execFilter(data) {
+  _proto._initFilteredData = function _initFilteredData() {
     var filters = this.get('filters');
+    var data = this.get('data') || [];
 
     if (filters) {
       data = data.filter(function (obj) {
         var rst = true;
-        Util.each(filters, function (fn, k) {
+        (0, _common.each)(filters, function (fn, k) {
           if (fn) {
             rst = fn(obj[k], obj);
 
@@ -957,32 +1081,56 @@ function (_Base) {
       });
     }
 
-    return data;
+    this.set('filteredData', data);
   };
 
-  _proto._initGeoms = function _initGeoms(geoms) {
-    var coord = this.get('coord');
+  _proto._changeGeomsData = function _changeGeomsData() {
+    var geoms = this.get('geoms');
     var data = this.get('filteredData');
-    var colDefs = this.get('colDefs');
 
     for (var i = 0, length = geoms.length; i < length; i++) {
       var geom = geoms[i];
-      geom.set('data', data);
-      geom.set('coord', coord);
-      geom.set('colDefs', colDefs);
-      geom.init();
+      geom.changeData(data);
+    }
+  };
+
+  _proto._initGeom = function _initGeom(geom) {
+    if (geom.get('isInit')) {
+      return;
+    }
+
+    var coord = this.get('coord');
+    var data = this.get('filteredData');
+    var colDefs = this.get('colDefs');
+    var middlePlot = this.get('middlePlot');
+    geom.set('chart', this);
+    geom.set('container', middlePlot.addGroup());
+    geom.set('data', data);
+    geom.set('coord', coord);
+    geom.set('colDefs', colDefs);
+    geom.init();
+    this.emit(_const.EVENT_AFTER_GEOM_INIT, geom);
+  };
+
+  _proto._initGeoms = function _initGeoms() {
+    var geoms = this.get('geoms');
+
+    for (var i = 0, length = geoms.length; i < length; i++) {
+      this._initGeom(geoms[i]);
     }
   };
 
   _proto._initCoord = function _initCoord() {
     var plot = this.get('plotRange');
-    var coordCfg = Util.mix({
+    var coordCfg = (0, _common.mix)({
       type: 'cartesian'
     }, this.get('coordCfg'), {
       plot: plot
     });
     var type = coordCfg.type;
-    var C = Coord[Util.upperFirst(type)];
+
+    var C = _index["default"][(0, _common.upperFirst)(type)];
+
     var coord = new C(coordCfg);
     this.set('coord', coord);
   };
@@ -992,7 +1140,7 @@ function (_Base) {
 
     if (!padding) {
       padding = this.get('margin') || this.get('padding');
-      padding = Util.parsePadding(padding);
+      padding = (0, _common.parsePadding)(padding);
     }
 
     var top = padding[0] === 'auto' ? 0 : padding[0];
@@ -1001,31 +1149,40 @@ function (_Base) {
     var left = padding[3] === 'auto' ? 0 : padding[3];
     var width = this.get('width');
     var height = this.get('height');
-    var plot = new Plot({
-      start: {
-        x: left,
-        y: top
-      },
-      end: {
-        x: width - right,
-        y: height - bottom
-      }
+    var start = {
+      x: left,
+      y: top
+    };
+    var end = {
+      x: width - right,
+      y: height - bottom
+    };
+    var plot = this.get('plot');
+
+    if (plot) {
+      plot.reset(start, end);
+      return;
+    }
+
+    var newPlot = new _plot["default"]({
+      start: start,
+      end: end
     });
-    this.set('plotRange', plot);
-    this.set('plot', plot);
+    this.set('plotRange', newPlot);
+    this.set('plot', newPlot);
   };
 
   _proto._initCanvas = function _initCanvas() {
     var self = this;
 
     try {
-      var canvas = new Canvas({
+      var canvas = new _index2.Canvas({
         el: self.get('el') || self.get('id'),
         context: self.get('context'),
         pixelRatio: self.get('pixelRatio'),
         width: self.get('width'),
         height: self.get('height'),
-        fontFamily: Global.fontFamily
+        fontFamily: _global["default"].fontFamily
       });
       self.set('canvas', canvas);
       self.set('el', canvas.get('el'));
@@ -1036,8 +1193,6 @@ function (_Base) {
     }
 
     Chart.plugins.notify(self, 'afterCanvasInit');
-
-    self._initLayout();
   };
 
   _proto._initLayers = function _initLayers() {
@@ -1051,16 +1206,60 @@ function (_Base) {
     }));
   };
 
+  _proto._initEvents = function _initEvents() {
+    var _this2 = this;
+
+    // 数据更新后的一些更新
+    this.on(_const.EVENT_AFTER_DATA_CHANGE, function () {
+      // 数据更新后，重新设置filterdata
+      _this2._initFilteredData(); // 更新geoms里的数据
+
+
+      _this2._changeGeomsData();
+    }); // 大小变化后的一些更新
+
+    this.on(_const.EVENT_AFTER_SIZE_CHANGE, function () {
+      _this2._initLayout(); // layout变化后，坐标轴也需要做相应的变化
+
+
+      var coord = _this2.get('coord');
+
+      if (coord) {
+        coord.reset(_this2.get('plot'));
+      }
+    });
+  };
+
+  _proto._initScaleController = function _initScaleController() {
+    var scaleController = new _scale["default"]({
+      chart: this
+    }); // 让colDefs 和 scaleController.defs 用同一个对象，这样就不用考虑同步的问题
+
+    this.set('colDefs', scaleController.defs); // 已经实例化的scales 也保持统一个对象
+
+    this.set('scales', scaleController.scales);
+    this.set('scaleController', scaleController);
+  };
+
+  _proto._clearScaleController = function _clearScaleController() {
+    var scaleController = this.get('scaleController');
+    scaleController.clear();
+  };
+
   _proto._init = function _init() {
     var self = this;
 
     self._initCanvas();
 
+    self._initLayout();
+
     self._initLayers();
 
-    self.set('geoms', []);
-    self.set('scaleController', new ScaleController());
-    self.set('axisController', new AxisController({
+    self._initEvents();
+
+    self._initScaleController();
+
+    self.set('axisController', new _axis["default"]({
       frontPlot: self.get('frontPlot').addGroup({
         className: 'axisContainer'
       }),
@@ -1076,9 +1275,11 @@ function (_Base) {
     var _this;
 
     _this = _Base.call(this, cfg) || this;
-    var self = (0, _assertThisInitialized2["default"])(_this);
-    Util.each(Geom, function (geomConstructor, className) {
-      var methodName = Util.lowerFirst(className);
+
+    var self = _assertThisInitialized(_this);
+
+    (0, _common.each)(_base2["default"], function (geomConstructor, className) {
+      var methodName = (0, _common.lowerFirst)(className);
 
       self[methodName] = function (cfg) {
         var geom = new geomConstructor(cfg);
@@ -1091,6 +1292,26 @@ function (_Base) {
 
     return _this;
   }
+
+  _proto.init = function init() {
+    // 初始filterData
+    this._initFilteredData(); // initialization coordinate instance
+
+
+    this._initCoord();
+
+    Chart.plugins.notify(this, 'beforeGeomInit'); // init all geometry instances
+
+    this._initGeoms(); // 多 Y 轴的情况时，统一 Y 轴的数值范围。
+
+
+    this._syncYScales(); // do some adjust for data
+
+
+    this._adjustScale();
+
+    this.emit(_const.EVENT_AFTER_INIT);
+  }
   /**
    * set data and some scale configuration
    * @chainable
@@ -1098,7 +1319,7 @@ function (_Base) {
    * @param  {Object} colDefs the configuration for scales
    * @return {Chart} return the chart instance
    */
-
+  ;
 
   _proto.source = function source(data, colDefs) {
     this.set('data', data);
@@ -1111,17 +1332,8 @@ function (_Base) {
   };
 
   _proto.scale = function scale(field, cfg) {
-    var colDefs = this.get('colDefs') || {};
-
-    if (Util.isObject(field)) {
-      Util.mix(colDefs, field);
-    } else {
-      colDefs[field] = cfg;
-    }
-
-    this.set('colDefs', colDefs);
     var scaleController = this.get('scaleController');
-    scaleController.defs = colDefs;
+    scaleController.setFieldDef(field, cfg);
     return this;
   }
   /**
@@ -1157,7 +1369,7 @@ function (_Base) {
   _proto.coord = function coord(type, cfg) {
     var coordCfg;
 
-    if (Util.isObject(type)) {
+    if ((0, _common.isObject)(type)) {
       coordCfg = type;
     } else {
       coordCfg = cfg || {};
@@ -1171,7 +1383,11 @@ function (_Base) {
   _proto.filter = function filter(field, condition) {
     var filters = this.get('filters') || {};
     filters[field] = condition;
-    this.set('filters', filters);
+    this.set('filters', filters); // 如果已经render过，则再重新触发一次change
+
+    if (this.get('rendered')) {
+      this.emit(_const.EVENT_AFTER_DATA_CHANGE, this.get('data'));
+    }
   }
   /**
    * render the chart
@@ -1181,28 +1397,20 @@ function (_Base) {
   ;
 
   _proto.render = function render() {
+    var rendered = this.get('rendered');
     var canvas = this.get('canvas');
-    var geoms = this.get('geoms');
-    var data = this.get('data') || [];
+    var geoms = this.get('geoms'); // 已经渲染过
 
-    var filteredData = this._execFilter(data); // filter data
+    if (rendered) {
+      this._initGeoms();
 
+      this._adjustScale();
+    } else {
+      this.init();
+      this.set('rendered', true);
+    }
 
-    this.set('filteredData', filteredData);
-
-    this._initCoord(); // initialization coordinate instance
-
-
-    Chart.plugins.notify(this, 'beforeGeomInit');
-
-    this._initGeoms(geoms); // init all geometry instances
-
-
-    this.get('syncY') && this._syncYScales();
-
-    this._adjustScale(); // do some adjust for data
-
-
+    this.emit(_const.EVENT_BEFORE_RENDER);
     Chart.plugins.notify(this, 'beforeGeomDraw');
 
     this._renderAxis();
@@ -1211,21 +1419,25 @@ function (_Base) {
 
     if (this.get('limitInPlot') && !middlePlot.attr('clip')) {
       var coord = this.get('coord');
-      var clip = Helper.getClip(coord);
+      var clip = (0, _helper.getClip)(coord);
       clip.set('canvas', middlePlot.get('canvas'));
       middlePlot.attr('clip', clip);
     }
+
+    this.emit(_const.EVENT_BEFORE_GEOM_DRAW);
 
     for (var i = 0, length = geoms.length; i < length; i++) {
       var geom = geoms[i];
       geom.paint();
     }
 
+    this.emit(_const.EVENT_AFTER_GEOM_DRAW);
     Chart.plugins.notify(this, 'afterGeomDraw');
     canvas.sort();
     this.get('frontPlot').sort();
     Chart.plugins.notify(this, 'beforeCanvasDraw');
     canvas.draw();
+    this.emit(_const.EVENT_AFTER_RENDER);
     return this;
   }
   /**
@@ -1237,31 +1449,47 @@ function (_Base) {
 
   _proto.clear = function clear() {
     Chart.plugins.notify(this, 'clear');
-
-    this._removeGeoms();
+    this.emit(_const.EVENT_CLEAR);
 
     this._clearInner();
 
+    this._removeGeoms();
+
+    this._clearScaleController();
+
+    this.set('legendItems', null);
     this.set('filters', null);
     this.set('isUpdate', false);
     this.set('_padding', null);
+    this.set('rendered', false);
     var canvas = this.get('canvas');
     canvas.draw();
     return this;
   };
 
   _proto.repaint = function repaint() {
+    // 如果在没有render之前就repaint的，就直接return退出
+    var rendered = this.get('rendered');
+
+    if (!rendered) {
+      return;
+    }
+
     this.set('isUpdate', true);
+    this.set('legendItems', null);
     Chart.plugins.notify(this, 'repaint');
 
     this._clearInner();
 
+    this.emit(_const.EVENT_REPAINT);
     this.render();
   };
 
   _proto.changeData = function changeData(data) {
+    this.emit(_const.EVENT_BEFORE_DATA_CHANGE, data);
     this.set('data', data);
     Chart.plugins.notify(this, 'changeData');
+    this.emit(_const.EVENT_AFTER_DATA_CHANGE, data);
     this.set('_padding', null);
     this.repaint();
   };
@@ -1281,9 +1509,10 @@ function (_Base) {
 
     var canvas = this.get('canvas');
     canvas.changeSize(width, height);
-
-    this._initLayout();
-
+    this.emit(_const.EVENT_AFTER_SIZE_CHANGE, {
+      width: width,
+      height: height
+    });
     this.repaint();
     return this;
   };
@@ -1295,7 +1524,7 @@ function (_Base) {
     Chart.plugins.notify(this, 'afterCanvasDestroyed');
 
     if (this._interactions) {
-      Util.each(this._interactions, function (interaction) {
+      (0, _common.each)(this._interactions, function (interaction) {
         interaction.destroy();
       });
     }
@@ -1313,10 +1542,24 @@ function (_Base) {
     var self = this;
     var coord = self.get('coord');
     var xScale = self.getXScale();
-    var yScale = self.getYScales()[0];
     var xField = xScale.field;
-    var x = xScale.scale(record[xField]);
+    var yScales = self.getYScales(); // default first
+
+    var yScale = yScales[0];
     var yField = yScale.field;
+
+    for (var i = 0, len = yScales.length; i < len; i++) {
+      var scale = yScales[i];
+      var field = scale.field;
+
+      if (record[field]) {
+        yScale = scale;
+        yField = field;
+        break;
+      }
+    }
+
+    var x = xScale.scale(record[xField]);
     var y = yScale.scale(record[yField]);
     return coord.convertPoint({
       x: x,
@@ -1367,24 +1610,10 @@ function (_Base) {
   ;
 
   _proto.createScale = function createScale(field) {
-    var data = this.get('data');
-    var filteredData = this.get('filteredData');
+    var data = this._getScaleData(field);
 
-    if (filteredData.length) {
-      var legendFields = this._getFieldsForLegend();
-
-      if (legendFields.indexOf(field) === -1) {
-        data = filteredData;
-      }
-    }
-
-    var scales = this.get('scales');
-
-    if (!scales[field]) {
-      scales[field] = this._createScale(field, data);
-    }
-
-    return scales[field];
+    var scaleController = this.get('scaleController');
+    return scaleController.createScale(field, data);
   }
   /**
    * @protected
@@ -1395,10 +1624,7 @@ function (_Base) {
 
   _proto.addGeom = function addGeom(geom) {
     var geoms = this.get('geoms');
-    var middlePlot = this.get('middlePlot');
     geoms.push(geom);
-    geom.set('chart', this);
-    geom.set('container', middlePlot.addGroup());
   }
   /**
    * get the scale of x axis
@@ -1421,7 +1647,7 @@ function (_Base) {
   _proto.getYScales = function getYScales() {
     var geoms = this.get('geoms');
     var rst = [];
-    Util.each(geoms, function (geom) {
+    (0, _common.each)(geoms, function (geom) {
       var yScale = geom.getYScale();
 
       if (rst.indexOf(yScale) === -1) {
@@ -1439,7 +1665,7 @@ function (_Base) {
     var legendItems = {};
     var scales = [];
     var geoms = this.get('geoms');
-    Util.each(geoms, function (geom) {
+    (0, _common.each)(geoms, function (geom) {
       var colorAttr = geom.getAttr('color');
 
       if (colorAttr) {
@@ -1450,12 +1676,14 @@ function (_Base) {
           var field = scale.field;
           var ticks = scale.getTicks();
           var items = [];
-          Util.each(ticks, function (tick) {
+          (0, _common.each)(ticks, function (tick) {
             var text = tick.text;
             var name = text;
             var scaleValue = tick.value;
             var value = scale.invert(scaleValue);
-            var color = colorAttr.mapping(value).join('') || Global.defaultColor;
+
+            var color = colorAttr.mapping(value).join('') || _global["default"].defaultColor;
+
             var marker = {
               fill: color,
               radius: 3,
@@ -1484,7 +1712,7 @@ function (_Base) {
     var self = this;
     var chartPlugins = self.get('plugins') || [];
 
-    if (!Util.isArray(chartPlugins)) {
+    if (!(0, _common.isArray)(chartPlugins)) {
       chartPlugins = [chartPlugins];
     }
 
@@ -1515,7 +1743,7 @@ function (_Base) {
 
     var padding = this.get('padding');
 
-    if (Util.isArray(padding)) {
+    if ((0, _common.isArray)(padding)) {
       return padding.indexOf('auto') !== -1;
     }
 
@@ -1540,23 +1768,59 @@ function (_Base) {
   };
 
   return Chart;
-}(Base);
+}(_base["default"]);
 
 Chart.plugins = Chart.initPlugins();
-module.exports = Chart;
-}, function(modId) { var map = {"../base":1605424195580,"./plot":1605424195581,"../util/common":1605424195577,"../coord/index":1605424195582,"../geom/base":1605424195587,"./controller/scale":1605424195592,"./controller/axis":1605424195594,"../global":1605424195575,"../graphic/index":1605424195598,"../util/helper":1605424195619}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195580, function(require, module, exports) {
+var _default = Chart;
+exports["default"] = _default;
+}, function(modId) { var map = {"./const":1606535077064,"../base":1606535077065,"./plot":1606535077067,"../util/common":1606535077060,"../coord/index":1606535077068,"../geom/base":1606535077073,"./controller/scale":1606535077082,"./controller/axis":1606535077086,"../global":1606535077058,"../graphic/index":1606535077090,"../util/helper":1606535077113}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077064, function(require, module, exports) {
 
 
-/**
- * @fileOverview Base class of chart and geometry
- * @author dxq613@gmail.com
- */
-var Util = require('./util/common');
+exports.__esModule = true;
+exports.EVENT_REPAINT = exports.EVENT_CLEAR_INNER = exports.EVENT_CLEAR = exports.EVENT_AFTER_GEOM_DRAW = exports.EVENT_BEFORE_GEOM_DRAW = exports.EVENT_AFTER_GEOM_INIT = exports.EVENT_AFTER_SIZE_CHANGE = exports.EVENT_AFTER_DATA_CHANGE = exports.EVENT_BEFORE_DATA_CHANGE = exports.EVENT_AFTER_RENDER = exports.EVENT_BEFORE_RENDER = exports.EVENT_AFTER_INIT = void 0;
+var EVENT_AFTER_INIT = 'afterinit';
+exports.EVENT_AFTER_INIT = EVENT_AFTER_INIT;
+var EVENT_BEFORE_RENDER = 'beforerender';
+exports.EVENT_BEFORE_RENDER = EVENT_BEFORE_RENDER;
+var EVENT_AFTER_RENDER = 'afterrender';
+exports.EVENT_AFTER_RENDER = EVENT_AFTER_RENDER;
+var EVENT_BEFORE_DATA_CHANGE = 'beforedatachange';
+exports.EVENT_BEFORE_DATA_CHANGE = EVENT_BEFORE_DATA_CHANGE;
+var EVENT_AFTER_DATA_CHANGE = 'afterdatachange';
+exports.EVENT_AFTER_DATA_CHANGE = EVENT_AFTER_DATA_CHANGE;
+var EVENT_AFTER_SIZE_CHANGE = '_aftersizechange';
+exports.EVENT_AFTER_SIZE_CHANGE = EVENT_AFTER_SIZE_CHANGE;
+var EVENT_AFTER_GEOM_INIT = '_aftergeominit';
+exports.EVENT_AFTER_GEOM_INIT = EVENT_AFTER_GEOM_INIT;
+var EVENT_BEFORE_GEOM_DRAW = 'beforegeomdraw';
+exports.EVENT_BEFORE_GEOM_DRAW = EVENT_BEFORE_GEOM_DRAW;
+var EVENT_AFTER_GEOM_DRAW = 'aftergeomdraw';
+exports.EVENT_AFTER_GEOM_DRAW = EVENT_AFTER_GEOM_DRAW;
+var EVENT_CLEAR = 'clear';
+exports.EVENT_CLEAR = EVENT_CLEAR;
+var EVENT_CLEAR_INNER = 'clearinner';
+exports.EVENT_CLEAR_INNER = EVENT_CLEAR_INNER;
+var EVENT_REPAINT = 'repaint';
+exports.EVENT_REPAINT = EVENT_REPAINT;
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077065, function(require, module, exports) {
 
-var Base =
-/*#__PURE__*/
-function () {
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _emit = _interopRequireDefault(require("./graphic/event/emit"));
+
+var _common = require("./util/common");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Base = /*#__PURE__*/function (_Emit) {
+  _inheritsLoose(Base, _Emit);
+
   var _proto = Base.prototype;
 
   _proto.getDefaultCfg = function getDefaultCfg() {
@@ -1564,10 +1828,16 @@ function () {
   };
 
   function Base(cfg) {
+    var _this;
+
+    _this = _Emit.call(this) || this;
     var attrs = {};
-    var defaultCfg = this.getDefaultCfg();
-    this._attrs = attrs;
-    Util.mix(attrs, defaultCfg, cfg);
+
+    var defaultCfg = _this.getDefaultCfg();
+
+    _this._attrs = attrs;
+    (0, _common.mix)(attrs, defaultCfg, cfg);
+    return _this;
   }
 
   _proto.get = function get(name) {
@@ -1584,20 +1854,100 @@ function () {
   };
 
   return Base;
+}(_emit["default"]);
+
+var _default = Base;
+exports["default"] = _default;
+}, function(modId) { var map = {"./graphic/event/emit":1606535077066,"./util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077066, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("../../util/common");
+
+// 实现简单的事件机制
+var EventEmit = /*#__PURE__*/function () {
+  function EventEmit() {
+    this.__events = {};
+  }
+
+  var _proto = EventEmit.prototype;
+
+  _proto.on = function on(type, listener) {
+    if (!type || !listener) {
+      return;
+    }
+
+    var events = this.__events[type] || [];
+    events.push(listener);
+    this.__events[type] = events;
+  };
+
+  _proto.emit = function emit(type, e) {
+    var _this = this;
+
+    if ((0, _common.isObject)(type)) {
+      e = type;
+      type = e && e.type;
+    }
+
+    if (!type) {
+      return;
+    }
+
+    var events = this.__events[type];
+
+    if (!events || !events.length) {
+      return;
+    }
+
+    events.forEach(function (listener) {
+      listener.call(_this, e);
+    });
+  };
+
+  _proto.off = function off(type, listener) {
+    var __events = this.__events;
+    var events = __events[type];
+
+    if (!events || !events.length) {
+      return;
+    } // 如果没有指定方法，则删除所有项
+
+
+    if (!listener) {
+      delete __events[type];
+      return;
+    } // 删除指定的 listener
+
+
+    for (var i = 0, len = events.length; i < len; i++) {
+      if (events[i] === listener) {
+        events.splice(i, 1);
+        i--;
+      }
+    }
+  };
+
+  return EventEmit;
 }();
 
-module.exports = Base;
-}, function(modId) { var map = {"./util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195581, function(require, module, exports) {
+var _default = EventEmit;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077067, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Plot =
-/*#__PURE__*/
-function () {
+var _common = require("../util/common");
+
+var Plot = /*#__PURE__*/function () {
   function Plot(cfg) {
-    Util.mix(this, cfg);
+    (0, _common.mix)(this, cfg);
 
     this._init();
   }
@@ -1646,14 +1996,14 @@ function () {
   }
   /**
    * check the point is in the range of plot
-   * @param  {Nubmer}  x x value
+   * @param  {Number}  x x value
    * @param  {[type]}  y y value
    * @return {Boolean} return the result
    */
   ;
 
   _proto.isInRange = function isInRange(x, y) {
-    if (Util.isObject(x)) {
+    if ((0, _common.isObject)(x)) {
       y = x.y;
       x = x.x;
     }
@@ -1666,31 +2016,41 @@ function () {
   return Plot;
 }();
 
-module.exports = Plot;
-}, function(modId) { var map = {"../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195582, function(require, module, exports) {
+var _default = Plot;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077068, function(require, module, exports) {
 
 
-var Coord = require('./base');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-require('./cartesian');
+var _base = _interopRequireDefault(require("./base"));
 
-module.exports = Coord;
-}, function(modId) { var map = {"./base":1605424195583,"./cartesian":1605424195586}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195583, function(require, module, exports) {
+require("./cartesian");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _default = _base["default"];
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077069,"./cartesian":1606535077072}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077069, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var MatrixUtil = require('../graphic/util/matrix');
+var _common = require("../util/common");
 
-var Vector2 = require('../graphic/util/vector2');
+var _matrix = _interopRequireDefault(require("../graphic/util/matrix"));
+
+var _vector = _interopRequireDefault(require("../graphic/util/vector2"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var defaultMatrix = [1, 0, 0, 1, 0, 0];
 
-var Base =
-/*#__PURE__*/
-function () {
+var Base = /*#__PURE__*/function () {
   var _proto = Base.prototype;
 
   _proto._initDefaultCfg = function _initDefaultCfg() {};
@@ -1698,7 +2058,7 @@ function () {
   function Base(cfg) {
     this._initDefaultCfg();
 
-    Util.mix(this, cfg);
+    (0, _common.mix)(this, cfg);
     var start;
     var end;
 
@@ -1718,9 +2078,12 @@ function () {
   _proto._scale = function _scale(s1, s2) {
     var matrix = this.matrix;
     var center = this.center;
-    MatrixUtil.translate(matrix, matrix, [center.x, center.y]);
-    MatrixUtil.scale(matrix, matrix, [s1, s2]);
-    MatrixUtil.translate(matrix, matrix, [-center.x, -center.y]);
+
+    _matrix["default"].translate(matrix, matrix, [center.x, center.y]);
+
+    _matrix["default"].scale(matrix, matrix, [s1, s2]);
+
+    _matrix["default"].translate(matrix, matrix, [-center.x, -center.y]);
   };
 
   _proto.init = function init(start, end) {
@@ -1741,8 +2104,17 @@ function () {
         x = _this$_convertPoint.x,
         y = _this$_convertPoint.y;
 
+    if (!_matrix["default"].isChanged(this.matrix)) {
+      return {
+        x: x,
+        y: y
+      };
+    }
+
     var vector = [x, y];
-    Vector2.transformMat2d(vector, vector, this.matrix);
+
+    _vector["default"].transformMat2d(vector, vector, this.matrix);
+
     return {
       x: vector[0],
       y: vector[1]
@@ -1773,12 +2145,21 @@ function () {
   return Base;
 }();
 
-module.exports = Base;
-}, function(modId) { var map = {"../util/common":1605424195577,"../graphic/util/matrix":1605424195584,"../graphic/util/vector2":1605424195585}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195584, function(require, module, exports) {
+var _default = Base;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"../graphic/util/matrix":1606535077070,"../graphic/util/vector2":1606535077071}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077070, function(require, module, exports) {
 
 
+exports.__esModule = true;
+exports["default"] = void 0;
 var Matrix = {
+  generateDefault: function generateDefault() {
+    return [1, 0, 0, 1, 0, 0];
+  },
+  isChanged: function isChanged(m) {
+    return m[0] !== 1 || m[1] !== 0 || m[2] !== 0 || m[3] !== 1 || m[4] !== 0 || m[5] !== 0;
+  },
   multiply: function multiply(m1, m2) {
     var m11 = m1[0] * m2[0] + m1[2] * m2[1];
     var m12 = m1[1] * m2[0] + m1[3] * m2[1];
@@ -1848,16 +2229,20 @@ var Matrix = {
     return out;
   }
 };
-module.exports = Matrix;
+var _default = Matrix;
+exports["default"] = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195585, function(require, module, exports) {
+__DEFINE__(1606535077071, function(require, module, exports) {
 
+
+exports.__esModule = true;
+exports["default"] = void 0;
 
 /**
  * 2 Dimensional Vector
  * @module vector2
  */
-module.exports = {
+var _default = {
   /**
    * Creates a new, empty vector2
    *
@@ -2080,20 +2465,22 @@ module.exports = {
     return out;
   }
 };
+exports["default"] = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195586, function(require, module, exports) {
+__DEFINE__(1606535077072, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _base = _interopRequireDefault(require("./base"));
 
-var Base = require('./base');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Cartesian =
-/*#__PURE__*/
-function (_Base) {
-  (0, _inheritsLoose2["default"])(Cartesian, _Base);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Cartesian = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Cartesian, _Base);
 
   function Cartesian() {
     return _Base.apply(this, arguments) || this;
@@ -2147,41 +2534,51 @@ function (_Base) {
   };
 
   return Cartesian;
-}(Base);
+}(_base["default"]);
 
-Base.Cartesian = Cartesian;
-Base.Rect = Cartesian;
-module.exports = Cartesian;
-}, function(modId) { var map = {"./base":1605424195583}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195587, function(require, module, exports) {
+_base["default"].Cartesian = Cartesian;
+_base["default"].Rect = Cartesian;
+var _default = Cartesian;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077069}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077073, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var Attr = _interopRequireWildcard(require("../attr/index"));
 
-var Util = require('../util/common');
+var _common = require("../util/common");
 
-var Base = require('../base');
+var _base = _interopRequireDefault(require("../base"));
+
+var _global = _interopRequireDefault(require("../global"));
+
+var _shape = _interopRequireDefault(require("./shape/shape"));
+
+var _base2 = _interopRequireDefault(require("@antv/adjust/lib/base"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 var GROUP_ATTRS = ['color', 'size', 'shape'];
 var FIELD_ORIGIN = '_origin';
 var FIELD_ORIGIN_Y = '_originY';
 
-var Global = require('../global');
-
-var Attr = require('../attr/index');
-
-var GeometryShape = require('./shape/shape');
-
-var Adjust = require('@antv/adjust/lib/base');
-
 function parseFields(field) {
-  if (Util.isArray(field)) {
+  if ((0, _common.isArray)(field)) {
     return field;
   }
 
-  if (Util.isString(field)) {
+  if ((0, _common.isString)(field)) {
     return field.split('*');
   }
 
@@ -2193,10 +2590,8 @@ function parseFields(field) {
  */
 
 
-var Geom =
-/*#__PURE__*/
-function (_Base) {
-  (0, _inheritsLoose2["default"])(Geom, _Base);
+var Geom = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Geom, _Base);
 
   function Geom() {
     return _Base.apply(this, arguments) || this;
@@ -2251,33 +2646,36 @@ function (_Base) {
       visible: true,
       connectNulls: false,
       // 是否丢弃没有值的分组。
-      ignoreEmptyGroup: false
+      ignoreEmptyGroup: false,
+      // 是否已经初始化
+      isInit: false
     };
   };
 
   _proto.init = function init() {
     var self = this;
+    var isInit = self.get('isInit');
+
+    if (isInit) {
+      return;
+    }
 
     self._initAttrs();
 
-    var dataArray = self._processData();
+    self._processData();
 
-    if (self.get('adjust')) {
-      self._adjustData(dataArray);
-    }
-
-    self.set('dataArray', dataArray);
+    self.set('isInit', true);
   };
 
   _proto._getGroupScales = function _getGroupScales() {
     var self = this;
     var scales = [];
-    Util.each(GROUP_ATTRS, function (attrName) {
+    (0, _common.each)(GROUP_ATTRS, function (attrName) {
       var attr = self.getAttr(attrName);
 
       if (attr) {
         var attrScales = attr.scales;
-        Util.each(attrScales, function (scale) {
+        (0, _common.each)(attrScales, function (scale) {
           if (scale && scale.isCategory && scales.indexOf(scale) === -1) {
             scales.push(scale);
           }
@@ -2296,7 +2694,7 @@ function (_Base) {
     if (groupScales.length) {
       var appendConditions = {};
       var names = [];
-      Util.each(groupScales, function (scale) {
+      (0, _common.each)(groupScales, function (scale) {
         var field = scale.field;
         names.push(field);
 
@@ -2305,7 +2703,7 @@ function (_Base) {
           appendConditions[scale.field] = colDefs[field].values;
         }
       });
-      return Util.Array.group(data, names, appendConditions);
+      return _common.Array.group(data, names, appendConditions);
     }
 
     return [data];
@@ -2314,6 +2712,11 @@ function (_Base) {
   _proto._setAttrOptions = function _setAttrOptions(attrName, attrCfg) {
     var options = this.get('attrOptions');
     options[attrName] = attrCfg;
+    var attrs = this.get('attrs'); // 说明已经初始化过了
+
+    if (Object.keys(attrs).length) {
+      this._createAttr(attrName, attrCfg);
+    }
   };
 
   _proto._createAttrOption = function _createAttrOption(attrName, field, cfg, defaultValues) {
@@ -2321,7 +2724,7 @@ function (_Base) {
     attrCfg.field = field;
 
     if (cfg) {
-      if (Util.isFunction(cfg)) {
+      if ((0, _common.isFunction)(cfg)) {
         attrCfg.callback = cfg;
       } else {
         attrCfg.values = cfg;
@@ -2333,49 +2736,54 @@ function (_Base) {
     this._setAttrOptions(attrName, attrCfg);
   };
 
-  _proto._initAttrs = function _initAttrs() {
+  _proto._createAttr = function _createAttr(type, option) {
     var self = this;
     var attrs = self.get('attrs');
-    var attrOptions = self.get('attrOptions');
     var coord = self.get('coord');
+    var className = (0, _common.upperFirst)(type);
+    var fields = parseFields(option.field);
+
+    if (type === 'position') {
+      option.coord = coord;
+    }
+
+    var scales = [];
+
+    for (var i = 0, len = fields.length; i < len; i++) {
+      var field = fields[i];
+
+      var scale = self._createScale(field);
+
+      scales.push(scale);
+    }
+
+    if (type === 'position') {
+      var yScale = scales[1]; // 饼图的处理，但是还不知道为啥
+
+      if (coord.type === 'polar' && coord.transposed && self.hasAdjust('stack')) {
+        if (yScale.values.length) {
+          yScale.change({
+            nice: false,
+            min: 0,
+            max: Math.max.apply(null, yScale.values)
+          });
+        }
+      }
+    }
+
+    option.scales = scales;
+    var attr = new Attr[className](option);
+    attrs[type] = attr;
+    return attr;
+  };
+
+  _proto._initAttrs = function _initAttrs() {
+    var self = this;
+    var attrOptions = self.get('attrOptions');
 
     for (var type in attrOptions) {
       if (attrOptions.hasOwnProperty(type)) {
-        var option = attrOptions[type];
-        var className = Util.upperFirst(type);
-        var fields = parseFields(option.field);
-
-        if (type === 'position') {
-          option.coord = coord;
-        }
-
-        var scales = [];
-
-        for (var i = 0, len = fields.length; i < len; i++) {
-          var field = fields[i];
-
-          var scale = self._createScale(field);
-
-          scales.push(scale);
-        }
-
-        if (type === 'position') {
-          var yScale = scales[1];
-
-          if (coord.type === 'polar' && coord.transposed && self.hasAdjust('stack')) {
-            if (yScale.values.length) {
-              yScale.change({
-                nice: false,
-                min: 0,
-                max: Math.max.apply(null, yScale.values)
-              });
-            }
-          }
-        }
-
-        option.scales = scales;
-        var attr = new Attr[className](option);
-        attrs[type] = attr;
+        this._createAttr(type, attrOptions[type]);
       }
     }
   };
@@ -2420,6 +2828,19 @@ function (_Base) {
       dataArray.push(tempData);
     }
 
+    if (self.get('adjust')) {
+      self._adjustData(dataArray);
+    }
+
+    if (self.get('sortable')) {
+      self._sort(dataArray);
+    }
+
+    self.emit('afterprocessdata', {
+      dataArray: dataArray
+    });
+    self.set('mappingData', dataArray);
+    self.set('dataArray', dataArray);
     return dataArray;
   };
 
@@ -2465,19 +2886,19 @@ function (_Base) {
     var adjust = self.get('adjust');
 
     if (adjust) {
-      var adjustType = Util.upperFirst(adjust.type);
+      var adjustType = (0, _common.upperFirst)(adjust.type);
 
-      if (!Adjust[adjustType]) {
+      if (!_base2["default"][adjustType]) {
         throw new Error('not support such adjust : ' + adjust);
       }
 
       var xScale = self.getXScale();
       var yScale = self.getYScale();
-      var cfg = Util.mix({
+      var cfg = (0, _common.mix)({
         xField: xScale.field,
         yField: yScale.field
       }, adjust);
-      var adjustObject = new Adjust[adjustType](cfg);
+      var adjustObject = new _base2["default"][adjustType](cfg);
       adjustObject.processAdjust(dataArray);
 
       if (adjustType === 'Stack') {
@@ -2487,7 +2908,8 @@ function (_Base) {
   };
 
   _proto._updateStackRange = function _updateStackRange(field, scale, dataArray) {
-    var mergeArray = Util.Array.merge(dataArray);
+    var mergeArray = _common.Array.merge(dataArray);
+
     var min = scale.min;
     var max = scale.max;
 
@@ -2520,10 +2942,10 @@ function (_Base) {
         type = xScale.type;
 
     if (type !== 'identity' && xScale.values.length > 1) {
-      Util.each(mappedArray, function (itemArr) {
+      (0, _common.each)(mappedArray, function (itemArr) {
         itemArr.sort(function (obj1, obj2) {
           if (type === 'timeCat') {
-            return xScale._toTimeStamp(obj1[FIELD_ORIGIN][field]) - xScale._toTimeStamp(obj2[FIELD_ORIGIN][field]);
+            return (0, _common.toTimeStamp)(obj1[FIELD_ORIGIN][field]) - (0, _common.toTimeStamp)(obj2[FIELD_ORIGIN][field]);
           }
 
           return xScale.translate(obj1[FIELD_ORIGIN][field]) - xScale.translate(obj2[FIELD_ORIGIN][field]);
@@ -2537,7 +2959,7 @@ function (_Base) {
 
   _proto.paint = function paint() {
     var self = this;
-    var dataArray = self.get('dataArray');
+    var dataArray = self.get('mappingData');
     var mappedArray = [];
     var shapeFactory = self.getShapeFactory();
     shapeFactory.setCoord(self.get('coord'));
@@ -2548,9 +2970,10 @@ function (_Base) {
       var data = dataArray[i];
 
       if (data.length) {
-        data = self._mapping(data);
-        mappedArray.push(data);
-        self.draw(data, shapeFactory);
+        var mappedData = self._mapping(data);
+
+        mappedArray.push(mappedData);
+        self.draw(mappedData, shapeFactory);
       }
     }
 
@@ -2562,7 +2985,7 @@ function (_Base) {
 
     if (!shapeFactory) {
       var shapeType = this.get('shapeType');
-      shapeFactory = GeometryShape.getShapeFactory(shapeType);
+      shapeFactory = _shape["default"].getShapeFactory(shapeType);
       this.set('shapeFactory', shapeFactory);
     }
 
@@ -2572,38 +2995,53 @@ function (_Base) {
   _proto._mapping = function _mapping(data) {
     var self = this;
     var attrs = self.get('attrs');
-    var yField = self.getYScale().field;
-    var mappedData = [];
+    var yField = self.getYScale().field; // 用来缓存转换的值，减少mapping耗时
 
-    for (var i = 0, len = data.length; i < len; i++) {
-      var record = data[i];
-      var newRecord = {};
-      newRecord[FIELD_ORIGIN] = record[FIELD_ORIGIN];
-      newRecord.points = record.points;
-      newRecord.nextPoints = record.nextPoints; // 避免
+    var mappedCache = {};
+    var mappedData = new Array(data.length);
 
-      newRecord[FIELD_ORIGIN_Y] = record[yField];
+    for (var k in attrs) {
+      if (attrs.hasOwnProperty(k)) {
+        var attr = attrs[k];
+        var names = attr.names;
+        var scales = attr.scales;
 
-      for (var k in attrs) {
-        if (attrs.hasOwnProperty(k)) {
-          var attr = attrs[k];
-          var names = attr.names;
+        for (var i = 0, len = data.length; i < len; i++) {
+          var record = data[i];
 
-          var values = self._getAttrValues(attr, record);
+          var mappedRecord = _extends({}, record, mappedData[i]);
 
-          if (names.length > 1) {
+          mappedRecord[FIELD_ORIGIN_Y] = record[yField]; // 获取视觉属性对应的value值
+          // 位置的缓存命中率低，还是每次单独计算
+
+          if (attr.type === 'position') {
+            var values = self._getAttrValues(attr, record);
+
             for (var j = 0, _len = values.length; j < _len; j++) {
               var val = values[j];
               var name = names[j];
-              newRecord[name] = Util.isArray(val) && val.length === 1 ? val[0] : val;
+              mappedRecord[name] = (0, _common.isArray)(val) && val.length === 1 ? val[0] : val;
             }
           } else {
-            newRecord[names[0]] = values.length === 1 ? values[0] : values;
-          }
+            // 除了position其他都只有一项
+            var _name = names[0];
+            var field = scales[0].field;
+            var value = record[field];
+            var key = "" + _name + value;
+            var _values = mappedCache[key];
+
+            if (!_values) {
+              _values = self._getAttrValues(attr, record);
+              mappedCache[key] = _values;
+            }
+
+            mappedRecord[_name] = _values[0];
+          } // 设置新数组
+
+
+          mappedData[i] = mappedRecord;
         }
       }
-
-      mappedData.push(newRecord);
     }
 
     return mappedData;
@@ -2644,22 +3082,8 @@ function (_Base) {
   _proto._beforeMapping = function _beforeMapping(dataArray) {
     var self = this;
 
-    if (self.get('sortable')) {
-      self._sort(dataArray);
-    }
-
     if (self.get('generatePoints')) {
-      Util.each(dataArray, function (data) {
-        self._generatePoints(data);
-      }); // 添加nextPoints
-
-      Util.each(dataArray, function (data, index) {
-        var nextData = dataArray[index + 1];
-
-        if (nextData) {
-          data[0].nextPoints = nextData[0].points;
-        }
-      });
+      self._generatePoints(dataArray);
     }
   };
 
@@ -2677,8 +3101,8 @@ function (_Base) {
     var params = fields.map(function (field) {
       return origin[field];
     });
-    Util.each(cfg, function (v, k) {
-      if (Util.isFunction(v)) {
+    (0, _common.each)(cfg, function (v, k) {
+      if ((0, _common.isFunction)(v)) {
         tmpCfg[k] = v.apply(null, params);
       } else {
         tmpCfg[k] = v;
@@ -2722,8 +3146,8 @@ function (_Base) {
     var self = this;
     var container = self.get('container');
     var yScale = self.getYScale();
-    Util.each(data, function (obj, index) {
-      if (yScale && Util.isNil(obj._origin[yScale.field])) {
+    (0, _common.each)(data, function (obj, index) {
+      if (yScale && (0, _common.isNil)(obj._origin[yScale.field])) {
         return;
       }
 
@@ -2738,24 +3162,33 @@ function (_Base) {
     var gShape = shapeFactory.drawShape(shape, cfg, container);
 
     if (gShape) {
-      Util.each([].concat(gShape), function (s) {
+      (0, _common.each)([].concat(gShape), function (s) {
         s.set('origin', shapeData);
       });
     }
   };
 
-  _proto._generatePoints = function _generatePoints(data) {
+  _proto._generatePoints = function _generatePoints(dataArray) {
     var self = this;
     var shapeFactory = self.getShapeFactory();
     var shapeAttr = self.getAttr('shape');
+    (0, _common.each)(dataArray, function (data) {
+      for (var i = 0, len = data.length; i < len; i++) {
+        var obj = data[i];
+        var cfg = self.createShapePointsCfg(obj);
+        var shape = shapeAttr ? self._getAttrValues(shapeAttr, obj) : null;
+        var points = shapeFactory.getShapePoints(shape, cfg);
+        obj.points = points;
+      }
+    }); // 添加nextPoints
 
-    for (var i = 0, len = data.length; i < len; i++) {
-      var obj = data[i];
-      var cfg = self.createShapePointsCfg(obj);
-      var shape = shapeAttr ? self._getAttrValues(shapeAttr, obj) : null;
-      var points = shapeFactory.getShapePoints(shape, cfg);
-      obj.points = points;
-    }
+    (0, _common.each)(dataArray, function (data, index) {
+      var nextData = dataArray[index + 1];
+
+      if (nextData) {
+        data[0].nextPoints = nextData[0].points;
+      }
+    });
   }
   /**
    * get the info of each shape
@@ -2808,7 +3241,7 @@ function (_Base) {
   _proto._normalizeValues = function _normalizeValues(values, scale) {
     var rst = [];
 
-    if (Util.isArray(values)) {
+    if ((0, _common.isArray)(values)) {
       for (var i = 0, len = values.length; i < len; i++) {
         var v = values[i];
         rst.push(scale.scale(v));
@@ -2924,7 +3357,7 @@ function (_Base) {
     var tmp = [];
     dataArray.forEach(function (data) {
       data.forEach(function (obj) {
-        var originValue = Util.isNil(obj[FIELD_ORIGIN]) ? obj[xfield] : obj[FIELD_ORIGIN][xfield];
+        var originValue = (0, _common.isNil)(obj[FIELD_ORIGIN]) ? obj[xfield] : obj[FIELD_ORIGIN][xfield];
 
         if (self._isEqual(originValue, xValue, xScale)) {
           tmp.push(obj);
@@ -2937,7 +3370,7 @@ function (_Base) {
         var yValue = yScale.invert(invertPoint.y);
         yValue = self._getSnap(yScale, yValue, tmp);
         tmp.forEach(function (obj) {
-          if (Util.isArray(yValue) ? obj[FIELD_ORIGIN_Y].toString() === yValue.toString() : obj[FIELD_ORIGIN_Y] === yValue) {
+          if ((0, _common.isArray)(yValue) ? obj[FIELD_ORIGIN_Y].toString() === yValue.toString() : obj[FIELD_ORIGIN_Y] === yValue) {
             rst.push(obj);
           }
         });
@@ -2949,9 +3382,29 @@ function (_Base) {
     return rst;
   };
 
+  _proto.getRecords = function getRecords(value) {
+    var _this = this;
+
+    var xScale = this.getXScale();
+    var dataArray = this.get('dataArray');
+    var xfield = xScale.field;
+    return dataArray.map(function (data) {
+      for (var len = data.length, i = len - 1; i >= 0; i--) {
+        var obj = data[i];
+        var originValue = (0, _common.isNil)(obj[FIELD_ORIGIN]) ? obj[xfield] : obj[FIELD_ORIGIN][xfield];
+
+        if (_this._isEqual(originValue, value, xScale)) {
+          return obj;
+        }
+      }
+
+      return null;
+    });
+  };
+
   _proto._isEqual = function _isEqual(originValue, value, scale) {
     if (scale.type === 'timeCat') {
-      return scale._toTimeStamp(originValue) === value;
+      return (0, _common.toTimeStamp)(originValue) === value;
     }
 
     return value === originValue;
@@ -2966,20 +3419,20 @@ function (_Base) {
   };
 
   _proto.color = function color(field, values) {
-    this._createAttrOption('color', field, values, Global.colors);
+    this._createAttrOption('color', field, values, _global["default"].colors);
 
     return this;
   };
 
   _proto.size = function size(field, values) {
-    this._createAttrOption('size', field, values, Global.sizes);
+    this._createAttrOption('size', field, values, _global["default"].sizes);
 
     return this;
   };
 
   _proto.shape = function shape(field, values) {
     var type = this.get('type');
-    var shapes = Global.shapes[type] || [];
+    var shapes = _global["default"].shapes[type] || [];
 
     this._createAttrOption('shape', field, values, shapes);
 
@@ -2994,7 +3447,7 @@ function (_Base) {
       this.set('styleOptions', styleOptions);
     }
 
-    if (Util.isObject(field)) {
+    if ((0, _common.isObject)(field)) {
       cfg = field;
       field = null;
     }
@@ -3011,7 +3464,7 @@ function (_Base) {
   };
 
   _proto.adjust = function adjust(type) {
-    if (Util.isString(type)) {
+    if ((0, _common.isString)(type)) {
       type = {
         type: type
       };
@@ -3026,33 +3479,37 @@ function (_Base) {
     return this;
   };
 
-  _proto.reset = function reset() {
-    this.set('attrOptions', {});
-    this.set('adjust', null);
-    this.clearInner();
+  _proto.changeData = function changeData(data) {
+    this.set('data', data); // 改变数据后，情况度量，因为需要重新实例化
+
+    this.set('scales', {});
+    if (!this.get('isInit')) return;
+    this.set('isInit', false);
+    this.init();
   };
 
   _proto.clearInner = function clearInner() {
     var container = this.get('container');
 
     if (container) {
-      container.clear();
-      container.setMatrix([1, 0, 0, 1, 0, 0]);
+      container.clear(); // container.setMatrix([ 1, 0, 0, 1, 0, 0 ]);
     }
+  };
 
-    container && container.clear();
+  _proto.reset = function reset() {
+    this.set('isInit', false);
     this.set('attrs', {});
-    this.set('groupScales', null);
-    this.set('xDistance', null);
-    this.set('_width', null);
+    this.set('attrOptions', {});
+    this.set('adjust', null);
+    this.clearInner();
   };
 
   _proto.clear = function clear() {
     this.clearInner();
-    this.set('scales', {});
   };
 
   _proto.destroy = function destroy() {
+    this.set('isInit', false);
     this.clear();
 
     _Base.prototype.destroy.call(this);
@@ -3075,37 +3532,493 @@ function (_Base) {
   };
 
   return Geom;
-}(Base);
+}(_base["default"]);
 
-module.exports = Geom;
-}, function(modId) { var map = {"../util/common":1605424195577,"../base":1605424195580,"../global":1605424195575,"../attr/index":1605424195588,"./shape/shape":1605424195591}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195588, function(require, module, exports) {
-
-
-module.exports = {
-  Position: require('@antv/attr/lib/position'),
-  Shape: require('@antv/attr/lib/shape'),
-  Size: require('@antv/attr/lib/size'),
-  Color: require('./color')
-};
-}, function(modId) { var map = {"./color":1605424195589}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195589, function(require, module, exports) {
+var _default = Geom;
+exports["default"] = _default;
+}, function(modId) { var map = {"../attr/index":1606535077074,"../util/common":1606535077060,"../base":1606535077065,"../global":1606535077058,"./shape/shape":1606535077081}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077074, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports.Color = exports.Size = exports.Shape = exports.Position = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _position = _interopRequireDefault(require("./position"));
 
-var Util = require('../util/common');
+exports.Position = _position["default"];
 
-var ColorUtil = require('./color-util');
+var _shape = _interopRequireDefault(require("./shape"));
 
-var Base = require('@antv/attr/lib/base');
+exports.Shape = _shape["default"];
 
-var Color =
-/*#__PURE__*/
-function (_Base) {
-  (0, _inheritsLoose2["default"])(Color, _Base);
+var _size = _interopRequireDefault(require("./size"));
+
+exports.Size = _size["default"];
+
+var _color = _interopRequireDefault(require("./color"));
+
+exports.Color = _color["default"];
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+}, function(modId) { var map = {"./position":1606535077075,"./shape":1606535077077,"./size":1606535077078,"./color":1606535077079}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077075, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _util = require("@antv/util");
+
+var _base = _interopRequireDefault(require("./base"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Position = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Position, _Base);
+
+  function Position(cfg) {
+    var _this;
+
+    _this = _Base.call(this, cfg) || this;
+    _this.names = ['x', 'y'];
+    _this.type = 'position';
+    return _this;
+  }
+
+  var _proto = Position.prototype;
+
+  _proto.mapping = function mapping(x, y) {
+    var scales = this.scales;
+    var coord = this.coord;
+    var scaleX = scales[0];
+    var scaleY = scales[1];
+    var rstX;
+    var rstY;
+    var obj;
+
+    if ((0, _util.isNil)(x) || (0, _util.isNil)(y)) {
+      return [];
+    }
+
+    if ((0, _util.isArray)(y) && (0, _util.isArray)(x)) {
+      rstX = [];
+      rstY = [];
+
+      for (var i = 0, j = 0, xLen = x.length, yLen = y.length; i < xLen && j < yLen; i++, j++) {
+        obj = coord.convertPoint({
+          x: scaleX.scale(x[i]),
+          y: scaleY.scale(y[j])
+        });
+        rstX.push(obj.x);
+        rstY.push(obj.y);
+      }
+    } else if ((0, _util.isArray)(y)) {
+      x = scaleX.scale(x);
+      rstY = [];
+      (0, _util.each)(y, function (yVal) {
+        yVal = scaleY.scale(yVal);
+        obj = coord.convertPoint({
+          x: x,
+          y: yVal
+        });
+
+        if (rstX && rstX !== obj.x) {
+          if (!(0, _util.isArray)(rstX)) {
+            rstX = [rstX];
+          }
+
+          rstX.push(obj.x);
+        } else {
+          rstX = obj.x;
+        }
+
+        rstY.push(obj.y);
+      });
+    } else if ((0, _util.isArray)(x)) {
+      y = scaleY.scale(y);
+      rstX = [];
+      (0, _util.each)(x, function (xVal) {
+        xVal = scaleX.scale(xVal);
+        obj = coord.convertPoint({
+          x: xVal,
+          y: y
+        });
+
+        if (rstY && rstY !== obj.y) {
+          if (!(0, _util.isArray)(rstY)) {
+            rstY = [rstY];
+          }
+
+          rstY.push(obj.y);
+        } else {
+          rstY = obj.y;
+        }
+
+        rstX.push(obj.x);
+      });
+    } else {
+      x = scaleX.scale(x);
+      y = scaleY.scale(y);
+      var point = coord.convertPoint({
+        x: x,
+        y: y
+      });
+      rstX = point.x;
+      rstY = point.y;
+    }
+
+    return [rstX, rstY];
+  };
+
+  return Position;
+}(_base["default"]);
+
+var _default = Position;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077076}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077076, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _util = require("@antv/util");
+
+/**
+ * @fileOverview the Attribute base class
+ */
+function toScaleString(scale, value) {
+  if ((0, _util.isString)(value)) {
+    return value;
+  }
+
+  return scale.invert(scale.scale(value));
+}
+/**
+ * 所有视觉通道属性的基类
+ * @class Attr
+ */
+
+
+var AttributeBase = /*#__PURE__*/function () {
+  function AttributeBase(cfg) {
+    var _this = this;
+
+    /**
+     * 属性的类型
+     * @type {String}
+     */
+    this.type = 'base';
+    /**
+     * 属性的名称
+     * @type {String}
+     */
+
+    this.name = null;
+    /**
+     * 回调函数
+     * @type {Function}
+     */
+
+    this.method = null;
+    /**
+     * 备选的值数组
+     * @type {Array}
+     */
+
+    this.values = [];
+    /**
+     * 属性内部的度量
+     * @type {Array}
+     */
+
+    this.scales = [];
+    /**
+     * 是否通过线性取值, 如果未指定，则根据数值的类型判定
+     * @type {Boolean}
+     */
+
+    this.linear = null;
+    /**
+     * 当用户设置的 callback 返回 null 时, 应该返回默认 callback 中的值
+     */
+
+    var mixedCallback = null;
+    var defaultCallback = this.callback;
+
+    if (cfg.callback) {
+      var userCallback = cfg.callback;
+
+      mixedCallback = function mixedCallback() {
+        for (var _len = arguments.length, params = new Array(_len), _key = 0; _key < _len; _key++) {
+          params[_key] = arguments[_key];
+        }
+
+        var ret = userCallback.apply(void 0, params);
+
+        if ((0, _util.isNil)(ret)) {
+          ret = defaultCallback.apply(_this, params);
+        }
+
+        return ret;
+      };
+    }
+
+    (0, _util.mix)(this, cfg);
+
+    if (mixedCallback) {
+      (0, _util.mix)(this, {
+        callback: mixedCallback
+      });
+    }
+  } // 获取属性值，将值映射到视觉通道
+
+
+  var _proto = AttributeBase.prototype;
+
+  _proto._getAttrValue = function _getAttrValue(scale, value) {
+    var values = this.values;
+
+    if (scale.isCategory && !this.linear) {
+      var index = scale.translate(value);
+      return values[index % values.length];
+    }
+
+    var percent = scale.scale(value);
+    return this.getLinearValue(percent);
+  }
+  /**
+   * 如果进行线性映射，返回对应的映射值
+   * @protected
+   * @param  {Number} percent 百分比
+   * @return {*}  颜色值、形状、大小等
+   */
+  ;
+
+  _proto.getLinearValue = function getLinearValue(percent) {
+    var values = this.values;
+    var steps = values.length - 1;
+    var step = Math.floor(steps * percent);
+    var leftPercent = steps * percent - step;
+    var start = values[step];
+    var end = step === steps ? start : values[step + 1];
+    var rstValue = start + (end - start) * leftPercent;
+    return rstValue;
+  }
+  /**
+   * 默认的回调函数
+   * @param {*} value 回调函数的值
+   * @type {Function}
+   * @return {Array} 返回映射后的值
+   */
+  ;
+
+  _proto.callback = function callback(value) {
+    var self = this;
+    var scale = self.scales[0];
+    var rstValue = null;
+
+    if (scale.type === 'identity') {
+      rstValue = scale.value;
+    } else {
+      rstValue = self._getAttrValue(scale, value);
+    }
+
+    return rstValue;
+  }
+  /**
+   * 根据度量获取属性名
+   * @return {Array} dims of this Attribute
+   */
+  ;
+
+  _proto.getNames = function getNames() {
+    var scales = this.scales;
+    var names = this.names;
+    var length = Math.min(scales.length, names.length);
+    var rst = [];
+
+    for (var i = 0; i < length; i++) {
+      rst.push(names[i]);
+    }
+
+    return rst;
+  }
+  /**
+   * 根据度量获取维度名
+   * @return {Array} dims of this Attribute
+   */
+  ;
+
+  _proto.getFields = function getFields() {
+    var scales = this.scales;
+    var rst = [];
+    (0, _util.each)(scales, function (scale) {
+      rst.push(scale.field);
+    });
+    return rst;
+  }
+  /**
+   * 根据名称获取度量
+   * @param  {String} name the name of scale
+   * @return {Scale} scale
+   */
+  ;
+
+  _proto.getScale = function getScale(name) {
+    var scales = this.scales;
+    var names = this.names;
+    var index = names.indexOf(name);
+    return scales[index];
+  }
+  /**
+   * 映射数据
+   * @param {*} param1...paramn 多个数值
+   * @return {Array} 映射的值组成的数组
+   */
+  ;
+
+  _proto.mapping = function mapping() {
+    var scales = this.scales;
+    var callback = this.callback;
+
+    for (var _len2 = arguments.length, params = new Array(_len2), _key2 = 0; _key2 < _len2; _key2++) {
+      params[_key2] = arguments[_key2];
+    }
+
+    var values = params;
+
+    if (callback) {
+      for (var i = 0, len = params.length; i < len; i++) {
+        params[i] = this._toOriginParam(params[i], scales[i]);
+      }
+
+      values = callback.apply(this, params);
+    }
+
+    values = [].concat(values);
+    return values;
+  } // 原始的参数
+  ;
+
+  _proto._toOriginParam = function _toOriginParam(param, scale) {
+    var rst = param;
+
+    if (!scale.isLinear) {
+      if ((0, _util.isArray)(param)) {
+        rst = [];
+
+        for (var i = 0, len = param.length; i < len; i++) {
+          rst.push(toScaleString(scale, param[i]));
+        }
+      } else {
+        rst = toScaleString(scale, param);
+      }
+    }
+
+    return rst;
+  };
+
+  return AttributeBase;
+}();
+
+var _default = AttributeBase;
+exports["default"] = _default;
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077077, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _base = _interopRequireDefault(require("./base"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Shape = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Shape, _Base);
+
+  function Shape(cfg) {
+    var _this;
+
+    _this = _Base.call(this, cfg) || this;
+    _this.names = ['shape'];
+    _this.type = 'shape';
+    _this.gradient = null;
+    return _this;
+  }
+  /**
+   * @override
+   */
+
+
+  var _proto = Shape.prototype;
+
+  _proto.getLinearValue = function getLinearValue(percent) {
+    var values = this.values;
+    var index = Math.round((values.length - 1) * percent);
+    return values[index];
+  };
+
+  return Shape;
+}(_base["default"]);
+
+var _default = Shape;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077076}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077078, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _base = _interopRequireDefault(require("./base"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Size = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Size, _Base);
+
+  function Size(cfg) {
+    var _this;
+
+    _this = _Base.call(this, cfg) || this;
+    _this.names = ['size'];
+    _this.type = 'size';
+    _this.gradient = null;
+    return _this;
+  }
+
+  return Size;
+}(_base["default"]);
+
+var _default = Size;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077076}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077079, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _util = require("@antv/util");
+
+var _base = _interopRequireDefault(require("./base"));
+
+var _colorUtil = require("./color-util");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Color = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Color, _Base);
 
   function Color(cfg) {
     var _this;
@@ -3115,7 +4028,7 @@ function (_Base) {
     _this.type = 'color';
     _this.gradient = null;
 
-    if (Util.isString(_this.values)) {
+    if ((0, _util.isString)(_this.values)) {
       _this.linear = true;
     }
 
@@ -3133,7 +4046,7 @@ function (_Base) {
 
     if (!gradient) {
       var values = this.values;
-      gradient = ColorUtil.gradient(values);
+      gradient = (0, _colorUtil.gradient)(values);
       this.gradient = gradient;
     }
 
@@ -3141,16 +4054,21 @@ function (_Base) {
   };
 
   return Color;
-}(Base);
+}(_base["default"]);
 
-module.exports = Color;
-}, function(modId) { var map = {"../util/common":1605424195577,"./color-util":1605424195590}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195590, function(require, module, exports) {
-
-
-var Util = require('../util/common'); // Get the interpolation between colors
+var _default = Color;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077076,"./color-util":1606535077080}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077080, function(require, module, exports) {
 
 
+exports.__esModule = true;
+exports.toHex = toHex;
+exports.gradient = gradient;
+
+var _util = require("@antv/util");
+
+// Get the interpolation between colors
 function getValue(start, end, percent, index) {
   var value = start[index] + (end[index] - start[index]) * percent;
   return value;
@@ -3202,71 +4120,74 @@ var colorCache = {
   white: '#ffffff',
   yellow: '#ffff00'
 };
-var ColorUtil = {
-  /**
-   * Returns a hexadecimal string representing this color in RGB space, such as #f7eaba.
-   * @param  {String} color color value
-   * @return {String} Returns a hexadecimal string
-   */
-  toHex: function toHex(color) {
-    if (colorCache[color]) {
-      return colorCache[color];
-    }
+/**
+ * Returns a hexadecimal string representing this color in RGB space, such as #f7eaba.
+ * @param  {String} color color value
+ * @return {String} Returns a hexadecimal string
+ */
 
-    if (color[0] === '#') {
-      if (color.length === 7) {
-        return color;
-      }
-
-      var hex = color.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function (m, r, g, b) {
-        return '#' + r + r + g + g + b + b;
-      }); // hex3 to hex6
-
-      colorCache[color] = hex;
-      return hex;
-    } // rgb/rgba to hex
-
-
-    var rst = color.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
-    rst.shift();
-    rst = arr2hex(rst);
-    colorCache[color] = rst;
-    return rst;
-  },
-  hex2arr: hex2arr,
-
-  /**
-   * handle the gradient color
-   * @param  {Array} colors the colors
-   * @return {String} return the color value
-   */
-  gradient: function gradient(colors) {
-    var points = [];
-
-    if (Util.isString(colors)) {
-      colors = colors.split('-');
-    }
-
-    Util.each(colors, function (color) {
-      if (color.indexOf('#') === -1) {
-        color = ColorUtil.toHex(color);
-      }
-
-      points.push(hex2arr(color));
-    });
-    return function (percent) {
-      return calColor(points, percent);
-    };
+function toHex(color) {
+  if (colorCache[color]) {
+    return colorCache[color];
   }
-};
-module.exports = ColorUtil;
-}, function(modId) { var map = {"../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195591, function(require, module, exports) {
+
+  if (color[0] === '#') {
+    if (color.length === 7) {
+      return color;
+    }
+
+    var hex = color.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, function (m, r, g, b) {
+      return '#' + r + r + g + g + b + b;
+    }); // hex3 to hex6
+
+    colorCache[color] = hex;
+    return hex;
+  } // rgb/rgba to hex
 
 
-var Util = require('../../util/common');
+  var rst = color.match(/^rgba?[\s+]?\([\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?,[\s+]?(\d+)[\s+]?/i);
+  rst.shift();
+  rst = arr2hex(rst);
+  colorCache[color] = rst;
+  return rst;
+}
+/**
+ * handle the gradient color
+ * @param  {Array} colors the colors
+ * @return {String} return the color value
+ */
 
-var Global = require('../../global');
+
+function gradient(colors) {
+  var points = [];
+
+  if ((0, _util.isString)(colors)) {
+    colors = colors.split('-');
+  }
+
+  (0, _util.each)(colors, function (color) {
+    if (color.indexOf('#') === -1) {
+      color = toHex(color);
+    }
+
+    points.push(hex2arr(color));
+  });
+  return function (percent) {
+    return calColor(points, percent);
+  };
+}
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077081, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("../../util/common");
+
+var _global = _interopRequireDefault(require("../../global"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var Shape = {};
 var ShapeBase = {
@@ -3330,7 +4251,7 @@ var ShapeFactoryBase = {
   getShape: function getShape(type) {
     var self = this;
 
-    if (Util.isArray(type)) {
+    if ((0, _common.isArray)(type)) {
       type = type[0];
     }
 
@@ -3353,7 +4274,7 @@ var ShapeFactoryBase = {
     var shape = this.getShape(type);
 
     if (!cfg.color) {
-      cfg.color = Global.colors[0];
+      cfg.color = _global["default"].colors[0];
     }
 
     return shape.draw(cfg, container);
@@ -3361,17 +4282,17 @@ var ShapeFactoryBase = {
 };
 
 Shape.registerFactory = function (factoryName, cfg) {
-  var className = Util.upperFirst(factoryName);
-  var geomObj = Util.mix({}, ShapeFactoryBase, cfg);
+  var className = (0, _common.upperFirst)(factoryName);
+  var geomObj = (0, _common.mix)({}, ShapeFactoryBase, cfg);
   Shape[className] = geomObj;
   geomObj.name = factoryName;
   return geomObj;
 };
 
 Shape.registerShape = function (factoryName, shapeType, cfg) {
-  var className = Util.upperFirst(factoryName);
+  var className = (0, _common.upperFirst)(factoryName);
   var factory = Shape[className];
-  var shapeObj = Util.mix({}, ShapeBase, cfg);
+  var shapeObj = (0, _common.mix)({}, ShapeBase, cfg);
   factory[shapeType] = shapeObj;
   return shapeObj;
 };
@@ -3381,47 +4302,80 @@ Shape.registShape = Shape.registerShape;
 Shape.getShapeFactory = function (factoryName) {
   var self = this;
   factoryName = factoryName || 'point';
-  var className = Util.upperFirst(factoryName);
+  var className = (0, _common.upperFirst)(factoryName);
   return self[className];
 };
 
-module.exports = Shape;
-}, function(modId) { var map = {"../../util/common":1605424195577,"../../global":1605424195575}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195592, function(require, module, exports) {
+var _default = Shape;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"../../global":1606535077058}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077082, function(require, module, exports) {
 
 
-var Util = require('../../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Global = require('../../global');
+var _scale = require("../../scale");
 
-var Scale = require('../../scale/');
+var _common = require("../../util/common");
 
-var SCALE_TYPES_MAP = {
-  linear: 'Linear',
-  cat: 'Cat',
-  timeCat: 'TimeCat',
-  identity: 'Identity'
-};
+var _global = _interopRequireDefault(require("../../global"));
 
-var ScaleController =
-/*#__PURE__*/
-function () {
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function isFullCircle(coord) {
+  if (!coord.isPolar) {
+    return false;
+  }
+
+  var startAngle = coord.startAngle;
+  var endAngle = coord.endAngle;
+
+  if (!(0, _common.isNil)(startAngle) && !(0, _common.isNil)(endAngle) && endAngle - startAngle < Math.PI * 2) {
+    return false;
+  }
+
+  return true;
+}
+
+function clearObj(obj) {
+  Object.keys(obj).forEach(function (key) {
+    delete obj[key];
+  });
+}
+
+var ScaleController = /*#__PURE__*/function () {
   function ScaleController(cfg) {
     // defs 列定义
-    this.defs = {};
-    Util.mix(this, cfg);
+    this.defs = {}; // 已经实例化的scale
+
+    this.scales = {};
+    (0, _common.mix)(this, cfg);
   }
 
   var _proto = ScaleController.prototype;
+
+  _proto.setFieldDef = function setFieldDef(field, cfg) {
+    var defs = this.defs;
+
+    if ((0, _common.isObject)(field)) {
+      (0, _common.mix)(defs, field);
+    } else {
+      defs[field] = cfg;
+    } // 因为可能同时变更多个scale，所以要把所有已实例化的scale都更新下
+
+
+    this.updateScales();
+  };
 
   _proto._getDef = function _getDef(field) {
     var defs = this.defs;
     var def = null;
 
-    if (Global.scales[field] || defs[field]) {
-      def = Util.mix({}, Global.scales[field]);
-      Util.each(defs[field], function (v, k) {
-        if (Util.isNil(v)) {
+    if (_global["default"].scales[field] || defs[field]) {
+      def = (0, _common.mix)({}, _global["default"].scales[field]);
+      (0, _common.each)(defs[field], function (v, k) {
+        if ((0, _common.isNil)(v)) {
           delete def[k];
         } else {
           def[k] = v;
@@ -3438,26 +4392,27 @@ function () {
     }
 
     var type = 'linear';
-    var value = Util.Array.firstValue(data, field);
 
-    if (Util.isArray(value)) {
+    var value = _common.Array.firstValue(data, field);
+
+    if ((0, _common.isArray)(value)) {
       value = value[0];
     }
 
-    if (Util.isString(value)) {
+    if ((0, _common.isString)(value)) {
       type = 'cat';
     }
 
     return type;
   };
 
-  _proto._getScaleCfg = function _getScaleCfg(type, field, data, def) {
+  _proto._getScaleDef = function _getScaleDef(type, field, data, def) {
     var values;
 
     if (def && def.values) {
       values = def.values;
     } else {
-      values = Util.Array.values(data, field);
+      values = _common.Array.values(data, field);
     }
 
     var cfg = {
@@ -3467,9 +4422,9 @@ function () {
 
     if (type !== 'cat' && type !== 'timeCat') {
       if (!def || !(def.min && def.max)) {
-        var _Util$Array$getRange = Util.Array.getRange(values),
-            min = _Util$Array$getRange.min,
-            max = _Util$Array$getRange.max;
+        var _Array$getRange = _common.Array.getRange(values),
+            min = _Array$getRange.min,
+            max = _Array$getRange.max;
 
         cfg.min = min;
         cfg.max = max;
@@ -3480,84 +4435,454 @@ function () {
     }
 
     return cfg;
+  } // 调整range，为了让图形居中
+  ;
+
+  _proto._adjustRange = function _adjustRange(type, cfg) {
+    var range = cfg.range,
+        values = cfg.values; // 如果是线性, 或者有自定义range都不处理
+
+    if (type === 'linear' || range || !values) {
+      return cfg;
+    }
+
+    var count = values.length; // 单只有一条数据时，在中间显示
+
+    if (count === 1) {
+      cfg.range = [0.5, 1];
+    } else {
+      var chart = this.chart;
+      var coord = chart.get('coord');
+      var widthRatio = _global["default"].widthRatio.multiplePie;
+      var offset = 0;
+
+      if (isFullCircle(coord)) {
+        if (!coord.transposed) {
+          cfg.range = [0, 1 - 1 / count];
+        } else {
+          offset = 1 / count * widthRatio;
+          cfg.range = [offset / 2, 1 - offset / 2];
+        }
+      } else {
+        // 为了让图形居中，所以才设置range
+        offset = 1 / count * 0.5; // 这里可能用0.25会更合理
+
+        cfg.range = [offset, 1 - offset];
+      }
+    }
+
+    return cfg;
   };
 
-  _proto.createScale = function createScale(field, data) {
+  _proto._getScaleCfg = function _getScaleCfg(field, data) {
     var self = this;
 
     var def = self._getDef(field);
 
-    var scale;
-
     if (!data || !data.length) {
       if (def && def.type) {
         def.field = field;
-        scale = new Scale[SCALE_TYPES_MAP[def.type]](def);
-      } else {
-        scale = new Scale.Identity({
+        return {
+          type: def.type,
+          cfg: def
+        };
+      }
+
+      return {
+        type: 'identity',
+        cfg: {
           value: field,
           field: field.toString(),
           values: [field]
-        });
-      }
-
-      return scale;
+        }
+      };
     }
 
     var firstObj = data[0];
     var firstValue = firstObj[field];
 
     if (firstValue === null) {
-      firstValue = Util.Array.firstValue(data, field);
+      firstValue = _common.Array.firstValue(data, field);
     }
 
-    if (Util.isNumber(field) || Util.isNil(firstValue) && !def) {
-      scale = new Scale.Identity({
-        value: field,
-        field: field.toString(),
-        values: [field]
+    if ((0, _common.isNumber)(field) || (0, _common.isNil)(firstValue) && !def) {
+      return {
+        type: 'identity',
+        cfg: {
+          value: field,
+          field: field.toString(),
+          values: [field]
+        }
+      };
+    }
+
+    var type = self._getDefaultType(field, data, def);
+
+    var cfg = self._getScaleDef(type, field, data, def);
+
+    def && (0, _common.mix)(cfg, def);
+    cfg = this._adjustRange(type, cfg);
+    return {
+      type: type,
+      cfg: cfg
+    };
+  };
+
+  _proto.createScale = function createScale(field, data) {
+    var scales = this.scales;
+
+    var _this$_getScaleCfg = this._getScaleCfg(field, data),
+        type = _this$_getScaleCfg.type,
+        cfg = _this$_getScaleCfg.cfg;
+
+    var scale = scales[field]; // 如果已经存在，且类型相等时直接返回
+
+    if (scale && scale.type === type) {
+      scale.change(cfg);
+      return scale;
+    }
+
+    var Scale = (0, _scale.getScale)(type);
+    var newScale = new Scale(cfg);
+    scales[field] = newScale;
+    return newScale;
+  };
+
+  _proto._updateScale = function _updateScale(scale) {
+    var field = scale.field; // 因为每个field的数据都会不同
+
+    var data = this.chart._getScaleData(field);
+
+    var _this$_getScaleCfg2 = this._getScaleCfg(field, data),
+        cfg = _this$_getScaleCfg2.cfg;
+
+    scale.change(cfg);
+  };
+
+  _proto.updateScales = function updateScales() {
+    var _this = this;
+
+    var scales = this.scales; // 修改完列定义后，需要更新已经实例化的scale
+    // 如果是还没有实例化的，在geom初始化的时候会被实例化，所以这里可以不用更新
+
+    (0, _common.each)(scales, function (scale) {
+      _this._updateScale(scale);
+    });
+  } // 调整scale从0开始
+  ;
+
+  _proto.adjustStartZero = function adjustStartZero(scale) {
+    var defs = this.defs;
+    var field = scale.field,
+        min = scale.min,
+        max = scale.max; // 如果有定义，则不处理
+
+    if (defs[field] && defs[field].min) {
+      return;
+    }
+
+    if (min > 0) {
+      scale.change({
+        min: 0
       });
-    } else {
-      var type = self._getDefaultType(field, data, def);
-
-      var cfg = self._getScaleCfg(type, field, data, def);
-
-      def && Util.mix(cfg, def);
-      scale = new Scale[SCALE_TYPES_MAP[type]](cfg);
+    } else if (max < 0) {
+      scale.change({
+        max: 0
+      });
     }
+  };
 
-    return scale;
+  _proto.clear = function clear() {
+    // this.defs = {};
+    // this.scales = {};
+    clearObj(this.defs);
+    clearObj(this.scales);
+    this.data = null;
   };
 
   return ScaleController;
 }();
 
-module.exports = ScaleController;
-}, function(modId) { var map = {"../../util/common":1605424195577,"../../global":1605424195575,"../../scale/":1605424195593}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195593, function(require, module, exports) {
+var _default = ScaleController;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../scale":1606535077083,"../../util/common":1606535077060,"../../global":1606535077058}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077083, function(require, module, exports) {
 
 
-var Scale = require('@antv/scale/lib/base');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-require('@antv/scale/lib/linear');
+var _scale = require("@antv/scale");
 
-require('@antv/scale/lib/identity');
+exports.getScale = _scale.getScale;
+exports.getTickMethod = _scale.getTickMethod;
 
-require('@antv/scale/lib/category');
+var _catTick = _interopRequireDefault(require("./cat-tick"));
 
-module.exports = Scale;
+var _linearTick = _interopRequireDefault(require("./linear-tick"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var Linear = (0, _scale.getScale)('linear');
+var Identity = (0, _scale.getScale)('identity');
+var Category = (0, _scale.getScale)('category');
+var TimeCat = (0, _scale.getScale)('timeCat'); // 覆盖0.3.x的 cat 方法
+
+(0, _scale.registerTickMethod)('cat', _catTick["default"]);
+(0, _scale.registerTickMethod)('time-cat', _catTick["default"]); // 覆盖linear 度量的tick算法
+
+(0, _scale.registerTickMethod)('wilkinson-extended', _linearTick["default"]);
+_scale.Scale.Linear = Linear;
+_scale.Scale.Identity = Identity;
+_scale.Scale.Category = Category;
+_scale.Scale.Cat = Category;
+_scale.Scale.TimeCat = TimeCat;
+var _default = _scale.Scale;
+exports["default"] = _default;
+}, function(modId) { var map = {"./cat-tick":1606535077084,"./linear-tick":1606535077085}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077084, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+// cat平均算法，保头保尾
+var _default = function _default(cfg) {
+  var values = cfg.values,
+      tickCount = cfg.tickCount;
+
+  if (!tickCount) {
+    return values;
+  }
+
+  if (values.length <= 1) {
+    return values;
+  } // 获取间隔步长, 最小是1
+
+
+  var step = parseInt(values.length / (tickCount - 1)) || 1;
+  var ticks = []; // 按间隔数取对应节点
+
+  for (var index = 0; index < values.length; index = index + step) {
+    ticks.push(values[index]);
+  }
+
+  var last = values[values.length - 1]; // 如果最后一个tick不等于原数据的最后一个
+
+  if (ticks[ticks.length - 1] !== last) {
+    if (ticks.length >= tickCount) {
+      // 如果当前的tick个数满足要求
+      ticks[ticks.length - 1] = last;
+    } else {
+      // 不满足tickCount则直接加入最后一个
+      ticks.push(last);
+    }
+  }
+
+  return ticks;
+};
+
+exports["default"] = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195594, function(require, module, exports) {
+__DEFINE__(1606535077085, function(require, module, exports) {
 
 
-var Util = require('../../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
+// 认为是nice的刻度
+var SNAP_COUNT_ARRAY = [1, 1.2, 1.5, 2, 2.2, 2.4, 2.5, 3, 4, 5, 6, 7.5, 8, 10];
+var DEFAULT_COUNT = 5; // 默认刻度值
 
-var Axis = require('../../component/axis/');
+var _default = function _default(cfg) {
+  var _ref = cfg || {},
+      tickCount = _ref.tickCount,
+      tickInterval = _ref.tickInterval;
 
-var Global = require('../../global');
+  var _ref2 = cfg || {},
+      min = _ref2.min,
+      max = _ref2.max;
 
-var _require = require('../../graphic/index'),
-    Shape = _require.Shape;
+  min = isNaN(min) ? 0 : min;
+  max = isNaN(max) ? 0 : max;
+  var count = tickCount && tickCount >= 2 ? tickCount : DEFAULT_COUNT; // 计算interval， 优先取tickInterval
+
+  var interval = tickInterval || getBestInterval({
+    tickCount: count,
+    max: max,
+    min: min
+  }); // 通过interval计算最小tick
+
+  var minTick = Math.floor(min / interval) * interval; // 如果指定了tickInterval, count 需要根据指定的tickInterval来算计
+
+  if (tickInterval) {
+    var intervalCount = Math.abs(Math.ceil((max - minTick) / tickInterval)) + 1; // tickCount 作为最小 count 处理
+
+    count = Math.max(count, intervalCount);
+  }
+
+  var ticks = [];
+  var tickLength = 0;
+  var fixedLength = getFixedLength(interval);
+
+  while (tickLength < count) {
+    ticks.push(toFixed(minTick + tickLength * interval, fixedLength));
+    tickLength++;
+  }
+
+  return ticks;
+};
+
+exports["default"] = _default;
+var DECIMAL_LENGTH = 12;
+
+function getFactor(number) {
+  // 取正数
+  number = Math.abs(number);
+  var factor = 1;
+
+  if (number === 0) {
+    return factor;
+  } // 小于1,逐渐放大
+
+
+  if (number < 1) {
+    var count = 0;
+
+    while (number < 1) {
+      factor = factor / 10;
+      number = number * 10;
+      count++;
+    } // 浮点数计算出现问题
+
+
+    if (factor.toString().length > DECIMAL_LENGTH) {
+      factor = parseFloat(factor.toFixed(count));
+    }
+
+    return factor;
+  } // 大于10逐渐缩小
+
+
+  while (number > 10) {
+    factor = factor * 10;
+    number = number / 10;
+  }
+
+  return factor;
+} // 获取最佳匹配刻度
+
+
+function getBestInterval(_ref3) {
+  var tickCount = _ref3.tickCount,
+      min = _ref3.min,
+      max = _ref3.max;
+
+  // 如果最大最小相等，则直接按1处理
+  if (min === max) {
+    return 1 * getFactor(max);
+  } // 1.计算平均刻度间隔
+
+
+  var avgInterval = (max - min) / (tickCount - 1); // 2.数据标准归一化 映射到[1-10]区间
+
+  var factor = getFactor(avgInterval);
+  var calInterval = avgInterval / factor;
+  var calMax = max / factor;
+  var calMin = min / factor; // 根据平均值推算最逼近刻度值
+
+  var similarityIndex = 0;
+
+  for (var index = 0; index < SNAP_COUNT_ARRAY.length; index++) {
+    var item = SNAP_COUNT_ARRAY[index];
+
+    if (calInterval <= item) {
+      similarityIndex = index;
+      break;
+    }
+  }
+
+  var similarityInterval = getInterval(similarityIndex, tickCount, calMin, calMax); // 小数点位数还原到数据的位数, 因为similarityIndex有可能是小数，所以需要保留similarityIndex自己的小数位数
+
+  var fixedLength = getFixedLength(similarityInterval) + getFixedLength(factor);
+  return toFixed(similarityInterval * factor, fixedLength);
+}
+
+function getInterval(startIndex, tickCount, min, max) {
+  var verify = false;
+  var interval = SNAP_COUNT_ARRAY[startIndex]; // 刻度值校验，如果不满足，循环下去
+
+  for (var i = startIndex; i < SNAP_COUNT_ARRAY.length; i++) {
+    if (intervalIsVerify({
+      interval: SNAP_COUNT_ARRAY[i],
+      tickCount: tickCount,
+      max: max,
+      min: min
+    })) {
+      // 有符合条件的interval
+      interval = SNAP_COUNT_ARRAY[i];
+      verify = true;
+      break;
+    }
+  } // 如果不满足, 依次缩小10倍，再计算
+
+
+  if (!verify) {
+    return 10 * getInterval(0, tickCount, min / 10, max / 10);
+  }
+
+  return interval;
+} // 刻度是否满足展示需求
+
+
+function intervalIsVerify(_ref4) {
+  var interval = _ref4.interval,
+      tickCount = _ref4.tickCount,
+      max = _ref4.max,
+      min = _ref4.min;
+  var minTick = Math.floor(min / interval) * interval;
+
+  if (minTick + (tickCount - 1) * interval >= max) {
+    return true;
+  }
+
+  return false;
+} // 计算小数点应该保留的位数
+
+
+function getFixedLength(num) {
+  var str = num.toString();
+  var index = str.indexOf('.');
+  var indexOfExp = str.indexOf('e-');
+  var length = indexOfExp >= 0 ? parseInt(str.substr(indexOfExp + 2), 10) : str.substr(index + 1).length;
+
+  if (length > 20) {
+    // 最多保留20位小数
+    length = 20;
+  }
+
+  return length;
+} // @antv/util fixedbase不支持科学计数法的判断，需要提mr
+
+
+function toFixed(v, length) {
+  return parseFloat(v.toFixed(length));
+}
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077086, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("../../util/common");
+
+var _index = _interopRequireDefault(require("../../component/axis/index"));
+
+var _global = _interopRequireDefault(require("../../global"));
+
+var _index2 = require("../../graphic/index");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function formatTicks(ticks) {
   var tmp = ticks.slice(0);
@@ -3582,16 +4907,14 @@ function formatTicks(ticks) {
   return tmp;
 }
 
-var AxisController =
-/*#__PURE__*/
-function () {
+var AxisController = /*#__PURE__*/function () {
   function AxisController(cfg) {
     this.axisCfg = {};
     this.frontPlot = null;
     this.backPlot = null;
     this.axes = {}; // store the axes's options
 
-    Util.mix(this, cfg);
+    (0, _common.mix)(this, cfg);
   }
 
   var _proto = AxisController.prototype;
@@ -3715,7 +5038,7 @@ function () {
     var self = this;
     var axisCfg = this.axisCfg;
     var ticks = scale.getTicks();
-    var cfg = Util.deepMix({
+    var cfg = (0, _common.deepMix)({
       ticks: ticks,
       frontContainer: this.frontPlot,
       backContainer: this.backPlot
@@ -3726,10 +5049,10 @@ function () {
     var maxWidth = 0;
     var maxHeight = 0;
     var labelCfg = label;
-    Util.each(ticks, function (tick, index) {
-      if (Util.isFunction(label)) {
+    (0, _common.each)(ticks, function (tick, index) {
+      if ((0, _common.isFunction)(label)) {
         var executedLabel = label(tick.text, index, count);
-        labelCfg = executedLabel ? Util.mix({}, Global._defaultAxis.label, executedLabel) : null;
+        labelCfg = executedLabel ? (0, _common.mix)({}, _global["default"]._defaultAxis.label, executedLabel) : null;
       }
 
       if (labelCfg) {
@@ -3743,9 +5066,9 @@ function () {
           textStyle.textBaseline = labelCfg.textBaseline;
         }
 
-        var axisLabel = new Shape.Text({
+        var axisLabel = new _index2.Shape.Text({
           className: 'axis-label',
-          attrs: Util.mix({
+          attrs: (0, _common.mix)({
             x: 0,
             y: 0,
             text: tick.text,
@@ -3787,17 +5110,17 @@ function () {
     if (coordType === 'cartesian' || coordType === 'rect') {
       var position = self._getLinePosition(scale, dimType, index, transposed);
 
-      defaultCfg = Global.axis[position];
+      defaultCfg = _global["default"].axis[position];
       defaultCfg.position = position;
       type = 'Line';
       key = position;
     } else {
       if (dimType === 'x' && !transposed || dimType === 'y' && transposed) {
-        defaultCfg = Global.axis.circle;
+        defaultCfg = _global["default"].axis.circle;
         type = 'Circle';
         key = 'circle';
       } else {
-        defaultCfg = Global.axis.radius;
+        defaultCfg = _global["default"].axis.radius;
         type = 'Line';
         key = 'radius';
       }
@@ -3819,7 +5142,7 @@ function () {
       self._createAxis(coord, xScale, yScales[0], 'x');
     }
 
-    Util.each(yScales, function (yScale, index) {
+    (0, _common.each)(yScales, function (yScale, index) {
       if (!self._isHide(yScale.field)) {
         self._createAxis(coord, yScale, xScale, 'y', index);
       }
@@ -3828,8 +5151,8 @@ function () {
     var chart = self.chart;
 
     if (chart._isAutoPadding()) {
-      var userPadding = Util.parsePadding(chart.get('padding'));
-      var appendPadding = Util.parsePadding(chart.get('appendPadding'));
+      var userPadding = (0, _common.parsePadding)(chart.get('padding'));
+      var appendPadding = (0, _common.parsePadding)(chart.get('appendPadding'));
       var legendRange = chart.get('legendRange') || {
         top: 0,
         right: 0,
@@ -3878,7 +5201,7 @@ function () {
       chart._updateLayout(padding);
     }
 
-    Util.each(axes, function (axis) {
+    (0, _common.each)(axes, function (axis) {
       var type = axis.type,
           grid = axis.grid,
           verticalScale = axis.verticalScale,
@@ -3901,9 +5224,9 @@ function () {
       if (grid && verticalScale) {
         var gridPoints = [];
         var verticalTicks = formatTicks(verticalScale.getTicks());
-        Util.each(ticks, function (tick) {
+        (0, _common.each)(ticks, function (tick) {
           var subPoints = [];
-          Util.each(verticalTicks, function (verticalTick) {
+          (0, _common.each)(verticalTicks, function (verticalTick) {
             var x = dimType === 'x' ? tick.value : verticalTick.value;
             var y = dimType === 'x' ? verticalTick.value : tick.value;
 
@@ -3931,11 +5254,11 @@ function () {
 
       appendCfg._id = 'axis-' + dimType;
 
-      if (!Util.isNil(index)) {
+      if (!(0, _common.isNil)(index)) {
         appendCfg._id = 'axis-' + dimType + index;
       }
 
-      new Axis[type](Util.mix(axis, appendCfg));
+      new _index["default"][type]((0, _common.mix)(axis, appendCfg));
     });
   };
 
@@ -3948,29 +5271,39 @@ function () {
   return AxisController;
 }();
 
-module.exports = AxisController;
-}, function(modId) { var map = {"../../util/common":1605424195577,"../../component/axis/":1605424195595,"../../global":1605424195575,"../../graphic/index":1605424195598}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195595, function(require, module, exports) {
+var _default = AxisController;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"../../component/axis/index":1606535077087,"../../global":1606535077058,"../../graphic/index":1606535077090}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077087, function(require, module, exports) {
 
 
-var Abstract = require('./abstract');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-require('./line');
+var _abstract = _interopRequireDefault(require("./abstract"));
 
-module.exports = Abstract;
-}, function(modId) { var map = {"./abstract":1605424195596,"./line":1605424195597}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195596, function(require, module, exports) {
+require("./line");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _default = _abstract["default"];
+exports["default"] = _default;
+}, function(modId) { var map = {"./abstract":1606535077088,"./line":1606535077089}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077088, function(require, module, exports) {
 
 
-var Util = require('../../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Global = require('../../global');
+var _common = require("../../util/common");
 
-var Vector2 = require('../../graphic/util/vector2');
+var _global = _interopRequireDefault(require("../../global"));
 
-var Abastract =
-/*#__PURE__*/
-function () {
+var _vector = _interopRequireDefault(require("../../graphic/util/vector2"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var Abastract = /*#__PURE__*/function () {
   var _proto = Abastract.prototype;
 
   _proto._initDefaultCfg = function _initDefaultCfg() {
@@ -4014,7 +5347,7 @@ function () {
   function Abastract(cfg) {
     this._initDefaultCfg();
 
-    Util.mix(this, cfg);
+    (0, _common.mix)(this, cfg);
     this.draw();
   }
 
@@ -4037,12 +5370,12 @@ function () {
     var ticks = self.ticks;
     var length = tickCfg.length;
     var container = self.getContainer(tickCfg.top);
-    Util.each(ticks, function (tick) {
+    (0, _common.each)(ticks, function (tick) {
       var start = self.getOffsetPoint(tick.value);
       var end = self.getSidePoint(start, length);
       var shape = container.addShape('line', {
         className: 'axis-tick',
-        attrs: Util.mix({
+        attrs: (0, _common.mix)({
           x1: start.x,
           y1: start.y,
           x2: end.x,
@@ -4057,7 +5390,7 @@ function () {
     var self = this;
     var labelOffset = self.labelOffset;
     var labels = self.labels;
-    Util.each(labels, function (labelShape) {
+    (0, _common.each)(labels, function (labelShape) {
       var container = self.getContainer(labelShape.get('top'));
       var start = self.getOffsetPoint(labelShape.get('value'));
 
@@ -4065,7 +5398,7 @@ function () {
           x = _self$getSidePoint.x,
           y = _self$getSidePoint.y;
 
-      labelShape.attr(Util.mix({
+      labelShape.attr((0, _common.mix)({
         x: x,
         y: y
       }, self.getTextAlignInfo(start, labelOffset), labelShape.get('textStyle')));
@@ -4082,11 +5415,11 @@ function () {
         ticks = self.ticks;
     var gridCfg = grid;
     var count = gridPoints.length;
-    Util.each(gridPoints, function (subPoints, index) {
-      if (Util.isFunction(grid)) {
+    (0, _common.each)(gridPoints, function (subPoints, index) {
+      if ((0, _common.isFunction)(grid)) {
         var tick = ticks[index] || {};
         var executedGrid = grid(tick.text, index, count);
-        gridCfg = executedGrid ? Util.mix({}, Global._defaultAxis.grid, executedGrid) : null;
+        gridCfg = executedGrid ? (0, _common.mix)({}, _global["default"]._defaultAxis.grid, executedGrid) : null;
       }
 
       if (gridCfg) {
@@ -4100,10 +5433,12 @@ function () {
           var center = self.center,
               startAngle = self.startAngle,
               endAngle = self.endAngle;
-          var radius = Vector2.length([points[0].x - center.x, points[0].y - center.y]);
+
+          var radius = _vector["default"].length([points[0].x - center.x, points[0].y - center.y]);
+
           shape = container.addShape('Arc', {
             className: 'axis-grid',
-            attrs: Util.mix({
+            attrs: (0, _common.mix)({
               x: center.x,
               y: center.y,
               startAngle: startAngle,
@@ -4114,7 +5449,7 @@ function () {
         } else {
           shape = container.addShape('Polyline', {
             className: 'axis-grid',
-            attrs: Util.mix({
+            attrs: (0, _common.mix)({
               points: points
             }, gridCfg)
           });
@@ -4132,10 +5467,12 @@ function () {
   _proto.getOffsetVector = function getOffsetVector(point, offset) {
     var self = this;
     var axisVector = self.getAxisVector(point);
-    var normal = Vector2.normalize([], axisVector);
+
+    var normal = _vector["default"].normalize([], axisVector);
+
     var factor = self.offsetFactor;
     var verticalVector = [normal[1] * -1 * factor, normal[0] * factor];
-    return Vector2.scale([], verticalVector, offset);
+    return _vector["default"].scale([], verticalVector, offset);
   };
 
   _proto.getSidePoint = function getSidePoint(point, offset) {
@@ -4184,23 +5521,25 @@ function () {
   return Abastract;
 }();
 
-module.exports = Abastract;
-}, function(modId) { var map = {"../../util/common":1605424195577,"../../global":1605424195575,"../../graphic/util/vector2":1605424195585}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195597, function(require, module, exports) {
+var _default = Abastract;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"../../global":1606535077058,"../../graphic/util/vector2":1606535077071}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077089, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _abstract = _interopRequireDefault(require("./abstract"));
 
-var Abstract = require('./abstract');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Line =
-/*#__PURE__*/
-function (_Abstract) {
-  (0, _inheritsLoose2["default"])(Line, _Abstract);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Line = /*#__PURE__*/function (_Abstract) {
+  _inheritsLoose(Line, _Abstract);
 
   function Line() {
     return _Abstract.apply(this, arguments) || this;
@@ -4236,7 +5575,7 @@ function (_Abstract) {
         end = this.end;
     container.addShape('line', {
       className: 'axis-line',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x1: start.x,
         y1: start.y,
         x2: end.x,
@@ -4246,59 +5585,86 @@ function (_Abstract) {
   };
 
   return Line;
-}(Abstract);
+}(_abstract["default"]);
 
-Abstract.Line = Line;
-module.exports = Line;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./abstract":1605424195596}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195598, function(require, module, exports) {
-
-
-var G = {
-  Canvas: require('./canvas'),
-  Group: require('./group'),
-  Shape: require('./shape'),
-  Matrix: require('./util/matrix'),
-  Vector2: require('./util/vector2')
-};
-
-require('./shape/rect');
-
-require('./shape/circle');
-
-require('./shape/line');
-
-require('./shape/polygon');
-
-require('./shape/polyline');
-
-require('./shape/arc');
-
-require('./shape/sector');
-
-require('./shape/text');
-
-require('./shape/custom');
-
-module.exports = G;
-}, function(modId) { var map = {"./canvas":1605424195599,"./group":1605424195604,"./shape":1605424195601,"./util/matrix":1605424195584,"./util/vector2":1605424195585,"./shape/rect":1605424195607,"./shape/circle":1605424195608,"./shape/line":1605424195609,"./shape/polygon":1605424195611,"./shape/polyline":1605424195612,"./shape/arc":1605424195614,"./shape/sector":1605424195615,"./shape/text":1605424195616,"./shape/custom":1605424195618}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195599, function(require, module, exports) {
+_abstract["default"].Line = Line;
+var _default = Line;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./abstract":1606535077088}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077090, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
 
-var Container = require('./container');
+var _canvas = _interopRequireDefault(require("./canvas"));
 
-var Group = require('./group');
+exports.Canvas = _canvas["default"];
 
-var _require = require('./util/requestAnimationFrame'),
-    requestAnimationFrame = _require.requestAnimationFrame;
+var _group = _interopRequireDefault(require("./group"));
 
-var CanvasElement = require('./canvas-element');
+exports.Group = _group["default"];
 
-var Canvas =
-/*#__PURE__*/
-function () {
+var _shape = _interopRequireDefault(require("./shape"));
+
+exports.Shape = _shape["default"];
+
+var _matrix = _interopRequireDefault(require("./util/matrix"));
+
+exports.Matrix = _matrix["default"];
+
+var _vector = _interopRequireDefault(require("./util/vector2"));
+
+exports.Vector2 = _vector["default"];
+
+require("./shape/rect");
+
+require("./shape/image");
+
+require("./shape/circle");
+
+require("./shape/line");
+
+require("./shape/polygon");
+
+require("./shape/polyline");
+
+require("./shape/arc");
+
+require("./shape/sector");
+
+require("./shape/text");
+
+require("./shape/custom");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+}, function(modId) { var map = {"./canvas":1606535077091,"./group":1606535077098,"./shape":1606535077095,"./util/matrix":1606535077070,"./util/vector2":1606535077071,"./shape/rect":1606535077100,"./shape/image":1606535077101,"./shape/circle":1606535077102,"./shape/line":1606535077103,"./shape/polygon":1606535077105,"./shape/polyline":1606535077106,"./shape/arc":1606535077108,"./shape/sector":1606535077109,"./shape/text":1606535077110,"./shape/custom":1606535077112}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077091, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _emit = _interopRequireDefault(require("./event/emit"));
+
+var _controller = _interopRequireDefault(require("./event/controller"));
+
+var _canvasElement = _interopRequireDefault(require("./canvas-element"));
+
+var _common = require("../util/common");
+
+var _container = _interopRequireDefault(require("./container"));
+
+var _group = _interopRequireDefault(require("./group"));
+
+var _requestAnimationFrame = require("./util/requestAnimationFrame");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Canvas = /*#__PURE__*/function (_EventEmit) {
+  _inheritsLoose(Canvas, _EventEmit);
+
   var _proto = Canvas.prototype;
 
   _proto.get = function get(name) {
@@ -4310,21 +5676,26 @@ function () {
   };
 
   function Canvas(cfg) {
-    this._attrs = Util.mix({
+    var _this;
+
+    _this = _EventEmit.call(this) || this;
+    _this._attrs = (0, _common.mix)({
       type: 'canvas',
       children: []
     }, cfg);
 
-    this._initPixelRatio();
+    _this._initPixelRatio();
 
-    this._initCanvas();
+    _this._initCanvas();
+
+    return _this;
   }
 
   _proto._initPixelRatio = function _initPixelRatio() {
     var pixelRatio = this.get('pixelRatio');
 
     if (!pixelRatio) {
-      this.set('pixelRatio', Util.getPixelRatio());
+      this.set('pixelRatio', (0, _common.getPixelRatio)());
     }
   };
 
@@ -4340,17 +5711,17 @@ function () {
     var context = self.get('context');
 
     if (!el && !context) {
-      throw new Error('Please specify the id or el of the chart!');
+      throw new Error('Please specify the id, el or context of the chart!');
     }
 
     var canvas;
 
     if (el) {
       // DOMElement or String
-      canvas = Util.isString(el) ? Util.getDomById(el) : el;
+      canvas = (0, _common.isString)(el) ? (0, _common.getDomById)(el) : el;
     } else {
       // 说明没有指定el
-      canvas = CanvasElement.create(context);
+      canvas = _canvasElement["default"].create(context);
     }
 
     if (context && canvas && !canvas.getContext) {
@@ -4362,19 +5733,25 @@ function () {
     var width = self.get('width');
 
     if (!width) {
-      width = Util.getWidth(canvas);
+      width = (0, _common.getWidth)(canvas);
     }
 
     var height = self.get('height');
 
     if (!height) {
-      height = Util.getHeight(canvas);
+      height = (0, _common.getHeight)(canvas);
     }
 
     self.set('canvas', this);
     self.set('el', canvas);
     self.set('context', context || canvas.getContext('2d'));
-    self.changeSize(width, height);
+    self.changeSize(width, height); // 初始化事件控制器
+
+    var eventController = new _controller["default"]({
+      canvas: this,
+      el: canvas
+    });
+    self.set('eventController', eventController);
   };
 
   _proto.changeSize = function changeSize(width, height) {
@@ -4387,7 +5764,7 @@ function () {
       canvasDOM.style.height = height + 'px';
     }
 
-    if (Util.isCanvasElement(canvasDOM)) {
+    if ((0, _common.isCanvasElement)(canvasDOM)) {
       canvasDOM.width = width * pixelRatio;
       canvasDOM.height = height * pixelRatio;
 
@@ -4436,7 +5813,7 @@ function () {
     var self = this;
 
     function drawInner() {
-      self.set('animateHandler', requestAnimationFrame(function () {
+      self.set('animateHandler', (0, _requestAnimationFrame.requestAnimationFrame)(function () {
         self.set('animateHandler', undefined);
 
         if (self.get('toDraw')) {
@@ -4447,13 +5824,7 @@ function () {
 
       try {
         var context = self._attrs.context;
-        var children = self._attrs.children;
-
-        for (var i = 0, len = children.length; i < len; i++) {
-          var child = children[i];
-          child.draw(context);
-        } // 支付宝，微信小程序，需要调context.draw才能完成绘制， 所以这里直接判断是否有.draw方法
-
+        self.drawInner(context); // 支付宝，微信小程序，需要调context.draw才能完成绘制， 所以这里直接判断是否有.draw方法
 
         if (context.draw) {
           context.draw();
@@ -4482,8 +5853,14 @@ function () {
   _proto.destroy = function destroy() {
     if (this.get('destroyed')) {
       return;
-    }
+    } // 需要清理 canvas 画布内容，否则会导致 spa 应用 ios 下 canvas 白屏
+    // https://stackoverflow.com/questions/52532614/total-canvas-memory-use-exceeds-the-maximum-limit-safari-12
+    // https://github.com/antvis/F2/issues/630
 
+
+    var el = this.get('el');
+    el.width = 0;
+    el.height = 0;
     this.clear();
     this._attrs = {};
     this.set('destroyed', true);
@@ -4494,21 +5871,482 @@ function () {
   };
 
   return Canvas;
-}();
+}(_emit["default"]);
 
-Util.mix(Canvas.prototype, Container, {
+(0, _common.mix)(Canvas.prototype, _container["default"], {
   getGroupClass: function getGroupClass() {
-    return Group;
+    return _group["default"];
   }
 });
-module.exports = Canvas;
-}, function(modId) { var map = {"../util/common":1605424195577,"./container":1605424195600,"./group":1605424195604,"./util/requestAnimationFrame":1605424195605,"./canvas-element":1605424195606}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195600, function(require, module, exports) {
+var _default = Canvas;
+exports["default"] = _default;
+}, function(modId) { var map = {"./event/emit":1606535077066,"./event/controller":1606535077092,"./canvas-element":1606535077093,"../util/common":1606535077060,"./container":1606535077094,"./group":1606535077098,"./util/requestAnimationFrame":1606535077099}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077092, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Shape = require('./shape');
+var _dom = require("../../util/dom");
+
+var _common = require("../../util/common");
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// 计算滑动的方向
+var calcDirection = function calcDirection(start, end) {
+  var xDistance = end.x - start.x;
+  var yDistance = end.y - start.y; // x 的距离大于y 说明是横向，否则就是纵向
+
+  if (Math.abs(xDistance) > Math.abs(yDistance)) {
+    return xDistance > 0 ? 'right' : 'left';
+  }
+
+  return yDistance > 0 ? 'down' : 'up';
+}; // 计算2点之间的距离
+
+
+var calcDistance = function calcDistance(point1, point2) {
+  var xDistance = Math.abs(point2.x - point1.x);
+  var yDistance = Math.abs(point2.y - point1.y);
+  return Math.sqrt(xDistance * xDistance + yDistance * yDistance);
+};
+
+var getCenter = function getCenter(point1, point2) {
+  var x = point1.x + (point2.x - point1.x) / 2;
+  var y = point1.y + (point2.y - point1.y) / 2;
+  return {
+    x: x,
+    y: y
+  };
+};
+
+var convertPoints = function convertPoints(ev, canvas) {
+  var touches = ev.touches; // 认为是mouse事件
+
+  if (!touches) {
+    var point = (0, _dom.getRelativePosition)({
+      x: ev.clientX,
+      y: ev.clientY
+    }, canvas);
+    return [point];
+  }
+
+  var points = [];
+  var len = touches.length;
+
+  for (var i = 0; i < len; i++) {
+    var touch = touches[i]; // x, y: 相对canvas原点的位置，clientX, clientY 相对于可视窗口的位置
+
+    var x = touch.x,
+        y = touch.y,
+        clientX = touch.clientX,
+        clientY = touch.clientY;
+
+    var _point = void 0; // 小程序环境会有x,y
+
+
+    if ((0, _common.isNumber)(x) || (0, _common.isNumber)(y)) {
+      _point = {
+        x: x,
+        y: y
+      };
+    } else {
+      // 浏览器环境再计算下canvas的相对位置
+      _point = (0, _dom.getRelativePosition)({
+        x: clientX,
+        y: clientY
+      }, canvas);
+    }
+
+    points.push(_point);
+  }
+
+  return points;
+};
+
+var PRESS_DELAY = 250;
+
+var EventController = /*#__PURE__*/function () {
+  function EventController(_ref) {
+    var _this = this;
+
+    var canvas = _ref.canvas,
+        el = _ref.el;
+
+    _defineProperty(this, "_click", function (ev) {
+      var points = convertPoints(ev, _this.canvas);
+      ev.points = points;
+
+      _this.emitEvent('click', ev);
+    });
+
+    _defineProperty(this, "_start", function (ev) {
+      var points = convertPoints(ev, _this.canvas);
+
+      if (!points) {
+        return;
+      }
+
+      ev.points = points;
+
+      _this.emitEvent('touchstart', ev); // 防止上次的内容没有清理掉，重新reset下
+
+
+      _this.reset(); // 记录touch start 的时间
+
+
+      _this.startTime = Date.now(); // 记录touch start 的点
+
+      _this.startPoints = points;
+
+      if (points.length > 1) {
+        _this.startDistance = calcDistance(points[0], points[1]);
+        _this.center = getCenter(points[0], points[1]);
+      } else {
+        // 如果touchstart后停顿250ms, 则也触发press事件
+        _this.pressTimeout = setTimeout(function () {
+          // 这里固定触发press事件
+          var eventType = 'press';
+          var direction = 'none';
+          ev.direction = direction;
+
+          _this.emitStart(eventType, ev);
+
+          _this.emitEvent(eventType, ev);
+
+          _this.eventType = eventType;
+          _this.direction = direction;
+        }, PRESS_DELAY);
+      }
+    });
+
+    _defineProperty(this, "_move", function (ev) {
+      var points = convertPoints(ev, _this.canvas);
+      if (!points) return;
+
+      _this.clearPressTimeout();
+
+      ev.points = points;
+
+      _this.emitEvent('touchmove', ev);
+
+      var startPoints = _this.startPoints;
+      if (!startPoints) return; // 多指触控
+
+      if (points.length > 1) {
+        // touchstart的距离
+        var startDistance = _this.startDistance;
+        var currentDistance = calcDistance(points[0], points[1]);
+        ev.zoom = currentDistance / startDistance;
+        ev.center = _this.center; // 触发缩放事件
+
+        _this.emitStart('pinch', ev);
+
+        _this.emitEvent('pinch', ev);
+      } else {
+        var deltaX = points[0].x - startPoints[0].x;
+        var deltaY = points[0].y - startPoints[0].y;
+        var direction = _this.direction || calcDirection(startPoints[0], points[0]);
+        _this.direction = direction; // 获取press或者pan的事件类型
+        // press 按住滑动, pan表示平移
+        // 如果start后立刻move，则触发pan, 如果有停顿，则触发press
+
+        var eventType = _this.getEventType(points);
+
+        ev.direction = direction;
+        ev.deltaX = deltaX;
+        ev.deltaY = deltaY;
+
+        _this.emitStart(eventType, ev);
+
+        _this.emitEvent(eventType, ev); // 记录最后2次move的时间和坐标，为了给swipe事件用
+
+
+        var prevMoveTime = _this.lastMoveTime;
+        var now = Date.now(); // 最后2次的时间间隔一定要大于0，否则swipe没发计算
+
+        if (now - prevMoveTime > 0) {
+          _this.prevMoveTime = prevMoveTime;
+          _this.prevMovePoints = _this.lastMovePoints;
+          _this.lastMoveTime = now;
+          _this.lastMovePoints = points;
+        }
+      }
+    });
+
+    _defineProperty(this, "_end", function (ev) {
+      _this.emitEnd(ev);
+
+      _this.emitEvent('touchend', ev); // swipe事件处理, 在touchend之后触发
+
+
+      var lastMoveTime = _this.lastMoveTime;
+      var now = Date.now(); // 做这个判断是为了最后一次touchmove后到end前，还有一个停顿的过程
+      // 100 是拍的一个值，理论这个值会很短，一般不卡顿的话在10ms以内
+
+      if (now - lastMoveTime < 100) {
+        var prevMoveTime = _this.prevMoveTime || _this.startTime;
+        var intervalTime = lastMoveTime - prevMoveTime; // 时间间隔一定要大于0, 否则计算没意义
+
+        if (intervalTime > 0) {
+          var prevMovePoints = _this.prevMovePoints || _this.startPoints;
+          var lastMovePoints = _this.lastMovePoints; // move速率
+
+          var velocity = calcDistance(prevMovePoints[0], lastMovePoints[0]) / intervalTime; // 0.3 是参考hammerjs的设置
+
+          if (velocity > 0.3) {
+            ev.velocity = velocity;
+            ev.direction = calcDirection(prevMovePoints[0], lastMovePoints[0]);
+
+            _this.emitEvent('swipe', ev);
+          }
+        }
+      }
+
+      _this.reset();
+
+      var touches = ev.touches; // 当多指只释放了1指时也会触发end, 这时重新触发一次start
+
+      if (touches && touches.length > 0) {
+        _this._start(ev);
+      }
+    });
+
+    _defineProperty(this, "_cancel", function (ev) {
+      _this.emitEvent('touchcancel', ev);
+
+      _this.reset();
+    });
+
+    // canvasEl
+    this.canvas = canvas;
+    this.delegateEvent(el); // 用来记录当前触发的事件
+
+    this.processEvent = {};
+  }
+
+  var _proto = EventController.prototype;
+
+  _proto.delegateEvent = function delegateEvent(canvasEl) {
+    // 代理这几个事件
+    canvasEl.addEventListener('click', this._click);
+    canvasEl.addEventListener('touchstart', this._start);
+    canvasEl.addEventListener('touchmove', this._move);
+    canvasEl.addEventListener('touchend', this._end);
+    canvasEl.addEventListener('touchcancel', this._cancel);
+  };
+
+  _proto.emitEvent = function emitEvent(type, ev) {
+    var canvas = this.canvas;
+    canvas.emit(type, ev);
+  };
+
+  _proto.getEventType = function getEventType(points) {
+    var eventType = this.eventType,
+        canvas = this.canvas,
+        startTime = this.startTime,
+        startPoints = this.startPoints;
+
+    if (eventType) {
+      return eventType;
+    }
+
+    var type;
+    var panEventListeners = canvas.__events.pan; // 如果没有pan事件的监听，默认都是press
+
+    if (!panEventListeners || !panEventListeners.length) {
+      type = 'press';
+    } else {
+      // 如果有pan事件的处理，press则需要停顿250ms, 且移动距离小于10
+      var now = Date.now();
+
+      if (now - startTime > PRESS_DELAY && calcDistance(startPoints[0], points[0]) < 10) {
+        type = 'press';
+      } else {
+        type = 'pan';
+      }
+    }
+
+    this.eventType = type;
+    return type;
+  };
+
+  _proto.enable = function enable(eventType) {
+    this.processEvent[eventType] = true;
+  } // 是否进行中的事件
+  ;
+
+  _proto.isProcess = function isProcess(eventType) {
+    return this.processEvent[eventType];
+  } // 触发start事件
+  ;
+
+  _proto.emitStart = function emitStart(type, ev) {
+    if (this.isProcess(type)) {
+      return;
+    }
+
+    this.enable(type);
+    this.emitEvent(type + "start", ev);
+  } // 触发end事件
+  ;
+
+  _proto.emitEnd = function emitEnd(ev) {
+    var _this2 = this;
+
+    var processEvent = this.processEvent;
+    Object.keys(processEvent).forEach(function (type) {
+      _this2.emitEvent(type + "end", ev);
+
+      delete processEvent[type];
+    });
+  };
+
+  _proto.clearPressTimeout = function clearPressTimeout() {
+    if (this.pressTimeout) {
+      clearTimeout(this.pressTimeout);
+      this.pressTimeout = 0;
+    }
+  };
+
+  _proto.reset = function reset() {
+    this.clearPressTimeout();
+    this.startTime = 0;
+    this.startPoints = null;
+    this.startDistance = 0;
+    this.direction = null;
+    this.eventType = null;
+    this.pinch = false;
+    this.prevMoveTime = 0;
+    this.prevMovePoints = null;
+    this.lastMoveTime = 0;
+    this.lastMovePoints = null;
+  };
+
+  return EventController;
+}();
+
+var _default = EventController;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/dom":1606535077062,"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077093, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _emit = _interopRequireDefault(require("./event/emit"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var CanvasElement = /*#__PURE__*/function (_EventEmit) {
+  _inheritsLoose(CanvasElement, _EventEmit);
+
+  function CanvasElement(ctx) {
+    var _this;
+
+    _this = _EventEmit.call(this) || this;
+    _this.context = ctx; // canvas实际的宽高 (width/height) * pixelRatio
+
+    _this.width = 0;
+    _this.height = 0;
+    _this.style = {};
+    _this.currentStyle = {}; // 用来标识是CanvasElement实例
+
+    _this.isCanvasElement = true;
+    return _this;
+  }
+
+  var _proto = CanvasElement.prototype;
+
+  _proto.getContext = function getContext()
+  /* type */
+  {
+    return this.context;
+  };
+
+  _proto.getBoundingClientRect = function getBoundingClientRect() {
+    var width = this.width;
+    var height = this.height; // 默认都处理成可视窗口的顶部位置
+
+    return {
+      top: 0,
+      right: width,
+      bottom: height,
+      left: 0
+    };
+  };
+
+  _proto.addEventListener = function addEventListener(type, listener) {
+    this.on(type, listener);
+  };
+
+  _proto.removeEventListener = function removeEventListener(type, listener) {
+    this.off(type, listener);
+  };
+
+  _proto.dispatchEvent = function dispatchEvent(type, e) {
+    this.emit(type, e);
+  };
+
+  return CanvasElement;
+}(_emit["default"]);
+
+function supportEventListener(canvas) {
+  if (!canvas) {
+    return false;
+  } // 非 HTMLCanvasElement
+
+
+  if (canvas.nodeType !== 1 || !canvas.nodeName || canvas.nodeName.toLowerCase() !== 'canvas') {
+    return false;
+  } // 微信小程序canvas.getContext('2d')时也是CanvasRenderingContext2D
+  // 也会有ctx.canvas, 而且nodeType也是1，所以还要在看下是否支持addEventListener
+
+
+  var support = false;
+
+  try {
+    canvas.addEventListener('eventTest', function () {
+      support = true;
+    });
+    canvas.dispatchEvent(new Event('eventTest'));
+  } catch (error) {
+    support = false;
+  }
+
+  return support;
+}
+
+var _default = {
+  create: function create(ctx) {
+    if (!ctx) {
+      return null;
+    }
+
+    if (supportEventListener(ctx.canvas)) {
+      return ctx.canvas;
+    }
+
+    return new CanvasElement(ctx);
+  }
+};
+exports["default"] = _default;
+}, function(modId) { var map = {"./event/emit":1606535077066}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077094, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("../util/common");
+
+var _shape = _interopRequireDefault(require("./shape"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var SHAPE_MAP = {};
 var INDEX = '_INDEX';
@@ -4520,7 +6358,7 @@ function getComparer(compare) {
   };
 }
 
-module.exports = {
+var _default = {
   getGroupClass: function getGroupClass() {},
   getChildren: function getChildren() {
     return this.get('children');
@@ -4534,7 +6372,7 @@ module.exports = {
     var shapeType = SHAPE_MAP[type];
 
     if (!shapeType) {
-      shapeType = Util.upperFirst(type);
+      shapeType = (0, _common.upperFirst)(type);
       SHAPE_MAP[type] = shapeType;
     }
 
@@ -4544,14 +6382,14 @@ module.exports = {
       cfg.attrs.fontFamily = cfg.attrs.fontFamily || canvas.get('fontFamily');
     }
 
-    var shape = new Shape[shapeType](cfg);
+    var shape = new _shape["default"][shapeType](cfg);
     this.add(shape);
     return shape;
   },
   addGroup: function addGroup(cfg) {
     var canvas = this.get('canvas');
     var groupClass = this.getGroupClass();
-    cfg = Util.mix({}, cfg);
+    cfg = (0, _common.mix)({}, cfg);
     cfg.canvas = canvas;
     cfg.parent = this;
     var rst = new groupClass(cfg);
@@ -4575,6 +6413,16 @@ module.exports = {
     }));
     return this;
   },
+  drawInner: function drawInner(context) {
+    var children = this.get('children');
+
+    for (var i = 0, len = children.length; i < len; i++) {
+      var child = children[i];
+      child.draw(context);
+    }
+
+    return this;
+  },
   clear: function clear() {
     var children = this.get('children');
 
@@ -4588,7 +6436,7 @@ module.exports = {
     var self = this;
     var children = self.get('children');
 
-    if (!Util.isArray(items)) {
+    if (!(0, _common.isArray)(items)) {
       items = [items];
     }
 
@@ -4598,7 +6446,8 @@ module.exports = {
 
       if (parent) {
         var descendants = parent.get('children');
-        Util.Array.remove(descendants, item);
+
+        _common.Array.remove(descendants, item);
       }
 
       self._setEvn(item);
@@ -4629,22 +6478,24 @@ module.exports = {
     }
   }
 };
-}, function(modId) { var map = {"../util/common":1605424195577,"./shape":1605424195601}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195601, function(require, module, exports) {
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"./shape":1606535077095}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077095, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../util/common");
 
-var Util = require('../util/common');
+var _element = _interopRequireDefault(require("./element"));
 
-var Element = require('./element');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Shape =
-/*#__PURE__*/
-function (_Element) {
-  (0, _inheritsLoose2["default"])(Shape, _Element);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Shape = /*#__PURE__*/function (_Element) {
+  _inheritsLoose(Shape, _Element);
 
   function Shape() {
     return _Element.apply(this, arguments) || this;
@@ -4675,7 +6526,7 @@ function (_Element) {
     if (self.hasFill()) {
       var fillOpacity = attrs.fillOpacity;
 
-      if (!Util.isNil(fillOpacity) && fillOpacity !== 1) {
+      if (!(0, _common.isNil)(fillOpacity) && fillOpacity !== 1) {
         context.globalAlpha = fillOpacity;
         context.fill();
         context.globalAlpha = originOpacity;
@@ -4690,7 +6541,7 @@ function (_Element) {
       if (lineWidth > 0) {
         var strokeOpacity = attrs.strokeOpacity;
 
-        if (!Util.isNil(strokeOpacity) && strokeOpacity !== 1) {
+        if (!(0, _common.isNil)(strokeOpacity) && strokeOpacity !== 1) {
           context.globalAlpha = strokeOpacity;
         }
 
@@ -4725,24 +6576,26 @@ function (_Element) {
   _proto.createPath = function createPath() {};
 
   return Shape;
-}(Element);
+}(_element["default"]);
 
-module.exports = Shape;
-}, function(modId) { var map = {"../util/common":1605424195577,"./element":1605424195602}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195602, function(require, module, exports) {
+var _default = Shape;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"./element":1606535077096}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077096, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var MatrixUtil = require('./util/matrix');
+var _common = require("../util/common");
 
-var Vector2 = require('./util/vector2');
+var _matrix = _interopRequireDefault(require("./util/matrix"));
 
-var StyleUtil = require('./util/style-parse');
+var _vector = _interopRequireDefault(require("./util/vector2"));
 
-function isUnchanged(m) {
-  return m[0] === 1 && m[1] === 0 && m[2] === 0 && m[3] === 1 && m[4] === 0 && m[5] === 0;
-}
+var _styleParse = require("./util/style-parse");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var ALIAS_ATTRS_MAP = {
   stroke: 'strokeStyle',
@@ -4753,9 +6606,7 @@ var SHAPE_ATTRS = ['fillStyle', 'font', 'globalAlpha', 'lineCap', 'lineWidth', '
 ];
 var CLIP_SHAPES = ['circle', 'sector', 'polygon', 'rect', 'polyline'];
 
-var Element =
-/*#__PURE__*/
-function () {
+var Element = /*#__PURE__*/function () {
   var _proto = Element.prototype;
 
   _proto._initProperties = function _initProperties() {
@@ -4769,7 +6620,7 @@ function () {
   function Element(cfg) {
     this._initProperties();
 
-    Util.mix(this._attrs, cfg);
+    (0, _common.mix)(this._attrs, cfg);
     var attrs = this._attrs.attrs;
 
     if (attrs) {
@@ -4796,7 +6647,7 @@ function () {
   };
 
   _proto.initAttrs = function initAttrs(attrs) {
-    this.attr(Util.mix(this.getDefaultAttrs(), attrs));
+    this.attr((0, _common.mix)(this.getDefaultAttrs(), attrs));
   };
 
   _proto.getDefaultAttrs = function getDefaultAttrs() {
@@ -4847,7 +6698,7 @@ function () {
       return self._attrs.attrs;
     }
 
-    if (Util.isObject(name)) {
+    if ((0, _common.isObject)(name)) {
       this._attrs.bbox = null;
 
       for (var k in name) {
@@ -4919,10 +6770,10 @@ function () {
           var v = elAttrs[k];
 
           if (k === 'fillStyle' || k === 'strokeStyle') {
-            v = StyleUtil.parseStyle(v, this, context);
+            v = (0, _styleParse.parseStyle)(v, this, context);
           }
 
-          if (k === 'lineDash' && context.setLineDash && Util.isArray(v)) {
+          if (k === 'lineDash' && context.setLineDash && (0, _common.isArray)(v)) {
             context.setLineDash(v);
           } else {
             context[k] = v;
@@ -4963,7 +6814,8 @@ function () {
 
     if (parent) {
       var children = parent.get('children');
-      Util.Array.remove(children, this);
+
+      _common.Array.remove(children, this);
     }
 
     return this;
@@ -5021,7 +6873,7 @@ function () {
 
   _proto.transform = function transform(actions) {
     var matrix = this._attrs.attrs.matrix;
-    this._attrs.attrs.matrix = MatrixUtil.transform(matrix, actions);
+    this._attrs.attrs.matrix = _matrix["default"].transform(matrix, actions);
     return this;
   };
 
@@ -5032,17 +6884,20 @@ function () {
 
   _proto.translate = function translate(x, y) {
     var matrix = this._attrs.attrs.matrix;
-    MatrixUtil.translate(matrix, matrix, [x, y]);
+
+    _matrix["default"].translate(matrix, matrix, [x, y]);
   };
 
   _proto.rotate = function rotate(rad) {
     var matrix = this._attrs.attrs.matrix;
-    MatrixUtil.rotate(matrix, matrix, rad);
+
+    _matrix["default"].rotate(matrix, matrix, rad);
   };
 
   _proto.scale = function scale(sx, sy) {
     var matrix = this._attrs.attrs.matrix;
-    MatrixUtil.scale(matrix, matrix, [sx, sy]);
+
+    _matrix["default"].scale(matrix, matrix, [sx, sy]);
   };
 
   _proto.moveTo = function moveTo(x, y) {
@@ -5055,14 +6910,16 @@ function () {
 
   _proto.apply = function apply(v) {
     var m = this._attrs.attrs.matrix;
-    Vector2.transformMat2d(v, v, m);
+
+    _vector["default"].transformMat2d(v, v, m);
+
     return this;
   };
 
   _proto.resetTransform = function resetTransform(context) {
     var mo = this._attrs.attrs.matrix;
 
-    if (!isUnchanged(mo)) {
+    if (_matrix["default"].isChanged(mo)) {
       context.transform(mo[0], mo[1], mo[2], mo[3], mo[4], mo[5]);
     }
   };
@@ -5074,19 +6931,24 @@ function () {
   return Element;
 }();
 
-module.exports = Element;
-}, function(modId) { var map = {"../util/common":1605424195577,"./util/matrix":1605424195584,"./util/vector2":1605424195585,"./util/style-parse":1605424195603}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195603, function(require, module, exports) {
+var _default = Element;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"./util/matrix":1606535077070,"./util/vector2":1606535077071,"./util/style-parse":1606535077097}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077097, function(require, module, exports) {
 
 
-var Util = require('../../util/common');
+exports.__esModule = true;
+exports.parseStyle = parseStyle;
+exports["default"] = void 0;
+
+var _common = require("../../util/common");
 
 function _mod(n, m) {
   return (n % m + m) % m;
 }
 
 function _addStop(steps, gradient) {
-  Util.each(steps, function (item) {
+  (0, _common.each)(steps, function (item) {
     item = item.split(':');
     gradient.addColorStop(Number(item[0]), item[1]);
   });
@@ -5186,46 +7048,50 @@ function _parseRadialGradient(color, shape, context) {
   return gradient;
 }
 
-module.exports = {
-  parseStyle: function parseStyle(color, shape, context) {
-    if (color[1] === '(') {
-      try {
-        var firstCode = color[0];
+function parseStyle(color, shape, context) {
+  if (color[1] === '(') {
+    try {
+      var firstCode = color[0];
 
-        if (firstCode === 'l') {
-          return _parseLineGradient(color, shape, context);
-        } else if (firstCode === 'r') {
-          return _parseRadialGradient(color, shape, context);
-        }
-      } catch (ev) {
-        console.error('error in parsing gradient string, please check if there are any extra whitespaces.');
-        console.error(ev);
+      if (firstCode === 'l') {
+        return _parseLineGradient(color, shape, context);
+      } else if (firstCode === 'r') {
+        return _parseRadialGradient(color, shape, context);
       }
+    } catch (ev) {
+      console.error('error in parsing gradient string, please check if there are any extra whitespaces.');
+      console.error(ev);
     }
-
-    return color;
   }
+
+  return color;
+}
+
+var _default = {
+  parseStyle: parseStyle
 };
-}, function(modId) { var map = {"../../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195604, function(require, module, exports) {
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077098, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../util/common");
 
-var Util = require('../util/common');
+var _element = _interopRequireDefault(require("./element"));
 
-var Element = require('./element');
+var _container = _interopRequireDefault(require("./container"));
 
-var Container = require('./container');
+var _vector = _interopRequireDefault(require("./util/vector2"));
 
-var Vector2 = require('./util/vector2');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Group =
-/*#__PURE__*/
-function (_Element) {
-  (0, _inheritsLoose2["default"])(Group, _Element);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Group = /*#__PURE__*/function (_Element) {
+  _inheritsLoose(Group, _Element);
 
   function Group() {
     return _Element.apply(this, arguments) || this;
@@ -5241,17 +7107,6 @@ function (_Element) {
       isGroup: true,
       children: []
     };
-  };
-
-  _proto.drawInner = function drawInner(context) {
-    var children = this.get('children');
-
-    for (var i = 0, len = children.length; i < len; i++) {
-      var child = children[i];
-      child.draw(context);
-    }
-
-    return this;
   };
 
   _proto.getBBox = function getBBox() {
@@ -5277,10 +7132,15 @@ function (_Element) {
         var rightTop = [box.maxX, box.minY];
         var rightBottom = [box.maxX, box.maxY];
         var matrix = child.attr('matrix');
-        Vector2.transformMat2d(leftTop, leftTop, matrix);
-        Vector2.transformMat2d(leftBottom, leftBottom, matrix);
-        Vector2.transformMat2d(rightTop, rightTop, matrix);
-        Vector2.transformMat2d(rightBottom, rightBottom, matrix);
+
+        _vector["default"].transformMat2d(leftTop, leftTop, matrix);
+
+        _vector["default"].transformMat2d(leftBottom, leftBottom, matrix);
+
+        _vector["default"].transformMat2d(rightTop, rightTop, matrix);
+
+        _vector["default"].transformMat2d(rightBottom, rightBottom, matrix);
+
         minX = Math.min(leftTop[0], leftBottom[0], rightTop[0], rightBottom[0], minX);
         maxX = Math.max(leftTop[0], leftBottom[0], rightTop[0], rightBottom[0], maxX);
         minY = Math.min(leftTop[1], leftBottom[1], rightTop[1], rightBottom[1], minY);
@@ -5311,156 +7171,63 @@ function (_Element) {
   };
 
   return Group;
-}(Element);
+}(_element["default"]);
 
-Util.mix(Group.prototype, Container, {
+(0, _common.mix)(Group.prototype, _container["default"], {
   getGroupClass: function getGroupClass() {
     return Group;
   }
 });
-module.exports = Group;
-}, function(modId) { var map = {"../util/common":1605424195577,"./element":1605424195602,"./container":1605424195600,"./util/vector2":1605424195585}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195605, function(require, module, exports) {
+var _default = Group;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"./element":1606535077096,"./container":1606535077094,"./util/vector2":1606535077071}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077099, function(require, module, exports) {
 
 
-module.exports = {
-  requestAnimationFrame: typeof window === 'object' && window.requestAnimationFrame ? window.requestAnimationFrame : function (fn) {
-    return setTimeout(fn, 16);
-  }
+exports.__esModule = true;
+exports.requestAnimationFrame = void 0;
+var requestAnimationFrame = typeof window === 'object' && window.requestAnimationFrame ? window.requestAnimationFrame : function (fn) {
+  return setTimeout(fn, 16);
 };
+exports.requestAnimationFrame = requestAnimationFrame;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195606, function(require, module, exports) {
+__DEFINE__(1606535077100, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var CanvasElement =
-/*#__PURE__*/
-function () {
-  function CanvasElement(ctx) {
-    this.context = ctx; // canvas实际的宽高 (width/height) * pixelRatio
+var _common = require("../../util/common");
 
-    this.width = 0;
-    this.height = 0;
-    this.style = {};
-    this.currentStyle = {}; // 用来标识是CanvasElement实例
+var _shape = _interopRequireDefault(require("../shape"));
 
-    this.isCanvasElement = true; // 实现简单的事件机制
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-    this.__events = {};
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+// 为了处理radius 大于 width 或 height 的场景
+function parseRadius(radius, width, height) {
+  radius = (0, _common.parsePadding)(radius); // 都为0
+
+  if (!radius[0] && !radius[1] && !radius[2] && !radius[3]) {
+    return radius;
   }
 
-  var _proto = CanvasElement.prototype;
+  var minWidth = Math.max(radius[0] + radius[1], radius[2] + radius[3]);
+  var minHeight = Math.max(radius[0] + radius[3], radius[1] + radius[2]);
+  var scale = Math.min(width / minWidth, height / minHeight);
 
-  _proto.getContext = function getContext()
-  /* type */
-  {
-    return this.context;
-  };
-
-  _proto.getBoundingClientRect = function getBoundingClientRect() {
-    var width = this.width;
-    var height = this.height; // 默认都处理成可视窗口的顶部位置
-
-    return {
-      top: 0,
-      right: width,
-      bottom: height,
-      left: 0
-    };
-  };
-
-  _proto.addEventListener = function addEventListener(type, listener) {
-    var events = this.__events[type] || [];
-    events.push(listener);
-    this.__events[type] = events;
-  };
-
-  _proto.removeEventListener = function removeEventListener(type) {
-    delete this.__events[type];
-  };
-
-  _proto.dispatchEvent = function dispatchEvent(type, e) {
-    var _this = this;
-
-    if (Util.isObject(type)) {
-      e = type;
-      type = e && e.type;
-    }
-
-    if (!type) {
-      return;
-    }
-
-    var events = this.__events[type];
-
-    if (!events || !events.length) {
-      return;
-    }
-
-    events.forEach(function (listener) {
-      listener.call(_this, e);
+  if (scale < 1) {
+    return radius.map(function (r) {
+      return r * scale;
     });
-  };
-
-  return CanvasElement;
-}();
-
-function supportEventListener(canvas) {
-  if (!canvas) {
-    return false;
-  } // 非 HTMLCanvasElement
-
-
-  if (canvas.nodeType !== 1 || !canvas.nodeName || canvas.nodeName.toLowerCase() !== 'canvas') {
-    return false;
-  } // 微信小程序canvas.getContext('2d')时也是CanvasRenderingContext2D
-  // 也会有ctx.canvas, 而且nodeType也是1，所以还要在看下是否支持addEventListener
-
-
-  var support = false;
-
-  try {
-    canvas.addEventListener('eventTest', function () {
-      support = true;
-    });
-    canvas.dispatchEvent(new Event('eventTest'));
-  } catch (error) {
-    support = false;
   }
 
-  return support;
+  return radius;
 }
 
-module.exports = {
-  create: function create(ctx) {
-    if (!ctx) {
-      return null;
-    }
-
-    if (supportEventListener(ctx.canvas)) {
-      return ctx.canvas;
-    }
-
-    return new CanvasElement(ctx);
-  }
-};
-}, function(modId) { var map = {"../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195607, function(require, module, exports) {
-
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
-
-var Util = require('../../util/common');
-
-var Shape = require('../shape');
-
-var Rect =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Rect, _Shape);
+var Rect = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Rect, _Shape);
 
   function Rect() {
     return _Shape.apply(this, arguments) || this;
@@ -5493,14 +7260,14 @@ function (_Shape) {
     var x = attrs.x,
         y = attrs.y,
         width = attrs.width,
-        height = attrs.height;
+        height = attrs.height,
+        radius = attrs.radius;
     context.beginPath();
-    var radius = attrs.radius;
 
     if (!radius || !(width * height)) {
       context.rect(x, y, width, height);
     } else {
-      radius = Util.parsePadding(radius);
+      radius = parseRadius(radius, width, height);
       context.moveTo(x + radius[0], y);
       context.lineTo(x + width - radius[1], y);
       context.arc(x + width - radius[1], y + radius[1], radius[1], -Math.PI / 2, 0, false);
@@ -5529,24 +7296,143 @@ function (_Shape) {
   };
 
   return Rect;
-}(Shape);
+}(_shape["default"]);
 
-Shape.Rect = Rect;
-module.exports = Rect;
-}, function(modId) { var map = {"../../util/common":1605424195577,"../shape":1605424195601}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195608, function(require, module, exports) {
+_shape["default"].Rect = Rect;
+var _default = Rect;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"../shape":1606535077095}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077101, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Shape = require('../shape');
+var _shape = _interopRequireDefault(require("../shape"));
 
-var Circle =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Circle, _Shape);
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var ImageShape = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(ImageShape, _Shape);
+
+  function ImageShape() {
+    return _Shape.apply(this, arguments) || this;
+  }
+
+  var _proto = ImageShape.prototype;
+
+  _proto._initProperties = function _initProperties() {
+    _Shape.prototype._initProperties.call(this);
+
+    this._attrs.canFill = false;
+    this._attrs.canStroke = false;
+    this._attrs.loading = false;
+    this._attrs.image = null;
+    this._attrs.type = 'image';
+  };
+
+  _proto.getDefaultAttrs = function getDefaultAttrs() {
+    return {
+      x: 0,
+      y: 0,
+      width: 0,
+      height: 0
+    };
+  };
+
+  _proto.createPath = function createPath(context) {
+    var _this = this;
+
+    var attrs = this.get('attrs');
+    var src = attrs.src;
+
+    if (this.get('loading')) {
+      return;
+    }
+
+    var image = this.get('image');
+
+    if (image) {
+      this.drawImage(context, image);
+    } else {
+      if (src && Image) {
+        this.set('loading', true);
+
+        var _image = new Image();
+
+        _image.src = src; // 设置跨域
+
+        _image.crossOrigin = 'Anonymous';
+
+        _image.onload = function () {
+          _this.set('loading', false);
+
+          _this.set('image', _image);
+
+          _this.drawImage(context, _image);
+        };
+      }
+    }
+  };
+
+  _proto.drawImage = function drawImage(context, image) {
+    var attrs = this.get('attrs');
+    var x = attrs.x,
+        y = attrs.y,
+        width = attrs.width,
+        height = attrs.height,
+        sx = attrs.sx,
+        sy = attrs.sy,
+        swidth = attrs.swidth,
+        sheight = attrs.sheight;
+
+    if (!(0, _common.isNil)(sx) && !(0, _common.isNil)(sy) && !(0, _common.isNil)(swidth) && !(0, _common.isNil)(sheight)) {
+      context.drawImage(image, sx, sy, swidth, sheight, x, y, width, height);
+    } else {
+      context.drawImage(image, x, y, width, height);
+    }
+  };
+
+  _proto.calculateBox = function calculateBox() {
+    var attrs = this.get('attrs');
+    var x = attrs.x,
+        y = attrs.y,
+        width = attrs.width,
+        height = attrs.height; // 和rect一样
+
+    return {
+      minX: x,
+      minY: y,
+      maxX: x + width,
+      maxY: y + height
+    };
+  };
+
+  return ImageShape;
+}(_shape["default"]);
+
+_shape["default"].Image = ImageShape;
+var _default = ImageShape;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"../shape":1606535077095}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077102, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _shape = _interopRequireDefault(require("../shape"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Circle = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Circle, _Shape);
 
   function Circle() {
     return _Shape.apply(this, arguments) || this;
@@ -5595,26 +7481,28 @@ function (_Shape) {
   };
 
   return Circle;
-}(Shape);
+}(_shape["default"]);
 
-Shape.Circle = Circle;
-module.exports = Circle;
-}, function(modId) { var map = {"../shape":1605424195601}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195609, function(require, module, exports) {
+_shape["default"].Circle = Circle;
+var _default = Circle;
+exports["default"] = _default;
+}, function(modId) { var map = {"../shape":1606535077095}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077103, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _shape = _interopRequireDefault(require("../shape"));
 
-var Shape = require('../shape');
+var _bbox = require("../util/bbox");
 
-var bbox = require('../util/bbox');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Line =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Line, _Shape);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Line = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Line, _Shape);
 
   function Line() {
     return _Shape.apply(this, arguments) || this;
@@ -5657,23 +7545,34 @@ function (_Shape) {
         x2 = attrs.x2,
         y2 = attrs.y2,
         lineWidth = attrs.lineWidth;
-    return bbox.getBBoxFromLine(x1, y1, x2, y2, lineWidth);
+    return (0, _bbox.getBBoxFromLine)(x1, y1, x2, y2, lineWidth);
   };
 
   return Line;
-}(Shape);
+}(_shape["default"]);
 
-Shape.Line = Line;
-module.exports = Line;
-}, function(modId) { var map = {"../shape":1605424195601,"../util/bbox":1605424195610}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195610, function(require, module, exports) {
+_shape["default"].Line = Line;
+var _default = Line;
+exports["default"] = _default;
+}, function(modId) { var map = {"../shape":1606535077095,"../util/bbox":1606535077104}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077104, function(require, module, exports) {
 
 
-var Vector2 = require('./vector2');
+exports.__esModule = true;
+exports.getBBoxFromPoints = getBBoxFromPoints;
+exports.getBBoxFromLine = getBBoxFromLine;
+exports.getBBoxFromArc = getBBoxFromArc;
+exports.getBBoxFromBezierGroup = getBBoxFromBezierGroup;
 
-var start = Vector2.create();
-var end = Vector2.create();
-var extremity = Vector2.create();
+var _vector = _interopRequireDefault(require("./vector2"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var start = _vector["default"].create();
+
+var end = _vector["default"].create();
+
+var extremity = _vector["default"].create();
 
 function getCubicBezierXYatT(startPt, controlPt1, controlPt2, endPt, T) {
   var x = CubicN(T, startPt.x, controlPt1.x, controlPt2.x, endPt.x);
@@ -5741,157 +7640,164 @@ function cubicBezierBounds(c) {
   };
 }
 
-module.exports = {
-  getBBoxFromPoints: function getBBoxFromPoints(points, lineWidth) {
-    if (points.length === 0) {
-      return;
-    }
+function getBBoxFromPoints(points, lineWidth) {
+  if (points.length === 0) {
+    return;
+  }
 
-    var p = points[0];
-    var left = p.x;
-    var right = p.x;
-    var top = p.y;
-    var bottom = p.y;
-    var len = points.length;
+  var p = points[0];
+  var left = p.x;
+  var right = p.x;
+  var top = p.y;
+  var bottom = p.y;
+  var len = points.length;
 
-    for (var i = 1; i < len; i++) {
-      p = points[i];
-      left = Math.min(left, p.x);
-      right = Math.max(right, p.x);
-      top = Math.min(top, p.y);
-      bottom = Math.max(bottom, p.y);
-    }
+  for (var i = 1; i < len; i++) {
+    p = points[i];
+    left = Math.min(left, p.x);
+    right = Math.max(right, p.x);
+    top = Math.min(top, p.y);
+    bottom = Math.max(bottom, p.y);
+  }
 
-    lineWidth = lineWidth / 2 || 0;
+  lineWidth = lineWidth / 2 || 0;
+  return {
+    minX: left - lineWidth,
+    minY: top - lineWidth,
+    maxX: right + lineWidth,
+    maxY: bottom + lineWidth
+  };
+}
+
+function getBBoxFromLine(x0, y0, x1, y1, lineWidth) {
+  lineWidth = lineWidth / 2 || 0;
+  return {
+    minX: Math.min(x0, x1) - lineWidth,
+    minY: Math.min(y0, y1) - lineWidth,
+    maxX: Math.max(x0, x1) + lineWidth,
+    maxY: Math.max(y0, y1) + lineWidth
+  };
+}
+
+function getBBoxFromArc(x, y, r, startAngle, endAngle, anticlockwise) {
+  var diff = Math.abs(startAngle - endAngle);
+
+  if (diff % (Math.PI * 2) < 1e-4 && diff > 1e-4) {
+    // Is a circle
     return {
-      minX: left - lineWidth,
-      minY: top - lineWidth,
-      maxX: right + lineWidth,
-      maxY: bottom + lineWidth
-    };
-  },
-  getBBoxFromLine: function getBBoxFromLine(x0, y0, x1, y1, lineWidth) {
-    lineWidth = lineWidth / 2 || 0;
-    return {
-      minX: Math.min(x0, x1) - lineWidth,
-      minY: Math.min(y0, y1) - lineWidth,
-      maxX: Math.max(x0, x1) + lineWidth,
-      maxY: Math.max(y0, y1) + lineWidth
-    };
-  },
-  getBBoxFromArc: function getBBoxFromArc(x, y, r, startAngle, endAngle, anticlockwise) {
-    var diff = Math.abs(startAngle - endAngle);
-
-    if (diff % (Math.PI * 2) < 1e-4 && diff > 1e-4) {
-      // Is a circle
-      return {
-        minX: x - r,
-        minY: y - r,
-        maxX: x + r,
-        maxY: y + r
-      };
-    }
-
-    start[0] = Math.cos(startAngle) * r + x;
-    start[1] = Math.sin(startAngle) * r + y;
-    end[0] = Math.cos(endAngle) * r + x;
-    end[1] = Math.sin(endAngle) * r + y;
-    var min = [0, 0];
-    var max = [0, 0];
-    Vector2.min(min, start, end);
-    Vector2.max(max, start, end); // Thresh to [0, Math.PI * 2]
-
-    startAngle = startAngle % (Math.PI * 2);
-
-    if (startAngle < 0) {
-      startAngle = startAngle + Math.PI * 2;
-    }
-
-    endAngle = endAngle % (Math.PI * 2);
-
-    if (endAngle < 0) {
-      endAngle = endAngle + Math.PI * 2;
-    }
-
-    if (startAngle > endAngle && !anticlockwise) {
-      endAngle += Math.PI * 2;
-    } else if (startAngle < endAngle && anticlockwise) {
-      startAngle += Math.PI * 2;
-    }
-
-    if (anticlockwise) {
-      var tmp = endAngle;
-      endAngle = startAngle;
-      startAngle = tmp;
-    }
-
-    for (var angle = 0; angle < endAngle; angle += Math.PI / 2) {
-      if (angle > startAngle) {
-        extremity[0] = Math.cos(angle) * r + x;
-        extremity[1] = Math.sin(angle) * r + y;
-        Vector2.min(min, extremity, min);
-        Vector2.max(max, extremity, max);
-      }
-    }
-
-    return {
-      minX: min[0],
-      minY: min[1],
-      maxX: max[0],
-      maxY: max[1]
-    };
-  },
-  getBBoxFromBezierGroup: function getBBoxFromBezierGroup(points, lineWidth) {
-    var minX = Infinity;
-    var maxX = -Infinity;
-    var minY = Infinity;
-    var maxY = -Infinity;
-
-    for (var i = 0, len = points.length; i < len; i++) {
-      var bbox = cubicBezierBounds(points[i]);
-
-      if (bbox.minX < minX) {
-        minX = bbox.minX;
-      }
-
-      if (bbox.maxX > maxX) {
-        maxX = bbox.maxX;
-      }
-
-      if (bbox.minY < minY) {
-        minY = bbox.minY;
-      }
-
-      if (bbox.maxY > maxY) {
-        maxY = bbox.maxY;
-      }
-    }
-
-    lineWidth = lineWidth / 2 || 0;
-    return {
-      minX: minX - lineWidth,
-      minY: minY - lineWidth,
-      maxX: maxX + lineWidth,
-      maxY: maxY + lineWidth
+      minX: x - r,
+      minY: y - r,
+      maxX: x + r,
+      maxY: y + r
     };
   }
-};
-}, function(modId) { var map = {"./vector2":1605424195585}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195611, function(require, module, exports) {
+
+  start[0] = Math.cos(startAngle) * r + x;
+  start[1] = Math.sin(startAngle) * r + y;
+  end[0] = Math.cos(endAngle) * r + x;
+  end[1] = Math.sin(endAngle) * r + y;
+  var min = [0, 0];
+  var max = [0, 0];
+
+  _vector["default"].min(min, start, end);
+
+  _vector["default"].max(max, start, end); // Thresh to [0, Math.PI * 2]
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+  startAngle = startAngle % (Math.PI * 2);
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+  if (startAngle < 0) {
+    startAngle = startAngle + Math.PI * 2;
+  }
 
-var Shape = require('../shape');
+  endAngle = endAngle % (Math.PI * 2);
 
-var bbox = require('../util/bbox');
+  if (endAngle < 0) {
+    endAngle = endAngle + Math.PI * 2;
+  }
 
-var Polygon =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Polygon, _Shape);
+  if (startAngle > endAngle && !anticlockwise) {
+    endAngle += Math.PI * 2;
+  } else if (startAngle < endAngle && anticlockwise) {
+    startAngle += Math.PI * 2;
+  }
+
+  if (anticlockwise) {
+    var tmp = endAngle;
+    endAngle = startAngle;
+    startAngle = tmp;
+  }
+
+  for (var angle = 0; angle < endAngle; angle += Math.PI / 2) {
+    if (angle > startAngle) {
+      extremity[0] = Math.cos(angle) * r + x;
+      extremity[1] = Math.sin(angle) * r + y;
+
+      _vector["default"].min(min, extremity, min);
+
+      _vector["default"].max(max, extremity, max);
+    }
+  }
+
+  return {
+    minX: min[0],
+    minY: min[1],
+    maxX: max[0],
+    maxY: max[1]
+  };
+}
+
+function getBBoxFromBezierGroup(points, lineWidth) {
+  var minX = Infinity;
+  var maxX = -Infinity;
+  var minY = Infinity;
+  var maxY = -Infinity;
+
+  for (var i = 0, len = points.length; i < len; i++) {
+    var bbox = cubicBezierBounds(points[i]);
+
+    if (bbox.minX < minX) {
+      minX = bbox.minX;
+    }
+
+    if (bbox.maxX > maxX) {
+      maxX = bbox.maxX;
+    }
+
+    if (bbox.minY < minY) {
+      minY = bbox.minY;
+    }
+
+    if (bbox.maxY > maxY) {
+      maxY = bbox.maxY;
+    }
+  }
+
+  lineWidth = lineWidth / 2 || 0;
+  return {
+    minX: minX - lineWidth,
+    minY: minY - lineWidth,
+    maxX: maxX + lineWidth,
+    maxY: maxY + lineWidth
+  };
+}
+}, function(modId) { var map = {"./vector2":1606535077071}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077105, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _shape = _interopRequireDefault(require("../shape"));
+
+var _bbox = require("../util/bbox");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Polygon = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Polygon, _Shape);
 
   function Polygon() {
     return _Shape.apply(this, arguments) || this;
@@ -5936,29 +7842,37 @@ function (_Shape) {
   _proto.calculateBox = function calculateBox() {
     var attrs = this.get('attrs');
     var points = attrs.points;
-    return bbox.getBBoxFromPoints(points);
+    return (0, _bbox.getBBoxFromPoints)(points);
   };
 
   return Polygon;
-}(Shape);
+}(_shape["default"]);
 
-Shape.Polygon = Polygon;
-module.exports = Polygon;
-}, function(modId) { var map = {"../shape":1605424195601,"../util/bbox":1605424195610}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195612, function(require, module, exports) {
-
-
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
-
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
-
-var Shape = require('../shape');
-
-var Smooth = require('../util/smooth');
-
-var bbox = require('../util/bbox'); // filter the point which x or y is NaN
+_shape["default"].Polygon = Polygon;
+var _default = Polygon;
+exports["default"] = _default;
+}, function(modId) { var map = {"../shape":1606535077095,"../util/bbox":1606535077104}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077106, function(require, module, exports) {
 
 
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _shape = _interopRequireDefault(require("../shape"));
+
+var _bbox = require("../util/bbox");
+
+var Smooth = _interopRequireWildcard(require("../util/smooth"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+// filter the point which x or y is NaN
 function _filterPoints(points) {
   var filteredPoints = [];
 
@@ -5973,10 +7887,8 @@ function _filterPoints(points) {
   return filteredPoints;
 }
 
-var Polyline =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Polyline, _Shape);
+var Polyline = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Polyline, _Shape);
 
   function Polyline() {
     return _Shape.apply(this, arguments) || this;
@@ -6059,27 +7971,33 @@ function (_Shape) {
         }
       }
 
-      return bbox.getBBoxFromBezierGroup(newPoints, lineWidth);
+      return (0, _bbox.getBBoxFromBezierGroup)(newPoints, lineWidth);
     }
 
-    return bbox.getBBoxFromPoints(filteredPoints, lineWidth);
+    return (0, _bbox.getBBoxFromPoints)(filteredPoints, lineWidth);
   };
 
   return Polyline;
-}(Shape);
+}(_shape["default"]);
 
-Shape.Polyline = Polyline;
-module.exports = Polyline;
-}, function(modId) { var map = {"../shape":1605424195601,"../util/smooth":1605424195613,"../util/bbox":1605424195610}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195613, function(require, module, exports) {
+_shape["default"].Polyline = Polyline;
+var _default = Polyline;
+exports["default"] = _default;
+}, function(modId) { var map = {"../shape":1606535077095,"../util/bbox":1606535077104,"../util/smooth":1606535077107}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077107, function(require, module, exports) {
 
+
+exports.__esModule = true;
+exports.smooth = catmullRom2bezier;
+
+var _vector = _interopRequireDefault(require("./vector2"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 /**
  * @fileOverview convert the line to curve
  * @author dxq613@gmail.com
  */
-var Vector2 = require('./vector2');
-
 function getPoint(v) {
   return [v.x, v.y];
 }
@@ -6102,12 +8020,15 @@ function smoothBezier(points, smooth, isLoop, constraint) {
 
     for (i = 0, l = points.length; i < l; i++) {
       point = getPoint(points[i]);
-      Vector2.min(min, min, point);
-      Vector2.max(max, max, point);
+
+      _vector["default"].min(min, min, point);
+
+      _vector["default"].max(max, max, point);
     }
 
-    Vector2.min(min, min, constraint[0]);
-    Vector2.max(max, max, constraint[1]);
+    _vector["default"].min(min, min, constraint[0]);
+
+    _vector["default"].max(max, max, constraint[1]);
   }
 
   for (i = 0, len = points.length; i < len; i++) {
@@ -6126,10 +8047,14 @@ function smoothBezier(points, smooth, isLoop, constraint) {
       }
     }
 
-    var v = Vector2.sub([], nextPoint, prevPoint);
-    Vector2.scale(v, v, smooth);
-    var d0 = Vector2.distance(point, prevPoint);
-    var d1 = Vector2.distance(point, nextPoint);
+    var v = _vector["default"].sub([], nextPoint, prevPoint);
+
+    _vector["default"].scale(v, v, smooth);
+
+    var d0 = _vector["default"].distance(point, prevPoint);
+
+    var d1 = _vector["default"].distance(point, nextPoint);
+
     var sum = d0 + d1;
 
     if (sum !== 0) {
@@ -6137,16 +8062,22 @@ function smoothBezier(points, smooth, isLoop, constraint) {
       d1 /= sum;
     }
 
-    var v1 = Vector2.scale([], v, -d0);
-    var v2 = Vector2.scale([], v, d1);
-    var cp0 = Vector2.add([], point, v1);
-    var cp1 = Vector2.add([], point, v2);
+    var v1 = _vector["default"].scale([], v, -d0);
+
+    var v2 = _vector["default"].scale([], v, d1);
+
+    var cp0 = _vector["default"].add([], point, v1);
+
+    var cp1 = _vector["default"].add([], point, v2);
 
     if (hasConstraint) {
-      Vector2.max(cp0, cp0, min);
-      Vector2.min(cp0, cp0, max);
-      Vector2.max(cp1, cp1, min);
-      Vector2.min(cp1, cp1, max);
+      _vector["default"].max(cp0, cp0, min);
+
+      _vector["default"].min(cp0, cp0, max);
+
+      _vector["default"].max(cp1, cp1, min);
+
+      _vector["default"].min(cp1, cp1, max);
     }
 
     cps.push([cp0[0], cp0[1]]);
@@ -6185,26 +8116,23 @@ function catmullRom2bezier(pointList, z, constraint) {
 
   return d1;
 }
-
-module.exports = {
-  smooth: catmullRom2bezier
-};
-}, function(modId) { var map = {"./vector2":1605424195585}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195614, function(require, module, exports) {
+}, function(modId) { var map = {"./vector2":1606535077071}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077108, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _shape = _interopRequireDefault(require("../shape"));
 
-var Shape = require('../shape');
+var _bbox = require("../util/bbox");
 
-var bbox = require('../util/bbox');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Arc =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Arc, _Shape);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Arc = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Arc, _Shape);
 
   function Arc() {
     return _Shape.apply(this, arguments) || this;
@@ -6255,30 +8183,32 @@ function (_Shape) {
         startAngle = attrs.startAngle,
         endAngle = attrs.endAngle,
         anticlockwise = attrs.anticlockwise;
-    return bbox.getBBoxFromArc(x, y, r, startAngle, endAngle, anticlockwise);
+    return (0, _bbox.getBBoxFromArc)(x, y, r, startAngle, endAngle, anticlockwise);
   };
 
   return Arc;
-}(Shape);
+}(_shape["default"]);
 
-Shape.Arc = Arc;
-module.exports = Arc;
-}, function(modId) { var map = {"../shape":1605424195601,"../util/bbox":1605424195610}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195615, function(require, module, exports) {
+_shape["default"].Arc = Arc;
+var _default = Arc;
+exports["default"] = _default;
+}, function(modId) { var map = {"../shape":1606535077095,"../util/bbox":1606535077104}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077109, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _shape = _interopRequireDefault(require("../shape"));
 
-var Shape = require('../shape');
+var _bbox = require("../util/bbox");
 
-var bbox = require('../util/bbox');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Sector =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Sector, _Shape);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Sector = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Sector, _Shape);
 
   function Sector() {
     return _Shape.apply(this, arguments) || this;
@@ -6343,8 +8273,8 @@ function (_Shape) {
         startAngle = attrs.startAngle,
         endAngle = attrs.endAngle,
         anticlockwise = attrs.anticlockwise;
-    var outerBBox = bbox.getBBoxFromArc(x, y, r, startAngle, endAngle, anticlockwise);
-    var innerBBox = bbox.getBBoxFromArc(x, y, r0, startAngle, endAngle, anticlockwise);
+    var outerBBox = (0, _bbox.getBBoxFromArc)(x, y, r, startAngle, endAngle, anticlockwise);
+    var innerBBox = (0, _bbox.getBBoxFromArc)(x, y, r0, startAngle, endAngle, anticlockwise);
     return {
       minX: Math.min(outerBBox.minX, innerBBox.minX),
       minY: Math.min(outerBBox.minY, innerBBox.minY),
@@ -6354,32 +8284,34 @@ function (_Shape) {
   };
 
   return Sector;
-}(Shape);
+}(_shape["default"]);
 
-Shape.Sector = Sector;
-module.exports = Sector;
-}, function(modId) { var map = {"../shape":1605424195601,"../util/bbox":1605424195610}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195616, function(require, module, exports) {
+_shape["default"].Sector = Sector;
+var _default = Sector;
+exports["default"] = _default;
+}, function(modId) { var map = {"../shape":1606535077095,"../util/bbox":1606535077104}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077110, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _shape = _interopRequireDefault(require("../shape"));
 
-var Shape = require('../shape');
+var _rect = _interopRequireDefault(require("../util/rect"));
 
-var RectUtil = require('../util/rect');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 var textWidthCacheCounter = 0;
 var textWidthCache = {};
 var TEXT_CACHE_MAX = 5000;
 
-var Text =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Text, _Shape);
+var Text = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Text, _Shape);
 
   function Text() {
     return _Shape.apply(this, arguments) || this;
@@ -6430,7 +8362,7 @@ function (_Shape) {
       var textArr = null;
       var lineCount = 1;
 
-      if (Util.isString(text) && text.indexOf('\n') !== -1) {
+      if ((0, _common.isString)(text) && text.indexOf('\n') !== -1) {
         textArr = text.split('\n');
         lineCount = textArr.length;
       }
@@ -6475,7 +8407,7 @@ function (_Shape) {
     var x = attrs.x;
     var y = attrs.y;
 
-    if (Util.isNil(text) || isNaN(x) || isNaN(y)) {
+    if ((0, _common.isNil)(text) || isNaN(x) || isNaN(y)) {
       // text will be 0
       return;
     }
@@ -6505,7 +8437,7 @@ function (_Shape) {
     if (self.hasFill()) {
       var fillOpacity = attrs.fillOpacity;
 
-      if (!Util.isNil(fillOpacity) && fillOpacity !== 1) {
+      if (!(0, _common.isNil)(fillOpacity) && fillOpacity !== 1) {
         context.globalAlpha = fillOpacity;
       }
 
@@ -6575,11 +8507,12 @@ function (_Shape) {
 
 
     if (attrs.rotate) {
-      var rotatedBox = RectUtil.calcRotatedBox({
+      var rotatedBox = _rect["default"].calcRotatedBox({
         width: width,
         height: height,
         rotate: attrs.rotate
       });
+
       width = rotatedBox.width;
       height = rotatedBox.height;
     }
@@ -6622,7 +8555,7 @@ function (_Shape) {
 
     var text = attrs.text;
     var context = this.get('context');
-    if (Util.isNil(text)) return undefined;
+    if ((0, _common.isNil)(text)) return undefined;
     var font = attrs.font;
     var textArr = attrs.textArr;
     var key = text + '' + font;
@@ -6636,10 +8569,10 @@ function (_Shape) {
     if (textArr) {
       for (var i = 0, length = textArr.length; i < length; i++) {
         var subText = textArr[i];
-        width = Math.max(width, Util.measureText(subText, font, context).width);
+        width = Math.max(width, (0, _common.measureText)(subText, font, context).width);
       }
     } else {
-      width = Util.measureText(text, font, context).width;
+      width = (0, _common.measureText)(text, font, context).width;
     }
 
     if (textWidthCacheCounter > TEXT_CACHE_MAX) {
@@ -6653,14 +8586,17 @@ function (_Shape) {
   };
 
   return Text;
-}(Shape);
+}(_shape["default"]);
 
-Shape.Text = Text;
-module.exports = Text;
-}, function(modId) { var map = {"../../util/common":1605424195577,"../shape":1605424195601,"../util/rect":1605424195617}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195617, function(require, module, exports) {
+_shape["default"].Text = Text;
+var _default = Text;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"../shape":1606535077095,"../util/rect":1606535077111}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077111, function(require, module, exports) {
 
 
+exports.__esModule = true;
+exports["default"] = void 0;
 var Rect = {
   calcRotatedBox: function calcRotatedBox(_ref) {
     var width = _ref.width,
@@ -6673,21 +8609,23 @@ var Rect = {
     };
   }
 };
-module.exports = Rect;
+var _default = Rect;
+exports["default"] = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195618, function(require, module, exports) {
+__DEFINE__(1606535077112, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _shape = _interopRequireDefault(require("../shape"));
 
-var Shape = require('../shape');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Custom =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Custom, _Shape);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Custom = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Custom, _Shape);
 
   function Custom() {
     return _Shape.apply(this, arguments) || this;
@@ -6715,103 +8653,113 @@ function (_Shape) {
   };
 
   return Custom;
-}(Shape);
+}(_shape["default"]);
 
-Shape.Custom = Custom;
-module.exports = Custom;
-}, function(modId) { var map = {"../shape":1605424195601}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195619, function(require, module, exports) {
+_shape["default"].Custom = Custom;
+var _default = Custom;
+exports["default"] = _default;
+}, function(modId) { var map = {"../shape":1606535077095}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077113, function(require, module, exports) {
 
 
-var _require = require('../graphic/index'),
-    Shape = _require.Shape;
+exports.__esModule = true;
+exports.getClip = getClip;
+exports.isPointInPlot = isPointInPlot;
 
-module.exports = {
-  getClip: function getClip(coord) {
-    var start = coord.start;
-    var end = coord.end;
-    var width = end.x - start.x;
-    var height = Math.abs(end.y - start.y);
-    var margin = 10;
-    var clip;
+var _index = require("../graphic/index");
 
-    if (coord.isPolar) {
-      var circleRadius = coord.circleRadius,
-          center = coord.center,
-          startAngle = coord.startAngle,
-          endAngle = coord.endAngle;
-      clip = new Shape.Sector({
-        attrs: {
-          x: center.x,
-          y: center.y,
-          r: circleRadius,
-          r0: 0,
-          startAngle: startAngle,
-          endAngle: endAngle
-        }
-      });
-    } else {
-      clip = new Shape.Rect({
-        attrs: {
-          x: start.x,
-          y: end.y - margin,
-          width: width,
-          height: height + 2 * margin
-        }
-      });
-    }
+function getClip(coord) {
+  var start = coord.start;
+  var end = coord.end;
+  var width = end.x - start.x;
+  var height = Math.abs(end.y - start.y);
+  var margin = 10;
+  var clip;
 
-    clip.isClip = true;
-    return clip;
-  },
-  isPointInPlot: function isPointInPlot(point, plot) {
-    var x = point.x,
-        y = point.y;
-    var tl = plot.tl,
-        tr = plot.tr,
-        br = plot.br;
-    return x >= tl.x && x <= tr.x && y >= tl.y && y <= br.y;
+  if (coord.isPolar) {
+    var circleRadius = coord.circleRadius,
+        center = coord.center,
+        startAngle = coord.startAngle,
+        endAngle = coord.endAngle;
+    clip = new _index.Shape.Sector({
+      attrs: {
+        x: center.x,
+        y: center.y,
+        r: circleRadius,
+        r0: 0,
+        startAngle: startAngle,
+        endAngle: endAngle
+      }
+    });
+  } else {
+    clip = new _index.Shape.Rect({
+      attrs: {
+        x: start.x,
+        y: end.y - margin,
+        width: width,
+        height: height + 2 * margin
+      }
+    });
   }
-};
-}, function(modId) { var map = {"../graphic/index":1605424195598}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195620, function(require, module, exports) {
+
+  clip.isClip = true;
+  return clip;
+}
+
+function isPointInPlot(point, plot) {
+  var x = point.x,
+      y = point.y;
+  var tl = plot.tl,
+      tr = plot.tr,
+      br = plot.br;
+  return x >= tl.x && x <= tr.x && y >= tl.y && y <= br.y;
+}
+}, function(modId) { var map = {"../graphic/index":1606535077090}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077114, function(require, module, exports) {
 
 
-var Geom = require('./base');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-require('./point');
+var _base = _interopRequireDefault(require("./base"));
 
-require('./path');
+require("./point");
 
-require('./line');
+require("./path");
 
-require('./area');
+require("./line");
 
-require('./interval');
+require("./area");
 
-require('./polygon');
+require("./interval");
 
-require('./schema');
+require("./polygon");
 
-module.exports = Geom;
-}, function(modId) { var map = {"./base":1605424195587,"./point":1605424195621,"./path":1605424195624,"./line":1605424195626,"./area":1605424195627,"./interval":1605424195629,"./polygon":1605424195632,"./schema":1605424195634}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195621, function(require, module, exports) {
+require("./schema");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _default = _base["default"];
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077073,"./point":1606535077115,"./path":1606535077118,"./line":1606535077120,"./area":1606535077121,"./interval":1606535077123,"./polygon":1606535077126,"./schema":1606535077128}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077115, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../util/common");
 
-var Util = require('../util/common');
+var _base = _interopRequireDefault(require("./base"));
 
-var Geom = require('./base');
+require("./shape/point");
 
-require('./shape/point');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Point =
-/*#__PURE__*/
-function (_Geom) {
-  (0, _inheritsLoose2["default"])(Point, _Geom);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Point = /*#__PURE__*/function (_Geom) {
+  _inheritsLoose(Point, _Geom);
 
   function Point() {
     return _Geom.apply(this, arguments) || this;
@@ -6824,54 +8772,61 @@ function (_Geom) {
 
     cfg.type = 'point';
     cfg.shapeType = 'point';
-    cfg.generatePoints = true;
+    cfg.generatePoints = false;
     return cfg;
   };
 
   _proto.draw = function draw(data, shapeFactory) {
     var self = this;
     var container = self.get('container');
-    Util.each(data, function (obj) {
+    (0, _common.each)(data, function (obj) {
       var shape = obj.shape;
       var cfg = self.getDrawCfg(obj);
 
-      if (Util.isArray(obj.y)) {
+      if ((0, _common.isArray)(obj.y)) {
         var hasStack = self.hasAdjust('stack');
-        Util.each(obj.y, function (y, idx) {
+        (0, _common.each)(obj.y, function (y, idx) {
           cfg.y = y;
 
           if (!hasStack || idx !== 0) {
             self.drawShape(shape, obj, cfg, container, shapeFactory);
           }
         });
-      } else if (!Util.isNil(obj.y)) {
+      } else if (!(0, _common.isNil)(obj.y)) {
         self.drawShape(shape, obj, cfg, container, shapeFactory);
       }
     });
   };
 
   return Point;
-}(Geom);
+}(_base["default"]);
 
-Geom.Point = Point;
-module.exports = Point;
-}, function(modId) { var map = {"../util/common":1605424195577,"./base":1605424195587,"./shape/point":1605424195622}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195622, function(require, module, exports) {
+_base["default"].Point = Point;
+var _default = Point;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"./base":1606535077073,"./shape/point":1606535077116}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077116, function(require, module, exports) {
 
 
-var Util = require('../../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Global = require('../../global');
+var _global = _interopRequireDefault(require("../../global"));
 
-var ShapeUtil = require('./util');
+var _shape = _interopRequireDefault(require("./shape"));
 
-var Shape = require('./shape');
+var _common = require("../../util/common");
+
+var _util = require("./util");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var SHAPES = ['circle', 'hollowCircle', 'rect'];
-var Point = Shape.registerFactory('point', {
+
+var Point = _shape["default"].registerFactory('point', {
   defaultShapeType: 'circle',
   getDefaultPoints: function getDefaultPoints(pointInfo) {
-    return ShapeUtil.splitPoints(pointInfo);
+    return (0, _util.splitPoints)(pointInfo);
   }
 });
 
@@ -6886,8 +8841,8 @@ function getPointsCfg(cfg) {
     style.size = cfg.size;
   }
 
-  Util.mix(style, cfg.style);
-  return Util.mix({}, Global.shape.point, style);
+  (0, _common.mix)(style, cfg.style);
+  return (0, _common.mix)({}, _global["default"].shape.point, style);
 }
 
 function drawShape(cfg, container, shape) {
@@ -6895,7 +8850,7 @@ function drawShape(cfg, container, shape) {
   var pointCfg = getPointsCfg(cfg);
   var size = pointCfg.r || pointCfg.size;
   var x = cfg.x;
-  var y = !Util.isArray(cfg.y) ? [cfg.y] : cfg.y;
+  var y = !(0, _common.isArray)(cfg.y) ? [cfg.y] : cfg.y;
 
   if (shape === 'hollowCircle') {
     pointCfg.lineWidth = 1;
@@ -6906,7 +8861,7 @@ function drawShape(cfg, container, shape) {
     if (shape === 'rect') {
       return container.addShape('Rect', {
         className: 'point',
-        attrs: Util.mix({
+        attrs: (0, _common.mix)({
           x: x - size,
           y: y[i] - size,
           width: size * 2,
@@ -6917,7 +8872,7 @@ function drawShape(cfg, container, shape) {
 
     return container.addShape('Circle', {
       className: 'point',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x: x,
         y: y[i],
         r: size
@@ -6926,91 +8881,95 @@ function drawShape(cfg, container, shape) {
   }
 }
 
-Util.each(SHAPES, function (shapeType) {
-  Shape.registerShape('point', shapeType, {
+(0, _common.each)(SHAPES, function (shapeType) {
+  _shape["default"].registerShape('point', shapeType, {
     draw: function draw(cfg, container) {
       return drawShape(cfg, container, shapeType);
     }
   });
 });
-module.exports = Point;
-}, function(modId) { var map = {"../../util/common":1605424195577,"../../global":1605424195575,"./util":1605424195623,"./shape":1605424195591}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195623, function(require, module, exports) {
+var _default = Point;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../global":1606535077058,"./shape":1606535077081,"../../util/common":1606535077060,"./util":1606535077117}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077117, function(require, module, exports) {
 
+
+exports.__esModule = true;
+exports.splitPoints = splitPoints;
+exports.splitArray = splitArray;
+
+var _common = require("../../util/common");
 
 /**
  * @fileOverview shape util
  * @author dxq613@gmail.com
  */
-var Util = require('../../util/common');
+function splitPoints(obj) {
+  var points = [];
+  var x = obj.x;
+  var y = obj.y;
+  y = (0, _common.isArray)(y) ? y : [y];
+  y.forEach(function (yItem, index) {
+    var point = {
+      x: (0, _common.isArray)(x) ? x[index] : x,
+      y: yItem
+    };
+    points.push(point);
+  });
+  return points;
+}
 
-var ShapeUtil = {
-  splitPoints: function splitPoints(obj) {
-    var points = [];
-    var x = obj.x;
-    var y = obj.y;
-    y = Util.isArray(y) ? y : [y];
-    y.forEach(function (yItem, index) {
-      var point = {
-        x: Util.isArray(x) ? x[index] : x,
-        y: yItem
-      };
-      points.push(point);
-    });
-    return points;
-  },
-  splitArray: function splitArray(data, yField, connectNulls) {
-    if (!data.length) return [];
-    var arr = [];
-    var tmp = [];
-    var yValue;
-    Util.each(data, function (obj) {
-      yValue = obj._origin ? obj._origin[yField] : obj[yField];
+function splitArray(data, yField, connectNulls) {
+  if (!data.length) return [];
+  var arr = [];
+  var tmp = [];
+  var yValue;
+  (0, _common.each)(data, function (obj) {
+    yValue = obj._origin ? obj._origin[yField] : obj[yField];
 
-      if (connectNulls) {
-        if (!Util.isNil(yValue)) {
-          tmp.push(obj);
+    if (connectNulls) {
+      if (!(0, _common.isNil)(yValue)) {
+        tmp.push(obj);
+      }
+    } else {
+      if ((0, _common.isArray)(yValue) && (0, _common.isNil)(yValue[0]) || (0, _common.isNil)(yValue)) {
+        if (tmp.length) {
+          arr.push(tmp);
+          tmp = [];
         }
       } else {
-        if (Util.isArray(yValue) && Util.isNil(yValue[0]) || Util.isNil(yValue)) {
-          if (tmp.length) {
-            arr.push(tmp);
-            tmp = [];
-          }
-        } else {
-          tmp.push(obj);
-        }
+        tmp.push(obj);
       }
-    });
-
-    if (tmp.length) {
-      arr.push(tmp);
     }
+  });
 
-    return arr;
+  if (tmp.length) {
+    arr.push(tmp);
   }
-};
-module.exports = ShapeUtil;
-}, function(modId) { var map = {"../../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195624, function(require, module, exports) {
+
+  return arr;
+}
+}, function(modId) { var map = {"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077118, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _base = _interopRequireDefault(require("./base"));
 
-var Geom = require('./base');
+var _util = require("./shape/util");
 
-var ShapeUtil = require('./shape/util');
+var _common = require("../util/common");
 
-var Util = require('../util/common');
+require("./shape/line");
 
-require('./shape/line');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Path =
-/*#__PURE__*/
-function (_Geom) {
-  (0, _inheritsLoose2["default"])(Path, _Geom);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Path = /*#__PURE__*/function (_Geom) {
+  _inheritsLoose(Path, _Geom);
 
   function Path() {
     return _Geom.apply(this, arguments) || this;
@@ -7038,10 +8997,10 @@ function (_Geom) {
     var container = self.get('container');
     var yScale = self.getYScale();
     var connectNulls = self.get('connectNulls');
-    var splitArray = ShapeUtil.splitArray(data, yScale.field, connectNulls);
+    var splitArrayObj = (0, _util.splitArray)(data, yScale.field, connectNulls);
     var cfg = this.getDrawCfg(data[0]);
     cfg.origin = data;
-    Util.each(splitArray, function (subData, splitedIndex) {
+    (0, _common.each)(splitArrayObj, function (subData, splitedIndex) {
       cfg.splitedIndex = splitedIndex;
       cfg.points = subData;
       self.drawShape(cfg.shape, data[0], cfg, container, shapeFactory);
@@ -7049,24 +9008,30 @@ function (_Geom) {
   };
 
   return Path;
-}(Geom);
+}(_base["default"]);
 
-Geom.Path = Path;
-module.exports = Path;
-}, function(modId) { var map = {"./base":1605424195587,"./shape/util":1605424195623,"../util/common":1605424195577,"./shape/line":1605424195625}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195625, function(require, module, exports) {
-
-
-var Util = require('../../util/common');
-
-var Shape = require('./shape');
-
-var ShapeUtil = require('./util');
-
-var Global = require('../../global'); // register line geom
+_base["default"].Path = Path;
+var _default = Path;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077073,"./shape/util":1606535077117,"../util/common":1606535077060,"./shape/line":1606535077119}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077119, function(require, module, exports) {
 
 
-var Line = Shape.registerFactory('line', {
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _global = _interopRequireDefault(require("../../global"));
+
+var _shape = _interopRequireDefault(require("./shape"));
+
+var _common = require("../../util/common");
+
+var _util = require("./util");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+// register line geom
+var Line = _shape["default"].registerFactory('line', {
   defaultShapeType: 'line'
 });
 
@@ -7079,20 +9044,20 @@ function getStyle(cfg) {
     style.lineWidth = cfg.size;
   }
 
-  Util.mix(style, cfg.style);
-  return Util.mix({}, Global.shape.line, style);
+  (0, _common.mix)(style, cfg.style);
+  return (0, _common.mix)({}, _global["default"].shape.line, style);
 }
 
 function drawLines(cfg, container, style, smooth) {
   var points = cfg.points;
 
-  if (points.length && Util.isArray(points[0].y)) {
+  if (points.length && (0, _common.isArray)(points[0].y)) {
     var topPoints = [];
     var bottomPoints = [];
 
     for (var i = 0, len = points.length; i < len; i++) {
       var point = points[i];
-      var tmp = ShapeUtil.splitPoints(point);
+      var tmp = (0, _util.splitPoints)(point);
       bottomPoints.push(tmp[0]);
       topPoints.push(tmp[1]);
     }
@@ -7105,7 +9070,7 @@ function drawLines(cfg, container, style, smooth) {
     if (cfg.isStack) {
       return container.addShape('Polyline', {
         className: 'line',
-        attrs: Util.mix({
+        attrs: (0, _common.mix)({
           points: topPoints,
           smooth: smooth
         }, style)
@@ -7114,14 +9079,14 @@ function drawLines(cfg, container, style, smooth) {
 
     var topShape = container.addShape('Polyline', {
       className: 'line',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         points: topPoints,
         smooth: smooth
       }, style)
     });
     var bottomShape = container.addShape('Polyline', {
       className: 'line',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         points: bottomPoints,
         smooth: smooth
       }, style)
@@ -7135,7 +9100,7 @@ function drawLines(cfg, container, style, smooth) {
 
   return container.addShape('Polyline', {
     className: 'line',
-    attrs: Util.mix({
+    attrs: (0, _common.mix)({
       points: points,
       smooth: smooth
     }, style)
@@ -7143,39 +9108,41 @@ function drawLines(cfg, container, style, smooth) {
 }
 
 var SHAPES = ['line', 'smooth', 'dash'];
-Util.each(SHAPES, function (shapeType) {
-  Shape.registerShape('line', shapeType, {
+(0, _common.each)(SHAPES, function (shapeType) {
+  _shape["default"].registerShape('line', shapeType, {
     draw: function draw(cfg, container) {
       var smooth = shapeType === 'smooth';
       var style = getStyle(cfg);
 
       if (shapeType === 'dash') {
-        style.lineDash = Global.lineDash;
+        style.lineDash = _global["default"].lineDash;
       }
 
       return drawLines(cfg, container, style, smooth);
     }
   });
 });
-module.exports = Line;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./shape":1605424195591,"./util":1605424195623,"../../global":1605424195575}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195626, function(require, module, exports) {
+var _default = Line;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../global":1606535077058,"./shape":1606535077081,"../../util/common":1606535077060,"./util":1606535077117}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077120, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _path = _interopRequireDefault(require("./path"));
 
-var Path = require('./path');
+var _base = _interopRequireDefault(require("./base"));
 
-var Geom = require('./base');
+require("./shape/line");
 
-require('./shape/line');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Line =
-/*#__PURE__*/
-function (_Path) {
-  (0, _inheritsLoose2["default"])(Line, _Path);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Line = /*#__PURE__*/function (_Path) {
+  _inheritsLoose(Line, _Path);
 
   function Line() {
     return _Path.apply(this, arguments) || this;
@@ -7192,35 +9159,32 @@ function (_Path) {
   };
 
   return Line;
-}(Path);
+}(_path["default"]);
 
-Geom.Line = Line;
-module.exports = Line;
-}, function(modId) { var map = {"./path":1605424195624,"./base":1605424195587,"./shape/line":1605424195625}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195627, function(require, module, exports) {
+_base["default"].Line = Line;
+var _default = Line;
+exports["default"] = _default;
+}, function(modId) { var map = {"./path":1606535077118,"./base":1606535077073,"./shape/line":1606535077119}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077121, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _base = _interopRequireDefault(require("./base"));
 
-/**
- * @fileOverview area geometry
- * @author dxq613 @gmail.com
- * @author sima.zhang1990@gmail.com
- */
-var Geom = require('./base');
+var _util = require("./shape/util");
 
-var ShapeUtil = require('./shape/util');
+var _common = require("../util/common");
 
-var Util = require('../util/common');
+require("./shape/area");
 
-require('./shape/area');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Area =
-/*#__PURE__*/
-function (_Geom) {
-  (0, _inheritsLoose2["default"])(Area, _Geom);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Area = /*#__PURE__*/function (_Geom) {
+  _inheritsLoose(Area, _Geom);
 
   function Area() {
     return _Geom.apply(this, arguments) || this;
@@ -7249,9 +9213,9 @@ function (_Geom) {
     var cfg = this.getDrawCfg(data[0]);
     var yScale = self.getYScale();
     var connectNulls = self.get('connectNulls');
-    var splitArray = ShapeUtil.splitArray(data, yScale.field, connectNulls);
+    var splitArrayfn = (0, _util.splitArray)(data, yScale.field, connectNulls);
     cfg.origin = data;
-    Util.each(splitArray, function (subData, splitedIndex) {
+    (0, _common.each)(splitArrayfn, function (subData, splitedIndex) {
       cfg.splitedIndex = splitedIndex;
       var points = subData.map(function (obj) {
         return obj.points;
@@ -7262,30 +9226,36 @@ function (_Geom) {
   };
 
   return Area;
-}(Geom);
+}(_base["default"]);
 
-Geom.Area = Area;
-module.exports = Area;
-}, function(modId) { var map = {"./base":1605424195587,"./shape/util":1605424195623,"../util/common":1605424195577,"./shape/area":1605424195628}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195628, function(require, module, exports) {
+_base["default"].Area = Area;
+var _default = Area;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077073,"./shape/util":1606535077117,"../util/common":1606535077060,"./shape/area":1606535077122}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077122, function(require, module, exports) {
 
 
-var Util = require('../../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Shape = require('./shape');
+var _smooth = require("../../graphic/util/smooth");
 
-var Smooth = require('../../graphic/util/smooth');
+var _bbox = require("../../graphic/util/bbox");
 
-var bbox = require('../../graphic/util/bbox');
+var _global = _interopRequireDefault(require("../../global"));
 
-var Global = require('../../global');
+var _shape = _interopRequireDefault(require("./shape"));
+
+var _common = require("../../util/common");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function equals(v1, v2) {
   return Math.abs(v1 - v2) < 0.00001;
 }
 
 function notEmpty(value) {
-  return !isNaN(value) && !Util.isNil(value);
+  return !isNaN(value) && !(0, _common.isNil)(value);
 }
 
 function filterPoints(points) {
@@ -7304,7 +9274,7 @@ function filterPoints(points) {
 
 function equalsCenter(points, center) {
   var eqls = true;
-  Util.each(points, function (point) {
+  (0, _common.each)(points, function (point) {
     if (!equals(point.x, center.x) || !equals(point.y, center.y)) {
       eqls = false;
       return false;
@@ -7320,7 +9290,7 @@ function drawRectShape(topPoints, bottomPoints, container, style, isSmooth) {
   if (isSmooth) {
     shape = container.addShape('Custom', {
       className: 'area',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         points: points
       }, style),
       createPath: function createPath(context) {
@@ -7329,7 +9299,7 @@ function drawRectShape(topPoints, bottomPoints, container, style, isSmooth) {
         var pointsLen = points.length;
         var topPoints = points.slice(0, pointsLen / 2);
         var bottomPoints = points.slice(pointsLen / 2, pointsLen);
-        var topSps = Smooth.smooth(topPoints, false, constaint);
+        var topSps = (0, _smooth.smooth)(topPoints, false, constaint);
         context.beginPath();
         context.moveTo(topPoints[0].x, topPoints[0].y);
 
@@ -7339,7 +9309,7 @@ function drawRectShape(topPoints, bottomPoints, container, style, isSmooth) {
         }
 
         if (bottomPoints.length) {
-          var bottomSps = Smooth.smooth(bottomPoints, false, constaint);
+          var bottomSps = (0, _smooth.smooth)(bottomPoints, false, constaint);
           context.lineTo(bottomPoints[0].x, bottomPoints[0].y);
 
           for (var _i = 0, _n = bottomSps.length; _i < _n; _i++) {
@@ -7352,13 +9322,13 @@ function drawRectShape(topPoints, bottomPoints, container, style, isSmooth) {
       },
       calculateBox: function calculateBox() {
         var points = filterPoints(this._attrs.attrs.points);
-        return bbox.getBBoxFromPoints(points);
+        return (0, _bbox.getBBoxFromPoints)(points);
       }
     });
   } else {
     shape = container.addShape('Polyline', {
       className: 'area',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         points: points
       }, style)
     });
@@ -7372,13 +9342,13 @@ function drawShape(cfg, container, isSmooth) {
   var points = cfg.points;
   var topPoints = [];
   var bottomPoints = [];
-  Util.each(points, function (point) {
+  (0, _common.each)(points, function (point) {
     bottomPoints.push(point[0]);
     topPoints.push(point[1]);
   });
-  var style = Util.mix({
+  var style = (0, _common.mix)({
     fillStyle: cfg.color
-  }, Global.shape.area, cfg.style);
+  }, _global["default"].shape.area, cfg.style);
   bottomPoints.reverse();
   topPoints = self.parsePoints(topPoints);
   bottomPoints = self.parsePoints(bottomPoints);
@@ -7395,13 +9365,13 @@ function drawShape(cfg, container, isSmooth) {
   return drawRectShape(topPoints, bottomPoints, container, style, isSmooth);
 }
 
-var Area = Shape.registerFactory('area', {
+var Area = _shape["default"].registerFactory('area', {
   defaultShapeType: 'area',
   getDefaultPoints: function getDefaultPoints(obj) {
     var x = obj.x;
     var y = obj.y;
     var y0 = obj.y0;
-    y = Util.isArray(y) ? y : [y0, y];
+    y = (0, _common.isArray)(y) ? y : [y0, y];
     var points = [];
     points.push({
       x: x,
@@ -7413,38 +9383,42 @@ var Area = Shape.registerFactory('area', {
     return points;
   }
 });
+
 var SHAPES = ['area', 'smooth'];
-Util.each(SHAPES, function (shapeType) {
-  Shape.registerShape('area', shapeType, {
+(0, _common.each)(SHAPES, function (shapeType) {
+  _shape["default"].registerShape('area', shapeType, {
     draw: function draw(cfg, container) {
       var smooth = shapeType === 'smooth';
       return drawShape.call(this, cfg, container, smooth);
     }
   });
 });
-module.exports = Area;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./shape":1605424195591,"../../graphic/util/smooth":1605424195613,"../../graphic/util/bbox":1605424195610,"../../global":1605424195575}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195629, function(require, module, exports) {
+var _default = Area;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../graphic/util/smooth":1606535077107,"../../graphic/util/bbox":1606535077104,"../../global":1606535077058,"./shape":1606535077081,"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077123, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+var _base = _interopRequireDefault(require("./base"));
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../util/common");
 
-var Geom = require('./base');
+var _size = _interopRequireDefault(require("./mixin/size"));
 
-var Util = require('../util/common');
+require("./shape/interval");
 
-var SizeMixin = require('./mixin/size');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-require('./shape/interval');
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-var Interval =
-/*#__PURE__*/
-function (_Geom) {
-  (0, _inheritsLoose2["default"])(Interval, _Geom);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Interval = /*#__PURE__*/function (_Geom) {
+  _inheritsLoose(Interval, _Geom);
+
   var _proto = Interval.prototype;
 
   _proto.getDefaultCfg = function getDefaultCfg() {
@@ -7460,9 +9434,16 @@ function (_Geom) {
     var _this;
 
     _this = _Geom.call(this, cfg) || this;
-    Util.mix((0, _assertThisInitialized2["default"])(_this), SizeMixin);
+    (0, _common.mix)(_assertThisInitialized(_this), _size["default"]);
     return _this;
   }
+
+  _proto.init = function init() {
+    _Geom.prototype.init.call(this); // 绑定事件
+
+
+    this.initEvent();
+  };
 
   _proto.createShapePointsCfg = function createShapePointsCfg(obj) {
     var cfg = _Geom.prototype.createShapePointsCfg.call(this, obj);
@@ -7478,32 +9459,53 @@ function (_Geom) {
   };
 
   return Interval;
-}(Geom);
+}(_base["default"]);
 
-Geom.Interval = Interval;
-module.exports = Interval;
-}, function(modId) { var map = {"./base":1605424195587,"../util/common":1605424195577,"./mixin/size":1605424195630,"./shape/interval":1605424195631}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195630, function(require, module, exports) {
+_base["default"].Interval = Interval;
+var _default = Interval;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077073,"../util/common":1606535077060,"./mixin/size":1606535077124,"./shape/interval":1606535077125}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077124, function(require, module, exports) {
 
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _const = require("../../chart/const");
+
+var _common = require("../../util/common");
+
+var _global = _interopRequireDefault(require("../../global"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 /**
  * @fileOverview Utility for calculate the with ratui in x axis
  * @author sima.zhang1990@gmail.com
  * @author dxq613@gmail.com
  */
-var Global = require('../../global');
-
-var Util = require('../../util/common');
-
 var SizeMixin = {
-  getDefalutSize: function getDefalutSize() {
+  initEvent: function initEvent() {
+    var _this = this;
+
+    var chart = this.get('chart');
+
+    if (!chart) {
+      return;
+    }
+
+    chart.on(_const.EVENT_AFTER_SIZE_CHANGE, function () {
+      _this.set('_width', null);
+    });
+  },
+  getDefaultSize: function getDefaultSize() {
     var defaultSize = this.get('defaultSize');
 
     if (!defaultSize) {
       var coord = this.get('coord');
       var xScale = this.getXScale();
       var dataArray = this.get('dataArray');
-      var values = Util.uniq(xScale.values);
+      var values = (0, _common.uniq)(xScale.values);
       var count = values.length;
       var range = xScale.range;
       var normalizeSize = 1 / count;
@@ -7511,16 +9513,16 @@ var SizeMixin = {
 
       if (coord && coord.isPolar) {
         if (coord.transposed && count > 1) {
-          widthRatio = Global.widthRatio.multiplePie;
+          widthRatio = _global["default"].widthRatio.multiplePie;
         } else {
-          widthRatio = Global.widthRatio.rose;
+          widthRatio = _global["default"].widthRatio.rose;
         }
       } else {
         if (xScale.isLinear) {
           normalizeSize *= range[1] - range[0];
         }
 
-        widthRatio = Global.widthRatio.column;
+        widthRatio = _global["default"].widthRatio.column;
       }
 
       normalizeSize *= widthRatio;
@@ -7583,8 +9585,8 @@ var SizeMixin = {
   getNormalizedSize: function getNormalizedSize(obj) {
     var size = this.getAttrValue('size', obj);
 
-    if (Util.isNil(size)) {
-      size = this.getDefalutSize();
+    if ((0, _common.isNil)(size)) {
+      size = this.getDefaultSize();
     } else {
       size = this._toNormalizedSize(size);
     }
@@ -7594,26 +9596,32 @@ var SizeMixin = {
   getSize: function getSize(obj) {
     var size = this.getAttrValue('size', obj);
 
-    if (Util.isNil(size)) {
-      var normalizeSize = this.getDefalutSize();
+    if ((0, _common.isNil)(size)) {
+      var normalizeSize = this.getDefaultSize();
       size = this._toCoordSize(normalizeSize);
     }
 
     return size;
   }
 };
-module.exports = SizeMixin;
-}, function(modId) { var map = {"../../global":1605424195575,"../../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195631, function(require, module, exports) {
+var _default = SizeMixin;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../chart/const":1606535077064,"../../util/common":1606535077060,"../../global":1606535077058}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077125, function(require, module, exports) {
 
 
-var Util = require('../../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Shape = require('./shape');
+var _vector = _interopRequireDefault(require("../../graphic/util/vector2"));
 
-var Vector2 = require('../../graphic/util/vector2');
+var _global = _interopRequireDefault(require("../../global"));
 
-var Global = require('../../global');
+var _shape = _interopRequireDefault(require("./shape"));
+
+var _common = require("../../util/common");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function getRectPoints(cfg) {
   var x = cfg.x,
@@ -7623,7 +9631,7 @@ function getRectPoints(cfg) {
   var ymin = y0;
   var ymax = y;
 
-  if (Util.isArray(y)) {
+  if ((0, _common.isArray)(y)) {
     ymax = y[1];
     ymin = y[0];
   }
@@ -7631,7 +9639,7 @@ function getRectPoints(cfg) {
   var xmin;
   var xmax;
 
-  if (Util.isArray(x)) {
+  if ((0, _common.isArray)(x)) {
     xmin = x[0];
     xmax = x[1];
   } else {
@@ -7685,18 +9693,19 @@ function getMiddlePoint(a, b) {
   };
 }
 
-var Interval = Shape.registerFactory('interval', {
+var Interval = _shape["default"].registerFactory('interval', {
   defaultShapeType: 'rect',
   getDefaultPoints: function getDefaultPoints(cfg) {
     return getRectPoints(cfg);
   }
 });
-Shape.registerShape('interval', 'rect', {
+
+_shape["default"].registerShape('interval', 'rect', {
   draw: function draw(cfg, container) {
     var points = this.parsePoints(cfg.points);
-    var style = Util.mix({
+    var style = (0, _common.mix)({
       fill: cfg.color
-    }, Global.shape.interval, cfg.style);
+    }, _global["default"].shape.interval, cfg.style);
 
     if (cfg.isInCircle) {
       var newPoints = points.slice(0);
@@ -7712,10 +9721,14 @@ Shape.registerShape('interval', 'rect', {
       var v0 = [newPoints[0].x - x, newPoints[0].y - y];
       var v1 = [newPoints[1].x - x, newPoints[1].y - y];
       var v2 = [newPoints[2].x - x, newPoints[2].y - y];
-      var startAngle = Vector2.angleTo(v, v1);
-      var endAngle = Vector2.angleTo(v, v2);
-      var r0 = Vector2.length(v0);
-      var r = Vector2.length(v1);
+
+      var startAngle = _vector["default"].angleTo(v, v1);
+
+      var endAngle = _vector["default"].angleTo(v, v2);
+
+      var r0 = _vector["default"].length(v0);
+
+      var r = _vector["default"].length(v1);
 
       if (startAngle >= 1.5 * Math.PI) {
         startAngle = startAngle - 2 * Math.PI;
@@ -7727,7 +9740,7 @@ Shape.registerShape('interval', 'rect', {
 
       return container.addShape('Sector', {
         className: 'interval',
-        attrs: Util.mix({
+        attrs: (0, _common.mix)({
           x: x,
           y: y,
           r: r,
@@ -7741,13 +9754,14 @@ Shape.registerShape('interval', 'rect', {
     var rectCfg = getRectRange(points);
     return container.addShape('rect', {
       className: 'interval',
-      attrs: Util.mix(rectCfg, style)
+      attrs: (0, _common.mix)(rectCfg, style)
     });
   }
 }); // 金字塔 和 漏斗图
 
+
 ['pyramid', 'funnel'].forEach(function (shapeType) {
-  Shape.registerShape('interval', shapeType, {
+  _shape["default"].registerShape('interval', shapeType, {
     getPoints: function getPoints(cfg) {
       cfg.size = cfg.size * 2; // 漏斗图的 size 是柱状图的两倍
 
@@ -7770,10 +9784,10 @@ Shape.registerShape('interval', 'rect', {
         }
       }
 
-      var attrs = Util.mix({
+      var attrs = (0, _common.mix)({
         fill: cfg.color,
         points: polygonPoints
-      }, Global.shape.interval, cfg.style);
+      }, _global["default"].shape.interval, cfg.style);
       return container.addShape('polygon', {
         className: 'interval',
         attrs: attrs
@@ -7781,25 +9795,27 @@ Shape.registerShape('interval', 'rect', {
     }
   });
 });
-module.exports = Interval;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./shape":1605424195591,"../../graphic/util/vector2":1605424195585,"../../global":1605424195575}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195632, function(require, module, exports) {
+var _default = Interval;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../graphic/util/vector2":1606535077071,"../../global":1606535077058,"./shape":1606535077081,"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077126, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _base = _interopRequireDefault(require("./base"));
 
-var Geom = require('./base');
+var _common = require("../util/common");
 
-var Util = require('../util/common');
+require("./shape/polygon");
 
-require('./shape/polygon');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Polygon =
-/*#__PURE__*/
-function (_Geom) {
-  (0, _inheritsLoose2["default"])(Polygon, _Geom);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Polygon = /*#__PURE__*/function (_Geom) {
+  _inheritsLoose(Polygon, _Geom);
 
   function Polygon() {
     return _Geom.apply(this, arguments) || this;
@@ -7824,7 +9840,7 @@ function (_Geom) {
     var y = cfg.y;
     var temp;
 
-    if (!(Util.isArray(x) && Util.isArray(y))) {
+    if (!((0, _common.isArray)(x) && (0, _common.isArray)(y))) {
       var xScale = self.getXScale();
       var yScale = self.getYScale();
       var xCount = xScale.values ? xScale.values.length : xScale.ticks.length;
@@ -7835,11 +9851,11 @@ function (_Geom) {
       if (xScale.isCategory && yScale.isCategory) {
         x = [x - xOffset, x - xOffset, x + xOffset, x + xOffset];
         y = [y - yOffset, y + yOffset, y + yOffset, y - yOffset];
-      } else if (Util.isArray(x)) {
+      } else if ((0, _common.isArray)(x)) {
         temp = x;
         x = [temp[0], temp[0], temp[1], temp[1]];
         y = [y - yOffset / 2, y + yOffset / 2, y + yOffset / 2, y - yOffset / 2];
-      } else if (Util.isArray(y)) {
+      } else if ((0, _common.isArray)(y)) {
         temp = y;
         y = [temp[0], temp[1], temp[1], temp[0]];
         x = [x - xOffset / 2, x - xOffset / 2, x + xOffset / 2, x + xOffset / 2];
@@ -7853,19 +9869,25 @@ function (_Geom) {
   };
 
   return Polygon;
-}(Geom);
+}(_base["default"]);
 
-Geom.Polygon = Polygon;
-module.exports = Polygon;
-}, function(modId) { var map = {"./base":1605424195587,"../util/common":1605424195577,"./shape/polygon":1605424195633}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195633, function(require, module, exports) {
+_base["default"].Polygon = Polygon;
+var _default = Polygon;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077073,"../util/common":1606535077060,"./shape/polygon":1606535077127}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077127, function(require, module, exports) {
 
 
-var Shape = require('./shape');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Util = require('../../util/common');
+var _shape = _interopRequireDefault(require("./shape"));
 
-var Polygon = Shape.registerFactory('polygon', {
+var _common = require("../../util/common");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var Polygon = _shape["default"].registerFactory('polygon', {
   defaultShapeType: 'polygon',
   getDefaultPoints: function getDefaultPoints(pointInfo) {
     var points = [];
@@ -7882,10 +9904,11 @@ var Polygon = Shape.registerFactory('polygon', {
     return points;
   }
 });
-Shape.registerShape('polygon', 'polygon', {
+
+_shape["default"].registerShape('polygon', 'polygon', {
   draw: function draw(cfg, container) {
     var points = this.parsePoints(cfg.points);
-    var style = Util.mix({
+    var style = (0, _common.mix)({
       fill: cfg.color,
       points: points
     }, cfg.style);
@@ -7895,29 +9918,33 @@ Shape.registerShape('polygon', 'polygon', {
     });
   }
 });
-module.exports = Polygon;
-}, function(modId) { var map = {"./shape":1605424195591,"../../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195634, function(require, module, exports) {
+
+var _default = Polygon;
+exports["default"] = _default;
+}, function(modId) { var map = {"./shape":1606535077081,"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077128, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _assertThisInitialized2 = _interopRequireDefault(require("@babel/runtime/helpers/assertThisInitialized"));
+var _base = _interopRequireDefault(require("./base"));
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../util/common");
 
-var Geom = require('./base');
+var _size = _interopRequireDefault(require("./mixin/size"));
 
-var Util = require('../util/common');
+require("./shape/schema");
 
-var SizeMixin = require('./mixin/size');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-require('./shape/schema');
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
-var Schema =
-/*#__PURE__*/
-function (_Geom) {
-  (0, _inheritsLoose2["default"])(Schema, _Geom);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Schema = /*#__PURE__*/function (_Geom) {
+  _inheritsLoose(Schema, _Geom);
+
   var _proto = Schema.prototype;
 
   _proto.getDefaultCfg = function getDefaultCfg() {
@@ -7933,9 +9960,16 @@ function (_Geom) {
     var _this;
 
     _this = _Geom.call(this, cfg) || this;
-    Util.mix((0, _assertThisInitialized2["default"])(_this), SizeMixin);
+    (0, _common.mix)(_assertThisInitialized(_this), _size["default"]);
     return _this;
   }
+
+  _proto.init = function init() {
+    _Geom.prototype.init.call(this); // 绑定事件
+
+
+    this.initEvent();
+  };
 
   _proto.createShapePointsCfg = function createShapePointsCfg(obj) {
     var cfg = _Geom.prototype.createShapePointsCfg.call(this, obj);
@@ -7951,17 +9985,23 @@ function (_Geom) {
   };
 
   return Schema;
-}(Geom);
+}(_base["default"]);
 
-Geom.Schema = Schema;
-module.exports = Schema;
-}, function(modId) { var map = {"./base":1605424195587,"../util/common":1605424195577,"./mixin/size":1605424195630,"./shape/schema":1605424195635}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195635, function(require, module, exports) {
+_base["default"].Schema = Schema;
+var _default = Schema;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077073,"../util/common":1606535077060,"./mixin/size":1606535077124,"./shape/schema":1606535077129}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077129, function(require, module, exports) {
 
 
-var Shape = require('./shape');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Util = require('../../util/common');
+var _shape = _interopRequireDefault(require("./shape"));
+
+var _common = require("../../util/common");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _sortValue(value) {
   var sorted = value.sort(function (a, b) {
@@ -8012,14 +10052,15 @@ function getCandlePoints(x, y, width) {
   return points;
 }
 
-var Schema = Shape.registerFactory('schema', {});
-Shape.registerShape('schema', 'candle', {
+var Schema = _shape["default"].registerFactory('schema', {});
+
+_shape["default"].registerShape('schema', 'candle', {
   getPoints: function getPoints(cfg) {
     return getCandlePoints(cfg.x, cfg.y, cfg.size);
   },
   draw: function draw(cfg, container) {
     var points = this.parsePoints(cfg.points);
-    var style = Util.mix({
+    var style = (0, _common.mix)({
       stroke: cfg.color,
       fill: cfg.color,
       lineWidth: 1
@@ -8044,55 +10085,86 @@ Shape.registerShape('schema', 'candle', {
     });
   }
 });
-module.exports = Schema;
-}, function(modId) { var map = {"./shape":1605424195591,"../../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195636, function(require, module, exports) {
+
+var _default = Schema;
+exports["default"] = _default;
+}, function(modId) { var map = {"./shape":1606535077081,"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077130, function(require, module, exports) {
 
 
-module.exports = {
-  Stack: require('./stack'),
-  Dodge: require('./dodge'),
-  Symmetric: require('./symmetric')
-};
-}, function(modId) { var map = {"./stack":1605424195637,"./dodge":1605424195638,"./symmetric":1605424195639}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195637, function(require, module, exports) {
+exports.__esModule = true;
+
+var _stack = _interopRequireDefault(require("./stack"));
+
+exports.Stack = _stack["default"];
+
+var _dodge = _interopRequireDefault(require("./dodge"));
+
+exports.Dodge = _dodge["default"];
+
+var _symmetric = _interopRequireDefault(require("./symmetric"));
+
+exports.Symmetric = _symmetric["default"];
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+}, function(modId) { var map = {"./stack":1606535077131,"./dodge":1606535077132,"./symmetric":1606535077133}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077131, function(require, module, exports) {
 
 
-var Stack = require('@antv/adjust/lib/stack');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-module.exports = Stack;
+var _stack = _interopRequireDefault(require("@antv/adjust/lib/stack"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _default = _stack["default"];
+exports["default"] = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195638, function(require, module, exports) {
+__DEFINE__(1606535077132, function(require, module, exports) {
 
 
-var Dodge = require('@antv/adjust/lib/dodge');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-module.exports = Dodge;
+var _dodge = _interopRequireDefault(require("@antv/adjust/lib/dodge"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _default = _dodge["default"];
+exports["default"] = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195639, function(require, module, exports) {
+__DEFINE__(1606535077133, function(require, module, exports) {
 
 
-var Symmetric = require('@antv/adjust/lib/symmetric');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-module.exports = Symmetric;
+var _symmetric = _interopRequireDefault(require("@antv/adjust/lib/symmetric"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _default = _symmetric["default"];
+exports["default"] = _default;
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195640, function(require, module, exports) {
+__DEFINE__(1606535077134, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _base = _interopRequireDefault(require("./base"));
 
-var Base = require('./base');
+var _vector = _interopRequireDefault(require("../graphic/util/vector2"));
 
-var Vector2 = require('../graphic/util/vector2');
+var _matrix = _interopRequireDefault(require("../graphic/util/matrix"));
 
-var Matrix = require('../graphic/util/matrix');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Polar =
-/*#__PURE__*/
-function (_Base) {
-  (0, _inheritsLoose2["default"])(Polar, _Base);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Polar = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Polar, _Base);
 
   function Polar() {
     return _Base.apply(this, arguments) || this;
@@ -8180,26 +10252,31 @@ function (_Base) {
     var xDim = transposed ? 'y' : 'x';
     var yDim = transposed ? 'x' : 'y';
     var m = [1, 0, 0, 1, 0, 0];
-    Matrix.rotate(m, m, x.start);
+
+    _matrix["default"].rotate(m, m, x.start);
+
     var startV = [1, 0];
-    Vector2.transformMat2d(startV, startV, m);
+
+    _vector["default"].transformMat2d(startV, startV, m);
+
     startV = [startV[0], startV[1]];
     var pointV = [point.x - center.x, point.y - center.y];
 
-    if (Vector2.zero(pointV)) {
+    if (_vector["default"].zero(pointV)) {
       return {
         x: 0,
         y: 0
       };
     }
 
-    var theta = Vector2.angleTo(startV, pointV, x.end < x.start);
+    var theta = _vector["default"].angleTo(startV, pointV, x.end < x.start);
 
     if (Math.abs(theta - Math.PI * 2) < 0.001) {
       theta = 0;
     }
 
-    var l = Vector2.length(pointV);
+    var l = _vector["default"].length(pointV);
+
     var percentX = theta / (x.end - x.start);
     percentX = x.end - x.start > 0 ? percentX : -percentX;
     var percentY = (l - y.start) / (y.end - y.start);
@@ -8210,26 +10287,28 @@ function (_Base) {
   };
 
   return Polar;
-}(Base);
+}(_base["default"]);
 
-Base.Polar = Polar;
-module.exports = Polar;
-}, function(modId) { var map = {"./base":1605424195583,"../graphic/util/vector2":1605424195585,"../graphic/util/matrix":1605424195584}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195641, function(require, module, exports) {
+_base["default"].Polar = Polar;
+var _default = Polar;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077069,"../graphic/util/vector2":1606535077071,"../graphic/util/matrix":1606535077070}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077135, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _abstract = _interopRequireDefault(require("./abstract"));
 
-var Abstract = require('./abstract');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Circle =
-/*#__PURE__*/
-function (_Abstract) {
-  (0, _inheritsLoose2["default"])(Circle, _Abstract);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Circle = /*#__PURE__*/function (_Abstract) {
+  _inheritsLoose(Circle, _Abstract);
 
   function Circle() {
     return _Abstract.apply(this, arguments) || this;
@@ -8306,7 +10385,7 @@ function (_Abstract) {
     var container = this.getContainer(lineCfg.top);
     container.addShape('arc', {
       className: 'axis-line',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x: center.x,
         y: center.y,
         r: radius,
@@ -8317,33 +10396,28 @@ function (_Abstract) {
   };
 
   return Circle;
-}(Abstract);
+}(_abstract["default"]);
 
-Abstract.Circle = Circle;
-module.exports = Circle;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./abstract":1605424195596}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195642, function(require, module, exports) {
-
-
-var TimeCat = require('@antv/scale/lib/time-cat');
-
-module.exports = TimeCat;
-}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195643, function(require, module, exports) {
+_abstract["default"].Circle = Circle;
+var _default = Circle;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./abstract":1606535077088}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077136, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _base = _interopRequireDefault(require("./base"));
 
-var GuideBase = require('./base');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Arc =
-/*#__PURE__*/
-function (_GuideBase) {
-  (0, _inheritsLoose2["default"])(Arc, _GuideBase);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Arc = /*#__PURE__*/function (_GuideBase) {
+  _inheritsLoose(Arc, _GuideBase);
 
   function Arc() {
     return _GuideBase.apply(this, arguments) || this;
@@ -8391,7 +10465,7 @@ function (_GuideBase) {
     var endAngle = Math.atan2(end.y - coordCenter.y, end.x - coordCenter.x);
     var shape = container.addShape('arc', {
       className: 'guide-arc',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x: coordCenter.x,
         y: coordCenter.y,
         r: radius,
@@ -8404,15 +10478,19 @@ function (_GuideBase) {
   };
 
   return Arc;
-}(GuideBase);
+}(_base["default"]);
 
-GuideBase.Arc = Arc;
-module.exports = Arc;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./base":1605424195644}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195644, function(require, module, exports) {
+_base["default"].Arc = Arc;
+var _default = Arc;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./base":1606535077137}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077137, function(require, module, exports) {
 
 
-var Util = require('../../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("../../util/common");
 
 var KEYWORDS_PERCENT = {
   min: 0,
@@ -8420,9 +10498,7 @@ var KEYWORDS_PERCENT = {
   max: 1
 };
 
-var GuideBase =
-/*#__PURE__*/
-function () {
+var GuideBase = /*#__PURE__*/function () {
   var _proto = GuideBase.prototype;
 
   _proto._initDefaultCfg = function _initDefaultCfg() {};
@@ -8430,13 +10506,13 @@ function () {
   function GuideBase(cfg) {
     this._initDefaultCfg();
 
-    Util.deepMix(this, cfg);
+    (0, _common.deepMix)(this, cfg);
   }
 
   _proto._getNormalizedValue = function _getNormalizedValue(val, scale) {
     var rst;
 
-    if (Util.isNil(KEYWORDS_PERCENT[val])) {
+    if ((0, _common.isNil)(KEYWORDS_PERCENT[val])) {
       rst = scale.scale(val);
     } else {
       rst = KEYWORDS_PERCENT[val];
@@ -8465,13 +10541,13 @@ function () {
     var xScale = self.xScale;
     var yScales = self.yScales;
 
-    if (Util.isFunction(position)) {
+    if ((0, _common.isFunction)(position)) {
       position = position(xScale, yScales); // position 必须是对象
     } // 如果数据格式是 ['50%', '50%'] 的格式
     // fix: 原始数据中可能会包含 'xxx5%xxx' 这样的数据，需要判断下 https://github.com/antvis/f2/issues/590
 
 
-    if (Util.isString(position[0]) && position[0].indexOf('%') !== -1 && !isNaN(position[0].slice(0, -1))) {
+    if ((0, _common.isString)(position[0]) && position[0].indexOf('%') !== -1 && !isNaN(position[0].slice(0, -1))) {
       return this.parsePercentPoint(coord, position);
     }
 
@@ -8539,18 +10615,22 @@ function () {
   return GuideBase;
 }();
 
-module.exports = GuideBase;
-}, function(modId) { var map = {"../../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195645, function(require, module, exports) {
+var _default = GuideBase;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077138, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _base = _interopRequireDefault(require("./base"));
 
-var GuideBase = require('./base');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
 
 function getOffsetFromAlign(alignX, alignY, width, height) {
   var result = [];
@@ -8604,10 +10684,8 @@ function createDom(str) {
   return container.childNodes[0];
 }
 
-var Html =
-/*#__PURE__*/
-function (_GuideBase) {
-  (0, _inheritsLoose2["default"])(Html, _GuideBase);
+var Html = /*#__PURE__*/function (_GuideBase) {
+  _inheritsLoose(Html, _GuideBase);
 
   function Html() {
     return _GuideBase.apply(this, arguments) || this;
@@ -8685,8 +10763,8 @@ function (_GuideBase) {
         alignY = self.alignY,
         offsetX = self.offsetX,
         offsetY = self.offsetY;
-    var width = Util.getWidth(myNode);
-    var height = Util.getHeight(myNode);
+    var width = (0, _common.getWidth)(myNode);
+    var height = (0, _common.getHeight)(myNode);
     var newOffset = getOffsetFromAlign(alignX, alignY, width, height);
     position.x = position.x + newOffset[0] + canvasOffsetLeft;
     position.y = position.y + newOffset[1] + canvasOffsetTop;
@@ -8713,26 +10791,28 @@ function (_GuideBase) {
   };
 
   return Html;
-}(GuideBase);
+}(_base["default"]);
 
-GuideBase.Html = Html;
-module.exports = Html;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./base":1605424195644}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195646, function(require, module, exports) {
+_base["default"].Html = Html;
+var _default = Html;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./base":1606535077137}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077139, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _base = _interopRequireDefault(require("./base"));
 
-var GuideBase = require('./base');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Line =
-/*#__PURE__*/
-function (_GuideBase) {
-  (0, _inheritsLoose2["default"])(Line, _GuideBase);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Line = /*#__PURE__*/function (_GuideBase) {
+  _inheritsLoose(Line, _GuideBase);
 
   function Line() {
     return _GuideBase.apply(this, arguments) || this;
@@ -8761,7 +10841,7 @@ function (_GuideBase) {
 
     var shape = container.addShape('Line', {
       className: 'guide-line',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x1: points[0].x,
         y1: points[0].y,
         x2: points[1].x,
@@ -8773,26 +10853,28 @@ function (_GuideBase) {
   };
 
   return Line;
-}(GuideBase);
+}(_base["default"]);
 
-GuideBase.Line = Line;
-module.exports = Line;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./base":1605424195644}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195647, function(require, module, exports) {
+_base["default"].Line = Line;
+var _default = Line;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./base":1606535077137}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077140, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _base = _interopRequireDefault(require("./base"));
 
-var GuideBase = require('./base');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Rect =
-/*#__PURE__*/
-function (_GuideBase) {
-  (0, _inheritsLoose2["default"])(Rect, _GuideBase);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Rect = /*#__PURE__*/function (_GuideBase) {
+  _inheritsLoose(Rect, _GuideBase);
 
   function Rect() {
     return _GuideBase.apply(this, arguments) || this;
@@ -8820,7 +10902,7 @@ function (_GuideBase) {
 
     var shape = container.addShape('rect', {
       className: 'guide-rect',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x: Math.min(start.x, end.x),
         y: Math.min(start.y, end.y),
         width: Math.abs(end.x - start.x),
@@ -8832,26 +10914,28 @@ function (_GuideBase) {
   };
 
   return Rect;
-}(GuideBase);
+}(_base["default"]);
 
-GuideBase.Rect = Rect;
-module.exports = Rect;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./base":1605424195644}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195648, function(require, module, exports) {
+_base["default"].Rect = Rect;
+var _default = Rect;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./base":1606535077137}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077141, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _base = _interopRequireDefault(require("./base"));
 
-var GuideBase = require('./base');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Text =
-/*#__PURE__*/
-function (_GuideBase) {
-  (0, _inheritsLoose2["default"])(Text, _GuideBase);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Text = /*#__PURE__*/function (_GuideBase) {
+  _inheritsLoose(Text, _GuideBase);
 
   function Text() {
     return _GuideBase.apply(this, arguments) || this;
@@ -8918,7 +11002,7 @@ function (_GuideBase) {
 
     var shape = container.addShape('text', {
       className: 'guide-text',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x: point.x,
         y: point.y,
         text: content
@@ -8929,26 +11013,28 @@ function (_GuideBase) {
   };
 
   return Text;
-}(GuideBase);
+}(_base["default"]);
 
-GuideBase.Text = Text;
-module.exports = Text;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./base":1605424195644}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195649, function(require, module, exports) {
+_base["default"].Text = Text;
+var _default = Text;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./base":1606535077137}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077142, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _base = _interopRequireDefault(require("./base"));
 
-var GuideBase = require('./base');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Tag =
-/*#__PURE__*/
-function (_GuideBase) {
-  (0, _inheritsLoose2["default"])(Tag, _GuideBase);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Tag = /*#__PURE__*/function (_GuideBase) {
+  _inheritsLoose(Tag, _GuideBase);
 
   function Tag() {
     return _GuideBase.apply(this, arguments) || this;
@@ -9026,6 +11112,11 @@ function (_GuideBase) {
 
     if (!position) {
       return;
+    } // 数据不在显示范围内时，x/y 会为NaN
+
+
+    if (isNaN(position.x) || isNaN(position.y)) {
+      return;
     }
 
     var content = this.content,
@@ -9039,7 +11130,7 @@ function (_GuideBase) {
     if (this.withPoint) {
       var pointShape = wrapperContainer.addShape('Circle', {
         className: 'guide-tag-point',
-        attrs: Util.mix({
+        attrs: (0, _common.mix)({
           x: position.x,
           y: position.y
         }, this.pointStyle)
@@ -9052,7 +11143,7 @@ function (_GuideBase) {
     var tagText = tagContainer.addShape('text', {
       className: 'guide-tag-text',
       zIndex: 1,
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x: 0,
         y: 0,
         text: content
@@ -9061,7 +11152,7 @@ function (_GuideBase) {
     shapes.push(tagText); // create background box
 
     var textBBox = tagText.getBBox();
-    var padding = Util.parsePadding(background.padding);
+    var padding = (0, _common.parsePadding)(background.padding);
     var tagWidth = textBBox.width + padding[1] + padding[3];
     var tagHeight = textBBox.height + padding[0] + padding[2];
     var yMin = textBBox.minY - padding[0];
@@ -9069,7 +11160,7 @@ function (_GuideBase) {
     var tagBg = tagContainer.addShape('rect', {
       className: 'guide-tag-bg',
       zIndex: -1,
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x: xMin,
         y: yMin,
         width: tagWidth,
@@ -9082,7 +11173,7 @@ function (_GuideBase) {
     var x = position.x + this.offsetX;
     var y = position.y + this.offsetY;
     var arrowPoints;
-    var radius = Util.parsePadding(background.radius);
+    var radius = (0, _common.parsePadding)(background.radius);
 
     if (direct === 'tl') {
       arrowPoints = [{
@@ -9210,26 +11301,28 @@ function (_GuideBase) {
   };
 
   return Tag;
-}(GuideBase);
+}(_base["default"]);
 
-GuideBase.Tag = Tag;
-module.exports = Tag;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./base":1605424195644}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195650, function(require, module, exports) {
+_base["default"].Tag = Tag;
+var _default = Tag;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./base":1606535077137}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077143, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../../util/common");
 
-var Util = require('../../util/common');
+var _base = _interopRequireDefault(require("./base"));
 
-var GuideBase = require('./base');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
-var Point =
-/*#__PURE__*/
-function (_GuideBase) {
-  (0, _inheritsLoose2["default"])(Point, _GuideBase);
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Point = /*#__PURE__*/function (_GuideBase) {
+  _inheritsLoose(Point, _GuideBase);
 
   function Point() {
     return _GuideBase.apply(this, arguments) || this;
@@ -9255,7 +11348,7 @@ function (_GuideBase) {
     if (!position) return null;
     var shape = container.addShape('Circle', {
       className: 'guide-point',
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x: position.x + this.offsetX,
         y: position.y + this.offsetY
       }, this.style)
@@ -9265,26 +11358,124 @@ function (_GuideBase) {
   };
 
   return Point;
-}(GuideBase);
+}(_base["default"]);
 
-GuideBase.Point = Point;
-module.exports = Point;
-}, function(modId) { var map = {"../../util/common":1605424195577,"./base":1605424195644}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195651, function(require, module, exports) {
-
-
-var Util = require('../util/common');
-
-var Global = require('../global');
-
-var Tooltip = require('../component/tooltip');
-
-var Helper = require('../util/helper'); // Register the default configuration for Tooltip
+_base["default"].Point = Point;
+var _default = Point;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./base":1606535077137}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077144, function(require, module, exports) {
 
 
-Global.tooltip = Util.deepMix({
-  triggerOn: ['touchstart', 'touchmove'],
-  // triggerOff: 'touchend',
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("../util/common");
+
+var _index = require("../graphic/index");
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var SYMBOLS = {
+  circle: function circle(x, y, r, ctx) {
+    ctx.arc(x, y, r, 0, Math.PI * 2, false);
+  },
+  square: function square(x, y, r, ctx) {
+    ctx.moveTo(x - r, y - r);
+    ctx.lineTo(x + r, y - r);
+    ctx.lineTo(x + r, y + r);
+    ctx.lineTo(x - r, y + r);
+    ctx.closePath();
+  }
+};
+
+var Marker = /*#__PURE__*/function (_Shape) {
+  _inheritsLoose(Marker, _Shape);
+
+  function Marker() {
+    return _Shape.apply(this, arguments) || this;
+  }
+
+  var _proto = Marker.prototype;
+
+  _proto._initProperties = function _initProperties() {
+    _Shape.prototype._initProperties.call(this);
+
+    this._attrs.canFill = true;
+    this._attrs.canStroke = true;
+    this._attrs.type = 'marker';
+  };
+
+  _proto.getDefaultAttrs = function getDefaultAttrs() {
+    return {
+      x: 0,
+      y: 0,
+      lineWidth: 0
+    };
+  };
+
+  _proto.createPath = function createPath(context) {
+    var attrs = this.get('attrs');
+    var x = attrs.x,
+        y = attrs.y,
+        radius = attrs.radius;
+    var symbol = attrs.symbol || 'circle';
+    var method;
+
+    if ((0, _common.isFunction)(symbol)) {
+      method = symbol;
+    } else {
+      method = SYMBOLS[symbol];
+    }
+
+    context.beginPath();
+    method(x, y, radius, context, this);
+  };
+
+  _proto.calculateBox = function calculateBox() {
+    var attrs = this.get('attrs');
+    var x = attrs.x,
+        y = attrs.y,
+        radius = attrs.radius;
+    return {
+      minX: x - radius,
+      minY: y - radius,
+      maxX: x + radius,
+      maxY: y + radius
+    };
+  };
+
+  return Marker;
+}(_index.Shape);
+
+var _default = Marker;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"../graphic/index":1606535077090}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077145, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports.init = init;
+exports.afterGeomDraw = afterGeomDraw;
+exports.clearInner = clearInner;
+exports["default"] = void 0;
+
+var _common = require("../util/common");
+
+var _global = _interopRequireDefault(require("../global"));
+
+var _tooltip = _interopRequireDefault(require("../component/tooltip"));
+
+var _helper = require("../util/helper");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// Register the default configuration for Tooltip
+_global["default"].tooltip = (0, _common.deepMix)({
+  triggerOn: 'press',
+  triggerOff: 'pressend',
   alwaysShow: false,
   showTitle: false,
   showCrosshairs: false,
@@ -9325,7 +11516,7 @@ Global.tooltip = Util.deepMix({
   },
   layout: 'horizontal',
   snap: false
-}, Global.tooltip || {});
+}, _global["default"].tooltip || {});
 
 function _getTooltipValueScale(geom) {
   var colorAttr = geom.getAttr('color');
@@ -9355,7 +11546,7 @@ function getTooltipName(geom, origin) {
   var groupScales = geom._getGroupScales();
 
   if (groupScales.length) {
-    Util.each(groupScales, function (scale) {
+    (0, _common.each)(groupScales, function (scale) {
       nameScale = scale;
       return false;
     });
@@ -9388,7 +11579,7 @@ function getTooltipTitle(geom, origin) {
 
 function _indexOfArray(items, item) {
   var rst = -1;
-  Util.each(items, function (sub, index) {
+  (0, _common.each)(items, function (sub, index) {
     if (sub.title === item.title && sub.name === item.name && sub.value === item.value && sub.color === item.color) {
       rst = index;
       return false;
@@ -9399,7 +11590,7 @@ function _indexOfArray(items, item) {
 
 function _uniqItems(items) {
   var tmp = [];
-  Util.each(items, function (item) {
+  (0, _common.each)(items, function (item) {
     var index = _indexOfArray(tmp, item);
 
     if (index === -1) {
@@ -9415,18 +11606,51 @@ function isEqual(arr1, arr2) {
   return JSON.stringify(arr1) === JSON.stringify(arr2);
 }
 
-var TooltipController =
-/*#__PURE__*/
-function () {
+var TooltipController = /*#__PURE__*/function () {
   function TooltipController(cfg) {
+    var _this = this;
+
+    _defineProperty(this, "handleShowEvent", function (ev) {
+      var chart = _this.chart;
+      if (!_this.enable) return;
+      var plot = chart.get('plotRange');
+      var point = (0, _common.createEvent)(ev, chart);
+
+      if (!(0, _helper.isPointInPlot)(point, plot) && !_this._tooltipCfg.alwaysShow) {
+        // not in chart plot
+        _this.hideTooltip();
+
+        return;
+      }
+
+      var lastTimeStamp = _this.timeStamp;
+      var timeStamp = +new Date();
+
+      if (timeStamp - lastTimeStamp > 16) {
+        _this.showTooltip(point);
+
+        _this.timeStamp = timeStamp;
+      }
+    });
+
+    _defineProperty(this, "handleHideEvent", function () {
+      if (!_this.enable) return;
+
+      _this.hideTooltip();
+    });
+
     this.enable = true;
     this.cfg = {};
     this.tooltip = null;
     this.chart = null;
     this.timeStamp = 0;
-    Util.mix(this, cfg);
-    var chart = this.chart;
-    this.canvasDom = chart.get('canvas').get('el');
+    (0, _common.mix)(this, cfg);
+    var _chart = this.chart;
+
+    var canvas = _chart.get('canvas');
+
+    this.canvas = canvas;
+    this.canvasDom = canvas.get('el');
   }
 
   var _proto = TooltipController.prototype;
@@ -9434,10 +11658,10 @@ function () {
   _proto._setCrosshairsCfg = function _setCrosshairsCfg() {
     var self = this;
     var chart = self.chart;
-    var defaultCfg = Util.mix({}, Global.tooltip);
+    var defaultCfg = (0, _common.mix)({}, _global["default"].tooltip);
     var geoms = chart.get('geoms');
     var shapes = [];
-    Util.each(geoms, function (geom) {
+    (0, _common.each)(geoms, function (geom) {
       var type = geom.get('type');
 
       if (shapes.indexOf(type) === -1) {
@@ -9448,7 +11672,7 @@ function () {
 
     if (geoms.length && (coordType === 'cartesian' || coordType === 'rect')) {
       if (shapes.length === 1 && ['line', 'area', 'path', 'point'].indexOf(shapes[0]) !== -1) {
-        Util.mix(defaultCfg, {
+        (0, _common.mix)(defaultCfg, {
           showCrosshairs: true
         });
       }
@@ -9491,7 +11715,7 @@ function () {
 
     var cfg = self.cfg; // 通过 chart.tooltip() 接口传入的 tooltip 配置项
 
-    var tooltipCfg = Util.deepMix({
+    var tooltipCfg = (0, _common.deepMix)({
       plotRange: plotRange,
       frontPlot: frontPlot,
       backPlot: backPlot,
@@ -9501,8 +11725,13 @@ function () {
 
     tooltipCfg.maxLength = self._getMaxLength(tooltipCfg);
     this._tooltipCfg = tooltipCfg;
-    var tooltip = new Tooltip(tooltipCfg);
-    self.tooltip = tooltip;
+    var tooltip = new _tooltip["default"](tooltipCfg);
+    self.tooltip = tooltip; // 需要保持tooltip一直显示
+
+    if (tooltipCfg.alwaysShow && self.prePoint) {
+      this.showTooltip(self.prePoint);
+    }
+
     self.bindEvents();
   };
 
@@ -9515,7 +11744,6 @@ function () {
     }
 
     this.tooltip = null;
-    this.prePoint = null;
     this._lastActive = null;
   };
 
@@ -9557,7 +11785,7 @@ function () {
         height = br.y - tl.y;
       }
 
-      cfg.style = Util.mix({
+      cfg.style = (0, _common.mix)({
         x: x,
         y: y,
         width: width,
@@ -9566,7 +11794,7 @@ function () {
         opacity: 0.3
       }, tooltipCfg.tooltipMarkerStyle);
     } else {
-      cfg.style = Util.mix({
+      cfg.style = (0, _common.mix)({
         radius: 4,
         fill: '#fff',
         lineWidth: 2
@@ -9581,6 +11809,7 @@ function () {
       tooltipMarkerCfg = {};
     }
 
+    this.prePoint = point;
     var lastActive = this._lastActive;
     var tooltip = this.tooltip;
     var cfg = this._tooltipCfg;
@@ -9596,7 +11825,7 @@ function () {
       var tip;
       var pos;
 
-      if (Helper.isPointInPlot(point, plot)) {
+      if ((0, _helper.isPointInPlot)(point, plot)) {
         if (coord.transposed) {
           tip = yScale.invert(invertPoint.x);
           pos = point.x;
@@ -9624,7 +11853,7 @@ function () {
     }
 
     if (isEqual(lastActive, items)) {
-      if (snap === false && (Util.directionEnabled(cfg.crosshairsType, 'y') || cfg.showYTip)) {
+      if (snap === false && ((0, _common.directionEnabled)(cfg.crosshairsType, 'y') || cfg.showYTip)) {
         var canvas = this.chart.get('canvas');
         canvas.draw();
       }
@@ -9703,15 +11932,18 @@ function () {
     var tooltipMarkerItems = [];
     var items = [];
     var cfg = self._tooltipCfg;
+    var showItemMarker = cfg.showItemMarker,
+        itemMarkerStyle = cfg.itemMarkerStyle,
+        alwaysShow = cfg.alwaysShow;
     var marker;
 
-    if (cfg.showItemMarker) {
-      marker = cfg.itemMarkerStyle;
+    if (showItemMarker) {
+      marker = itemMarkerStyle;
     }
 
     var geoms = chart.get('geoms');
     var coord = chart.get('coord');
-    Util.each(geoms, function (geom) {
+    (0, _common.each)(geoms, function (geom) {
       if (geom.get('visible')) {
         var type = geom.get('type');
         var records = geom.getSnapRecords(point);
@@ -9721,7 +11953,7 @@ function () {
           return;
         }
 
-        Util.each(records, function (record) {
+        (0, _common.each)(records, function (record) {
           if (record.x && record.y) {
             var x = record.x,
                 y = record.y,
@@ -9729,8 +11961,8 @@ function () {
                 color = record.color;
             var tooltipItem = {
               x: x,
-              y: Util.isArray(y) ? y[1] : y,
-              color: color || Global.defaultColor,
+              y: (0, _common.isArray)(y) ? y[1] : y,
+              color: color || _global["default"].defaultColor,
               origin: _origin,
               name: getTooltipName(geom, _origin),
               value: getTooltipValue(geom, _origin),
@@ -9738,8 +11970,8 @@ function () {
             };
 
             if (marker) {
-              tooltipItem.marker = Util.mix({
-                fill: color || Global.defaultColor
+              tooltipItem.marker = (0, _common.mix)({
+                fill: color || _global["default"].defaultColor
               }, marker);
             }
 
@@ -9765,7 +11997,11 @@ function () {
       };
 
       self._setTooltip(point, items, tooltipMarkerCfg);
-    } else {
+
+      return;
+    }
+
+    if (!alwaysShow) {
       self.hideTooltip();
     }
   };
@@ -9789,132 +12025,108 @@ function () {
     }
   };
 
-  _proto.handleShowEvent = function handleShowEvent(ev) {
-    var chart = this.chart;
-    if (!this.enable || chart.get('_closeTooltip')) return;
-    var plot = chart.get('plotRange');
-    var point = Util.createEvent(ev, chart);
-
-    if (!Helper.isPointInPlot(point, plot) && !this._tooltipCfg.alwaysShow) {
-      // not in chart plot
-      this.hideTooltip();
-      return;
-    }
-
-    var lastTimeStamp = this.timeStamp;
-    var timeStamp = +new Date();
-
-    if (timeStamp - lastTimeStamp > 16) {
-      this.showTooltip(point);
-      this.timeStamp = timeStamp;
-    }
-  };
-
-  _proto.handleHideEvent = function handleHideEvent() {
-    var chart = this.chart;
-    if (!this.enable || chart.get('_closeTooltip')) return;
-    this.hideTooltip();
-  };
-
   _proto._handleEvent = function _handleEvent(methodName, method, action) {
-    var canvasDom = this.canvasDom;
-    Util.each([].concat(methodName), function (aMethod) {
+    var canvas = this.canvas;
+    (0, _common.each)([].concat(methodName), function (aMethod) {
       if (action === 'bind') {
-        Util.addEventListener(canvasDom, aMethod, method);
+        canvas.on(aMethod, method);
       } else {
-        Util.removeEventListener(canvasDom, aMethod, method);
+        canvas.off(aMethod, method);
       }
     });
   };
 
   _proto.bindEvents = function bindEvents() {
     var cfg = this._tooltipCfg;
-    var canvasElement = this.canvasDom;
     var triggerOn = cfg.triggerOn,
         triggerOff = cfg.triggerOff,
         alwaysShow = cfg.alwaysShow;
-    var showMethod = Util.wrapBehavior(this, 'handleShowEvent');
-    var hideMethod = Util.wrapBehavior(this, 'handleHideEvent');
-    triggerOn && this._handleEvent(triggerOn, showMethod, 'bind');
-    triggerOff && this._handleEvent(triggerOff, hideMethod, 'bind'); // 如果 !alwaysShow, 则在手势离开后就隐藏
+    triggerOn && this._handleEvent(triggerOn, this.handleShowEvent, 'bind'); // 如果 !alwaysShow, 则在手势离开后就隐藏
 
-    if (!alwaysShow && !triggerOff) {
-      Util.addEventListener(canvasElement, 'touchend', hideMethod);
+    if (!alwaysShow) {
+      this._handleEvent(triggerOff, this.handleHideEvent, 'bind');
     }
   };
 
   _proto.unBindEvents = function unBindEvents() {
     var cfg = this._tooltipCfg;
-    var canvasElement = this.canvasDom;
     var triggerOn = cfg.triggerOn,
         triggerOff = cfg.triggerOff,
         alwaysShow = cfg.alwaysShow;
-    var showMethod = Util.getWrapBehavior(this, 'handleShowEvent');
-    var hideMethod = Util.getWrapBehavior(this, 'handleHideEvent');
-    triggerOn && this._handleEvent(triggerOn, showMethod, 'unBind');
-    triggerOff && this._handleEvent(triggerOff, hideMethod, 'unBind');
+    triggerOn && this._handleEvent(triggerOn, this.handleShowEvent, 'unBind');
 
     if (!alwaysShow) {
-      var docMethod = Util.getWrapBehavior(this, 'handleDocEvent');
-      Util.removeEventListener(canvasElement, 'touchend', docMethod);
+      this._handleEvent(triggerOff, this.handleHideEvent, 'unBind');
     }
   };
 
   return TooltipController;
 }();
 
-module.exports = {
-  init: function init(chart) {
-    var tooltipController = new TooltipController({
-      chart: chart
-    });
-    chart.set('tooltipController', tooltipController);
+function init(chart) {
+  var tooltipController = new TooltipController({
+    chart: chart
+  });
+  chart.set('tooltipController', tooltipController);
 
-    chart.tooltip = function (enable, cfg) {
-      if (Util.isObject(enable)) {
-        cfg = enable;
-        enable = true;
-      }
+  chart.tooltip = function (enable, cfg) {
+    if ((0, _common.isObject)(enable)) {
+      cfg = enable;
+      enable = true;
+    }
 
-      tooltipController.enable = enable;
+    tooltipController.enable = enable;
 
-      if (cfg) {
-        tooltipController.cfg = cfg;
-      }
+    if (cfg) {
+      tooltipController.cfg = cfg;
+    }
 
-      return this;
-    };
-  },
-  afterGeomDraw: function afterGeomDraw(chart) {
-    var tooltipController = chart.get('tooltipController');
-    tooltipController.render();
+    return this;
+  };
+}
 
-    chart.showTooltip = function (point) {
-      tooltipController.showTooltip(point);
-      return this;
-    };
+function afterGeomDraw(chart) {
+  var tooltipController = chart.get('tooltipController');
+  tooltipController.render();
 
-    chart.hideTooltip = function () {
-      tooltipController.hideTooltip();
-      return this;
-    };
-  },
-  clearInner: function clearInner(chart) {
-    var tooltipController = chart.get('tooltipController');
-    tooltipController.clear();
-  }
+  chart.showTooltip = function (point) {
+    tooltipController.showTooltip(point);
+    return this;
+  };
+
+  chart.hideTooltip = function () {
+    tooltipController.hideTooltip();
+    return this;
+  };
+}
+
+function clearInner(chart) {
+  var tooltipController = chart.get('tooltipController');
+  tooltipController.clear();
+}
+
+var _default = {
+  init: init,
+  afterGeomDraw: afterGeomDraw,
+  clearInner: clearInner
 };
-}, function(modId) { var map = {"../util/common":1605424195577,"../global":1605424195575,"../component/tooltip":1605424195652,"../util/helper":1605424195619}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195652, function(require, module, exports) {
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"../global":1606535077058,"../component/tooltip":1606535077146,"../util/helper":1606535077113}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077146, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var Marker = require('./marker');
+var _common = require("../util/common");
 
-var Container = require('./list');
+var _marker = _interopRequireDefault(require("./marker"));
 
-var TextBox = require('./text-box');
+var _list = _interopRequireDefault(require("./list"));
+
+var _textBox = _interopRequireDefault(require("./text-box"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var GAP = 4;
 /**
@@ -9922,9 +12134,7 @@ var GAP = 4;
  * 1. 移除 fixed 参数
  */
 
-var Tooltip =
-/*#__PURE__*/
-function () {
+var Tooltip = /*#__PURE__*/function () {
   var _proto = Tooltip.prototype;
 
   _proto.getDefaultCfg = function getDefaultCfg() {
@@ -9964,11 +12174,23 @@ function () {
         fill: 'rgba(0, 0, 0, 0.65)',
         padding: [3, 5]
       },
+      xTipTextStyle: {
+        fontSize: 12,
+        fill: '#fff',
+        textAlign: 'center',
+        textBaseline: 'middle'
+      },
       yTip: null,
       yTipBackground: {
         radius: 1,
         fill: 'rgba(0, 0, 0, 0.65)',
         padding: [3, 5]
+      },
+      yTipTextStyle: {
+        fontSize: 12,
+        fill: '#fff',
+        textAlign: 'center',
+        textBaseline: 'middle'
       },
 
       /**
@@ -9988,13 +12210,13 @@ function () {
   };
 
   function Tooltip(cfg) {
-    Util.deepMix(this, this.getDefaultCfg(), cfg);
+    (0, _common.deepMix)(this, this.getDefaultCfg(), cfg);
     var frontPlot = this.frontPlot,
         custom = this.custom;
 
     if (!custom) {
       // custom means user do customize
-      var container = new Container(Util.mix({
+      var container = new _list["default"]((0, _common.mix)({
         parent: frontPlot,
         zIndex: 3
       }, cfg));
@@ -10007,7 +12229,7 @@ function () {
           className: 'tooltip-arrow',
           visible: false,
           zIndex: 2,
-          attrs: Util.mix({
+          attrs: (0, _common.mix)({
             points: []
           }, background)
         });
@@ -10015,10 +12237,13 @@ function () {
     }
 
     if (this.showXTip) {
-      var xTipBackground = this.xTipBackground;
-      var xTipBox = new TextBox({
+      var xTipBackground = this.xTipBackground,
+          xTipTextStyle = this.xTipTextStyle;
+      var xTipBox = new _textBox["default"]({
+        context: frontPlot.get('context'),
         className: 'xTip',
         background: xTipBackground,
+        textStyle: xTipTextStyle,
         visible: false
       });
       frontPlot.add(xTipBox.container);
@@ -10026,10 +12251,13 @@ function () {
     }
 
     if (this.showYTip) {
-      var yTipBackground = this.yTipBackground;
-      var yTipBox = new TextBox({
+      var yTipBackground = this.yTipBackground,
+          yTipTextStyle = this.yTipTextStyle;
+      var yTipBox = new _textBox["default"]({
+        context: frontPlot.get('context'),
         className: 'yTip',
         background: yTipBackground,
+        textStyle: yTipTextStyle,
         visible: false
       });
       frontPlot.add(yTipBox.container);
@@ -10057,10 +12285,10 @@ function () {
   _proto.setYTipContent = function setYTipContent(val) {
     var yTip = this.yTip;
 
-    if (Util.isFunction(yTip)) {
+    if ((0, _common.isFunction)(yTip)) {
       val = yTip(val);
     } else {
-      val = Util.mix({
+      val = (0, _common.mix)({
         text: val
       }, yTip);
     }
@@ -10099,10 +12327,10 @@ function () {
   _proto.setXTipContent = function setXTipContent(val) {
     var xTip = this.xTip;
 
-    if (Util.isFunction(xTip)) {
+    if ((0, _common.isFunction)(xTip)) {
       val = xTip(val);
     } else {
-      val = Util.mix({
+      val = (0, _common.mix)({
         text: val
       }, xTip);
     }
@@ -10207,7 +12435,7 @@ function () {
           y: tl.y + offsetY
         }]);
         var backShape = container.backShape;
-        var radius = Util.parsePadding(backShape.attr('radius'));
+        var radius = (0, _common.parsePadding)(backShape.attr('radius'));
 
         if (_x === tl.x) {
           radius[3] = 0;
@@ -10258,9 +12486,9 @@ function () {
     if (type === 'circle') {
       for (var i = 0, length = items.length; i < length; i++) {
         var item = items[i];
-        var marker = new Marker({
+        var marker = new _marker["default"]({
           className: 'tooltip-circle-marker',
-          attrs: Util.mix({
+          attrs: (0, _common.mix)({
             x: item.x,
             y: item.y,
             stroke: item.color
@@ -10364,12 +12592,12 @@ function () {
     var tl = plotRange.tl,
         br = plotRange.br;
 
-    if (Util.directionEnabled(crosshairsType, 'x')) {
+    if ((0, _common.directionEnabled)(crosshairsType, 'x')) {
       this.crosshairsShapeX = frontPlot.addShape('Line', {
         className: 'tooltip-crosshairs-x',
         zIndex: 0,
         visible: false,
-        attrs: Util.mix({
+        attrs: (0, _common.mix)({
           x1: tl.x,
           y1: 0,
           x2: br.x,
@@ -10378,12 +12606,12 @@ function () {
       });
     }
 
-    if (Util.directionEnabled(crosshairsType, 'y')) {
+    if ((0, _common.directionEnabled)(crosshairsType, 'y')) {
       this.crosshairsShapeY = frontPlot.addShape('Line', {
         className: 'tooltip-crosshairs-y',
         zIndex: 0,
         visible: false,
-        attrs: Util.mix({
+        attrs: (0, _common.mix)({
           x1: 0,
           y1: br.y,
           x2: 0,
@@ -10396,114 +12624,26 @@ function () {
   return Tooltip;
 }();
 
-module.exports = Tooltip;
-}, function(modId) { var map = {"../util/common":1605424195577,"./marker":1605424195653,"./list":1605424195654,"./text-box":1605424195655}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195653, function(require, module, exports) {
+var _default = Tooltip;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"./marker":1606535077144,"./list":1606535077147,"./text-box":1606535077148}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077147, function(require, module, exports) {
 
 
-var _interopRequireDefault = require("@babel/runtime/helpers/interopRequireDefault");
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _inheritsLoose2 = _interopRequireDefault(require("@babel/runtime/helpers/inheritsLoose"));
+var _common = require("../util/common");
 
-/**
- * marker shapes，used for tooltip and legend
- */
-var Util = require('../util/common');
+var _index = require("../graphic/index");
 
-var _require = require('../graphic/index'),
-    Shape = _require.Shape;
+var _marker = _interopRequireDefault(require("./marker"));
 
-var SYMBOLS = {
-  circle: function circle(x, y, r, ctx) {
-    ctx.arc(x, y, r, 0, Math.PI * 2, false);
-  },
-  square: function square(x, y, r, ctx) {
-    ctx.moveTo(x - r, y - r);
-    ctx.lineTo(x + r, y - r);
-    ctx.lineTo(x + r, y + r);
-    ctx.lineTo(x - r, y + r);
-    ctx.closePath();
-  }
-};
-
-var Marker =
-/*#__PURE__*/
-function (_Shape) {
-  (0, _inheritsLoose2["default"])(Marker, _Shape);
-
-  function Marker() {
-    return _Shape.apply(this, arguments) || this;
-  }
-
-  var _proto = Marker.prototype;
-
-  _proto._initProperties = function _initProperties() {
-    _Shape.prototype._initProperties.call(this);
-
-    this._attrs.canFill = true;
-    this._attrs.canStroke = true;
-    this._attrs.type = 'marker';
-  };
-
-  _proto.getDefaultAttrs = function getDefaultAttrs() {
-    return {
-      x: 0,
-      y: 0,
-      lineWidth: 0
-    };
-  };
-
-  _proto.createPath = function createPath(context) {
-    var attrs = this.get('attrs');
-    var x = attrs.x,
-        y = attrs.y,
-        radius = attrs.radius;
-    var symbol = attrs.symbol || 'circle';
-    var method;
-
-    if (Util.isFunction(symbol)) {
-      method = symbol;
-    } else {
-      method = SYMBOLS[symbol];
-    }
-
-    context.beginPath();
-    method(x, y, radius, context, this);
-  };
-
-  _proto.calculateBox = function calculateBox() {
-    var attrs = this.get('attrs');
-    var x = attrs.x,
-        y = attrs.y,
-        radius = attrs.radius;
-    return {
-      minX: x - radius,
-      minY: y - radius,
-      maxX: x + radius,
-      maxY: y + radius
-    };
-  };
-
-  return Marker;
-}(Shape);
-
-module.exports = Marker;
-}, function(modId) { var map = {"../util/common":1605424195577,"../graphic/index":1605424195598}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195654, function(require, module, exports) {
-
-
-var Util = require('../util/common');
-
-var _require = require('../graphic/index'),
-    Group = _require.Group;
-
-var Marker = require('./marker');
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var MARKER_RADIUS = 3;
 
-var List =
-/*#__PURE__*/
-function () {
+var List = /*#__PURE__*/function () {
   var _proto = List.prototype;
 
   _proto.getDefaultCfg = function getDefaultCfg() {
@@ -10565,7 +12705,7 @@ function () {
   };
 
   function List(cfg) {
-    Util.deepMix(this, this.getDefaultCfg(), cfg);
+    (0, _common.deepMix)(this, this.getDefaultCfg(), cfg);
 
     this._init();
 
@@ -10575,7 +12715,7 @@ function () {
   }
 
   _proto._init = function _init() {
-    var container = new Group({
+    var container = new _index.Group({
       zIndex: this.zIndex || 0
     });
     this.container = container;
@@ -10604,7 +12744,7 @@ function () {
             titleStyle = this.titleStyle;
         titleShape = wrapper.addShape('text', {
           className: 'title',
-          attrs: Util.mix({
+          attrs: (0, _common.mix)({
             x: 0,
             y: 0,
             text: title
@@ -10631,7 +12771,7 @@ function () {
       items.reverse();
     }
 
-    Util.each(items, function (item, index) {
+    (0, _common.each)(items, function (item, index) {
       self._addItem(item, index);
     });
 
@@ -10656,8 +12796,8 @@ function () {
           height = _wrapper$getBBox.height;
 
       var padding = background.padding || [0, 0, 0, 0];
-      padding = Util.parsePadding(padding);
-      var attrs = Util.mix({
+      padding = (0, _common.parsePadding)(padding);
+      var attrs = (0, _common.mix)({
         x: minX - padding[3],
         y: minY - padding[0],
         width: width + padding[1] + padding[3],
@@ -10702,16 +12842,16 @@ function () {
 
     if (marker) {
       var radius = marker.radius || MARKER_RADIUS;
-      var markerAttrs = Util.mix({
+      var markerAttrs = (0, _common.mix)({
         x: radius,
         y: this._titleHeight
       }, marker);
 
       if (item.checked === false) {
-        Util.mix(markerAttrs, unCheckStyle);
+        (0, _common.mix)(markerAttrs, unCheckStyle);
       }
 
-      var markerShape = new Marker({
+      var markerShape = new _marker["default"]({
         className: 'item-marker',
         attrs: markerAttrs
       });
@@ -10727,7 +12867,7 @@ function () {
       name = value ? name + joinString : name;
       nameText = itemGroup.addShape('text', {
         className: 'name',
-        attrs: Util.mix({
+        attrs: (0, _common.mix)({
           x: startX,
           y: this._titleHeight,
           text: this._formatItemValue(name)
@@ -10744,7 +12884,7 @@ function () {
 
       itemGroup.addShape('text', {
         className: 'value',
-        attrs: Util.mix({
+        attrs: (0, _common.mix)({
           x: valueX,
           y: this._titleHeight,
           text: value
@@ -10769,7 +12909,7 @@ function () {
     var width;
     var itemWidth = this.itemWidth;
 
-    if (Util.isNumber(itemWidth) || Util.isNil(itemWidth)) {
+    if ((0, _common.isNumber)(itemWidth) || (0, _common.isNil)(itemWidth)) {
       return itemWidth;
     }
 
@@ -10874,7 +13014,7 @@ function () {
       width = bbox.width;
       height = bbox.height;
 
-      if (Util.isNumber(itemWidth)) {
+      if ((0, _common.isNumber)(itemWidth)) {
         maxItemWidth = itemWidth + itemGap;
       } else if (width > maxItemWidth) {
         maxItemWidth = width + itemGap;
@@ -10971,19 +13111,20 @@ function () {
   return List;
 }();
 
-module.exports = List;
-}, function(modId) { var map = {"../util/common":1605424195577,"../graphic/index":1605424195598,"./marker":1605424195653}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195655, function(require, module, exports) {
+var _default = List;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"../graphic/index":1606535077090,"./marker":1606535077144}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077148, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
 
-var _require = require('../graphic/index'),
-    Group = _require.Group;
+var _common = require("../util/common");
 
-var TextBox =
-/*#__PURE__*/
-function () {
+var _index = require("../graphic/index");
+
+var TextBox = /*#__PURE__*/function () {
   var _proto = TextBox.prototype;
 
   _proto.getDefaultCfg = function getDefaultCfg() {
@@ -10995,7 +13136,8 @@ function () {
         fontSize: 12,
         fill: '#fff',
         textAlign: 'center',
-        textBaseline: 'middle'
+        textBaseline: 'middle',
+        fontFamily: 'Arial'
       },
       background: {
         radius: 1,
@@ -11009,7 +13151,7 @@ function () {
   };
 
   function TextBox(cfg) {
-    Util.deepMix(this, this.getDefaultCfg(), cfg);
+    (0, _common.deepMix)(this, this.getDefaultCfg(), cfg);
 
     this._init();
 
@@ -11017,7 +13159,7 @@ function () {
         x = this.x,
         y = this.y;
 
-    if (!Util.isNil(content)) {
+    if (!(0, _common.isNil)(content)) {
       this.updateContent(content);
     }
 
@@ -11029,8 +13171,10 @@ function () {
         textStyle = this.textStyle,
         background = this.background,
         className = this.className,
-        visible = this.visible;
-    var container = new Group({
+        visible = this.visible,
+        context = this.context;
+    var container = new _index.Group({
+      context: context,
       className: className,
       zIndex: 0,
       visible: visible
@@ -11038,7 +13182,7 @@ function () {
     var text = container.addShape('Text', {
       className: className + '-text',
       zIndex: 1,
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         text: content,
         x: 0,
         y: 0
@@ -11047,7 +13191,7 @@ function () {
     var backgroundShape = container.addShape('Rect', {
       className: className + '-bg',
       zIndex: -1,
-      attrs: Util.mix({
+      attrs: (0, _common.mix)({
         x: 0,
         y: 0,
         width: 0,
@@ -11064,7 +13208,7 @@ function () {
     var textShape = this.textShape;
     var background = this.background;
     var textBBox = textShape.getBBox();
-    var padding = Util.parsePadding(background.padding);
+    var padding = (0, _common.parsePadding)(background.padding);
     var width = textBBox.width + padding[1] + padding[3];
     var height = textBBox.height + padding[0] + padding[2];
     var x = textBBox.minX - padding[3];
@@ -11081,8 +13225,8 @@ function () {
     var textShape = this.textShape,
         backgroundShape = this.backgroundShape;
 
-    if (!Util.isNil(text)) {
-      if (!Util.isObject(text)) {
+    if (!(0, _common.isNil)(text)) {
+      if (!(0, _common.isObject)(text)) {
         text = {
           text: text
         };
@@ -11150,19 +13294,29 @@ function () {
   return TextBox;
 }();
 
-module.exports = TextBox;
-}, function(modId) { var map = {"../util/common":1605424195577,"../graphic/index":1605424195598}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195656, function(require, module, exports) {
+var _default = TextBox;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"../graphic/index":1606535077090}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077149, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
+exports.init = init;
+exports.afterGeomDraw = afterGeomDraw;
+exports.clear = clear;
+exports.repaint = repaint;
+exports["default"] = void 0;
 
-var Guide = require('../component/guide/base');
+var _common = require("../util/common");
 
-var Global = require('../global'); // register the default configuration for Guide
+var _base = _interopRequireDefault(require("../component/guide/base"));
 
+var _global = _interopRequireDefault(require("../global"));
 
-Global.guide = Util.deepMix({
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+// register the default configuration for Guide
+_global["default"].guide = (0, _common.deepMix)({
   line: {
     style: {
       stroke: '#a3a3a3',
@@ -11226,23 +13380,21 @@ Global.guide = Util.deepMix({
       stroke: '#1890ff'
     }
   }
-}, Global.guide || {});
+}, _global["default"].guide || {});
 
-var GuideController =
-/*#__PURE__*/
-function () {
+var GuideController = /*#__PURE__*/function () {
   function GuideController(cfg) {
     this.guides = [];
     this.xScale = null;
     this.yScales = null;
     this.guideShapes = [];
-    Util.mix(this, cfg);
+    (0, _common.mix)(this, cfg);
   }
 
   var _proto = GuideController.prototype;
 
   _proto._toString = function _toString(position) {
-    if (Util.isFunction(position)) {
+    if ((0, _common.isFunction)(position)) {
       position = position(this.xScale, this.yScales);
     }
 
@@ -11273,7 +13425,7 @@ function () {
         xScale = self.xScale,
         yScales = self.yScales;
     var guideShapes = [];
-    Util.each(guides, function (guide, idx) {
+    (0, _common.each)(guides, function (guide, idx) {
       guide.xScale = xScale;
       guide.yScales = yScales;
       var container;
@@ -11311,14 +13463,14 @@ function () {
 
   _proto.reset = function reset() {
     var guides = this.guides;
-    Util.each(guides, function (guide) {
+    (0, _common.each)(guides, function (guide) {
       guide.remove();
     });
   };
 
   _proto._createGuide = function _createGuide(type, cfg) {
-    var ClassName = Util.upperFirst(type);
-    var guide = new Guide[ClassName](Util.deepMix({}, Global.guide[type], cfg));
+    var ClassName = (0, _common.upperFirst)(type);
+    var guide = new _base["default"][ClassName]((0, _common.deepMix)({}, _global["default"].guide[type], cfg));
     this.guides.push(guide);
     return guide;
   };
@@ -11390,59 +13542,79 @@ function () {
   return GuideController;
 }();
 
-module.exports = {
-  init: function init(chart) {
-    var guideController = new GuideController({
-      frontPlot: chart.get('frontPlot').addGroup({
-        zIndex: 20,
-        className: 'guideContainer'
-      }),
-      backPlot: chart.get('backPlot').addGroup({
-        className: 'guideContainer'
-      })
-    });
-    chart.set('guideController', guideController);
-    /**
-     * 为图表添加 guide
-     * @return {GuideController} 返回 guide 控制器
-     */
+function init(chart) {
+  var guideController = new GuideController({
+    frontPlot: chart.get('frontPlot').addGroup({
+      zIndex: 20,
+      className: 'guideContainer'
+    }),
+    backPlot: chart.get('backPlot').addGroup({
+      className: 'guideContainer'
+    })
+  });
+  chart.set('guideController', guideController);
+  /**
+   * 为图表添加 guide
+   * @return {GuideController} 返回 guide 控制器
+   */
 
-    chart.guide = function () {
-      return guideController;
-    };
-  },
-  afterGeomDraw: function afterGeomDraw(chart) {
-    var guideController = chart.get('guideController');
+  chart.guide = function () {
+    return guideController;
+  };
+}
 
-    if (!guideController.guides.length) {
-      return;
-    }
+function afterGeomDraw(chart) {
+  var guideController = chart.get('guideController');
 
-    var xScale = chart.getXScale();
-    var yScales = chart.getYScales();
-    var coord = chart.get('coord');
-    guideController.xScale = xScale;
-    guideController.yScales = yScales;
-    guideController.chart = chart; // for regionFilter
-
-    guideController.paint(coord);
-  },
-  clear: function clear(chart) {
-    chart.get('guideController').clear();
-  },
-  repaint: function repaint(chart) {
-    chart.get('guideController').reset();
+  if (!guideController.guides.length) {
+    return;
   }
+
+  var xScale = chart.getXScale();
+  var yScales = chart.getYScales();
+  var coord = chart.get('coord');
+  guideController.xScale = xScale;
+  guideController.yScales = yScales;
+  guideController.chart = chart; // for regionFilter
+
+  guideController.paint(coord);
+}
+
+function clear(chart) {
+  chart.get('guideController').clear();
+}
+
+function repaint(chart) {
+  chart.get('guideController').reset();
+}
+
+var _default = {
+  init: init,
+  afterGeomDraw: afterGeomDraw,
+  clear: clear,
+  repaint: repaint
 };
-}, function(modId) { var map = {"../util/common":1605424195577,"../component/guide/base":1605424195644,"../global":1605424195575}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195657, function(require, module, exports) {
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"../component/guide/base":1606535077137,"../global":1606535077058}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077150, function(require, module, exports) {
 
 
-var Util = require('../util/common');
+exports.__esModule = true;
+exports.init = init;
+exports.beforeGeomDraw = beforeGeomDraw;
+exports.afterGeomDraw = afterGeomDraw;
+exports.clearInner = clearInner;
+exports["default"] = void 0;
 
-var List = require('../component/list');
+var _common = require("../util/common");
 
-var Global = require('../global');
+var _list = _interopRequireDefault(require("../component/list"));
+
+var _global = _interopRequireDefault(require("../global"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var LEGEND_GAP = 12;
 var MARKER_SIZE = 3;
@@ -11477,30 +13649,30 @@ var DEFAULT_CFG = {
 
 }; // Register the default configuration for Legend
 
-Global.legend = Util.deepMix({
+_global["default"].legend = (0, _common.deepMix)({
   common: DEFAULT_CFG,
   // common legend configuration
-  right: Util.mix({
+  right: (0, _common.mix)({
     position: 'right',
     layout: 'vertical'
   }, DEFAULT_CFG),
-  left: Util.mix({
+  left: (0, _common.mix)({
     position: 'left',
     layout: 'vertical'
   }, DEFAULT_CFG),
-  top: Util.mix({
+  top: (0, _common.mix)({
     position: 'top',
     layout: 'horizontal'
   }, DEFAULT_CFG),
-  bottom: Util.mix({
+  bottom: (0, _common.mix)({
     position: 'bottom',
     layout: 'horizontal'
   }, DEFAULT_CFG)
-}, Global.legend || {});
+}, _global["default"].legend || {});
 
 function getPaddingByPos(pos, appendPadding) {
   var padding = 0;
-  appendPadding = Util.parsePadding(appendPadding);
+  appendPadding = (0, _common.parsePadding)(appendPadding);
 
   switch (pos) {
     case 'top':
@@ -11526,16 +13698,91 @@ function getPaddingByPos(pos, appendPadding) {
   return padding;
 }
 
-var LegendController =
-/*#__PURE__*/
-function () {
+var LegendController = /*#__PURE__*/function () {
   function LegendController(cfg) {
+    var _this = this;
+
+    _defineProperty(this, "handleEvent", function (ev) {
+      var self = _this;
+
+      function findItem(x, y) {
+        var result = null;
+        var legends = self.legends;
+        (0, _common.each)(legends, function (legendItems) {
+          (0, _common.each)(legendItems, function (legend) {
+            var itemsGroup = legend.itemsGroup,
+                legendHitBoxes = legend.legendHitBoxes;
+            var children = itemsGroup.get('children');
+
+            if (children.length) {
+              var legendPosX = legend.x;
+              var legendPosY = legend.y;
+              (0, _common.each)(legendHitBoxes, function (box, index) {
+                if (x >= box.x + legendPosX && x <= box.x + box.width + legendPosX && y >= box.y + legendPosY && y <= box.height + box.y + legendPosY) {
+                  // inbox
+                  result = {
+                    clickedItem: children[index],
+                    clickedLegend: legend
+                  };
+                  return false;
+                }
+              });
+            }
+          });
+        });
+        return result;
+      }
+
+      var chart = self.chart;
+
+      var _createEvent = (0, _common.createEvent)(ev, chart),
+          x = _createEvent.x,
+          y = _createEvent.y;
+
+      var clicked = findItem(x, y);
+
+      if (clicked && clicked.clickedLegend.clickable !== false) {
+        var clickedItem = clicked.clickedItem,
+            clickedLegend = clicked.clickedLegend;
+
+        if (clickedLegend.onClick) {
+          ev.clickedItem = clickedItem;
+          clickedLegend.onClick(ev);
+        } else if (!clickedLegend.custom) {
+          var checked = clickedItem.get('checked');
+          var value = clickedItem.get('dataValue');
+          var filteredVals = clickedLegend.filteredVals,
+              field = clickedLegend.field,
+              selectedMode = clickedLegend.selectedMode;
+          var isSingeSelected = selectedMode === 'single';
+
+          if (isSingeSelected) {
+            chart.filter(field, function (val) {
+              return val === value;
+            });
+          } else {
+            if (checked) {
+              filteredVals.push(value);
+            } else {
+              _common.Array.remove(filteredVals, value);
+            }
+
+            chart.filter(field, function (val) {
+              return filteredVals.indexOf(val) === -1;
+            });
+          }
+
+          chart.repaint();
+        }
+      }
+    });
+
     this.legendCfg = {};
     this.enable = true;
     this.position = 'top';
-    Util.mix(this, cfg);
-    var chart = this.chart;
-    this.canvasDom = chart.get('canvas').get('el');
+    (0, _common.mix)(this, cfg);
+    var _chart = this.chart;
+    this.canvasDom = _chart.get('canvas').get('el');
     this.clear();
   }
 
@@ -11584,8 +13831,8 @@ function () {
     }
 
     var container = self.container;
-    Util.each(items, function (item) {
-      if (!Util.isPlainObject(item.marker)) {
+    (0, _common.each)(items, function (item) {
+      if (!(0, _common.isPlainObject)(item.marker)) {
         item.marker = {
           symbol: item.marker || 'circle',
           fill: item.fill,
@@ -11595,10 +13842,10 @@ function () {
         item.marker.radius = item.marker.radius || MARKER_SIZE;
       }
 
-      item.checked = Util.isNil(item.checked) ? true : item.checked;
+      item.checked = (0, _common.isNil)(item.checked) ? true : item.checked;
       item.name = item.name || item.value;
     });
-    var legend = new List(Util.deepMix({}, Global.legend[position], legendCfg, {
+    var legend = new _list["default"]((0, _common.deepMix)({}, _global["default"].legend[position], legendCfg, {
       maxLength: self._getMaxLength(position),
       items: items,
       parent: container
@@ -11608,8 +13855,8 @@ function () {
 
   _proto.clear = function clear() {
     var legends = this.legends;
-    Util.each(legends, function (legendItems) {
-      Util.each(legendItems, function (legend) {
+    (0, _common.each)(legends, function (legendItems) {
+      (0, _common.each)(legendItems, function (legend) {
         legend.clear();
       });
     });
@@ -11619,7 +13866,7 @@ function () {
 
   _proto._isFiltered = function _isFiltered(scale, values, value) {
     var rst = false;
-    Util.each(values, function (val) {
+    (0, _common.each)(values, function (val) {
       rst = rst || scale.getText(val) === scale.getText(value);
 
       if (rst) {
@@ -11631,7 +13878,7 @@ function () {
 
   _proto._getMaxLength = function _getMaxLength(position) {
     var chart = this.chart;
-    var appendPadding = Util.parsePadding(chart.get('appendPadding'));
+    var appendPadding = (0, _common.parsePadding)(chart.get('appendPadding'));
     return position === 'right' || position === 'left' ? chart.get('height') - (appendPadding[0] + appendPadding[2]) : chart.get('width') - (appendPadding[1] + appendPadding[3]);
   };
 
@@ -11651,9 +13898,9 @@ function () {
       symbol = legendCfg.marker;
     }
 
-    Util.each(items, function (item) {
-      if (Util.isPlainObject(symbol)) {
-        Util.mix(item.marker, symbol);
+    (0, _common.each)(items, function (item) {
+      if ((0, _common.isPlainObject)(symbol)) {
+        (0, _common.mix)(item.marker, symbol);
       } else {
         item.marker.symbol = symbol;
       }
@@ -11664,7 +13911,7 @@ function () {
     });
     var legendItems = chart.get('legendItems');
     legendItems[field] = items;
-    var lastCfg = Util.deepMix({}, Global.legend[position], legendCfg[field] || legendCfg, {
+    var lastCfg = (0, _common.deepMix)({}, _global["default"].legend[position], legendCfg[field] || legendCfg, {
       maxLength: self._getMaxLength(position),
       items: items,
       field: field,
@@ -11673,12 +13920,12 @@ function () {
     });
 
     if (lastCfg.showTitle) {
-      Util.deepMix(lastCfg, {
+      (0, _common.deepMix)(lastCfg, {
         title: scale.alias || scale.field
       });
     }
 
-    var legend = new List(lastCfg);
+    var legend = new _list["default"](lastCfg);
     legends[position].push(legend);
     return legend;
   };
@@ -11693,7 +13940,7 @@ function () {
     var offsetY = legend.offsetY || 0;
     var chartWidth = chart.get('width');
     var chartHeight = chart.get('height');
-    var appendPadding = Util.parsePadding(chart.get('appendPadding'));
+    var appendPadding = (0, _common.parsePadding)(chart.get('appendPadding'));
     var legendHeight = legend.getHeight();
     var legendWidth = legend.getWidth();
     var x = 0;
@@ -11746,8 +13993,8 @@ function () {
   _proto.alignLegends = function alignLegends() {
     var self = this;
     var legends = self.legends;
-    Util.each(legends, function (legendItems, position) {
-      Util.each(legendItems, function (legend, index) {
+    (0, _common.each)(legends, function (legendItems, position) {
+      (0, _common.each)(legendItems, function (legend, index) {
         var pre = legendItems[index - 1];
 
         self._alignLegend(legend, pre, position);
@@ -11756,236 +14003,180 @@ function () {
     return self;
   };
 
-  _proto.handleEvent = function handleEvent(ev) {
-    var self = this;
-
-    function findItem(x, y) {
-      var result = null;
-      var legends = self.legends;
-      Util.each(legends, function (legendItems) {
-        Util.each(legendItems, function (legend) {
-          var itemsGroup = legend.itemsGroup,
-              legendHitBoxes = legend.legendHitBoxes;
-          var children = itemsGroup.get('children');
-
-          if (children.length) {
-            var legendPosX = legend.x;
-            var legendPosY = legend.y;
-            Util.each(legendHitBoxes, function (box, index) {
-              if (x >= box.x + legendPosX && x <= box.x + box.width + legendPosX && y >= box.y + legendPosY && y <= box.height + box.y + legendPosY) {
-                // inbox
-                result = {
-                  clickedItem: children[index],
-                  clickedLegend: legend
-                };
-                return false;
-              }
-            });
-          }
-        });
-      });
-      return result;
-    }
-
-    var chart = self.chart;
-
-    var _Util$createEvent = Util.createEvent(ev, chart),
-        x = _Util$createEvent.x,
-        y = _Util$createEvent.y;
-
-    var clicked = findItem(x, y);
-
-    if (clicked && clicked.clickedLegend.clickable !== false) {
-      var clickedItem = clicked.clickedItem,
-          clickedLegend = clicked.clickedLegend;
-
-      if (clickedLegend.onClick) {
-        ev.clickedItem = clickedItem;
-        clickedLegend.onClick(ev);
-      } else if (!clickedLegend.custom) {
-        var checked = clickedItem.get('checked');
-        var value = clickedItem.get('dataValue');
-        var filteredVals = clickedLegend.filteredVals,
-            field = clickedLegend.field,
-            selectedMode = clickedLegend.selectedMode;
-        var isSingeSelected = selectedMode === 'single';
-
-        if (isSingeSelected) {
-          chart.filter(field, function (val) {
-            return val === value;
-          });
-        } else {
-          if (checked) {
-            filteredVals.push(value);
-          } else {
-            Util.Array.remove(filteredVals, value);
-          }
-
-          chart.filter(field, function (val) {
-            return filteredVals.indexOf(val) === -1;
-          });
-        }
-
-        chart.repaint();
-      }
-    }
-  };
-
   _proto.bindEvents = function bindEvents() {
     var legendCfg = this.legendCfg;
     var triggerOn = legendCfg.triggerOn || 'touchstart';
-    var method = Util.wrapBehavior(this, 'handleEvent');
-    Util.addEventListener(this.canvasDom, triggerOn, method);
+    (0, _common.addEventListener)(this.canvasDom, triggerOn, this.handleEvent);
   };
 
   _proto.unBindEvents = function unBindEvents() {
     var legendCfg = this.legendCfg;
     var triggerOn = legendCfg.triggerOn || 'touchstart';
-    var method = Util.getWrapBehavior(this, 'handleEvent');
-    Util.removeEventListener(this.canvasDom, triggerOn, method);
+    (0, _common.removeEventListener)(this.canvasDom, triggerOn, this.handleEvent);
   };
 
   return LegendController;
 }();
 
-module.exports = {
-  init: function init(chart) {
-    var legendController = new LegendController({
-      container: chart.get('backPlot'),
-      plotRange: chart.get('plotRange'),
-      chart: chart
-    });
-    chart.set('legendController', legendController);
+function init(chart) {
+  var legendController = new LegendController({
+    container: chart.get('backPlot'),
+    plotRange: chart.get('plotRange'),
+    chart: chart
+  });
+  chart.set('legendController', legendController);
 
-    chart.legend = function (field, cfg) {
-      var legendCfg = legendController.legendCfg;
-      legendController.enable = true;
+  chart.legend = function (field, cfg) {
+    var legendCfg = legendController.legendCfg;
+    legendController.enable = true;
 
-      if (Util.isBoolean(field)) {
-        legendController.enable = field;
-        legendCfg = cfg || {};
-      } else if (Util.isObject(field)) {
-        legendCfg = field;
+    if ((0, _common.isBoolean)(field)) {
+      legendController.enable = field;
+      legendCfg = cfg || {};
+    } else if ((0, _common.isObject)(field)) {
+      legendCfg = field;
+    } else {
+      legendCfg[field] = cfg;
+    }
+
+    legendController.legendCfg = legendCfg;
+    return this;
+  };
+}
+
+function beforeGeomDraw(chart) {
+  var legendController = chart.get('legendController');
+  if (!legendController.enable) return null; // legend is not displayed
+
+  var legendCfg = legendController.legendCfg;
+
+  if (legendCfg && legendCfg.custom) {
+    legendController.addCustomLegend();
+  } else {
+    var legendItems = chart.getLegendItems();
+    var scales = chart.get('scales');
+    var filters = chart.get('filters');
+    (0, _common.each)(legendItems, function (items, field) {
+      var scale = scales[field];
+      var values = scale.values;
+      var filteredVals;
+
+      if (filters && filters[field]) {
+        filteredVals = values.filter(function (v) {
+          return !filters[field](v);
+        });
       } else {
-        legendCfg[field] = cfg;
+        filteredVals = [];
       }
 
-      legendController.legendCfg = legendCfg;
-      return this;
-    };
-  },
-  beforeGeomDraw: function beforeGeomDraw(chart) {
-    var legendController = chart.get('legendController');
-    if (!legendController.enable) return null; // legend is not displayed
-
-    var legendCfg = legendController.legendCfg;
-
-    if (legendCfg && legendCfg.custom) {
-      legendController.addCustomLegend();
-    } else {
-      var legendItems = chart.getLegendItems();
-      var scales = chart.get('scales');
-      var filters = chart.get('filters');
-      Util.each(legendItems, function (items, field) {
-        var scale = scales[field];
-        var values = scale.values;
-        var filteredVals;
-
-        if (filters && filters[field]) {
-          filteredVals = values.filter(function (v) {
-            return !filters[field](v);
-          });
-        } else {
-          filteredVals = [];
-        }
-
-        legendController.addLegend(scale, items, filteredVals);
-      });
-    }
-
-    if (legendCfg && legendCfg.clickable !== false) {
-      legendController.bindEvents();
-    }
-
-    var legends = legendController.legends;
-    var legendRange = {
-      top: 0,
-      right: 0,
-      bottom: 0,
-      left: 0
-    };
-    Util.each(legends, function (legendItems, position) {
-      var padding = 0;
-      Util.each(legendItems, function (legend) {
-        var width = legend.getWidth();
-        var height = legend.getHeight();
-
-        if (position === 'top' || position === 'bottom') {
-          padding = Math.max(padding, height);
-
-          if (legend.offsetY > 0) {
-            padding += legend.offsetY;
-          }
-        } else {
-          padding = Math.max(padding, width);
-
-          if (legend.offsetX > 0) {
-            padding += legend.offsetX;
-          }
-        }
-      });
-      legendRange[position] = padding + getPaddingByPos(position, chart.get('appendPadding'));
+      legendController.addLegend(scale, items, filteredVals);
     });
-    chart.set('legendRange', legendRange);
-  },
-  afterGeomDraw: function afterGeomDraw(chart) {
-    var legendController = chart.get('legendController');
-    legendController.alignLegends();
-  },
-  clearInner: function clearInner(chart) {
-    var legendController = chart.get('legendController');
-    legendController.clear();
-    chart.set('legendRange', null);
   }
-};
-}, function(modId) { var map = {"../util/common":1605424195577,"../component/list":1605424195654,"../global":1605424195575}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195658, function(require, module, exports) {
 
+  if (legendCfg && legendCfg.clickable !== false) {
+    legendController.bindEvents();
+  }
+
+  var legends = legendController.legends;
+  var legendRange = {
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0
+  };
+  (0, _common.each)(legends, function (legendItems, position) {
+    var padding = 0;
+    (0, _common.each)(legendItems, function (legend) {
+      var width = legend.getWidth();
+      var height = legend.getHeight();
+
+      if (position === 'top' || position === 'bottom') {
+        padding = Math.max(padding, height);
+
+        if (legend.offsetY > 0) {
+          padding += legend.offsetY;
+        }
+      } else {
+        padding = Math.max(padding, width);
+
+        if (legend.offsetX > 0) {
+          padding += legend.offsetX;
+        }
+      }
+    });
+    legendRange[position] = padding + getPaddingByPos(position, chart.get('appendPadding'));
+  });
+  chart.set('legendRange', legendRange);
+}
+
+function afterGeomDraw(chart) {
+  var legendController = chart.get('legendController');
+  legendController.alignLegends();
+}
+
+function clearInner(chart) {
+  var legendController = chart.get('legendController');
+  legendController.clear();
+  chart.set('legendRange', null);
+}
+
+var _default = {
+  init: init,
+  beforeGeomDraw: beforeGeomDraw,
+  afterGeomDraw: afterGeomDraw,
+  clearInner: clearInner
+};
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"../component/list":1606535077147,"../global":1606535077058}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077151, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports.afterCanvasInit = afterCanvasInit;
+exports.beforeCanvasDraw = beforeCanvasDraw;
+exports.afterCanvasDestroyed = afterCanvasDestroyed;
+exports["default"] = void 0;
+
+var _common = require("../util/common");
+
+var _element = _interopRequireDefault(require("../graphic/element"));
+
+var _timeline = _interopRequireDefault(require("../graphic/animate/timeline"));
+
+var _animator = _interopRequireDefault(require("../graphic/animate/animator"));
+
+var _animate2 = _interopRequireDefault(require("./animate"));
+
+var ShapeAction = _interopRequireWildcard(require("./shape-action"));
+
+var GroupAction = _interopRequireWildcard(require("./group-action"));
+
+var _chart = _interopRequireDefault(require("../chart/chart"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 /**
  * Handle the detail animations
  * @author sima.zhang1990@gmail.com
  */
-var Util = require('../util/common');
-
-var Element = require('../graphic/element');
-
-var Timeline = require('../graphic/animate/timeline');
-
-var Animator = require('../graphic/animate/animator');
-
-var Animate = require('./animate');
-
-var ShapeAction = require('./shape-action');
-
-var GroupAction = require('./group-action');
-
-var Chart = require('../chart/chart');
-
 var timeline;
 
-Element.prototype.animate = function () {
-  var attrs = Util.mix({}, this.get('attrs'));
-  return new Animator(this, attrs, timeline);
+_element["default"].prototype.animate = function () {
+  var attrs = (0, _common.mix)({}, this.get('attrs'));
+  return new _animator["default"](this, attrs, timeline);
 };
 
-Chart.prototype.animate = function (cfg) {
+_chart["default"].prototype.animate = function (cfg) {
   this.set('animate', cfg);
   return this;
 };
 
-Animate.Action = ShapeAction;
-Animate.defaultCfg = {
+_animate2["default"].Action = ShapeAction;
+_animate2["default"].defaultCfg = {
   interval: {
     enter: function enter(coord) {
       if (coord.isPolar && coord.transposed) {
@@ -12070,9 +14261,9 @@ function diff(fromAttrs, toAttrs) {
   var endState = {};
 
   for (var k in toAttrs) {
-    if (Util.isNumber(fromAttrs[k]) && fromAttrs[k] !== toAttrs[k]) {
+    if ((0, _common.isNumber)(fromAttrs[k]) && fromAttrs[k] !== toAttrs[k]) {
       endState[k] = toAttrs[k];
-    } else if (Util.isArray(fromAttrs[k]) && JSON.stringify(fromAttrs[k]) !== JSON.stringify(toAttrs[k])) {
+    } else if ((0, _common.isArray)(fromAttrs[k]) && JSON.stringify(fromAttrs[k]) !== JSON.stringify(toAttrs[k])) {
       endState[k] = toAttrs[k];
     }
   }
@@ -12107,7 +14298,7 @@ function _getShapeId(geom, dataObj, geomIdx) {
 
   var groupScales = geom._getGroupScales();
 
-  Util.each(groupScales, function (groupScale) {
+  (0, _common.each)(groupScales, function (groupScale) {
     var field = groupScale.field;
 
     if (groupScale.type !== 'identity') {
@@ -12120,14 +14311,14 @@ function _getShapeId(geom, dataObj, geomIdx) {
 
 function getShapes(geoms, chart, coord) {
   var shapes = [];
-  Util.each(geoms, function (geom, geomIdx) {
+  (0, _common.each)(geoms, function (geom, geomIdx) {
     var geomContainer = geom.get('container');
     var geomShapes = geomContainer.get('children');
     var type = geom.get('type');
-    var animateCfg = Util.isNil(geom.get('animateCfg')) ? _getAnimateCfgByShapeType(type, chart) : geom.get('animateCfg');
+    var animateCfg = (0, _common.isNil)(geom.get('animateCfg')) ? _getAnimateCfgByShapeType(type, chart) : geom.get('animateCfg');
 
     if (animateCfg !== false) {
-      Util.each(geomShapes, function (shape, index) {
+      (0, _common.each)(geomShapes, function (shape, index) {
         if (shape.get('className') === type) {
           shape._id = _getShapeId(geom, shape.get('origin')._origin, geomIdx);
           shape.set('coord', coord);
@@ -12154,7 +14345,7 @@ function cache(shapes) {
       _id: id,
       type: shape.get('type'),
       // the type of shape
-      attrs: Util.mix({}, shape._attrs.attrs),
+      attrs: (0, _common.mix)({}, shape._attrs.attrs),
       // the graphics attributes of shape
       className: shape.get('className'),
       geomType: shape.get('className'),
@@ -12170,26 +14361,26 @@ function cache(shapes) {
 function getAnimate(geomType, coord, animationType, animationName) {
   var result;
 
-  if (Util.isFunction(animationName)) {
+  if ((0, _common.isFunction)(animationName)) {
     result = animationName;
-  } else if (Util.isString(animationName)) {
-    result = Animate.Action[animationName];
+  } else if ((0, _common.isString)(animationName)) {
+    result = _animate2["default"].Action[animationName];
   } else {
-    result = Animate.getAnimation(geomType, coord, animationType);
+    result = _animate2["default"].getAnimation(geomType, coord, animationType);
   }
 
   return result;
 }
 
 function getAnimateCfg(geomType, animationType, animateCfg) {
-  if (animateCfg === false || Util.isObject(animateCfg) && animateCfg[animationType] === false) {
+  if (animateCfg === false || (0, _common.isObject)(animateCfg) && animateCfg[animationType] === false) {
     return false;
   }
 
-  var defaultCfg = Animate.getAnimateCfg(geomType, animationType);
+  var defaultCfg = _animate2["default"].getAnimateCfg(geomType, animationType);
 
   if (animateCfg && animateCfg[animationType]) {
-    return Util.deepMix({}, defaultCfg, animateCfg[animationType]);
+    return (0, _common.deepMix)({}, defaultCfg, animateCfg[animationType]);
   }
 
   return defaultCfg;
@@ -12201,7 +14392,7 @@ function addAnimate(cache, shapes, canvas) {
 
   var updateShapes = [];
   var newShapes = [];
-  Util.each(shapes, function (shape) {
+  (0, _common.each)(shapes, function (shape) {
     var result = cache[shape._id];
 
     if (!result) {
@@ -12213,7 +14404,7 @@ function addAnimate(cache, shapes, canvas) {
     }
   }); // first do the leave animation
 
-  Util.each(cache, function (deletedShape) {
+  (0, _common.each)(cache, function (deletedShape) {
     var className = deletedShape.className,
         coord = deletedShape.coord,
         _id = deletedShape._id,
@@ -12224,7 +14415,7 @@ function addAnimate(cache, shapes, canvas) {
     if (animateCfg === false) return true;
     animate = getAnimate(className, coord, 'leave', animateCfg.animation);
 
-    if (Util.isFunction(animate)) {
+    if ((0, _common.isFunction)(animate)) {
       var tempShape = canvas.addShape(type, {
         attrs: attrs,
         index: index,
@@ -12236,7 +14427,7 @@ function addAnimate(cache, shapes, canvas) {
     }
   }); // then do the update animation
 
-  Util.each(updateShapes, function (updateShape) {
+  (0, _common.each)(updateShapes, function (updateShape) {
     var className = updateShape.get('className');
     animateCfg = getAnimateCfg(className, 'update', updateShape.get('animateCfg'));
     if (animateCfg === false) return true;
@@ -12247,7 +14438,7 @@ function addAnimate(cache, shapes, canvas) {
     if (Object.keys(endState).length) {
       animate = getAnimate(className, coord, 'update', animateCfg.animation);
 
-      if (Util.isFunction(animate)) {
+      if ((0, _common.isFunction)(animate)) {
         animate(updateShape, animateCfg, coord);
       } else {
         updateShape.attr(cacheAttrs);
@@ -12263,7 +14454,7 @@ function addAnimate(cache, shapes, canvas) {
     }
   }); // last, enter animation
 
-  Util.each(newShapes, function (newShape) {
+  (0, _common.each)(newShapes, function (newShape) {
     // 新图形元素的进场元素
     var className = newShape.get('className');
     var coord = newShape.get('coord');
@@ -12271,7 +14462,7 @@ function addAnimate(cache, shapes, canvas) {
     if (animateCfg === false) return true;
     animate = getAnimate(className, coord, 'enter', animateCfg.animation);
 
-    if (Util.isFunction(animate)) {
+    if ((0, _common.isFunction)(animate)) {
       if (className === 'interval' && coord.isPolar && coord.transposed) {
         var index = newShape.get('index');
         var lastShape = updateShapes[index - 1];
@@ -12294,7 +14485,7 @@ function _getAnimateCfgByShapeType(type, chart) {
     type = 'guide-tag';
   }
 
-  if (Util.isObject(animateCfg)) {
+  if ((0, _common.isObject)(animateCfg)) {
     return animateCfg[type];
   }
 
@@ -12305,123 +14496,131 @@ function _getAnimateCfgByShapeType(type, chart) {
   return null;
 }
 
-module.exports = {
-  afterCanvasInit: function afterCanvasInit()
-  /* chart */
-  {
-    timeline = new Timeline();
-    timeline.play();
-  },
-  beforeCanvasDraw: function beforeCanvasDraw(chart) {
-    if (chart.get('animate') === false) {
-      return;
-    }
+function afterCanvasInit()
+/* chart */
+{
+  timeline = new _timeline["default"]();
+  timeline.play();
+}
 
-    var isUpdate = chart.get('isUpdate');
-    var canvas = chart.get('canvas');
-    var coord = chart.get('coord');
-    var geoms = chart.get('geoms');
-    var caches = canvas.get('caches') || [];
-
-    if (caches.length === 0) {
-      isUpdate = false;
-    }
-
-    var cacheShapes = getShapes(geoms, chart, coord);
-
-    var _chart$get = chart.get('axisController'),
-        frontPlot = _chart$get.frontPlot,
-        backPlot = _chart$get.backPlot;
-
-    var axisShapes = frontPlot.get('children').concat(backPlot.get('children'));
-    var guideShapes = [];
-
-    if (chart.get('guideController')) {
-      guideShapes = chart.get('guideController').guideShapes;
-    }
-
-    var componentShapes = [];
-    axisShapes.concat(guideShapes).forEach(function (s) {
-      var className = s.get('className');
-
-      var animateCfg = _getAnimateCfgByShapeType(className, chart);
-
-      s.set('coord', coord);
-      s.set('animateCfg', animateCfg);
-      componentShapes.push(s);
-      cacheShapes.push(s);
-    });
-    canvas.set('caches', cache(cacheShapes));
-
-    if (isUpdate) {
-      addAnimate(caches, cacheShapes, canvas);
-    } else {
-      // do the appear animation
-      var animateCfg;
-      var animate;
-      Util.each(geoms, function (geom) {
-        var type = geom.get('type');
-        var geomCfg = Util.isNil(geom.get('animateCfg')) ? _getAnimateCfgByShapeType(type, chart) : geom.get('animateCfg');
-
-        if (geomCfg !== false) {
-          animateCfg = getAnimateCfg(type, 'appear', geomCfg);
-          animate = getAnimate(type, coord, 'appear', animateCfg.animation);
-
-          if (Util.isFunction(animate)) {
-            var shapes = geom.get('shapes');
-            Util.each(shapes, function (shape) {
-              animate(shape, animateCfg, coord);
-            });
-          } else if (GROUP_ANIMATION[type]) {
-            // do the default animation
-            animate = GroupAction[animateCfg.animation] || GROUP_ANIMATION[type](coord);
-            var yScale = geom.getYScale();
-            var zeroY = coord.convertPoint({
-              x: 0,
-              y: yScale.scale(geom.getYMinValue())
-            });
-            var container = geom.get('container');
-            animate && animate(container, animateCfg, coord, zeroY);
-          }
-        }
-      }); // do the animation of components
-
-      Util.each(componentShapes, function (shape) {
-        var animateCfg = shape.get('animateCfg');
-        var className = shape.get('className');
-
-        if (animateCfg && animateCfg.appear) {
-          // if user configure
-          var defaultCfg = Animate.getAnimateCfg(className, 'appear');
-          var appearCfg = Util.deepMix({}, defaultCfg, animateCfg.appear);
-
-          var _animate = getAnimate(className, coord, 'appear', appearCfg.animation);
-
-          if (Util.isFunction(_animate)) {
-            _animate(shape, appearCfg, coord);
-          }
-        }
-      });
-    }
-  },
-  afterCanvasDestroyed: function afterCanvasDestroyed()
-  /* chart */
-  {
-    timeline.stop();
+function beforeCanvasDraw(chart) {
+  if (chart.get('animate') === false) {
+    return;
   }
+
+  var isUpdate = chart.get('isUpdate');
+  var canvas = chart.get('canvas');
+  var coord = chart.get('coord');
+  var geoms = chart.get('geoms');
+  var caches = canvas.get('caches') || [];
+
+  if (caches.length === 0) {
+    isUpdate = false;
+  }
+
+  var cacheShapes = getShapes(geoms, chart, coord);
+
+  var _chart$get = chart.get('axisController'),
+      frontPlot = _chart$get.frontPlot,
+      backPlot = _chart$get.backPlot;
+
+  var axisShapes = frontPlot.get('children').concat(backPlot.get('children'));
+  var guideShapes = [];
+
+  if (chart.get('guideController')) {
+    guideShapes = chart.get('guideController').guideShapes;
+  }
+
+  var componentShapes = [];
+  axisShapes.concat(guideShapes).forEach(function (s) {
+    var className = s.get('className');
+
+    var animateCfg = _getAnimateCfgByShapeType(className, chart);
+
+    s.set('coord', coord);
+    s.set('animateCfg', animateCfg);
+    componentShapes.push(s);
+    cacheShapes.push(s);
+  });
+  canvas.set('caches', cache(cacheShapes));
+
+  if (isUpdate) {
+    addAnimate(caches, cacheShapes, canvas);
+  } else {
+    // do the appear animation
+    var animateCfg;
+    var animate;
+    (0, _common.each)(geoms, function (geom) {
+      var type = geom.get('type');
+      var geomCfg = (0, _common.isNil)(geom.get('animateCfg')) ? _getAnimateCfgByShapeType(type, chart) : geom.get('animateCfg');
+
+      if (geomCfg !== false) {
+        animateCfg = getAnimateCfg(type, 'appear', geomCfg);
+        animate = getAnimate(type, coord, 'appear', animateCfg.animation);
+
+        if ((0, _common.isFunction)(animate)) {
+          var shapes = geom.get('shapes');
+          (0, _common.each)(shapes, function (shape) {
+            animate(shape, animateCfg, coord);
+          });
+        } else if (GROUP_ANIMATION[type]) {
+          // do the default animation
+          animate = GroupAction[animateCfg.animation] || GROUP_ANIMATION[type](coord);
+          var yScale = geom.getYScale();
+          var zeroY = coord.convertPoint({
+            x: 0,
+            y: yScale.scale(geom.getYMinValue())
+          });
+          var container = geom.get('container');
+          animate && animate(container, animateCfg, coord, zeroY);
+        }
+      }
+    }); // do the animation of components
+
+    (0, _common.each)(componentShapes, function (shape) {
+      var animateCfg = shape.get('animateCfg');
+      var className = shape.get('className');
+
+      if (animateCfg && animateCfg.appear) {
+        // if user configure
+        var defaultCfg = _animate2["default"].getAnimateCfg(className, 'appear');
+
+        var appearCfg = (0, _common.deepMix)({}, defaultCfg, animateCfg.appear);
+
+        var _animate = getAnimate(className, coord, 'appear', appearCfg.animation);
+
+        if ((0, _common.isFunction)(_animate)) {
+          _animate(shape, appearCfg, coord);
+        }
+      }
+    });
+  }
+}
+
+function afterCanvasDestroyed()
+/* chart */
+{
+  timeline.stop();
+}
+
+var _default = {
+  afterCanvasInit: afterCanvasInit,
+  beforeCanvasDraw: beforeCanvasDraw,
+  afterCanvasDestroyed: afterCanvasDestroyed
 };
-}, function(modId) { var map = {"../util/common":1605424195577,"../graphic/element":1605424195602,"../graphic/animate/timeline":1605424195659,"../graphic/animate/animator":1605424195660,"./animate":1605424195662,"./shape-action":1605424195663,"./group-action":1605424195665,"../chart/chart":1605424195579}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195659, function(require, module, exports) {
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"../graphic/element":1606535077096,"../graphic/animate/timeline":1606535077152,"../graphic/animate/animator":1606535077153,"./animate":1606535077155,"./shape-action":1606535077156,"./group-action":1606535077158,"../chart/chart":1606535077063}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077152, function(require, module, exports) {
 
 
-var _require = require('../util/requestAnimationFrame'),
-    requestAnimationFrame = _require.requestAnimationFrame;
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _requestAnimationFrame = require("../util/requestAnimationFrame");
 
 var clock = typeof performance === 'object' && performance.now ? performance : Date;
 
-var Timeline =
-/*#__PURE__*/
-function () {
+var Timeline = /*#__PURE__*/function () {
   function Timeline() {
     this.anims = [];
     this.time = null;
@@ -12438,12 +14637,12 @@ function () {
 
     function step() {
       if (self.playing) {
-        requestAnimationFrame(step);
+        (0, _requestAnimationFrame.requestAnimationFrame)(step);
         self.update();
       }
     }
 
-    requestAnimationFrame(step);
+    (0, _requestAnimationFrame.requestAnimationFrame)(step);
   };
 
   _proto.stop = function stop() {
@@ -12452,9 +14651,24 @@ function () {
     this.canvas = [];
   };
 
+  _proto.pushAnim = function pushAnim(animInfo) {
+    this.anims.push(animInfo);
+
+    if (this.playing) {
+      return;
+    }
+
+    this.play();
+  };
+
   _proto.update = function update() {
     var currentTime = clock.now();
     this.canvas = [];
+
+    if (!this.anims.length) {
+      this.stop();
+      return;
+    }
 
     for (var i = 0; i < this.anims.length; i++) {
       var propertyAnim = this.anims[i];
@@ -12550,12 +14764,20 @@ function () {
   return Timeline;
 }();
 
-module.exports = Timeline;
-}, function(modId) { var map = {"../util/requestAnimationFrame":1605424195605}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195660, function(require, module, exports) {
+var _default = Timeline;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/requestAnimationFrame":1606535077099}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077153, function(require, module, exports) {
 
 
-var Easing = require('./easing');
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var Easing = _interopRequireWildcard(require("./easing"));
+
+function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || typeof obj !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function plainArray(arr) {
   var result = [];
@@ -12602,9 +14824,7 @@ function interpolateArray(a, b) {
   };
 }
 
-var Animator =
-/*#__PURE__*/
-function () {
+var Animator = /*#__PURE__*/function () {
   function Animator(shape, source, timeline) {
     this.hasStarted = false;
     this.hasEnded = false;
@@ -12662,7 +14882,7 @@ function () {
     animInfo.startState = this.source;
     animInfo.endState = attrs;
     animInfo.endTime = animInfo.startTime + duration;
-    this.timeline.anims.push(animInfo);
+    this.timeline.pushAnim(animInfo);
     this.animate = animInfo;
     return this;
   };
@@ -12711,154 +14931,186 @@ function () {
   return Animator;
 }();
 
-module.exports = Animator;
-}, function(modId) { var map = {"./easing":1605424195661}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195661, function(require, module, exports) {
+var _default = Animator;
+exports["default"] = _default;
+}, function(modId) { var map = {"./easing":1606535077154}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077154, function(require, module, exports) {
 
 
-var Easing = {
-  linear: function linear(k) {
-    return k;
-  },
-  quadraticIn: function quadraticIn(k) {
-    return k * k;
-  },
-  quadraticOut: function quadraticOut(k) {
-    return k * (2 - k);
-  },
-  quadraticInOut: function quadraticInOut(k) {
-    if ((k *= 2) < 1) {
-      return 0.5 * k * k;
-    }
+exports.__esModule = true;
+exports.linear = linear;
+exports.quadraticIn = quadraticIn;
+exports.quadraticOut = quadraticOut;
+exports.quadraticInOut = quadraticInOut;
+exports.cubicIn = cubicIn;
+exports.cubicOut = cubicOut;
+exports.cubicInOut = cubicInOut;
+exports.elasticIn = elasticIn;
+exports.elasticOut = elasticOut;
+exports.elasticInOut = elasticInOut;
+exports.backIn = backIn;
+exports.backOut = backOut;
+exports.backInOut = backInOut;
+exports.bounceIn = bounceIn;
+exports.bounceOut = bounceOut;
+exports.bounceInOut = bounceInOut;
 
-    return -0.5 * (--k * (k - 2) - 1);
-  },
-  cubicIn: function cubicIn(k) {
-    return k * k * k;
-  },
-  cubicOut: function cubicOut(k) {
-    return --k * k * k + 1;
-  },
-  cubicInOut: function cubicInOut(k) {
-    if ((k *= 2) < 1) {
-      return 0.5 * k * k * k;
-    }
+function linear(k) {
+  return k;
+}
 
-    return 0.5 * ((k -= 2) * k * k + 2);
-  },
-  elasticIn: function elasticIn(k) {
-    var s;
-    var a = 0.1;
-    var p = 0.4;
-    if (k === 0) return 0;
-    if (k === 1) return 1;
+function quadraticIn(k) {
+  return k * k;
+}
 
-    if (!p) {
-      p = 0.3;
-    }
+function quadraticOut(k) {
+  return k * (2 - k);
+}
 
-    if (!a || a < 1) {
-      a = 1;
-      s = p / 4;
-    } else {
-      s = p / (2 * Math.PI) * Math.asin(1 / a);
-    }
-
-    return -(a * Math.pow(2, 10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p));
-  },
-  elasticOut: function elasticOut(k) {
-    var s;
-    var a = 0.1;
-    var p = 0.4;
-    if (k === 0) return 0;
-    if (k === 1) return 1;
-
-    if (!p) {
-      p = 0.3;
-    }
-
-    if (!a || a < 1) {
-      a = 1;
-      s = p / 4;
-    } else {
-      s = p / (2 * Math.PI) * Math.asin(1 / a);
-    }
-
-    return a * Math.pow(2, -10 * k) * Math.sin((k - s) * (2 * Math.PI) / p) + 1;
-  },
-  elasticInOut: function elasticInOut(k) {
-    var s;
-    var a = 0.1;
-    var p = 0.4;
-    if (k === 0) return 0;
-    if (k === 1) return 1;
-
-    if (!p) {
-      p = 0.3;
-    }
-
-    if (!a || a < 1) {
-      a = 1;
-      s = p / 4;
-    } else {
-      s = p / (2 * Math.PI) * Math.asin(1 / a);
-    }
-
-    if ((k *= 2) < 1) {
-      return -0.5 * (a * Math.pow(2, 10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p));
-    }
-
-    return a * Math.pow(2, -10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p) * 0.5 + 1;
-  },
-  backIn: function backIn(k) {
-    var s = 1.70158;
-    return k * k * ((s + 1) * k - s);
-  },
-  backOut: function backOut(k) {
-    var s = 1.70158;
-    return (k = k - 1) * k * ((s + 1) * k + s) + 1;
-  },
-  backInOut: function backInOut(k) {
-    var s = 1.70158 * 1.525;
-
-    if ((k *= 2) < 1) {
-      return 0.5 * (k * k * ((s + 1) * k - s));
-    }
-
-    return 0.5 * ((k -= 2) * k * ((s + 1) * k + s) + 2);
-  },
-  bounceIn: function bounceIn(k) {
-    return 1 - Easing.bounceOut(1 - k);
-  },
-  bounceOut: function bounceOut(k) {
-    if ((k /= 1) < 1 / 2.75) {
-      return 7.5625 * k * k;
-    } else if (k < 2 / 2.75) {
-      return 7.5625 * (k -= 1.5 / 2.75) * k + 0.75;
-    } else if (k < 2.5 / 2.75) {
-      return 7.5625 * (k -= 2.25 / 2.75) * k + 0.9375;
-    }
-
-    return 7.5625 * (k -= 2.625 / 2.75) * k + 0.984375;
-  },
-  bounceInOut: function bounceInOut(k) {
-    if (k < 0.5) {
-      return Easing.bounceIn(k * 2) * 0.5;
-    }
-
-    return Easing.bounceOut(k * 2 - 1) * 0.5 + 0.5;
+function quadraticInOut(k) {
+  if ((k *= 2) < 1) {
+    return 0.5 * k * k;
   }
-};
-module.exports = Easing;
+
+  return -0.5 * (--k * (k - 2) - 1);
+}
+
+function cubicIn(k) {
+  return k * k * k;
+}
+
+function cubicOut(k) {
+  return --k * k * k + 1;
+}
+
+function cubicInOut(k) {
+  if ((k *= 2) < 1) {
+    return 0.5 * k * k * k;
+  }
+
+  return 0.5 * ((k -= 2) * k * k + 2);
+}
+
+function elasticIn(k) {
+  var s;
+  var a = 0.1;
+  var p = 0.4;
+  if (k === 0) return 0;
+  if (k === 1) return 1;
+
+  if (!p) {
+    p = 0.3;
+  }
+
+  if (!a || a < 1) {
+    a = 1;
+    s = p / 4;
+  } else {
+    s = p / (2 * Math.PI) * Math.asin(1 / a);
+  }
+
+  return -(a * Math.pow(2, 10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p));
+}
+
+function elasticOut(k) {
+  var s;
+  var a = 0.1;
+  var p = 0.4;
+  if (k === 0) return 0;
+  if (k === 1) return 1;
+
+  if (!p) {
+    p = 0.3;
+  }
+
+  if (!a || a < 1) {
+    a = 1;
+    s = p / 4;
+  } else {
+    s = p / (2 * Math.PI) * Math.asin(1 / a);
+  }
+
+  return a * Math.pow(2, -10 * k) * Math.sin((k - s) * (2 * Math.PI) / p) + 1;
+}
+
+function elasticInOut(k) {
+  var s;
+  var a = 0.1;
+  var p = 0.4;
+  if (k === 0) return 0;
+  if (k === 1) return 1;
+
+  if (!p) {
+    p = 0.3;
+  }
+
+  if (!a || a < 1) {
+    a = 1;
+    s = p / 4;
+  } else {
+    s = p / (2 * Math.PI) * Math.asin(1 / a);
+  }
+
+  if ((k *= 2) < 1) {
+    return -0.5 * (a * Math.pow(2, 10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p));
+  }
+
+  return a * Math.pow(2, -10 * (k -= 1)) * Math.sin((k - s) * (2 * Math.PI) / p) * 0.5 + 1;
+}
+
+function backIn(k) {
+  var s = 1.70158;
+  return k * k * ((s + 1) * k - s);
+}
+
+function backOut(k) {
+  var s = 1.70158;
+  return (k = k - 1) * k * ((s + 1) * k + s) + 1;
+}
+
+function backInOut(k) {
+  var s = 1.70158 * 1.525;
+
+  if ((k *= 2) < 1) {
+    return 0.5 * (k * k * ((s + 1) * k - s));
+  }
+
+  return 0.5 * ((k -= 2) * k * ((s + 1) * k + s) + 2);
+}
+
+function bounceIn(k) {
+  return 1 - bounceOut(1 - k);
+}
+
+function bounceOut(k) {
+  if ((k /= 1) < 1 / 2.75) {
+    return 7.5625 * k * k;
+  } else if (k < 2 / 2.75) {
+    return 7.5625 * (k -= 1.5 / 2.75) * k + 0.75;
+  } else if (k < 2.5 / 2.75) {
+    return 7.5625 * (k -= 2.25 / 2.75) * k + 0.9375;
+  }
+
+  return 7.5625 * (k -= 2.625 / 2.75) * k + 0.984375;
+}
+
+function bounceInOut(k) {
+  if (k < 0.5) {
+    return bounceIn(k * 2) * 0.5;
+  }
+
+  return bounceOut(k * 2 - 1) * 0.5 + 0.5;
+}
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195662, function(require, module, exports) {
+__DEFINE__(1606535077155, function(require, module, exports) {
 
 
-/**
- * Animate configuration and register
- * @author sima.zhang1990@gmail.com
- */
-var Util = require('../util/common');
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("../util/common");
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 var defaultAnimationCfg = {
   appear: {
@@ -12891,7 +15143,7 @@ var Animate = {
     if (geomAnimateCfg) {
       var animation = geomAnimateCfg[animationType];
 
-      if (Util.isFunction(animation)) {
+      if ((0, _common.isFunction)(animation)) {
         return animation(coord);
       }
     }
@@ -12903,31 +15155,39 @@ var Animate = {
     var geomConfig = this.defaultCfg[geomType];
 
     if (geomConfig && geomConfig.cfg && geomConfig.cfg[animationType]) {
-      return Util.deepMix({}, defaultCfg, geomConfig.cfg[animationType]);
+      return (0, _common.deepMix)({}, defaultCfg, geomConfig.cfg[animationType]);
     }
 
     return defaultCfg;
   },
   registerAnimation: function registerAnimation(animationName, animationFun) {
+    var _extends2;
+
     if (!this.Action) {
       this.Action = {};
     }
 
-    this.Action[animationName] = animationFun;
+    this.Action = _extends({}, this.Action, (_extends2 = {}, _extends2[animationName] = animationFun, _extends2));
   }
 };
-module.exports = Animate;
-}, function(modId) { var map = {"../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195663, function(require, module, exports) {
+var _default = Animate;
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077156, function(require, module, exports) {
 
+
+exports.__esModule = true;
+exports.fadeIn = fadeIn;
+
+var _common = require("../util/common");
+
+var _util = require("./util");
 
 /**
  * Animation functions for shape
  * @author sima.zhang1990@gmail.com
  */
-var Util = require('../util/common');
 
-var Helpers = require('./util');
 /*
 function waveIn(shape, animateCfg, coord) {
   const clip = Helpers.getClip(coord);
@@ -12970,137 +15230,141 @@ function scaleInY(shape, animateCfg) {
   Helpers.doAnimation(shape, { matrix: scaledMatrix }, animateCfg);
 }
 */
-
-
 function fadeIn(shape, animateCfg) {
-  var fillOpacity = Util.isNil(shape.attr('fillOpacity')) ? 1 : shape.attr('fillOpacity');
-  var strokeOpacity = Util.isNil(shape.attr('strokeOpacity')) ? 1 : shape.attr('strokeOpacity');
+  var fillOpacity = (0, _common.isNil)(shape.attr('fillOpacity')) ? 1 : shape.attr('fillOpacity');
+  var strokeOpacity = (0, _common.isNil)(shape.attr('strokeOpacity')) ? 1 : shape.attr('strokeOpacity');
   shape.attr('fillOpacity', 0);
   shape.attr('strokeOpacity', 0);
   var endState = {
     fillOpacity: fillOpacity,
     strokeOpacity: strokeOpacity
   };
-  Helpers.doAnimation(shape, endState, animateCfg);
+  (0, _util.doAnimation)(shape, endState, animateCfg);
 }
+}, function(modId) { var map = {"../util/common":1606535077060,"./util":1606535077157}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077157, function(require, module, exports) {
 
-module.exports = {
-  // waveIn,
-  // scaleInX,
-  // scaleInY,
-  fadeIn: fadeIn
-};
-}, function(modId) { var map = {"../util/common":1605424195577,"./util":1605424195664}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195664, function(require, module, exports) {
 
+exports.__esModule = true;
+exports.getCoordInfo = getCoordInfo;
+exports.getScaledMatrix = getScaledMatrix;
+exports.getAnimateParam = getAnimateParam;
+exports.doAnimation = doAnimation;
+
+var _index = require("../graphic/index");
+
+var _common = require("../util/common");
 
 /**
  * Utility
  * @author sima.zhang1990@gmail.com
  */
-var _require = require('../graphic/index'),
-    Matrix = _require.Matrix;
+function getCoordInfo(coord) {
+  var start = coord.start;
+  var end = coord.end;
+  return {
+    start: start,
+    end: end,
+    width: end.x - start.x,
+    height: Math.abs(end.y - start.y)
+  };
+}
 
-var Util = require('../util/common');
+function getScaledMatrix(shape, v, direct) {
+  var scaledMatrix;
+  shape.apply(v);
+  var x = v[0];
+  var y = v[1];
 
-var Helpers = {
-  getCoordInfo: function getCoordInfo(coord) {
-    var start = coord.start;
-    var end = coord.end;
-    return {
-      start: start,
-      end: end,
-      width: end.x - start.x,
-      height: Math.abs(end.y - start.y)
-    };
-  },
-  getScaledMatrix: function getScaledMatrix(shape, v, direct) {
-    var scaledMatrix;
-    shape.apply(v);
-    var x = v[0];
-    var y = v[1];
+  if (direct === 'x') {
+    shape.transform([['t', x, y], ['s', 0.01, 1], ['t', -x, -y]]);
+    var matrix = shape.getMatrix();
+    scaledMatrix = _index.Matrix.transform(matrix, [['t', x, y], ['s', 100, 1], ['t', -x, -y]]);
+  } else if (direct === 'y') {
+    shape.transform([['t', x, y], ['s', 1, 0.01], ['t', -x, -y]]);
 
-    if (direct === 'x') {
-      shape.transform([['t', x, y], ['s', 0.01, 1], ['t', -x, -y]]);
-      var matrix = shape.getMatrix();
-      scaledMatrix = Matrix.transform(matrix, [['t', x, y], ['s', 100, 1], ['t', -x, -y]]);
-    } else if (direct === 'y') {
-      shape.transform([['t', x, y], ['s', 1, 0.01], ['t', -x, -y]]);
+    var _matrix = shape.getMatrix();
 
-      var _matrix = shape.getMatrix();
+    scaledMatrix = _index.Matrix.transform(_matrix, [['t', x, y], ['s', 1, 100], ['t', -x, -y]]);
+  } else if (direct === 'xy') {
+    shape.transform([['t', x, y], ['s', 0.01, 0.01], ['t', -x, -y]]);
 
-      scaledMatrix = Matrix.transform(_matrix, [['t', x, y], ['s', 1, 100], ['t', -x, -y]]);
-    } else if (direct === 'xy') {
-      shape.transform([['t', x, y], ['s', 0.01, 0.01], ['t', -x, -y]]);
+    var _matrix2 = shape.getMatrix();
 
-      var _matrix2 = shape.getMatrix();
-
-      scaledMatrix = Matrix.transform(_matrix2, [['t', x, y], ['s', 100, 100], ['t', -x, -y]]);
-    }
-
-    return scaledMatrix;
-  },
-  getAnimateParam: function getAnimateParam(animateCfg, index, id) {
-    var result = {};
-
-    if (animateCfg.delay) {
-      result.delay = Util.isFunction(animateCfg.delay) ? animateCfg.delay(index, id) : animateCfg.delay;
-    }
-
-    result.easing = animateCfg.easing;
-    result.duration = animateCfg.duration;
-    result.delay = animateCfg.delay;
-    return result;
-  },
-  doAnimation: function doAnimation(shape, endState, animateCfg, callback) {
-    var id = shape._id;
-    var index = shape.get('index');
-
-    var _Helpers$getAnimatePa = Helpers.getAnimateParam(animateCfg, index, id),
-        easing = _Helpers$getAnimatePa.easing,
-        delay = _Helpers$getAnimatePa.delay,
-        duration = _Helpers$getAnimatePa.duration;
-
-    var anim = shape.animate().to({
-      attrs: endState,
-      duration: duration,
-      delay: delay,
-      easing: easing
-    });
-
-    if (callback) {
-      anim.onEnd(function () {
-        callback();
-      });
-    }
+    scaledMatrix = _index.Matrix.transform(_matrix2, [['t', x, y], ['s', 100, 100], ['t', -x, -y]]);
   }
-};
-module.exports = Helpers;
-}, function(modId) { var map = {"../graphic/index":1605424195598,"../util/common":1605424195577}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1605424195665, function(require, module, exports) {
 
+  return scaledMatrix;
+}
+
+function getAnimateParam(animateCfg, index, id) {
+  var result = {};
+
+  if (animateCfg.delay) {
+    result.delay = (0, _common.isFunction)(animateCfg.delay) ? animateCfg.delay(index, id) : animateCfg.delay;
+  }
+
+  result.easing = animateCfg.easing;
+  result.duration = animateCfg.duration;
+  result.delay = animateCfg.delay;
+  return result;
+}
+
+function doAnimation(shape, endState, animateCfg, callback) {
+  var id = shape._id;
+  var index = shape.get('index');
+
+  var _getAnimateParam = getAnimateParam(animateCfg, index, id),
+      easing = _getAnimateParam.easing,
+      delay = _getAnimateParam.delay,
+      duration = _getAnimateParam.duration;
+
+  var anim = shape.animate().to({
+    attrs: endState,
+    duration: duration,
+    delay: delay,
+    easing: easing
+  });
+
+  if (callback) {
+    anim.onEnd(function () {
+      callback();
+    });
+  }
+}
+}, function(modId) { var map = {"../graphic/index":1606535077090,"../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077158, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports.groupWaveIn = groupWaveIn;
+exports.groupScaleInX = groupScaleInX;
+exports.groupScaleInY = groupScaleInY;
+exports.groupScaleInXY = groupScaleInXY;
+exports.shapesScaleInX = shapesScaleInX;
+exports.shapesScaleInY = shapesScaleInY;
+exports.shapesScaleInXY = shapesScaleInXY;
+
+var _util = require("./util");
+
+var _helper = require("../util/helper");
+
+var _index = require("../graphic/index");
 
 /**
  * Group animate functions
  * @author sima.zhang1990@gmail.com
  */
-var Util = require('./util');
-
-var Helper = require('../util/helper');
-
-var _require = require('../graphic/index'),
-    Shape = _require.Shape;
-
 function _groupScaleIn(container, animateCfg, coord, zeroY, type) {
-  var _Util$getCoordInfo = Util.getCoordInfo(coord),
-      start = _Util$getCoordInfo.start,
-      end = _Util$getCoordInfo.end,
-      width = _Util$getCoordInfo.width,
-      height = _Util$getCoordInfo.height;
+  var _getCoordInfo = (0, _util.getCoordInfo)(coord),
+      start = _getCoordInfo.start,
+      end = _getCoordInfo.end,
+      width = _getCoordInfo.width,
+      height = _getCoordInfo.height;
 
   var x;
   var y;
-  var clip = new Shape.Rect({
+  var clip = new _index.Shape.Rect({
     attrs: {
       x: start.x,
       y: end.y,
@@ -13125,7 +15389,7 @@ function _groupScaleIn(container, animateCfg, coord, zeroY, type) {
     }
   }
 
-  var endMatrix = Util.getScaledMatrix(clip, [x, y], type);
+  var endMatrix = (0, _util.getScaledMatrix)(clip, [x, y], type);
   clip.isClip = true;
   clip.endState = {
     matrix: endMatrix
@@ -13138,7 +15402,7 @@ function _groupScaleIn(container, animateCfg, coord, zeroY, type) {
     clip.remove(true);
   };
 
-  Util.doAnimation(clip, clip.endState, animateCfg, onEnd);
+  (0, _util.doAnimation)(clip, clip.endState, animateCfg, onEnd);
 }
 
 function _shapeScale(container, animateCfg, type) {
@@ -13152,8 +15416,8 @@ function _shapeScale(container, animateCfg, type) {
     var box = shape.getBBox();
     x = (box.minX + box.maxX) / 2;
     y = (box.minY + box.maxY) / 2;
-    endMatrix = Util.getScaledMatrix(shape, [x, y], type);
-    Util.doAnimation(shape, {
+    endMatrix = (0, _util.getScaledMatrix)(shape, [x, y], type);
+    (0, _util.doAnimation)(shape, {
       matrix: endMatrix
     }, animateCfg);
   }
@@ -13184,7 +15448,7 @@ function shapesScaleInXY(container, animateCfg) {
 }
 
 function groupWaveIn(container, animateCfg, coord) {
-  var clip = Helper.getClip(coord);
+  var clip = (0, _helper.getClip)(coord);
   clip.set('canvas', container.get('canvas'));
   container.attr('clip', clip);
 
@@ -13215,19 +15479,639 @@ function groupWaveIn(container, animateCfg, coord) {
     }
   }
 
-  Util.doAnimation(clip, endState, animateCfg, onEnd);
+  (0, _util.doAnimation)(clip, endState, animateCfg, onEnd);
 }
+}, function(modId) { var map = {"./util":1606535077157,"../util/helper":1606535077113,"../graphic/index":1606535077090}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077159, function(require, module, exports) {
 
-module.exports = {
-  groupWaveIn: groupWaveIn,
-  groupScaleInX: groupScaleInX,
-  groupScaleInY: groupScaleInY,
-  groupScaleInXY: groupScaleInXY,
-  shapesScaleInX: shapesScaleInX,
-  shapesScaleInY: shapesScaleInY,
-  shapesScaleInXY: shapesScaleInXY
+
+var _register = _interopRequireDefault(require("../register"));
+
+var _pan = _interopRequireDefault(require("./pan"));
+
+var _pinch = _interopRequireDefault(require("./pinch"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+// 注册交互
+_register["default"].registerInteraction('pan', _pan["default"]);
+
+_register["default"].registerInteraction('pinch', _pinch["default"]);
+}, function(modId) { var map = {"../register":1606535077160,"./pan":1606535077161,"./pinch":1606535077164}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077160, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("../util/common");
+
+var _chart = _interopRequireDefault(require("../chart/chart"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+_chart["default"]._Interactions = {};
+
+_chart["default"].registerInteraction = function (type, constructor) {
+  _chart["default"]._Interactions[type] = constructor;
 };
-}, function(modId) { var map = {"./util":1605424195664,"../util/helper":1605424195619,"../graphic/index":1605424195598}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1605424195573);
+
+_chart["default"].getInteraction = function (type) {
+  return _chart["default"]._Interactions[type];
+};
+
+_chart["default"].prototype.interaction = function (type, cfg) {
+  var interactions = this._interactions || {};
+
+  if (interactions[type]) {
+    // if reprated, destroy last
+    interactions[type].destroy();
+  }
+
+  var Ctor = _chart["default"].getInteraction(type);
+
+  var interact = new Ctor(cfg, this);
+  interactions[type] = interact;
+  this._interactions = interactions;
+  return this;
+};
+
+_chart["default"].prototype.clearInteraction = function (type) {
+  var interactions = this._interactions;
+  if (!interactions) return;
+
+  if (type) {
+    interactions[type] && interactions[type].destroy();
+    delete interactions[type];
+  } else {
+    (0, _common.each)(interactions, function (interaction, key) {
+      interaction.destroy();
+      delete interactions[key];
+    });
+  }
+
+  return this;
+};
+
+var _default = _chart["default"];
+exports["default"] = _default;
+}, function(modId) { var map = {"../util/common":1606535077060,"../chart/chart":1606535077063}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077161, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _base = _interopRequireDefault(require("./base"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Pan = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Pan, _Base);
+
+  function Pan() {
+    return _Base.apply(this, arguments) || this;
+  }
+
+  var _proto = Pan.prototype;
+
+  _proto.getDefaultCfg = function getDefaultCfg() {
+    return {
+      type: 'pan',
+      startEvent: 'panstart',
+      processEvent: 'pan',
+      endEvent: 'panend'
+    };
+  };
+
+  _proto.start = function start() {
+    var context = this.context;
+    context.start();
+  };
+
+  _proto.process = function process(e) {
+    var direction = e.direction,
+        deltaX = e.deltaX;
+
+    if (direction === 'up' || direction === 'down') {
+      return;
+    }
+
+    e.preventDefault && e.preventDefault();
+    var context = this.context;
+    var chart = context.chart;
+    var coord = chart.get('coord');
+    var start = coord.start,
+        end = coord.end;
+    var coordWidth = end.x - start.x;
+    var ratio = deltaX / coordWidth;
+    context.doMove(ratio);
+  };
+
+  return Pan;
+}(_base["default"]);
+
+var _default = Pan;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077162}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077162, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _common = require("../../util/common");
+
+var _context = _interopRequireDefault(require("./context"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var Base = /*#__PURE__*/function () {
+  var _proto = Base.prototype;
+
+  // 交互的上下文
+  _proto.getDefaultCfg = function getDefaultCfg() {
+    return {};
+  };
+
+  _proto.getInteractionContext = function getInteractionContext(chart) {
+    var interactionContext = chart.get('interactionContext');
+
+    if (interactionContext) {
+      return interactionContext;
+    }
+
+    interactionContext = new _context["default"](chart);
+    chart.set('interactionContext', interactionContext);
+    return interactionContext;
+  };
+
+  function Base(cfg, chart) {
+    var _this = this;
+
+    _defineProperty(this, "type", '');
+
+    _defineProperty(this, "startEvent", 'touchstart');
+
+    _defineProperty(this, "processEvent", 'touchmove');
+
+    _defineProperty(this, "endEvent", 'touchend');
+
+    _defineProperty(this, "resetEvent", null);
+
+    _defineProperty(this, "context", null);
+
+    _defineProperty(this, "_start", function (ev) {
+      _this.preStart && _this.preStart(ev);
+
+      _this.start(ev);
+
+      _this.onStart && _this.onStart(ev);
+    });
+
+    _defineProperty(this, "_process", function (ev) {
+      _this.preProcess && _this.preProcess(ev);
+
+      _this.process(ev);
+
+      _this.onProcess && _this.onProcess(ev);
+    });
+
+    _defineProperty(this, "_end", function (ev) {
+      _this.preEnd && _this.preEnd(ev);
+
+      _this.end(ev);
+
+      _this.onEnd && _this.onEnd(ev);
+    });
+
+    _defineProperty(this, "_reset", function (ev) {
+      _this.preReset && _this.preReset(ev);
+
+      _this.reset(ev);
+
+      _this.onReset && _this.onReset(ev);
+    });
+
+    (0, _common.mix)(this, this.getDefaultCfg(), cfg);
+    this.context = this.getInteractionContext(chart);
+    this.chart = chart; // 只处理range, 暂时先这么处理后面再看情况调整
+
+    var range = this.range;
+
+    if (range) {
+      this.context.range = range;
+    }
+
+    this._bindEvents(chart);
+  }
+
+  _proto._bindEvents = function _bindEvents(chart) {
+    var startEvent = this.startEvent,
+        processEvent = this.processEvent,
+        endEvent = this.endEvent,
+        resetEvent = this.resetEvent;
+    var canvas = chart.get('canvas'); // 统一绑定事件
+
+    canvas.on(startEvent, this._start);
+    canvas.on(processEvent, this._process);
+    canvas.on(endEvent, this._end);
+    canvas.on(resetEvent, this._reset);
+  };
+
+  _proto._clearEvents = function _clearEvents() {
+    var chart = this.chart,
+        startEvent = this.startEvent,
+        processEvent = this.processEvent,
+        endEvent = this.endEvent,
+        resetEvent = this.resetEvent;
+    var canvas = chart.get('canvas'); // 统一绑定事件
+
+    canvas.off(startEvent, this._start);
+    canvas.off(processEvent, this._process);
+    canvas.off(endEvent, this._end);
+    canvas.off(resetEvent, this._start);
+  };
+
+  // override
+  _proto.start = function start() {} // override
+  ;
+
+  _proto.process = function process() {} // override
+  ;
+
+  _proto.end = function end() {} // override
+  ;
+
+  _proto.reset = function reset() {};
+
+  _proto.destroy = function destroy() {
+    this.context.destroy();
+
+    this._clearEvents();
+  };
+
+  return Base;
+}();
+
+var _default = Base;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../util/common":1606535077060,"./context":1606535077163}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077163, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _scale = require("../../scale");
+
+var _array = require("../../util/array");
+
+var _const = require("../../chart/const");
+
+var _common = require("../../util/common");
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+// 判断新老values是否相等，这里只要判断前后是否相等即可
+function isValuesEqual(values, newValues) {
+  if (values.length !== newValues.length) {
+    return false;
+  }
+
+  var lastIndex = values.length - 1;
+  return values[0] === newValues[0] && values[lastIndex] === newValues[lastIndex];
+} // 不同交互之间共享的上下文
+
+
+var defaultRange = [0, 1];
+
+var Context = /*#__PURE__*/function () {
+  // 最开始的原始值
+  // 当前显示的范围
+  // 缩放最小的点数
+  // 最小的缩放比例, 默认通过minCount计算
+  // minScale = 0.01;
+  // 交互开始时，ticks个数，主要为了每次缩放后，更新ticks个数
+  // lastTickCount;
+  function Context(chart) {
+    var _this = this;
+
+    _defineProperty(this, "chart", null);
+
+    _defineProperty(this, "values", null);
+
+    _defineProperty(this, "range", defaultRange);
+
+    _defineProperty(this, "startRange", defaultRange);
+
+    _defineProperty(this, "minCount", 10);
+
+    _defineProperty(this, "_afterinit", function () {
+      // 初始化value值
+      var scale = _this.getPinchScale(); // 记录原始全量数据
+
+
+      var values = [].concat(scale.values);
+      _this.values = values; // 最小的缩放比例
+
+      if (!_this.minScale) {
+        _this.minScale = _this.minCount / values.length;
+      } // 初始化的时候有设置range，则初始化成默认比例
+
+
+      if (_this.range !== defaultRange) {
+        _this.updateRange(_this.range);
+
+        _this.updateTicks();
+      }
+    });
+
+    _defineProperty(this, "_afterdatachange", function () {
+      _this.updateRange(_this.range);
+    });
+
+    this.chart = chart;
+
+    this._initEvent(chart);
+  }
+
+  var _proto = Context.prototype;
+
+  _proto._initEvent = function _initEvent(chart) {
+    // 在整体初始化后还需要设置一些初始状态
+    chart.on(_const.EVENT_AFTER_INIT, this._afterinit);
+    chart.on(_const.EVENT_AFTER_DATA_CHANGE, this._afterdatachange);
+  } // 缩放的主轴scale
+  ;
+
+  _proto.getPinchScale = function getPinchScale() {
+    var chart = this.chart; // 默认缩放x轴
+
+    var scale = chart.getXScale();
+    return scale;
+  } // 跟随轴的scale
+  ;
+
+  _proto.getFollowScale = function getFollowScale() {
+    var chart = this.chart; // 默认缩放x轴
+
+    var scales = chart.getYScales() || [];
+    return scales[0];
+  };
+
+  _proto.start = function start() {
+    var range = this.range;
+    var scale = this.getPinchScale();
+    var start = range[0],
+        end = range[1]; // 记录交互起始的范围
+
+    this.startRange = [start, end]; // 记录开始时的ticks个数
+
+    this.lastTickCount = scale.tickCount;
+  };
+
+  _proto.doZoom = function doZoom(leftScale, rightScale, zoom) {
+    var range = this.startRange,
+        minScale = this.minScale;
+    var start = range[0],
+        end = range[1];
+    var zoomOffset = 1 - zoom;
+    var rangeLen = end - start;
+    var rangeOffset = rangeLen * zoomOffset;
+    var leftOffset = rangeOffset * leftScale;
+    var rightOffset = rangeOffset * rightScale;
+    var newStart = Math.max(0, start - leftOffset);
+    var newEnd = Math.min(1, end + rightOffset);
+    var newRange = [newStart, newEnd]; // 如果已经到了最小比例，则不能再继续再放大
+
+    if (newEnd - newStart < minScale) {
+      return;
+    }
+
+    this.updateRange(newRange);
+  };
+
+  _proto.doMove = function doMove(ratio) {
+    // 不管是0， 还是其他，都不用处理
+    if (!ratio) return;
+    var range = this.startRange;
+    var start = range[0],
+        end = range[1];
+    var rangeLen = end - start;
+    var rangeOffset = rangeLen * ratio;
+    var newStart = start - rangeOffset;
+    var newEnd = end - rangeOffset; // 处理边界值
+
+    var newRange;
+
+    if (newStart < 0) {
+      newRange = [0, rangeLen];
+    } else if (newEnd > 1) {
+      newRange = [1 - rangeLen, 1];
+    } else {
+      newRange = [newStart, newEnd];
+    }
+
+    this.updateRange(newRange);
+  };
+
+  _proto.updateRange = function updateRange(range) {
+    var values = this.values; // 0， 1 的范围之间
+
+    var start = range[0],
+        end = range[1]; // start 不能小于0
+
+    start = Math.max(0, start); // end 不能大于1
+
+    end = Math.min(1, end); // 设置当前的范围
+
+    this.range = [start, end];
+    var len = values.length;
+    var valueStart = start * len;
+    var valueEnd = end * len; // 从原始数据里截取需要显示的数据
+
+    var newValues = values.slice(valueStart, valueEnd);
+    this.repaint(newValues);
+  };
+
+  _proto.repaint = function repaint(newValues) {
+    var chart = this.chart;
+    var scale = this.getPinchScale();
+    var currentValues = scale.values,
+        ticks = scale.ticks; // 如果新数组和当前显示的数组相同，则不更新
+
+    if (isValuesEqual(currentValues, newValues)) {
+      return;
+    } // 更新主轴values
+
+
+    this.updateScale(scale, {
+      ticks: ticks,
+      values: newValues
+    });
+    this.updateFollowScale(scale, newValues);
+    chart.repaint();
+  };
+
+  _proto.updateFollowScale = function updateFollowScale(pinchScale, pinchValues) {
+    var chart = this.chart;
+    var followScale = this.getFollowScale();
+    var pinchField = pinchScale.field,
+        pinchScaleType = pinchScale.type;
+    var followField = followScale.field; // 根据主轴的value值，找到所有从轴的value值
+
+    var values = []; // 转成map，让查找性能更高
+
+    var pinchValueMap = {};
+    pinchValues.forEach(function (item) {
+      pinchValueMap[item] = true;
+    });
+    var data = chart.get('data');
+    data.forEach(function (item) {
+      if (pinchScaleType === 'timeCat') {
+        var value = (0, _common.toTimeStamp)(item[pinchField]);
+
+        if (pinchValueMap[value]) {
+          values.push(item[followField]);
+        }
+      }
+    });
+
+    var _getRange = (0, _array.getRange)(values),
+        min = _getRange.min,
+        max = _getRange.max;
+
+    this.updateScale(followScale, {
+      min: min,
+      max: max,
+      nice: true
+    });
+  };
+
+  _proto.updateScale = function updateScale(scale, cfg) {
+    if (!scale) {
+      return;
+    }
+
+    scale.change(cfg);
+  } // 上一次的tick个数
+  ;
+
+  _proto.updateTicks = function updateTicks() {
+    var chart = this.chart,
+        values = this.values;
+    var scale = this.getPinchScale();
+    var currentValues = scale.values,
+        tickCount = scale.tickCount; // 根据当前数据的比例，和定义的tickCount计算应该需要多少个ticks
+
+    var newTickCount = Math.round(tickCount * values.length / currentValues.length);
+    var catTicks = (0, _scale.getTickMethod)('cat');
+    var ticks = catTicks({
+      tickCount: newTickCount,
+      values: values
+    });
+    this.updateScale(scale, {
+      ticks: ticks,
+      values: currentValues
+    }); // 更新完后，需要重新绘制一次
+
+    chart.repaint();
+  };
+
+  _proto.destroy = function destroy() {
+    var chart = this.chart;
+    chart.off(_const.EVENT_AFTER_INIT, this._afterinit);
+    chart.off(_const.EVENT_AFTER_DATA_CHANGE, this._afterdatachange);
+  };
+
+  return Context;
+}();
+
+var _default = Context;
+exports["default"] = _default;
+}, function(modId) { var map = {"../../scale":1606535077083,"../../util/array":1606535077061,"../../chart/const":1606535077064,"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077164, function(require, module, exports) {
+
+
+exports.__esModule = true;
+exports["default"] = void 0;
+
+var _base = _interopRequireDefault(require("./base"));
+
+var _common = require("../../util/common");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
+
+var Pinch = /*#__PURE__*/function (_Base) {
+  _inheritsLoose(Pinch, _Base);
+
+  var _proto = Pinch.prototype;
+
+  _proto.getDefaultCfg = function getDefaultCfg() {
+    return {
+      type: 'pinch',
+      startEvent: 'pinchstart',
+      processEvent: 'pinch',
+      endEvent: 'pinchend'
+    };
+  };
+
+  function Pinch(cfg, chart) {
+    var _this;
+
+    _this = _Base.call(this, cfg, chart) || this;
+
+    var _assertThisInitialize = _assertThisInitialized(_this),
+        context = _assertThisInitialize.context;
+
+    (0, _common.mix)(context, cfg);
+    return _this;
+  }
+
+  _proto.start = function start() {
+    var context = this.context;
+    context.start();
+  };
+
+  _proto.process = function process(e) {
+    e.preventDefault && e.preventDefault();
+    var zoom = e.zoom,
+        center = e.center;
+    var context = this.context;
+    var chart = context.chart;
+    var coord = chart.get('coord');
+    var start = coord.start,
+        end = coord.end;
+    var coordWidth = end.x - start.x;
+    var leftLen = Math.abs(center.x - start.x);
+    var rightLen = Math.abs(end.x - center.x); // 计算左右缩放的比例
+
+    var leftScale = leftLen / coordWidth;
+    var rightScale = rightLen / coordWidth;
+    context.doZoom(leftScale, rightScale, zoom);
+  };
+
+  _proto.end = function end() {
+    // 缩放完成后再更新ticks
+    var context = this.context;
+    context.updateTicks();
+  };
+
+  return Pinch;
+}(_base["default"]);
+
+var _default = Pinch;
+exports["default"] = _default;
+}, function(modId) { var map = {"./base":1606535077162,"../../util/common":1606535077060}; return __REQUIRE__(map[modId], modId); })
+return __REQUIRE__(1606535077056);
 })()
 //# sourceMappingURL=index.js.map

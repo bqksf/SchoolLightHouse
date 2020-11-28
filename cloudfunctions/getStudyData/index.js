@@ -34,7 +34,7 @@ exports.main = async (event, context) => {
       });
     }
     // 检查获取爬虫信息的时间，大于7天就重新获取（包括有账号密码，但是没有获取到数据的）
-    if ((isObjEmpty(examTime) && isObjEmpty(schedule) && isObjEmpty(score)) || is7DaysLater(updateAt)) {
+    if ((isObjEmpty(examTime) && isObjEmpty(schedule) && isObjEmpty(score)) || is7DaysLater(updateAt) || event.refresh) {
       // 获取爬虫数据
       const data = await getPachongDataAndSafe(stuID, stuPassword, OPENID);
       if (!data) {
@@ -57,6 +57,11 @@ exports.main = async (event, context) => {
       if ('error' in examTime || 'error' in schedule || 'error' in score) {
         // 有错误，重新获取爬虫再返回
         const data = await getPachongDataAndSafe(stuID, stuPassword, OPENID);
+        // 重新获取爬虫还是有错误
+        if ('error' in data.examTime || 'error' in data.schedule || 'error' in data.score) {
+          log.error({ message: '查询教务系统失败：', data: JSON.stringify(data), _openid: OPENID });
+          return returnRule.fail('查询教务系统失败', JSON.stringify(data));
+        }
         if (!data) {
           // 密码错误
           return returnRule.success({
@@ -83,7 +88,6 @@ exports.main = async (event, context) => {
     }
   } catch (e) {
     log.error({ message: '查询studyData数据库失败：', data: e.toString(), _openid: OPENID });
-    console.error(e);
     return returnRule.fail('查询studyData数据库失败', e.toString());
   }
 
@@ -118,7 +122,6 @@ async function getPachongDataAndSafe(stuID, stuPassword, OPENID) {
       });
     } catch (e) {
       log.error({ message: '更新为密码错误数据库失败：', data: e.toString(), _openid: OPENID });
-      console.error(e);
     }
     return false;
   }
@@ -135,7 +138,6 @@ async function getPachongDataAndSafe(stuID, stuPassword, OPENID) {
     });
   } catch (e) {
     log.error({ message: '更新学生所有信息数据库失败：', data: e.toString(), _openid: OPENID });
-    console.error(e);
   }
   return data;
 }

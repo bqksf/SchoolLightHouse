@@ -6,14 +6,15 @@
     "pages/mine/mine",
     "pages/question/moreanswer/moreanswer",
     "pages/question/answer/answer",
-    "pages/bindnumber/bindnumber",
     "pages/index/score/score",
     "pages/mine/about/about",
     "pages/mine/update/update",
-    "pages/bindnumber/bindhelp/bindhelp",
+    "pages/register/privacy/privacy",
     "pages/index/exam/exam",
     "pages/index/schedule/schedule",
-    "pages/question/ask/ask"
+    "pages/question/ask/ask",
+    "pages/register/register",
+    "pages/mine/esInfo/esInfo"
   ],
   "window": {
     "backgroundTextStyle": "dark",

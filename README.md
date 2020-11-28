@@ -2,21 +2,20 @@
 高校灯塔
 
 颜色方案
-#f8f8f8 背景颜色
 #666 灰色正文文字颜色
 color--black: #000; 标题文字颜色
-color--grey10: #171a20; 正文文字颜色
+color--grey10: #171a20; 黑色正文文字颜色
 color--grey15: #222;
 color--grey20: #393c41;
 color--grey25: #444;
 color--grey30: #5c5e62;
 color--grey35: #757575;
-color--grey40: #a2a3a5; 导航栏文字颜色
-color--grey50: #d0d1d2; 搜索框提示文字颜色
-color--grey60: #eee; 灰色按钮底色
-color--grey70: #f8f8f8; 提示框背景颜色
+color--grey40: #a2a3a5; 问问导航栏未切换时文字颜色
+color--grey50: #d0d1d2; 搜索框提示文字颜色，灰色按钮按下颜色
+color--grey60: #eee; 灰色按钮色
+color--grey70: #f8f8f8; 提示框，卡片背景颜色
 color--white: #fff;
-color--blue30: #3e6ae1; 蓝色按钮底色
+color--blue30: #3e6ae1; 蓝色按钮色
 color--blue20: #3457b1;
 color--blue10: #2e4994;
 color--red: #ed4e3b;
@@ -25,6 +24,9 @@ color--red20: #ed4e3b;
 color--green10: #12bb00;
 color--green20: #02e359;
 color--yellow: #fbb01b;
+
+设计方案
+屏幕边缘到内容区间隔30rpx
 
 ## 云开发 quickstart
 

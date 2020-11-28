@@ -10,15 +10,11 @@
 }
 
 .user-name{
-    font-size: 35rpx;
+    font-size: 40rpx;
     font-weight: 500;
-}
-
-.user-no{
-    font-size: 23rpx;
-    color: #666;
     margin-top: 5rpx;
 }
+
 
 .page__bd{
     margin-top: 20rpx;

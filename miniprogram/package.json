@@ -1,7 +1,7 @@
 {
   "name": "schoollighthouse",
-  "version": "1.0.0",
-  "description": "口袋大学",
+  "version": "1.2.0",
+  "description": "高校灯塔",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,7 +17,6 @@
   },
   "homepage": "https://github.com/k-skye/SchoolLightHouse#readme",
   "dependencies": {
-    "@antv/wx-f2": "^2.0.1",
-    "miniprogram-api-promise": "^1.0.4"
+    "@antv/wx-f2": "^2.1.1"
   }
 }

@@ -1,5 +1,4 @@
 var app = getApp();
-const AV = require('../../utils/av-weapp-min.js');
 import { showErrorModal, dateFormat } from '../../utils/index.js';
 Page({
     data: {
@@ -16,7 +15,7 @@ Page({
         page: 0,
     },
     onLoad() {
-        this.getList('refresh', 0);
+        // this.getList('refresh', 0);
     },
     getListPopular(type, currentPage){
         this.setData({

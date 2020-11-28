@@ -4,112 +4,72 @@ Page({
     data: {
         studentInfo: {
             image: "/images/user.png",
-            name: "",
-            stuid: "未绑定学号"
+            name: "未注册",
         },
-        currentSize: 0,
-    },
-    onLoad() {
-        // this.getStorageNum(), this.getBindnumber();
+        navigateTitle: "教务系统",
+        navigateUrl: "../mine/esInfo/esInfo"
     },
     onShow() {
         !app.globalData.firstlogin && (this.getStudentInfo());
+        this.setData({
+            navigateTitle: app.globalData.isNoBind === true || app.globalData.firstlogin ? '未绑定教务系统':'教务系统',
+            navigateUrl: app.globalData.isNoBind === true || app.globalData.firstlogin ? '/pages/register/register':'../mine/esInfo/esInfo',
+        });
     },
     getStudentInfo() {
-        //暂时用数据库里的信息来解决重复读
-        //但是绑定后的返回我的界面来不及读取global，会造成空值
+        // 绑定后的返回我的界面来不及读取global，会造成空值
         this.setData({
             studentInfo: {
-                image: app.globalData.user.avatarUrl ||  "/images/user.png",
-                name: app.globalData.user.nickName || "恭喜",
-                stuid: app.globalData.user.stuID || "已绑定成功"
+                image: app.globalData.userInfo.avatarUrl ||  "/images/user.png",
+                name: app.globalData.userInfo.name || "绑定成功"
             }
         });
     },
     tapHead() {
-        this.data.studentInfo.stuid === "未绑定学号" ? wx.navigateTo({
-            url: '/pages/bindnumber/bindnumber'
+        app.globalData.isNoBind === true || app.globalData.firstlogin ? wx.navigateTo({
+            url: '/pages/register/register'
         })
             :
-            console.log('功能待添加');
+            console.log('修改头像和名字功能待添加');// TODO
     },
-    clearStorage() {
-        wx.showModal({
-            title: "确认清除数据？",
-            content: "清除数据将清除课表查询记录以及校园卡绑定记录，同时清除成绩、课表等信息",
-            confirmColor: "#e64340",
-            success: function (t) {
-                t.confirm && (wx.clearStorage(), wx.showToast({
-                    title: "数据已清除",
-                    icon: "success",
-                    duration: 2e3,
-                    complete() {
-                        wx.reLaunch({
-                            url: "/pages/index/index"
-                        });
-                    }
-                }));
-            }
-        });
-    },
-    getStorageNum() {
-        wx.getStorageInfo({
-            success: e => {
-                this.setData({
-                    currentSize: e.currentSize
-                });
-            }
-        });
-    },
-    getPromissionStatus() {
-        wx.getSetting({
-            success: e => {
-                console.log(e.authSetting["scope.userInfo"]), e.authSetting["scope.userInfo"] && this.setData({
-                    promissionStatus: !0
-                });
-            }
-        });
-    },
-    getPromission() {
-        wx.getUserInfo({
-            success: e => {
-                getApp().globalData.userInfo = e.userInfo, this.setData({
-                    userInfo: getApp().globalData.userInfo
-                });
-            },
-            error: t => {
-                console.log(t);
-            }
-        });
-    },
-    unbindNumber() {
-        wx.showModal({
-            title: "确认解绑学号？",
-            content: "解绑学号后将不能自动登录教务系统，也不能显示相关课程、成绩、考试安排等信息",
-            confirmColor: "#e64340",
-            success: function (t) {
-                t.confirm && (wx.clearStorage(), wx.showToast({
-                    title: "数据已清除",
-                    icon: "success",
-                    duration: 2e3,
-                    complete() {
-                        wx.reLaunch({
-                            url: "/pages/index/index"
-                        });
-                    }
-                }));
-            }
-        });
-    },
-    getBindnumber() {
-        try {
-            wx.getStorageSync("card_info") ? this.setData({
-                isBinding: !0
-            }) : this.setData({
-                isBinding: !1
-            });
-        } catch (t) { }
-    },
+    // clearStorage() {
+    //     wx.showModal({
+    //         title: "确认清除数据？",
+    //         content: "清除数据将清除课表查询记录以及校园卡绑定记录，同时清除成绩、课表等信息",
+    //         confirmColor: "#e64340",
+    //         success: function (t) {
+    //             t.confirm && (wx.clearStorage(), wx.showToast({
+    //                 title: "数据已清除",
+    //                 icon: "success",
+    //                 duration: 2e3,
+    //                 complete() {
+    //                     wx.reLaunch({
+    //                         url: "/pages/index/index"
+    //                     });
+    //                 }
+    //             }));
+    //         }
+    //     });
+    // },
+    // unbindNumber() {
+    //     wx.showModal({
+    //         title: "确认解绑学号？",
+    //         content: "解绑学号后将不能自动登录教务系统，也不能显示相关课程、成绩、考试安排等信息",
+    //         confirmColor: "#e64340",
+    //         success: function (t) {
+    //             t.confirm && (wx.clearStorage(), wx.showToast({
+    //                 title: "数据已清除",
+    //                 icon: "success",
+    //                 duration: 2e3,
+    //                 complete() {
+    //                     wx.reLaunch({
+    //                         url: "/pages/index/index"
+    //                     });
+    //                 }
+    //             }));
+    //         }
+    //     });
+    // },
     onShareAppMessage() {
         return {
             title: "高校灯塔(小程序)",

@@ -1,0 +1,80 @@
+<view class="page">
+    <view class="choose-school" wx:if="{{registerPage === 1}}">
+        <view class="title">选择学校</view>
+        <view class="weui-form__control-area">
+            <view class="weui-cells__group weui-cells__group_form">
+                <view class="weui-cells weui-cells_radio register-input">
+                    <radio-group class="radio-group" bindchange="radioChange">
+                        <label class="weui-cell weui-cell_active weui-check__label" wx:for="{{items}}" wx:key="name">
+                            <view class="weui-cell__bd">
+                                <view>{{item.value}}</view>
+                            </view>
+                            <view class="weui-cell__ft">
+                                <radio class="weui-check" value="{{item.name}}" checked="{{item.checked}}" />
+                                <i class="weui-icon-checked"></i>
+                            </view>
+                        </label>
+                    </radio-group>
+                    <a class="weui-cell weui-cell_active weui-cell_link" bindtap="tapMoreSchool">
+                        <view class="weui-cell__bd">更多</view>
+                    </a>
+                </view>
+            </view>
+        </view>
+        <view class="weui-form__tips-area tips">
+            <label for="weuiAgree" class="weui-agree">
+                <span class="weui-agree__text">
+                    注册即表示您已同意
+                    <navigator class="weui-agree__link" url="/pages/register/privacy/privacy">
+                        《用户协议》
+                    </navigator>
+                </span>
+            </label>
+        </view>
+        <view class="weui-form__opr-area buttons">
+            <button wx:if="{{canIUse}}" type="primary" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+                确定
+            </button>
+            <view wx:else>请升级微信版本</view>
+        </view>
+    </view>
+    <view class="bindAccount" wx:else>
+        <view class="title">绑定教务系统</view>
+        <view class="tip">将用于查看课程表、考试时间、考试成绩、抢课、自动评教、学生卡等服务</view>
+        <view class="page-body">
+            <view class="weui-form__control-area">
+                <view class="weui-cells__group weui-cells__group_form">
+                    <view class="weui-cells weui-cells_form register-input">
+
+                        <view class="weui-cell">
+                            <view class="weui-cell__hd">
+                                <label class="weui-label">用户名</label>
+                            </view>
+                            <view class="weui-cell__bd">
+                                <input class="weui-input" bindinput="stuIDKeyInput" placeholder-class="weui-input__placeholder"
+                                    placeholder="请输入教务系统用户名" value="{{stuID}}" />
+                            </view>
+                        </view>
+                        <view class="weui-cell">
+                            <view class="weui-cell__hd">
+                                <label class="weui-label">密码</label>
+                            </view>
+                            <view class="weui-cell__bd">
+                                <input class="weui-input" bindinput="stuPasswordKeyInput" password placeholder="请输入教务系统密码" placeholder-class="weui-input__placeholder"
+                                    value="{{stuPassword}}" />
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="weui-form__opr-area buttons">
+            <button plain style="margin-bottom:15rpx" bindtap="tapLaterButton">
+                以后再说
+            </button>
+            <button type="primary" bindtap="tapBindButton">
+                绑定
+            </button>
+        </view>
+    </view>
+</view>

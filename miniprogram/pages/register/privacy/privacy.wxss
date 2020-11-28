@@ -19,7 +19,8 @@
 
 .index-desc {
     margin-top: 20rpx;
-    font-size: 28rpx;
+    font-size: 50rpx;
+    font-weight: 500;
 }
 
 .weui-msg__desc {

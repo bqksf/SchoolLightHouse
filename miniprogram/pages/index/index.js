@@ -1,5 +1,5 @@
 import { getWhichWeek } from "../../utils/study-date.js";
-import { showErrorModal } from '../../utils/index.js';
+import { showErrorModal, isObjEmpty } from '../../utils/index.js';
 
 let app = getApp();
 let db = wx.cloud.database({
@@ -20,11 +20,12 @@ Page({
         examNum: 0,
         weekNum: 0,
         todayClassArr: [],
-        bookNum: 0
+        bookNum: 0,
+        isRefresh: false // 下拉刷新
     },
     onLoad() {
         //针对第一次进入页面
-        if (!app.globalData._openid) {
+        if (!app.globalData._openid || isObjEmpty(app.globalData.userInfo)) {
             app.userInfoReadyCallback = res => { // app.js异步回调方法，获取不到数据时使用
                 const { _openid, firstlogin, userInfo } = res;
                 if (!firstlogin) {
@@ -35,7 +36,7 @@ Page({
                     });
                 }
             };
-        }else{
+        } else {
             if (!app.globalData.firstlogin) {
                 this.initData(app.globalData._openid, app.globalData.userInfo);
             } else {
@@ -78,18 +79,50 @@ Page({
         });
         app.globalData.weekNum = weekNum;
         try {
-            const studyData = await this.getStudyData();
-            // console.log('获取到的学习数据：' + JSON.stringify(studyData));
+            // 先检查缓存，有的话从缓存中取
+            let studyDataStorage = wx.getStorageSync('studyData') || null;
+            let studyData = null;
+            let needSetStorage = false;
+            const nowTime = Math.round(new Date().getTime() / 1000);
+            if (!studyDataStorage) {
+                // 缓存中没有，直接获取
+                studyData = await this.getStudyData();
+                needSetStorage = true;
+            } else {
+                // 缓存中有，看看到期了没
+                if (((nowTime - studyDataStorage.addStorTime) > (86400 * 1))) {
+                    // 缓存过了1天，到期了，重新获取
+                    studyData = await this.getStudyData();
+                    needSetStorage = true;
+                } else {
+                    // 在缓存中取
+                    studyData = studyDataStorage;
+                }
+            }
+            console.log('获取学习数据完成');
             // 未绑定
             if (studyData.status === 'error' && studyData.msg === 'noBind') {
                 this.setData({
                     allModalStatus: 'noBind'
                 });
+                app.globalData.isNoBind = true;
                 return;
             }
-            const { data } = studyData;
+            // 其他错误
+            if (studyData.status === 'error') {
+                throw studyData.msg + studyData.data;
+            }
+            let { data } = studyData;
             // 设置全局变量
             app.globalData.studyData = data;
+            // 设置缓存
+            if (needSetStorage) {
+                studyData.addStorTime = nowTime;
+                wx.setStorage({
+                    key: 'studyData',
+                    data: studyData
+                });
+            }
             // 是否需要更改教务系统绑定密码
             if (data.needChangePassword === true) {
                 this.setData({
@@ -114,7 +147,8 @@ Page({
             }
             // TODO 服务器公告
             this.setData({
-                notice: '暂时没有通知'
+                notice: '暂时没有通知',
+                isRefresh: false
             });
         } catch (e) {
             showErrorModal('获取学习信息失败', e);
@@ -127,8 +161,12 @@ Page({
     },
     async getStudyData() {
         const studyDataResp = await wx.cloud.callFunction({
-            name: 'getStudyData'
+            name: 'getStudyData',
+            data: {
+                refresh: this.data.isRefresh
+            }
         });
+        // console.log('获取到的学习数据：' + JSON.stringify(studyDataResp.result));
         return studyDataResp.result;
     },
     handleExamData(exam) {
@@ -185,18 +223,17 @@ Page({
                 //每次都循环一遍每一个今日课表数据的时间，如果匹配上
                 okArr.push(new Array(scheduleData));
             });
-
             //设置展示的今日课程数和今日课表arr
             this.setData({
                 todayClassNum: todayClassNumI,
                 todayClassArr: okArr,
-                noClass: 0
+                noClass: false
             });
         } else {
             this.setData({
                 todayClassNum: 1,
                 todayClassArr: [],
-                noClass: 1
+                noClass: true
             });
         }
     },
@@ -307,7 +344,7 @@ Page({
                 return false;
             case 'noBind':
                 wx.navigateTo({
-                    url: '../bindnumber/bindnumber'
+                    url: '../register/register'
                 });
                 return false;
             default:
@@ -324,6 +361,11 @@ Page({
     },
     onPullDownRefresh() {
         wx.vibrateShort();
+        wx.removeStorageSync('studyData');
+        this.setData({
+            isRefresh: true,
+            allModalStatus: null
+        });
         this.onLoad();
         wx.stopPullDownRefresh();
     },

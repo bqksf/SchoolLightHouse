@@ -1,7 +1,7 @@
 <view class="page">
     <view class="weui-msg">
         <view class="weui-msg__icon-area">
-            <image class="index-logo" src="/images/info.png"></image>
+            <image class="index-logo" src="/images/shield.png"></image>
             <view class="index-desc">隐私协议</view>
         </view>
         <view class="weui-msg__text-area">
@@ -9,7 +9,7 @@
                 为了给您提供更准确、更有个性化的服务，「校园灯塔」需要使用你的教务密码，「校园灯塔」会按照本隐私权政策的规定使用和披露您的个人信息，并将以高度的勤勉、审慎义务对待这些信息。
             </view>
             <view class="weui-msg__desc">
-                「高校灯塔」不会向任何第三方提供、出售、出租、分享或交易您的个人信息，使用过程中所产生的任何信息将加密存储在阿里云数据中心，当你删除「高校灯塔」时，这些信息也将会一同删除。
+                「高校灯塔」不会向任何第三方提供、出售、出租、分享或交易您的个人信息，使用过程中所产生的任何信息将加密存储在腾讯云数据中心，当你删除「高校灯塔」时，这些信息也将会一同删除。
             </view>
         </view>
         <view class="weui-msg__extra-area">

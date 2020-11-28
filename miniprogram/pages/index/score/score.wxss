@@ -82,8 +82,9 @@ button:not([size='mini']) {
 }
 
 .pg-content{
-    margin: 0 15px;
-    width: calc(100% - 30px);
+    margin: 0 30rpx;
+    margin-bottom: -25rpx;
+    width: calc(100% - 60rpx);
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -168,4 +169,12 @@ button:not([size='mini']) {
     color: #666;
     text-align: center;
     margin-top: -5rpx;
+}
+
+.chartHeight{
+    height: 300rpx;
+}
+
+.charts{
+    height: 1000rpx;
 }

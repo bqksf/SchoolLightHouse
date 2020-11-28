@@ -1,0 +1,23 @@
+.title{
+  font-size: 80rpx;
+  text-align: center;
+  margin-top: 50rpx;
+  font-weight: 450;
+}
+
+.change-input{
+  background-color: #f8f8f8;
+  margin: 0 30rpx;
+  border-radius: 30rpx;
+}
+
+button:not([size='mini']) {
+  width: 80% !important;
+}
+
+.buttons{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  margin-bottom: 80rpx !important;
+}

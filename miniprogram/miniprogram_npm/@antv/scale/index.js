@@ -4,2722 +4,1872 @@ var __DEFINE__ = function(modId, func, req) { var m = { exports: {}, _tempexport
 var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = __MODS__[modId].m; m._exports = m._tempexports; var desp = Object.getOwnPropertyDescriptor(m, "exports"); if (desp && desp.configurable) Object.defineProperty(m, "exports", { set: function (val) { if(typeof val === "object" && val !== m._exports) { m._exports.__proto__ = val.__proto__; Object.keys(val).forEach(function (k) { m._exports[k] = val[k]; }); } m._tempexports = val }, get: function () { return m._tempexports; } }); __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1605424195668, function(require, module, exports) {
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["scale"] = factory();
-	else
-		root["scale"] = factory();
-})(typeof self !== 'undefined' ? self : this, function() {
-return /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
-/******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
-/******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
-/******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
-/******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, {
-/******/ 				configurable: false,
-/******/ 				enumerable: true,
-/******/ 				get: getter
-/******/ 			});
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
-/******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
-/******/ })
-/************************************************************************/
-/******/ ([
-/* 0 */
-/***/ (function(module, exports, __webpack_require__) {
+__DEFINE__(1606535077166, function(require, module, exports) {
 
-var mix = __webpack_require__(16);
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.registerTickMethod = exports.getTickMethod = exports.registerScale = exports.getScale = exports.Scale = exports.Quantize = exports.Quantile = exports.TimeCat = exports.Time = exports.Pow = exports.Log = exports.Linear = exports.Identity = exports.Category = void 0;
+var base_1 = require("./base");
+exports.Scale = base_1.default;
+var base_2 = require("./category/base");
+exports.Category = base_2.default;
+var time_1 = require("./category/time");
+exports.TimeCat = time_1.default;
+var linear_1 = require("./continuous/linear");
+exports.Linear = linear_1.default;
+var log_1 = require("./continuous/log");
+exports.Log = log_1.default;
+var pow_1 = require("./continuous/pow");
+exports.Pow = pow_1.default;
+var time_2 = require("./continuous/time");
+exports.Time = time_2.default;
+var quantize_1 = require("./continuous/quantize");
+exports.Quantize = quantize_1.default;
+var quantile_1 = require("./continuous/quantile");
+exports.Quantile = quantile_1.default;
+var factory_1 = require("./factory");
+Object.defineProperty(exports, "getScale", { enumerable: true, get: function () { return factory_1.getScale; } });
+Object.defineProperty(exports, "registerScale", { enumerable: true, get: function () { return factory_1.registerScale; } });
+var index_1 = require("./identity/index");
+exports.Identity = index_1.default;
+var index_2 = require("./tick-method/index");
+Object.defineProperty(exports, "getTickMethod", { enumerable: true, get: function () { return index_2.getTickMethod; } });
+Object.defineProperty(exports, "registerTickMethod", { enumerable: true, get: function () { return index_2.registerTickMethod; } });
+factory_1.registerScale('cat', base_2.default);
+factory_1.registerScale('category', base_2.default);
+factory_1.registerScale('identity', index_1.default);
+factory_1.registerScale('linear', linear_1.default);
+factory_1.registerScale('log', log_1.default);
+factory_1.registerScale('pow', pow_1.default);
+factory_1.registerScale('time', time_2.default);
+factory_1.registerScale('timeCat', time_1.default);
+factory_1.registerScale('quantize', quantize_1.default);
+factory_1.registerScale('quantile', quantile_1.default);
+//# sourceMappingURL=index.js.map
+}, function(modId) {var map = {"./base":1606535077167,"./category/base":1606535077169,"./category/time":1606535077170,"./continuous/linear":1606535077173,"./continuous/log":1606535077175,"./continuous/pow":1606535077177,"./continuous/time":1606535077178,"./continuous/quantize":1606535077179,"./continuous/quantile":1606535077180,"./factory":1606535077181,"./identity/index":1606535077182,"./tick-method/index":1606535077183}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077167, function(require, module, exports) {
 
-var each = __webpack_require__(1);
-
-var isObject = __webpack_require__(7);
-
-var isNil = __webpack_require__(2);
-
-var Scale =
-/*#__PURE__*/
-function () {
-  var _proto = Scale.prototype;
-
-  _proto._initDefaultCfg = function _initDefaultCfg() {
-    this.type = 'base';
-    /**
-     * 格式化函数,输出文本或者tick时的格式化函数
-     * @type {Function}
-     */
-
-    this.formatter = null;
-    /**
-     * 输出的值域
-     * @type {Array}
-     */
-
-    this.range = [0, 1];
-    /**
-     * 度量的标记
-     * @type {Array}
-     */
-
-    this.ticks = null;
-    /**
-     * 参与度量计算的值，可选项
-     * @type {Array}
-     */
-
-    this.values = [];
-  };
-
-  function Scale(cfg) {
-    this._initDefaultCfg();
-
-    mix(this, cfg);
-    this.init();
-  }
-  /**
-   * 度量初始化
-   * @protected
-   */
-
-
-  _proto.init = function init() {}
-  /**
-   * 获取该度量的ticks,返回的是多个对象，
-   *   - text: tick 的文本
-   *   - value: 对应的度量转换后的值
-   * <code>
-   *   [
-   *     {text: 0,value:0}
-   *     {text: 1,value:0.2}
-   *     {text: 2,value:0.4}
-   *     {text: 3,value:0.6}
-   *     {text: 4,value:0.8}
-   *     {text: 5,value:1}
-   *   ]
-   * </code>
-   * @param {Number} count 输出tick的个数的近似值，默认是 10
-   * @return {Array} 返回 ticks 数组
-   */
-  ;
-
-  _proto.getTicks = function getTicks() {
-    var self = this;
-    var ticks = self.ticks;
-    var rst = [];
-    each(ticks, function (tick) {
-      var obj;
-
-      if (isObject(tick)) {
-        obj = tick;
-      } else {
-        obj = {
-          text: self.getText(tick),
-          tickValue: tick,
-          value: self.scale(tick)
-        };
-      }
-
-      rst.push(obj);
-    });
-    return rst;
-  }
-  /**
-   * 获取格式化后的文本
-   * @param  {*} value 输入的数据
-   * @param  {*} key 字段的 key
-   * @return {String} 格式化的文本
-   */
-  ;
-
-  _proto.getText = function getText(value, key) {
-    var formatter = this.formatter;
-    value = formatter ? formatter(value, key) : value;
-
-    if (isNil(value) || !value.toString) {
-      value = '';
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("@antv/util");
+var register_1 = require("./tick-method/register");
+var Scale = /** @class */ (function () {
+    function Scale(cfg) {
+        /**
+         * 度量的类型
+         */
+        this.type = 'base';
+        /**
+         * 是否分类类型的度量
+         */
+        this.isCategory = false;
+        /**
+         * 是否线性度量，有linear, time 度量
+         */
+        this.isLinear = false;
+        /**
+         * 是否连续类型的度量，linear,time,log, pow, quantile, quantize 都支持
+         */
+        this.isContinuous = false;
+        /**
+         * 是否是常量的度量，传入和传出一致
+         */
+        this.isIdentity = false;
+        this.values = [];
+        this.range = [0, 1];
+        this.ticks = [];
+        this.__cfg__ = cfg;
+        this.initCfg();
+        this.init();
     }
-
-    return value.toString();
-  }
-  /**
-   * 输出的值域最小值
-   * @protected
-   * @return {Number} 返回最小的值
-   */
-  ;
-
-  _proto.rangeMin = function rangeMin() {
-    return this.range[0];
-  }
-  /**
-   * 输出的值域最大值
-   * @protected
-   * @return {Number} 返回最大的值
-   */
-  ;
-
-  _proto.rangeMax = function rangeMax() {
-    var range = this.range;
-    return range[range.length - 1];
-  }
-  /**
-   * 度量转换后的结果，翻转回输入域
-   * @param  {Number} value 需要翻转的数值
-   * @return {*} 度量的输入值
-   */
-  ;
-
-  _proto.invert = function invert(value) {
-    return value;
-  }
-  /**
-   * 将传入的值从非数值转换成数值格式，如分类字符串、时间字符串等
-   * @param  {*} value 传入的值
-   * @return {Number} 转换的值
-   */
-  ;
-
-  _proto.translate = function translate(value) {
-    return value;
-  }
-  /**
-   * 进行度量转换
-   * @param  {*} value 输入值
-   * @return {Number} 输出值，在设定的输出值域之间，默认[0,1]
-   */
-  ;
-
-  _proto.scale = function scale(value) {
-    return value;
-  }
-  /**
-   * 克隆一个新的scale,拥有跟当前scale相同的输入域、输出域等
-   * @return {Scale} 克隆的度量
-   */
-  ;
-
-  _proto.clone = function clone() {
-    var self = this;
-    var constr = self.constructor;
-    var cfg = {};
-    each(self, function (v, k) {
-      cfg[k] = self[k];
-    });
-    return new constr(cfg);
-  }
-  /**
-   * 更改度量的属性信息
-   * @param  {Object} info 属性信息
-   * @chainable
-   * @return {Scale} 返回自身的引用
-   */
-  ;
-
-  _proto.change = function change(info) {
-    this.ticks = null;
-    mix(this, info);
-    this.init();
-    return this;
-  };
-
-  return Scale;
-}();
-
-module.exports = Scale;
-
-/***/ }),
-/* 1 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(7);
-
-var isArray = __webpack_require__(17);
-
-var each = function each(elements, func) {
-  if (!elements) {
-    return;
-  }
-
-  var rst = void 0;
-
-  if (isArray(elements)) {
-    for (var i = 0, len = elements.length; i < len; i++) {
-      rst = func(elements[i], i);
-
-      if (rst === false) {
-        break;
-      }
-    }
-  } else if (isObject(elements)) {
-    for (var k in elements) {
-      if (elements.hasOwnProperty(k)) {
-        rst = func(elements[k], k);
-
-        if (rst === false) {
-          break;
+    // 对于原始值的必要转换，如分类、时间字段需转换成数值，用transform/map命名可能更好
+    Scale.prototype.translate = function (v) {
+        return v;
+    };
+    /** 重新初始化 */
+    Scale.prototype.change = function (cfg) {
+        // 覆盖配置项，而不替代
+        util_1.assign(this.__cfg__, cfg);
+        this.init();
+    };
+    Scale.prototype.clone = function () {
+        return this.constructor(this.__cfg__);
+    };
+    /** 获取坐标轴需要的ticks */
+    Scale.prototype.getTicks = function () {
+        var _this = this;
+        return util_1.map(this.ticks, function (tick, idx) {
+            if (util_1.isObject(tick)) {
+                // 仅当符合Tick类型时才有意义
+                return tick;
+            }
+            return {
+                text: _this.getText(tick, idx),
+                tickValue: tick,
+                value: _this.scale(tick),
+            };
+        });
+    };
+    /** 获取Tick的格式化结果 */
+    Scale.prototype.getText = function (value, key) {
+        var formatter = this.formatter;
+        var res = formatter ? formatter(value, key) : value;
+        if (util_1.isNil(res) || !util_1.isFunction(res.toString)) {
+            return '';
         }
-      }
-    }
-  }
-};
+        return res.toString();
+    };
+    // 获取配置项中的值，当前 scale 上的值可能会被修改
+    Scale.prototype.getConfig = function (key) {
+        return this.__cfg__[key];
+    };
+    // scale初始化
+    Scale.prototype.init = function () {
+        util_1.assign(this, this.__cfg__);
+        this.setDomain();
+        if (util_1.isEmpty(this.getConfig('ticks'))) {
+            this.ticks = this.calculateTicks();
+        }
+    };
+    // 子类上覆盖某些属性，不能直接在类上声明，否则会被覆盖
+    Scale.prototype.initCfg = function () { };
+    Scale.prototype.setDomain = function () { };
+    Scale.prototype.calculateTicks = function () {
+        var tickMethod = this.tickMethod;
+        var ticks = [];
+        if (util_1.isString(tickMethod)) {
+            var method = register_1.getTickMethod(tickMethod);
+            if (!method) {
+                throw new Error('There is no method to to calculate ticks!');
+            }
+            ticks = method(this);
+        }
+        else if (util_1.isFunction(tickMethod)) {
+            ticks = tickMethod(this);
+        }
+        return ticks;
+    };
+    // range 的最小值
+    Scale.prototype.rangeMin = function () {
+        return util_1.head(this.range);
+    };
+    // range 的最大值
+    Scale.prototype.rangeMax = function () {
+        return util_1.last(this.range);
+    };
+    /** 定义域转 0~1 */
+    Scale.prototype.calcPercent = function (value, min, max) {
+        if (util_1.isNumber(value)) {
+            return (value - min) / (max - min);
+        }
+        return NaN;
+    };
+    /** 0~1转定义域 */
+    Scale.prototype.calcValue = function (percent, min, max) {
+        return min + percent * (max - min);
+    };
+    return Scale;
+}());
+exports.default = Scale;
+//# sourceMappingURL=base.js.map
+}, function(modId) { var map = {"./tick-method/register":1606535077168}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077168, function(require, module, exports) {
 
-module.exports = each;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports) {
-
-// isFinite,
-var isNil = function isNil(value) {
-  /**
-   * isNil(null) => true
-   * isNil() => true
-   */
-  return value === null || value === undefined;
-};
-
-module.exports = isNil;
-
-/***/ }),
-/* 3 */
-/***/ (function(module, exports) {
-
-var toString = {}.toString;
-
-var isType = function isType(value, type) {
-  return toString.call(value) === '[object ' + type + ']';
-};
-
-module.exports = isType;
-
-/***/ }),
-/* 4 */
-/***/ (function(module, exports, __webpack_require__) {
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.registerTickMethod = exports.getTickMethod = void 0;
+var methodCache = {};
 /**
- * @fileOverview The measurement of linear data scale function
- * @author dxq613@gmail.com
+ * 获取计算 ticks 的方法
+ * @param key 键值
+ * @returns 计算 ticks 的方法
  */
-var isNil = __webpack_require__(2);
+function getTickMethod(key) {
+    return methodCache[key];
+}
+exports.getTickMethod = getTickMethod;
+/**
+ * 注册计算 ticks 的方法
+ * @param key 键值
+ * @param method 方法
+ */
+function registerTickMethod(key, method) {
+    methodCache[key] = method;
+}
+exports.registerTickMethod = registerTickMethod;
+//# sourceMappingURL=register.js.map
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077169, function(require, module, exports) {
 
-var each = __webpack_require__(1);
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var util_1 = require("@antv/util");
+var base_1 = require("../base");
+/**
+ * 分类度量
+ * @class
+ */
+var Category = /** @class */ (function (_super) {
+    tslib_1.__extends(Category, _super);
+    function Category() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.type = 'cat';
+        _this.isCategory = true;
+        return _this;
+    }
+    Category.prototype.translate = function (value) {
+        var index = util_1.indexOf(this.values, value);
+        if (index === -1) {
+            return util_1.isNumber(value) ? value : NaN;
+        }
+        return index;
+    };
+    Category.prototype.scale = function (value) {
+        var order = this.translate(value);
+        // 分类数据允许 0.5 范围内调整
+        // if (order < this.min - 0.5 || order > this.max + 0.5) {
+        //   return NaN;
+        // }
+        var percent = this.calcPercent(order, this.min, this.max);
+        return this.calcValue(percent, this.rangeMin(), this.rangeMax());
+    };
+    Category.prototype.invert = function (scaledValue) {
+        var domainRange = this.max - this.min;
+        var percent = this.calcPercent(scaledValue, this.rangeMin(), this.rangeMax());
+        var idx = Math.round(domainRange * percent) + this.min;
+        if (idx < this.min || idx > this.max) {
+            return NaN;
+        }
+        return this.values[idx];
+    };
+    Category.prototype.getText = function (value) {
+        var args = [];
+        for (var _i = 1; _i < arguments.length; _i++) {
+            args[_i - 1] = arguments[_i];
+        }
+        var v = value;
+        // value为index
+        if (util_1.isNumber(value) && !this.values.includes(value)) {
+            v = this.values[v];
+        }
+        return _super.prototype.getText.apply(this, tslib_1.__spreadArrays([v], args));
+    };
+    // 复写属性
+    Category.prototype.initCfg = function () {
+        this.tickMethod = 'cat';
+    };
+    // 设置 min, max
+    Category.prototype.setDomain = function () {
+        // 用户有可能设置 min
+        if (util_1.isNil(this.getConfig('min'))) {
+            this.min = 0;
+        }
+        if (util_1.isNil(this.getConfig('max'))) {
+            var size = this.values.length;
+            this.max = size > 1 ? size - 1 : size;
+        }
+    };
+    return Category;
+}(base_1.default));
+exports.default = Category;
+//# sourceMappingURL=base.js.map
+}, function(modId) { var map = {"../base":1606535077167}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077170, function(require, module, exports) {
 
-var Base = __webpack_require__(0);
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var util_1 = require("@antv/util");
+var time_1 = require("../util/time");
+var base_1 = require("./base");
+/**
+ * 时间分类度量
+ * @class
+ */
+var TimeCat = /** @class */ (function (_super) {
+    tslib_1.__extends(TimeCat, _super);
+    function TimeCat() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.type = 'timeCat';
+        return _this;
+    }
+    /**
+     * @override
+     */
+    TimeCat.prototype.translate = function (value) {
+        value = time_1.toTimeStamp(value);
+        var index = this.values.indexOf(value);
+        if (index === -1) {
+            if (util_1.isNumber(value) && value < this.values.length) {
+                index = value;
+            }
+            else {
+                index = NaN;
+            }
+        }
+        return index;
+    };
+    /**
+     * 由于时间类型数据需要转换一下，所以复写 getText
+     * @override
+     */
+    TimeCat.prototype.getText = function (value, tickIndex) {
+        var index = this.translate(value);
+        if (index > -1) {
+            var result = this.values[index];
+            var formatter = this.formatter;
+            result = formatter ? formatter(result, tickIndex) : time_1.timeFormat(result, this.mask);
+            return result;
+        }
+        return value;
+    };
+    TimeCat.prototype.initCfg = function () {
+        this.tickMethod = 'time-cat';
+        this.mask = 'YYYY-MM-DD';
+        this.tickCount = 7; // 一般时间数据会显示 7， 14， 30 天的数字
+    };
+    TimeCat.prototype.setDomain = function () {
+        var values = this.values;
+        // 针对时间分类类型，会将时间统一转换为时间戳
+        util_1.each(values, function (v, i) {
+            values[i] = time_1.toTimeStamp(v);
+        });
+        values.sort(function (v1, v2) {
+            return v1 - v2;
+        });
+        _super.prototype.setDomain.call(this);
+    };
+    return TimeCat;
+}(base_1.default));
+exports.default = TimeCat;
+//# sourceMappingURL=time.js.map
+}, function(modId) { var map = {"../util/time":1606535077171,"./base":1606535077169}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077171, function(require, module, exports) {
 
-var numberAuto = __webpack_require__(18);
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getTickInterval = exports.YEAR = exports.MONTH = exports.DAY = exports.HOUR = exports.MINUTE = exports.SECOND = exports.toTimeStamp = exports.timeFormat = void 0;
+var util_1 = require("@antv/util");
+var fecha_1 = require("fecha");
+var fecha1 = require("fecha");
+var bisector_1 = require("./bisector");
+var FORMAT_METHOD = 'format';
+function timeFormat(time, mask) {
+    var method = fecha1[FORMAT_METHOD] || fecha_1.default[FORMAT_METHOD];
+    return method(time, mask);
+}
+exports.timeFormat = timeFormat;
+/**
+ * 转换成时间戳
+ * @param value 时间值
+ */
+function toTimeStamp(value) {
+    if (util_1.isString(value)) {
+        if (value.indexOf('T') > 0) {
+            value = new Date(value).getTime();
+        }
+        else {
+            // new Date('2010/01/10') 和 new Date('2010-01-10') 的差别在于:
+            // 如果仅有年月日时，前者是带有时区的: Fri Jan 10 2020 02:40:13 GMT+0800 (中国标准时间)
+            // 后者会格式化成 Sun Jan 10 2010 08:00:00 GMT+0800 (中国标准时间)
+            value = new Date(value.replace(/-/gi, '/')).getTime();
+        }
+    }
+    if (util_1.isDate(value)) {
+        value = value.getTime();
+    }
+    return value;
+}
+exports.toTimeStamp = toTimeStamp;
+var SECOND = 1000;
+exports.SECOND = SECOND;
+var MINUTE = 60 * SECOND;
+exports.MINUTE = MINUTE;
+var HOUR = 60 * MINUTE;
+exports.HOUR = HOUR;
+var DAY = 24 * HOUR;
+exports.DAY = DAY;
+var MONTH = DAY * 31;
+exports.MONTH = MONTH;
+var YEAR = DAY * 365;
+exports.YEAR = YEAR;
+var intervals = [
+    ['HH:mm:ss', SECOND],
+    ['HH:mm:ss', SECOND * 10],
+    ['HH:mm:ss', SECOND * 30],
+    ['HH:mm', MINUTE],
+    ['HH:mm', MINUTE * 10],
+    ['HH:mm', MINUTE * 30],
+    ['HH', HOUR],
+    ['HH', HOUR * 6],
+    ['HH', HOUR * 12],
+    ['YYYY-MM-DD', DAY],
+    ['YYYY-MM-DD', DAY * 4],
+    ['YYYY-WW', DAY * 7],
+    ['YYYY-MM', MONTH],
+    ['YYYY-MM', MONTH * 4],
+    ['YYYY-MM', MONTH * 6],
+    ['YYYY', DAY * 380],
+];
+function getTickInterval(min, max, tickCount) {
+    var target = (max - min) / tickCount;
+    var idx = bisector_1.default(function (o) { return o[1]; })(intervals, target) - 1;
+    var interval = intervals[idx];
+    if (idx < 0) {
+        interval = intervals[0];
+    }
+    else if (idx >= intervals.length) {
+        interval = util_1.last(intervals);
+    }
+    return interval;
+}
+exports.getTickInterval = getTickInterval;
+//# sourceMappingURL=time.js.map
+}, function(modId) { var map = {"./bisector":1606535077172}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077172, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("@antv/util");
+/**
+ * 二分右侧查找
+ * https://github.com/d3/d3-array/blob/master/src/bisector.js
+ */
+function default_1(getter) {
+    /**
+     * x: 目标值
+     * lo: 起始位置
+     * hi: 结束位置
+     */
+    return function (a, x, _lo, _hi) {
+        var lo = util_1.isNil(_lo) ? 0 : _lo;
+        var hi = util_1.isNil(_hi) ? a.length : _hi;
+        while (lo < hi) {
+            var mid = (lo + hi) >>> 1;
+            if (getter(a[mid]) > x) {
+                hi = mid;
+            }
+            else {
+                lo = mid + 1;
+            }
+        }
+        return lo;
+    };
+}
+exports.default = default_1;
+//# sourceMappingURL=bisector.js.map
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077173, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var base_1 = require("./base");
 /**
  * 线性度量
- * @class Scale.Linear
+ * @class
  */
-
-
-var Linear =
-/*#__PURE__*/
-function (_Base) {
-  _inheritsLoose(Linear, _Base);
-
-  function Linear() {
-    return _Base.apply(this, arguments) || this;
-  }
-
-  var _proto = Linear.prototype;
-
-  _proto._initDefaultCfg = function _initDefaultCfg() {
-    _Base.prototype._initDefaultCfg.call(this);
-
-    var self = this;
-    self.type = 'linear';
-    self.isLinear = true;
-    /**
-     * 是否为了用户习惯，优化min,max和ticks，如果进行优化，则会根据生成的ticks调整min,max，否则舍弃(min,max)范围之外的ticks
-     * @type {Boolean}
-     * @default false
-     */
-
-    self.nice = false;
-    /**
-     * min value of the scale
-     * @type {Number}
-     * @default null
-     */
-
-    self.min = null;
-    /**
-     * min value limitted of the scale
-     * @type {Number}
-     * @default null
-     */
-
-    self.minLimit = null;
-    /**
-     * max value of the scale
-     * @type {Number}
-     * @default null
-     */
-
-    self.max = null;
-    /**
-     * max value limitted of the scale
-     * @type {Number}
-     * @default null
-     */
-
-    self.maxLimit = null;
-    /**
-     * 自动生成标记时的个数
-     * @type {Number}
-     * @default null
-     */
-
-    self.tickCount = null;
-    /**
-     * 坐标轴点之间的间距，指的是真实数据的差值
-     * @type {Number}
-     * @default null
-     */
-
-    self.tickInterval = null;
-    /**
-     * 坐标轴点之间的最小间距，指的是真实数据的差值
-     * @type {Number}
-     * @default null
-     */
-
-    self.minTickInterval = null;
-    /**
-     * 用于计算坐标点时逼近的数组
-     * @type {Array}
-     */
-
-    self.snapArray = null;
-  }
-  /**
-   * @protected
-   * @override
-   */
-  ;
-
-  _proto.init = function init() {
-    var self = this;
-
-    if (!self.ticks) {
-      self.min = self.translate(self.min);
-      self.max = self.translate(self.max);
-      self.initTicks();
-    } else {
-      var ticks = self.ticks;
-      var firstValue = self.translate(ticks[0]);
-      var lastValue = self.translate(ticks[ticks.length - 1]);
-
-      if (isNil(self.min) || self.min > firstValue) {
-        self.min = firstValue;
-      }
-
-      if (isNil(self.max) || self.max < lastValue) {
-        self.max = lastValue;
-      }
+var Linear = /** @class */ (function (_super) {
+    tslib_1.__extends(Linear, _super);
+    function Linear() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.type = 'linear';
+        _this.isLinear = true;
+        return _this;
     }
-  }
-  /**
-   * 计算坐标点
-   * @protected
-   * @return {Array} 计算完成的坐标点
-   */
-  ;
-
-  _proto.calculateTicks = function calculateTicks() {
-    var min = this.min,
-        max = this.max,
-        minLimit = this.minLimit,
-        maxLimit = this.maxLimit,
-        tickCount = this.tickCount,
-        tickInterval = this.tickInterval,
-        minTickInterval = this.minTickInterval,
-        snapArray = this.snapArray;
-
-    if (tickCount === 1) {
-      throw new Error('linear scale\'tickCount should not be 1');
-    }
-
-    if (max < min) {
-      throw new Error("max: " + max + " should not be less than min: " + min);
-    }
-
-    var tmp = numberAuto({
-      min: min,
-      max: max,
-      minLimit: minLimit,
-      maxLimit: maxLimit,
-      minCount: tickCount,
-      maxCount: tickCount,
-      interval: tickInterval,
-      minTickInterval: minTickInterval,
-      snapArray: snapArray
-    });
-    return tmp.ticks;
-  } // 初始化ticks
-  ;
-
-  _proto.initTicks = function initTicks() {
-    var self = this;
-    var calTicks = self.calculateTicks();
-
-    if (self.nice) {
-      // 如果需要优化显示的tick
-      self.ticks = calTicks;
-      self.min = calTicks[0];
-      self.max = calTicks[calTicks.length - 1];
-    } else {
-      var ticks = [];
-      each(calTicks, function (tick) {
-        if (tick >= self.min && tick <= self.max) {
-          ticks.push(tick);
-        }
-      }); // 如果 ticks 为空，直接输入最小值、最大值
-
-      if (!ticks.length) {
-        ticks.push(self.min);
-        ticks.push(self.max);
-      }
-
-      self.ticks = ticks;
-    }
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.scale = function scale(value) {
-    if (isNil(value)) {
-      return NaN;
-    }
-
-    var max = this.max;
-    var min = this.min;
-
-    if (max === min) {
-      return 0;
-    }
-
-    var percent = (value - min) / (max - min);
-    var rangeMin = this.rangeMin();
-    var rangeMax = this.rangeMax();
-    return rangeMin + percent * (rangeMax - rangeMin);
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.invert = function invert(value) {
-    var percent = (value - this.rangeMin()) / (this.rangeMax() - this.rangeMin());
-    return this.min + percent * (this.max - this.min);
-  };
-
-  return Linear;
-}(Base);
-
-Base.Linear = Linear;
-module.exports = Linear;
-
-/***/ }),
-/* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * 判断是否数字
- * @return {Boolean} 是否数字
- */
-var isType = __webpack_require__(3);
-
-var isNumber = function isNumber(value) {
-  return isType(value, 'Number');
-};
-
-module.exports = isNumber;
-
-/***/ }),
-/* 6 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isType = __webpack_require__(3);
-
-var isString = function isString(str) {
-  return isType(str, 'String');
-};
-
-module.exports = isString;
-
-/***/ }),
-/* 7 */
-/***/ (function(module, exports) {
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) {
-  return typeof obj;
-} : function (obj) {
-  return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-};
-
-var isObject = function isObject(value) {
-  /**
-   * isObject({}) => true
-   * isObject([1, 2, 3]) => true
-   * isObject(Function) => true
-   * isObject(null) => false
-   */
-  var type = typeof value === 'undefined' ? 'undefined' : _typeof(value);
-  return value !== null && type === 'object' || type === 'function';
-};
-
-module.exports = isObject;
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-/**
- * @fileOverview 计算方法
- * @author dxq613@gmail.com
- */
-// 如果小数点后面超过 10 位浮点数时进行一下处理
-var DECIMAL_LENGTH = 12; // 获取系数
-
-function getFactor(v) {
-  var factor = 1;
-
-  if (v === Infinity || v === -Infinity) {
-    throw new Error('Not support Infinity!');
-  }
-
-  if (v < 1) {
-    var count = 0;
-
-    while (v < 1) {
-      factor = factor / 10;
-      v = v * 10;
-      count++;
-    } // 浮点数计算出现问题
-
-
-    if (factor.toString().length > DECIMAL_LENGTH) {
-      factor = parseFloat(factor.toFixed(count));
-    }
-  } else {
-    while (v > 10) {
-      factor = factor * 10;
-      v = v / 10;
-    }
-  }
-
-  return factor;
-} // 取小于当前值的
-
-
-function arrayFloor(values, value) {
-  var length = values.length;
-
-  if (length === 0) {
-    return NaN;
-  }
-
-  var pre = values[0];
-
-  if (value < values[0]) {
-    return NaN;
-  }
-
-  if (value >= values[length - 1]) {
-    return values[length - 1];
-  }
-
-  for (var i = 1; i < values.length; i++) {
-    if (value < values[i]) {
-      break;
-    }
-
-    pre = values[i];
-  }
-
-  return pre;
-} // 大于当前值的第一个
-
-
-function arrayCeiling(values, value) {
-  var length = values.length;
-
-  if (length === 0) {
-    return NaN;
-  } // var pre = values[0];
-
-
-  var rst;
-
-  if (value > values[length - 1]) {
-    return NaN;
-  }
-
-  if (value < values[0]) {
-    return values[0];
-  }
-
-  for (var i = 1; i < values.length; i++) {
-    if (value <= values[i]) {
-      rst = values[i];
-      break;
-    }
-  }
-
-  return rst;
-}
-
-var Util = {
-  // 获取逼近的数值
-  snapFactorTo: function snapFactorTo(v, arr, snapType) {
-    // 假设 v = -512,isFloor = true
-    if (isNaN(v)) {
-      return NaN;
-    }
-
-    var factor = 1; // 计算系数
-
-    if (v !== 0) {
-      if (v < 0) {
-        factor = -1;
-      }
-
-      v = v * factor; // v = 512
-
-      var tmpFactor = getFactor(v);
-      factor = factor * tmpFactor; // factor = -100
-
-      v = v / tmpFactor; // v = 5.12
-    }
-
-    if (snapType === 'floor') {
-      v = Util.snapFloor(arr, v); // v = 5
-    } else if (snapType === 'ceil') {
-      v = Util.snapCeiling(arr, v); // v = 6
-    } else {
-      v = Util.snapTo(arr, v); // 四舍五入 5
-    }
-
-    var rst = parseFloat((v * factor).toPrecision(DECIMAL_LENGTH)); // 如果出现浮点数计算问题，需要处理一下
-    // 如果出现浮点数计算问题，需要处理一下
-
-    if (Math.abs(factor) < 1 && rst.toString().length > DECIMAL_LENGTH) {
-      var decimalVal = parseInt(1 / factor);
-      var symbol = factor > 0 ? 1 : -1;
-      rst = v / decimalVal * symbol;
-    }
-
-    return rst;
-  },
-  // 获取逼近的倍数
-  snapMultiple: function snapMultiple(v, base, snapType) {
-    var div;
-
-    if (snapType === 'ceil') {
-      div = Math.ceil(v / base);
-    } else if (snapType === 'floor') {
-      div = Math.floor(v / base);
-    } else {
-      div = Math.round(v / base);
-    }
-
-    return div * base;
-  },
-
-  /**
-   * 获取逼近的值，用于对齐数据
-   * @param  {Array} values   数据集合
-   * @param  {Number} value   数值
-   * @return {Number} 逼近的值
-   */
-  snapTo: function snapTo(values, value) {
-    // 这里假定values是升序排列
-    var floorVal = arrayFloor(values, value);
-    var ceilingVal = arrayCeiling(values, value);
-
-    if (isNaN(floorVal) || isNaN(ceilingVal)) {
-      if (values[0] >= value) {
-        return values[0];
-      }
-
-      var last = values[values.length - 1];
-
-      if (last <= value) {
-        return last;
-      }
-    }
-
-    if (Math.abs(value - floorVal) < Math.abs(ceilingVal - value)) {
-      return floorVal;
-    }
-
-    return ceilingVal;
-  },
-
-  /**
-   * 获取逼近的最小值，用于对齐数据
-   * @param  {Array} values   数据集合
-   * @param  {Number} value   数值
-   * @return {Number} 逼近的最小值
-   */
-  snapFloor: function snapFloor(values, value) {
-    // 这里假定values是升序排列
-    return arrayFloor(values, value);
-  },
-
-  /**
-   * 获取逼近的最大值，用于对齐数据
-   * @param  {Array} values   数据集合
-   * @param  {Number} value   数值
-   * @return {Number} 逼近的最大值
-   */
-  snapCeiling: function snapCeiling(values, value) {
-    // 这里假定values是升序排列
-    return arrayCeiling(values, value);
-  },
-  fixedBase: function fixedBase(v, base) {
-    var str = base.toString();
-    var index = str.indexOf('.');
-    var indexOfExp = str.indexOf('e-'); // 判断是否带小数点，1.000001 1.23e-9
-
-    if (index < 0 && indexOfExp < 0) {
-      // base为整数
-      return Math.round(v);
-    }
-
-    var length = indexOfExp >= 0 ? parseInt(str.substr(indexOfExp + 2), 10) : str.substr(index + 1).length;
-
-    if (length > 20) {
-      length = 20;
-    }
-
-    return parseFloat(v.toFixed(length));
-  }
-};
-module.exports = Util;
-
-/***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-var Base = __webpack_require__(0);
-
-var catAuto = __webpack_require__(10);
-
-var each = __webpack_require__(1);
-
-var isNumber = __webpack_require__(5);
-
-var isString = __webpack_require__(6);
-
-var Category =
-/*#__PURE__*/
-function (_Base) {
-  _inheritsLoose(Category, _Base);
-
-  function Category() {
-    return _Base.apply(this, arguments) || this;
-  }
-
-  var _proto = Category.prototype;
-
-  _proto._initDefaultCfg = function _initDefaultCfg() {
-    _Base.prototype._initDefaultCfg.call(this);
-
-    this.type = 'cat';
-    /**
-     * 是否分类度量
-     * @type {Boolean}
-     */
-
-    this.isCategory = true;
-    this.isRounding = true; // 是否进行取整操作
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.init = function init() {
-    var self = this;
-    var values = self.values;
-    var tickCount = self.tickCount;
-    each(values, function (v, i) {
-      values[i] = v.toString();
-    });
-
-    if (!self.ticks) {
-      var ticks = values;
-
-      if (tickCount) {
-        var temp = catAuto({
-          maxCount: tickCount,
-          data: values,
-          isRounding: self.isRounding
-        });
-        ticks = temp.ticks;
-      }
-
-      this.ticks = ticks;
-    }
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.getText = function getText(value) {
-    if (this.values.indexOf(value) === -1 && isNumber(value)) {
-      value = this.values[Math.round(value)];
-    }
-
-    return _Base.prototype.getText.call(this, value);
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.translate = function translate(value) {
-    var index = this.values.indexOf(value);
-
-    if (index === -1 && isNumber(value)) {
-      index = value;
-    } else if (index === -1) {
-      index = NaN;
-    }
-
-    return index;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.scale = function scale(value) {
-    var rangeMin = this.rangeMin();
-    var rangeMax = this.rangeMax();
-    var percent;
-
-    if (isString(value) || this.values.indexOf(value) !== -1) {
-      value = this.translate(value);
-    }
-
-    if (this.values.length > 1) {
-      percent = value / (this.values.length - 1);
-    } else {
-      percent = value;
-    }
-
-    return rangeMin + percent * (rangeMax - rangeMin);
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.invert = function invert(value) {
-    if (isString(value)) {
-      // 如果已经是字符串
-      return value;
-    }
-
-    var min = this.rangeMin();
-    var max = this.rangeMax(); // 归一到 范围内
-
-    if (value < min) {
-      value = min;
-    }
-
-    if (value > max) {
-      value = max;
-    }
-
-    var percent = (value - min) / (max - min);
-    var index = Math.round(percent * (this.values.length - 1)) % this.values.length;
-    index = index || 0;
-    return this.values[index];
-  };
-
-  return Category;
-}(Base);
-
-Base.Cat = Category;
-module.exports = Category;
-
-/***/ }),
-/* 10 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * @fileOverview 计算分类的的坐标点
- * @author dxq613@gmail.com
- */
-var each = __webpack_require__(1);
-
-var MAX_COUNT = 8;
-var SUB_COUNT = 4; // 控制个数不能过小
-
-function getSimpleArray(data) {
-  var arr = [];
-  each(data, function (sub) {
-    arr = arr.concat(sub);
-  });
-  return arr;
-}
-
-function getGreatestFactor(count, number) {
-  var i;
-
-  for (i = number; i > 0; i--) {
-    if (count % i === 0) {
-      break;
-    }
-  } // 如果是素数，没有可以整除的数字
-
-
-  if (i === 1) {
-    for (i = number; i > 0; i--) {
-      if ((count - 1) % i === 0) {
-        break;
-      }
-    }
-  }
-
-  return i;
-}
-
-module.exports = function (info) {
-  var rst = {};
-  var ticks = [];
-  var isRounding = info.isRounding;
-  var categories = getSimpleArray(info.data);
-  var length = categories.length;
-  var maxCount = info.maxCount || MAX_COUNT;
-  var tickCount;
-
-  if (isRounding) {
-    // 取整操作
-    tickCount = getGreatestFactor(length - 1, maxCount - 1) + 1; // 如果计算出来只有两个坐标点，则直接使用传入的 maxCount
-
-    if (tickCount === 2) {
-      tickCount = maxCount;
-    } else if (tickCount < maxCount - SUB_COUNT) {
-      tickCount = maxCount - SUB_COUNT;
-    }
-  } else {
-    tickCount = maxCount;
-  }
-
-  if (!isRounding && length <= tickCount + tickCount / 2) {
-    ticks = [].concat(categories);
-  } else {
-    var step = parseInt(length / (tickCount - 1), 10);
-    var groups = categories.map(function (e, i) {
-      return i % step === 0 ? categories.slice(i, i + step) : null;
-    }).filter(function (e) {
-      return e;
-    });
-
-    for (var i = 1, groupLen = groups.length; i < groupLen && (isRounding ? i * step < length - step : i < tickCount - 1); i++) {
-      ticks.push(groups[i][0]);
-    }
-
-    if (categories.length) {
-      ticks.unshift(categories[0]);
-      var last = categories[length - 1];
-
-      if (ticks.indexOf(last) === -1) {
-        ticks.push(last);
-      }
-    }
-  }
-
-  rst.categories = categories;
-  rst.ticks = ticks;
-  return rst;
-};
-
-/***/ }),
-/* 11 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var __WEBPACK_AMD_DEFINE_RESULT__;(function (main) {
-  
-  /**
-   * Parse or format dates
-   * @class fecha
-   */
-
-  var fecha = {};
-  var token = /d{1,4}|M{1,4}|YY(?:YY)?|S{1,3}|Do|ZZ|([HhMsDm])\1?|[aA]|"[^"]*"|'[^']*'/g;
-  var twoDigits = /\d\d?/;
-  var threeDigits = /\d{3}/;
-  var fourDigits = /\d{4}/;
-  var word = /[0-9]*['a-z\u00A0-\u05FF\u0700-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+|[\u0600-\u06FF\/]+(\s*?[\u0600-\u06FF]+){1,2}/i;
-  var literal = /\[([^]*?)\]/gm;
-
-  var noop = function () {};
-
-  function shorten(arr, sLen) {
-    var newArr = [];
-
-    for (var i = 0, len = arr.length; i < len; i++) {
-      newArr.push(arr[i].substr(0, sLen));
-    }
-
-    return newArr;
-  }
-
-  function monthUpdate(arrName) {
-    return function (d, v, i18n) {
-      var index = i18n[arrName].indexOf(v.charAt(0).toUpperCase() + v.substr(1).toLowerCase());
-
-      if (~index) {
-        d.month = index;
-      }
+    Linear.prototype.invert = function (value) {
+        var percent = this.getInvertPercent(value);
+        return this.min + percent * (this.max - this.min);
     };
-  }
-
-  function pad(val, len) {
-    val = String(val);
-    len = len || 2;
-
-    while (val.length < len) {
-      val = '0' + val;
-    }
-
-    return val;
-  }
-
-  var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  var monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-  var monthNamesShort = shorten(monthNames, 3);
-  var dayNamesShort = shorten(dayNames, 3);
-  fecha.i18n = {
-    dayNamesShort: dayNamesShort,
-    dayNames: dayNames,
-    monthNamesShort: monthNamesShort,
-    monthNames: monthNames,
-    amPm: ['am', 'pm'],
-    DoFn: function DoFn(D) {
-      return D + ['th', 'st', 'nd', 'rd'][D % 10 > 3 ? 0 : (D - D % 10 !== 10) * D % 10];
-    }
-  };
-  var formatFlags = {
-    D: function (dateObj) {
-      return dateObj.getDate();
-    },
-    DD: function (dateObj) {
-      return pad(dateObj.getDate());
-    },
-    Do: function (dateObj, i18n) {
-      return i18n.DoFn(dateObj.getDate());
-    },
-    d: function (dateObj) {
-      return dateObj.getDay();
-    },
-    dd: function (dateObj) {
-      return pad(dateObj.getDay());
-    },
-    ddd: function (dateObj, i18n) {
-      return i18n.dayNamesShort[dateObj.getDay()];
-    },
-    dddd: function (dateObj, i18n) {
-      return i18n.dayNames[dateObj.getDay()];
-    },
-    M: function (dateObj) {
-      return dateObj.getMonth() + 1;
-    },
-    MM: function (dateObj) {
-      return pad(dateObj.getMonth() + 1);
-    },
-    MMM: function (dateObj, i18n) {
-      return i18n.monthNamesShort[dateObj.getMonth()];
-    },
-    MMMM: function (dateObj, i18n) {
-      return i18n.monthNames[dateObj.getMonth()];
-    },
-    YY: function (dateObj) {
-      return String(dateObj.getFullYear()).substr(2);
-    },
-    YYYY: function (dateObj) {
-      return pad(dateObj.getFullYear(), 4);
-    },
-    h: function (dateObj) {
-      return dateObj.getHours() % 12 || 12;
-    },
-    hh: function (dateObj) {
-      return pad(dateObj.getHours() % 12 || 12);
-    },
-    H: function (dateObj) {
-      return dateObj.getHours();
-    },
-    HH: function (dateObj) {
-      return pad(dateObj.getHours());
-    },
-    m: function (dateObj) {
-      return dateObj.getMinutes();
-    },
-    mm: function (dateObj) {
-      return pad(dateObj.getMinutes());
-    },
-    s: function (dateObj) {
-      return dateObj.getSeconds();
-    },
-    ss: function (dateObj) {
-      return pad(dateObj.getSeconds());
-    },
-    S: function (dateObj) {
-      return Math.round(dateObj.getMilliseconds() / 100);
-    },
-    SS: function (dateObj) {
-      return pad(Math.round(dateObj.getMilliseconds() / 10), 2);
-    },
-    SSS: function (dateObj) {
-      return pad(dateObj.getMilliseconds(), 3);
-    },
-    a: function (dateObj, i18n) {
-      return dateObj.getHours() < 12 ? i18n.amPm[0] : i18n.amPm[1];
-    },
-    A: function (dateObj, i18n) {
-      return dateObj.getHours() < 12 ? i18n.amPm[0].toUpperCase() : i18n.amPm[1].toUpperCase();
-    },
-    ZZ: function (dateObj) {
-      var o = dateObj.getTimezoneOffset();
-      return (o > 0 ? '-' : '+') + pad(Math.floor(Math.abs(o) / 60) * 100 + Math.abs(o) % 60, 4);
-    }
-  };
-  var parseFlags = {
-    D: [twoDigits, function (d, v) {
-      d.day = v;
-    }],
-    Do: [new RegExp(twoDigits.source + word.source), function (d, v) {
-      d.day = parseInt(v, 10);
-    }],
-    M: [twoDigits, function (d, v) {
-      d.month = v - 1;
-    }],
-    YY: [twoDigits, function (d, v) {
-      var da = new Date(),
-          cent = +('' + da.getFullYear()).substr(0, 2);
-      d.year = '' + (v > 68 ? cent - 1 : cent) + v;
-    }],
-    h: [twoDigits, function (d, v) {
-      d.hour = v;
-    }],
-    m: [twoDigits, function (d, v) {
-      d.minute = v;
-    }],
-    s: [twoDigits, function (d, v) {
-      d.second = v;
-    }],
-    YYYY: [fourDigits, function (d, v) {
-      d.year = v;
-    }],
-    S: [/\d/, function (d, v) {
-      d.millisecond = v * 100;
-    }],
-    SS: [/\d{2}/, function (d, v) {
-      d.millisecond = v * 10;
-    }],
-    SSS: [threeDigits, function (d, v) {
-      d.millisecond = v;
-    }],
-    d: [twoDigits, noop],
-    ddd: [word, noop],
-    MMM: [word, monthUpdate('monthNamesShort')],
-    MMMM: [word, monthUpdate('monthNames')],
-    a: [word, function (d, v, i18n) {
-      var val = v.toLowerCase();
-
-      if (val === i18n.amPm[0]) {
-        d.isPm = false;
-      } else if (val === i18n.amPm[1]) {
-        d.isPm = true;
-      }
-    }],
-    ZZ: [/([\+\-]\d\d:?\d\d|Z)/, function (d, v) {
-      if (v === 'Z') v = '+00:00';
-      var parts = (v + '').match(/([\+\-]|\d\d)/gi),
-          minutes;
-
-      if (parts) {
-        minutes = +(parts[1] * 60) + parseInt(parts[2], 10);
-        d.timezoneOffset = parts[0] === '+' ? minutes : -minutes;
-      }
-    }]
-  };
-  parseFlags.dd = parseFlags.d;
-  parseFlags.dddd = parseFlags.ddd;
-  parseFlags.DD = parseFlags.D;
-  parseFlags.mm = parseFlags.m;
-  parseFlags.hh = parseFlags.H = parseFlags.HH = parseFlags.h;
-  parseFlags.MM = parseFlags.M;
-  parseFlags.ss = parseFlags.s;
-  parseFlags.A = parseFlags.a; // Some common format strings
-
-  fecha.masks = {
-    default: 'ddd MMM DD YYYY HH:mm:ss',
-    shortDate: 'M/D/YY',
-    mediumDate: 'MMM D, YYYY',
-    longDate: 'MMMM D, YYYY',
-    fullDate: 'dddd, MMMM D, YYYY',
-    shortTime: 'HH:mm',
-    mediumTime: 'HH:mm:ss',
-    longTime: 'HH:mm:ss.SSS'
-  };
-  /***
-   * Format a date
-   * @method format
-   * @param {Date|number} dateObj
-   * @param {string} mask Format of the date, i.e. 'mm-dd-yy' or 'shortDate'
-   */
-
-  fecha.format = function (dateObj, mask, i18nSettings) {
-    var i18n = i18nSettings || fecha.i18n;
-
-    if (typeof dateObj === 'number') {
-      dateObj = new Date(dateObj);
-    }
-
-    if (Object.prototype.toString.call(dateObj) !== '[object Date]' || isNaN(dateObj.getTime())) {
-      throw new Error('Invalid Date in fecha.format');
-    }
-
-    mask = fecha.masks[mask] || mask || fecha.masks['default'];
-    var literals = []; // Make literals inactive by replacing them with ??
-
-    mask = mask.replace(literal, function ($0, $1) {
-      literals.push($1);
-      return '??';
-    }); // Apply formatting rules
-
-    mask = mask.replace(token, function ($0) {
-      return $0 in formatFlags ? formatFlags[$0](dateObj, i18n) : $0.slice(1, $0.length - 1);
-    }); // Inline literal values back into the formatted value
-
-    return mask.replace(/\?\?/g, function () {
-      return literals.shift();
-    });
-  };
-  /**
-   * Parse a date string into an object, changes - into /
-   * @method parse
-   * @param {string} dateStr Date string
-   * @param {string} format Date parse format
-   * @returns {Date|boolean}
-   */
-
-
-  fecha.parse = function (dateStr, format, i18nSettings) {
-    var i18n = i18nSettings || fecha.i18n;
-
-    if (typeof format !== 'string') {
-      throw new Error('Invalid format in fecha.parse');
-    }
-
-    format = fecha.masks[format] || format; // Avoid regular expression denial of service, fail early for really long strings
-    // https://www.owasp.org/index.php/Regular_expression_Denial_of_Service_-_ReDoS
-
-    if (dateStr.length > 1000) {
-      return false;
-    }
-
-    var isValid = true;
-    var dateInfo = {};
-    format.replace(token, function ($0) {
-      if (parseFlags[$0]) {
-        var info = parseFlags[$0];
-        var index = dateStr.search(info[0]);
-
-        if (!~index) {
-          isValid = false;
-        } else {
-          dateStr.replace(info[0], function (result) {
-            info[1](dateInfo, result, i18n);
-            dateStr = dateStr.substr(index + result.length);
-            return result;
-          });
-        }
-      }
-
-      return parseFlags[$0] ? '' : $0.slice(1, $0.length - 1);
-    });
-
-    if (!isValid) {
-      return false;
-    }
-
-    var today = new Date();
-
-    if (dateInfo.isPm === true && dateInfo.hour != null && +dateInfo.hour !== 12) {
-      dateInfo.hour = +dateInfo.hour + 12;
-    } else if (dateInfo.isPm === false && +dateInfo.hour === 12) {
-      dateInfo.hour = 0;
-    }
-
-    var date;
-
-    if (dateInfo.timezoneOffset != null) {
-      dateInfo.minute = +(dateInfo.minute || 0) - +dateInfo.timezoneOffset;
-      date = new Date(Date.UTC(dateInfo.year || today.getFullYear(), dateInfo.month || 0, dateInfo.day || 1, dateInfo.hour || 0, dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0));
-    } else {
-      date = new Date(dateInfo.year || today.getFullYear(), dateInfo.month || 0, dateInfo.day || 1, dateInfo.hour || 0, dateInfo.minute || 0, dateInfo.second || 0, dateInfo.millisecond || 0);
-    }
-
-    return date;
-  };
-  /* istanbul ignore next */
-
-
-  if (typeof module !== 'undefined' && module.exports) {
-    module.exports = fecha;
-  } else if (true) {
-    !(__WEBPACK_AMD_DEFINE_RESULT__ = (function () {
-      return fecha;
-    }).call(exports, __webpack_require__, exports, module),
-				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
-  } else {
-    main.fecha = fecha;
-  }
-})(this);
-
-/***/ }),
-/* 12 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * @fileOverview 提取公共代码到util方法
- * @author dxq613@gmail.com
- */
-var isString = __webpack_require__(6);
-
-var isDate = __webpack_require__(22);
-
-module.exports = {
-  toTimeStamp: function toTimeStamp(value) {
-    if (isString(value)) {
-      if (value.indexOf('T') > 0) {
-        value = new Date(value).getTime();
-      } else {
-        value = new Date(value.replace(/-/ig, '/')).getTime();
-      }
-    }
-
-    if (isDate(value)) {
-      value = value.getTime();
-    }
-
-    return value;
-  }
-};
-
-/***/ }),
-/* 13 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * @fileOverview Scale entry, used to reference all the scales
- * @author dxq613@gmail.com
- */
-var lowerFirst = __webpack_require__(14);
-
-var Base = __webpack_require__(0);
-
-Base.Linear = __webpack_require__(4);
-Base.Identity = __webpack_require__(19);
-Base.Cat = __webpack_require__(9);
-Base.Time = __webpack_require__(20);
-Base.TimeCat = __webpack_require__(23);
-Base.Log = __webpack_require__(24);
-Base.Pow = __webpack_require__(25);
-
-var _loop = function _loop(k) {
-  if (Base.hasOwnProperty(k)) {
-    var methodName = lowerFirst(k);
-
-    Base[methodName] = function (cfg) {
-      return new Base[k](cfg);
+    Linear.prototype.initCfg = function () {
+        this.tickMethod = 'wilkinson-extended';
+        this.nice = false;
     };
-  }
-};
+    return Linear;
+}(base_1.default));
+exports.default = Linear;
+//# sourceMappingURL=linear.js.map
+}, function(modId) { var map = {"./base":1606535077174}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077174, function(require, module, exports) {
 
-for (var k in Base) {
-  _loop(k);
-}
-
-var CAT_ARR = ['cat', 'timeCat'];
-
-Base.isCategory = function (type) {
-  return CAT_ARR.indexOf(type) >= 0;
-};
-
-module.exports = Base;
-
-/***/ }),
-/* 14 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var toString = __webpack_require__(15);
-
-var lowerFirst = function lowerFirst(value) {
-  var str = toString(value);
-  return str.charAt(0).toLowerCase() + str.substring(1);
-};
-
-module.exports = lowerFirst;
-
-/***/ }),
-/* 15 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isNil = __webpack_require__(2);
-
-function toString(value) {
-  if (isNil(value)) return '';
-  return value.toString();
-}
-
-module.exports = toString;
-
-/***/ }),
-/* 16 */
-/***/ (function(module, exports) {
-
-function _mix(dist, obj) {
-  for (var key in obj) {
-    if (obj.hasOwnProperty(key) && key !== 'constructor' && obj[key] !== undefined) {
-      dist[key] = obj[key];
-    }
-  }
-}
-
-var mix = function mix(dist, src1, src2, src3) {
-  if (src1) _mix(dist, src1);
-  if (src2) _mix(dist, src2);
-  if (src3) _mix(dist, src3);
-  return dist;
-};
-
-module.exports = mix;
-
-/***/ }),
-/* 17 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isType = __webpack_require__(3);
-
-var isArray = Array.isArray ? Array.isArray : function (value) {
-  return isType(value, 'Array');
-};
-module.exports = isArray;
-
-/***/ }),
-/* 18 */
-/***/ (function(module, exports, __webpack_require__) {
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var util_1 = require("@antv/util");
+var base_1 = require("../base");
 /**
- * @fileOverview 自动计算数字坐标轴
- * @author dxq613@gmail.com
+ * 连续度量的基类
+ * @class
  */
-var isNil = __webpack_require__(2);
-
-var isNumber = __webpack_require__(5);
-
-var AutoUtil = __webpack_require__(8);
-
-var MIN_COUNT = 5;
-var MAX_COUNT = 7;
-var SNAP_COUNT_ARRAY = [0, 1, 1.2, 1.5, 1.6, 2, 2.2, 2.4, 2.5, 3, 4, 5, 6, 7.5, 8, 10];
-var SNAP_ARRAY = [0, 1, 2, 4, 5, 10];
-var EPS = 1e-12;
-
-module.exports = function (info) {
-  var min = info.min;
-  var max = info.max;
-  var interval = info.interval;
-  var minTickInterval = info.minTickInterval;
-  var ticks = [];
-  var minCount = info.minCount || MIN_COUNT;
-  var maxCount = info.maxCount || MAX_COUNT;
-  var isFixedCount = minCount === maxCount; // 是否限定死了个数
-
-  var minLimit = isNil(info.minLimit) ? -Infinity : info.minLimit; // 限定的最小值
-
-  var maxLimit = isNil(info.maxLimit) ? Infinity : info.maxLimit; // 限定最大值
-
-  var avgCount = (minCount + maxCount) / 2;
-  var count = avgCount; // 用户传入的逼近数组
-
-  var snapArray = info.snapArray ? info.snapArray : isFixedCount ? SNAP_COUNT_ARRAY : SNAP_ARRAY; // 如果限定大小范围，同时大小范围等于用户传入的范围，同时限定了个数，interval 按照个数均分
-
-  if (min === minLimit && max === maxLimit && isFixedCount) {
-    interval = (max - min) / (count - 1);
-  }
-
-  if (isNil(min)) {
-    min = 0;
-  }
-
-  if (isNil(max)) {
-    max = 0;
-  }
-
-  if (Math.abs(max - min) < EPS) {
-    if (min === 0) {
-      max = 1;
-    } else {
-      if (min > 0) {
-        min = 0;
-      } else {
-        max = 0;
-      }
+var Continuous = /** @class */ (function (_super) {
+    tslib_1.__extends(Continuous, _super);
+    function Continuous() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.isContinuous = true;
+        return _this;
     }
-
-    if (max - min < 5 && !interval && max - min >= 1) {
-      interval = 1;
-    }
-  }
-
-  if (isNil(interval)) {
-    // 计算间距
-    var temp = (max - min) / (avgCount - 1);
-    interval = AutoUtil.snapFactorTo(temp, snapArray, 'ceil');
-
-    if (maxCount !== minCount) {
-      count = parseInt((max - min) / interval, 10);
-
-      if (count > maxCount) {
-        count = maxCount;
-      }
-
-      if (count < minCount) {
-        count = minCount;
-      } // 不确定tick的个数时，使得tick偏小
-
-
-      interval = AutoUtil.snapFactorTo((max - min) / (count - 1), snapArray, 'floor');
-    }
-  } // interval should not be less than minTickInterval
-
-
-  if (isNumber(minTickInterval) && interval < minTickInterval) {
-    interval = minTickInterval;
-  }
-
-  if (info.interval || maxCount !== minCount) {
-    // 校正 max 和 min
-    max = Math.min(AutoUtil.snapMultiple(max, interval, 'ceil'), maxLimit); // 向上逼近
-
-    min = Math.max(AutoUtil.snapMultiple(min, interval, 'floor'), minLimit); // 向下逼近
-
-    count = Math.round((max - min) / interval);
-    min = AutoUtil.fixedBase(min, interval); // 当min为负数的时候，fixedBase后，min可能会大于minLimit，导致最终产出的tick是大于minLimit的，所以必须进行修正
-
-    max = AutoUtil.fixedBase(max, interval);
-    var prevMin = null;
-
-    while (min > minLimit && minLimit > -Infinity && (prevMin === null || min < prevMin)) {
-      // 保证计算出来的刻度最小值 min， 不大于数据最小值 min
-      prevMin = min;
-      min = AutoUtil.fixedBase(min - interval, interval);
-    }
-  } else {
-    avgCount = parseInt(avgCount, 10); // 取整
-
-    var avg = (max + min) / 2;
-    var avgTick = AutoUtil.snapMultiple(avg, interval, 'ceil');
-    var sideCount = Math.floor((avgCount - 2) / 2);
-    var maxTick = avgTick + sideCount * interval;
-    var minTick;
-
-    if (avgCount % 2 === 0) {
-      minTick = avgTick - sideCount * interval;
-    } else {
-      minTick = avgTick - (sideCount + 1) * interval;
-    }
-
-    var prevMaxTick = null; // 如果减去intervl, fixBase后，新的minTick没有大于之前的值，就退出，防止死循环
-
-    while (maxTick < max && (prevMaxTick === null || maxTick > prevMaxTick)) {
-      // 保证计算出来的刻度最大值 maxTick 不小于数据最大值 max
-      prevMaxTick = maxTick;
-      maxTick = AutoUtil.fixedBase(maxTick + interval, interval);
-    }
-
-    var prevMinTick = null; // 如果减去intervl, fixBase后，新的minTick没有小于之前的值，就退出，防止死循环
-
-    while (minTick > min && (prevMinTick === null || minTick < prevMinTick)) {
-      // 保证计算出来的刻度最小值 minTick 不大于数据最小值 min
-      prevMinTick = minTick;
-      minTick = AutoUtil.fixedBase(minTick - interval, interval); // 防止超常浮点数计算问题
-    }
-
-    max = maxTick;
-    min = minTick;
-  }
-
-  max = Math.min(max, maxLimit);
-  min = Math.max(min, minLimit);
-  ticks.push(min);
-
-  for (var i = 1; i < count; i++) {
-    var tickValue = AutoUtil.fixedBase(interval * i + min, interval);
-
-    if (tickValue < max) {
-      ticks.push(tickValue);
-    }
-  }
-
-  if (ticks[ticks.length - 1] < max) {
-    ticks.push(max);
-  }
-
-  return {
-    min: min,
-    max: max,
-    interval: interval,
-    count: count,
-    ticks: ticks
-  };
-};
-
-/***/ }),
-/* 19 */
-/***/ (function(module, exports, __webpack_require__) {
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-var Base = __webpack_require__(0);
-
-var isNumber = __webpack_require__(5);
-
-var Identity =
-/*#__PURE__*/
-function (_Base) {
-  _inheritsLoose(Identity, _Base);
-
-  function Identity() {
-    return _Base.apply(this, arguments) || this;
-  }
-
-  var _proto = Identity.prototype;
-
-  _proto._initDefaultCfg = function _initDefaultCfg() {
-    _Base.prototype._initDefaultCfg.call(this);
-
-    this.isIdentity = true;
-    this.type = 'identity';
-    /**
-     * 常量值
-     * @type {*}
-     */
-
-    this.value = null;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.getText = function getText() {
-    return this.value.toString();
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.scale = function scale(value) {
-    if (this.value !== value && isNumber(value)) {
-      return value;
-    }
-
-    return this.range[0];
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.invert = function invert() {
-    return this.value;
-  };
-
-  return Identity;
-}(Base);
-
-Base.Identity = Identity;
-module.exports = Identity;
-
-/***/ }),
-/* 20 */
-/***/ (function(module, exports, __webpack_require__) {
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-/**
- * @fileOverview The measurement of linear data scale function
- * @author dxq613@gmail.com
- */
-var fecha = __webpack_require__(11);
-
-var each = __webpack_require__(1);
-
-var isNil = __webpack_require__(2);
-
-var isString = __webpack_require__(6);
-
-var Base = __webpack_require__(0);
-
-var Linear = __webpack_require__(4);
-
-var timeAuto = __webpack_require__(21);
-
-var TimeUtil = __webpack_require__(12);
-/**
- * 时间度量的构造函数
- * @class Scale.Time
- */
-
-
-var Time =
-/*#__PURE__*/
-function (_Linear) {
-  _inheritsLoose(Time, _Linear);
-
-  function Time() {
-    return _Linear.apply(this, arguments) || this;
-  }
-
-  var _proto = Time.prototype;
-
-  _proto._initDefaultCfg = function _initDefaultCfg() {
-    _Linear.prototype._initDefaultCfg.call(this);
-
-    this.type = 'time';
-    this.mask = 'YYYY-MM-DD';
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.init = function init() {
-    var self = this;
-    var values = self.values;
-
-    if (values && values.length) {
-      // 重新计算最大最小值
-      var timeStamps = [];
-      var min = Infinity; // 最小值
-
-      var secondMin = min; // 次小值
-
-      var max = 0; // 使用一个循环，计算min,max,secondMin
-
-      each(values, function (v) {
-        var timeStamp = self._toTimeStamp(v);
-
-        if (isNaN(timeStamp)) {
-          throw new TypeError("Invalid Time: " + v);
+    Continuous.prototype.scale = function (value) {
+        if (util_1.isNil(value)) {
+            return NaN;
         }
-
-        if (min > timeStamp) {
-          secondMin = min;
-          min = timeStamp;
-        } else if (secondMin > timeStamp) {
-          secondMin = timeStamp;
+        var rangeMin = this.rangeMin();
+        var rangeMax = this.rangeMax();
+        var max = this.max;
+        var min = this.min;
+        if (max === min) {
+            return rangeMin;
         }
-
-        if (max < timeStamp) {
-          max = timeStamp;
+        var percent = this.getScalePercent(value);
+        return rangeMin + percent * (rangeMax - rangeMin);
+    };
+    Continuous.prototype.init = function () {
+        _super.prototype.init.call(this);
+        // init 完成后保证 min, max 包含 ticks 的范围
+        var ticks = this.ticks;
+        var firstTick = util_1.head(ticks);
+        var lastTick = util_1.last(ticks);
+        if (firstTick < this.min) {
+            this.min = firstTick;
         }
+        if (lastTick > this.max) {
+            this.max = lastTick;
+        }
+        // strict-limit 方式
+        if (!util_1.isNil(this.minLimit)) {
+            this.min = firstTick;
+        }
+        if (!util_1.isNil(this.maxLimit)) {
+            this.max = lastTick;
+        }
+    };
+    Continuous.prototype.setDomain = function () {
+        var _a = util_1.getRange(this.values), min = _a.min, max = _a.max;
+        if (util_1.isNil(this.min)) {
+            this.min = min;
+        }
+        if (util_1.isNil(this.max)) {
+            this.max = max;
+        }
+        if (this.min > this.max) {
+            this.min = min;
+            this.max = max;
+        }
+    };
+    Continuous.prototype.calculateTicks = function () {
+        var _this = this;
+        var ticks = _super.prototype.calculateTicks.call(this);
+        if (!this.nice) {
+            ticks = util_1.filter(ticks, function (tick) {
+                return tick >= _this.min && tick <= _this.max;
+            });
+        }
+        return ticks;
+    };
+    // 计算原始值值占的百分比
+    Continuous.prototype.getScalePercent = function (value) {
+        var max = this.max;
+        var min = this.min;
+        return (value - min) / (max - min);
+    };
+    Continuous.prototype.getInvertPercent = function (value) {
+        return (value - this.rangeMin()) / (this.rangeMax() - this.rangeMin());
+    };
+    return Continuous;
+}(base_1.default));
+exports.default = Continuous;
+//# sourceMappingURL=base.js.map
+}, function(modId) { var map = {"../base":1606535077167}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077175, function(require, module, exports) {
 
-        timeStamps.push(timeStamp);
-      }); // 存在多个值时，设置最小间距
-
-      if (values.length > 1) {
-        self.minTickInterval = secondMin - min;
-      }
-
-      if (isNil(self.min) || self._toTimeStamp(self.min) > min) {
-        self.min = min;
-      }
-
-      if (isNil(self.max) || self._toTimeStamp(self.max) < max) {
-        self.max = max;
-      }
-    }
-
-    _Linear.prototype.init.call(this);
-  };
-
-  _proto.calculateTicks = function calculateTicks() {
-    var self = this;
-    var min = self.min;
-    var max = self.max;
-    var count = self.tickCount;
-    var interval = self.tickInterval;
-    var tmp = timeAuto({
-      min: min,
-      max: max,
-      minCount: count,
-      maxCount: count,
-      interval: interval,
-      minInterval: self.minTickInterval
-    });
-    return tmp.ticks;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.getText = function getText(value) {
-    var formatter = this.formatter;
-    value = this.translate(value);
-    value = formatter ? formatter(value) : fecha.format(value, this.mask);
-    return value;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.scale = function scale(value) {
-    if (isString(value)) {
-      value = this.translate(value);
-    }
-
-    return _Linear.prototype.scale.call(this, value);
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.translate = function translate(value) {
-    return this._toTimeStamp(value);
-  } // 将时间转换为时间戳
-  ;
-
-  _proto._toTimeStamp = function _toTimeStamp(value) {
-    return TimeUtil.toTimeStamp(value);
-  };
-
-  return Time;
-}(Linear);
-
-Base.Time = Time;
-module.exports = Time;
-
-/***/ }),
-/* 21 */
-/***/ (function(module, exports, __webpack_require__) {
-
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var math_1 = require("../util/math");
+var base_1 = require("./base");
 /**
- * @fileOverview 计算时间坐标轴
- * @author dxq613@gmail.com
+ * Log 度量，处理非均匀分布
  */
-var AutoUtil = __webpack_require__(8);
-
-var isNil = __webpack_require__(2);
-
-var MAX_COUNT = 6;
-var SNAP_ARRAY = [1, 2, 4, 6, 8, 12];
-var MINUTE_MS = 60 * 1000;
-var HOUR_MS = 3600 * 1000;
-var DAY_MS = 24 * 3600 * 1000;
-
-function getYear(date) {
-  return new Date(date).getFullYear();
-}
-
-function createYear(year) {
-  return new Date(year, 0, 1).getTime();
-}
-
-function getMonth(date) {
-  return new Date(date).getMonth();
-}
-
-function diffMonth(min, max) {
-  var minYear = getYear(min);
-  var maxYear = getYear(max);
-  var minMonth = getMonth(min);
-  var maxMonth = getMonth(max);
-  return (maxYear - minYear) * 12 + (maxMonth - minMonth) % 12;
-}
-
-function creatMonth(year, month) {
-  return new Date(year, month, 1).getTime();
-}
-
-function diffDay(min, max) {
-  return Math.ceil((max - min) / DAY_MS);
-}
-
-function diffHour(min, max) {
-  return Math.ceil((max - min) / HOUR_MS);
-}
-
-function diffMinus(min, max) {
-  return Math.ceil((max - min) / (60 * 1000));
-}
-
-module.exports = function (info) {
-  var minInterval = info.minInterval;
-  var ticks = [];
-  var min = info.min;
-  var max = info.max;
-  var interval = info.interval;
-  var count; // 如果最大值和最小值相等，则设置最大值大于最小值一天
-
-  if (max === min) {
-    max = min + DAY_MS;
-  } // 计算间距
-
-
-  if (isNil(interval)) {
-    var innerTime = max - min;
-    var dms = DAY_MS; // 天代表的秒
-
-    var yms = 365 * dms; // 年代表的秒
-
-    interval = parseInt(innerTime / (info.maxCount || MAX_COUNT), 10);
-
-    if (minInterval && minInterval > interval) {
-      interval = minInterval;
+var Log = /** @class */ (function (_super) {
+    tslib_1.__extends(Log, _super);
+    function Log() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.type = 'log';
+        return _this;
     }
-
-    var yfactor = interval / yms;
-    var minYear = getYear(min); // 大于半年
-
-    if (yfactor > 0.51) {
-      var year = Math.ceil(yfactor); // interval = year * yms;
-
-      var maxYear = getYear(max);
-
-      for (var i = minYear; i <= maxYear + year; i = i + year) {
-        ticks.push(createYear(i));
-      }
-
-      interval = null;
-    } else if (yfactor > 0.0834) {
-      // 大于一个月
-      var month = Math.ceil(yfactor / 0.0834);
-      var mmMoth = getMonth(min);
-      var dMonths = diffMonth(min, max);
-
-      for (var _i = 0; _i <= dMonths + month; _i = _i + month) {
-        ticks.push(creatMonth(minYear, _i + mmMoth));
-      }
-
-      interval = null;
-    } else if (interval > dms * 0.5) {
-      // 大于一天
-      var date = new Date(min);
-
-      var _year = date.getFullYear();
-
-      var _month = date.getMonth(min);
-
-      var mday = date.getDate();
-      var day = Math.ceil(interval / dms);
-      var ddays = diffDay(min, max);
-      interval = day * dms;
-
-      for (var _i2 = 0; _i2 < ddays + day; _i2 = _i2 + day) {
-        ticks.push(new Date(_year, _month, mday + _i2).getTime());
-      }
-    } else if (interval > HOUR_MS) {
-      // 大于一个小时
-      var _date = new Date(min);
-
-      var _year2 = _date.getFullYear();
-
-      var _month2 = _date.getMonth(min);
-
-      var _day = _date.getDate();
-
-      var hour = _date.getHours();
-
-      var hours = AutoUtil.snapTo(SNAP_ARRAY, Math.ceil(interval / HOUR_MS));
-      var dHours = diffHour(min, max);
-      interval = hours * HOUR_MS;
-
-      for (var _i3 = 0; _i3 <= dHours + hours; _i3 = _i3 + hours) {
-        ticks.push(new Date(_year2, _month2, _day, hour + _i3).getTime());
-      }
-    } else if (interval > MINUTE_MS) {
-      // 最小单位是分钟
-      var dMinus = diffMinus(min, max);
-      var minutes = Math.ceil(interval / MINUTE_MS);
-      interval = minutes * MINUTE_MS;
-
-      for (var _i4 = 0; _i4 <= dMinus + minutes; _i4 = _i4 + minutes) {
-        ticks.push(min + _i4 * MINUTE_MS);
-      }
-    } else {
-      if (interval < 1000) {
-        interval = 1000;
-      }
-
-      min = Math.floor(min / 1000) * 1000;
-      var dSeconds = Math.ceil((max - min) / 1000);
-      var seconds = Math.ceil(interval / 1000);
-      interval = seconds * 1000;
-
-      for (var _i5 = 0; _i5 < dSeconds + seconds; _i5 = _i5 + seconds) {
-        ticks.push(min + _i5 * 1000);
-      }
-    }
-  }
-
-  if (!ticks.length) {
-    min = Math.floor(min / 1000) * 1000;
-    max = Math.ceil(max / 1000) * 1000;
-    count = (max - min) / interval;
-
-    for (var _i6 = 0; _i6 <= count; _i6++) {
-      ticks.push(AutoUtil.fixedBase(interval * _i6 + min, interval));
-    }
-  }
-
-  return {
-    max: max,
-    min: min,
-    interval: interval,
-    ticks: ticks,
-    count: ticks.length
-  };
-};
-
-/***/ }),
-/* 22 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isType = __webpack_require__(3);
-
-var isDate = function isDate(value) {
-  return isType(value, 'Date');
-};
-
-module.exports = isDate;
-
-/***/ }),
-/* 23 */
-/***/ (function(module, exports, __webpack_require__) {
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-/**
- * @fileOverview 时间数据作为分类类型
- * @author dxq613@gmail.com
- */
-var Base = __webpack_require__(0);
-
-var Category = __webpack_require__(9);
-
-var fecha = __webpack_require__(11);
-
-var catAuto = __webpack_require__(10);
-
-var TimeUtil = __webpack_require__(12);
-
-var each = __webpack_require__(1);
-
-var isNumber = __webpack_require__(5);
-
-var isObject = __webpack_require__(7);
-
-var isString = __webpack_require__(6);
-/**
- * 度量的构造函数
- * @class Scale.TimeCategory
- */
-
-
-var TimeCategory =
-/*#__PURE__*/
-function (_Category) {
-  _inheritsLoose(TimeCategory, _Category);
-
-  function TimeCategory() {
-    return _Category.apply(this, arguments) || this;
-  }
-
-  var _proto = TimeCategory.prototype;
-
-  _proto._initDefaultCfg = function _initDefaultCfg() {
-    _Category.prototype._initDefaultCfg.call(this);
-
-    this.type = 'timeCat';
-    /**
-     * 是否需要排序，默认进行排序
-     * @type {Boolean}
-     */
-
-    this.sortable = true;
-    this.tickCount = 5;
-    /**
-     * 时间格式化
-     * @type {String}
-     */
-
-    this.mask = 'YYYY-MM-DD';
-  };
-
-  _proto.init = function init() {
-    var self = this;
-    var values = this.values; // 针对时间分类类型，会将时间统一转换为时间戳
-
-    each(values, function (v, i) {
-      values[i] = self._toTimeStamp(v);
-    });
-
-    if (this.sortable) {
-      // 允许排序
-      values.sort(function (v1, v2) {
-        return v1 - v2;
-      });
-    }
-
-    if (!self.ticks) {
-      self.ticks = this.calculateTicks();
-    }
-  }
-  /**
-   * 计算 ticks
-   * @return {array} 返回 ticks 数组
-   */
-  ;
-
-  _proto.calculateTicks = function calculateTicks() {
-    var self = this;
-    var count = self.tickCount;
-    var ticks;
-
-    if (count) {
-      var temp = catAuto({
-        maxCount: count,
-        data: self.values,
-        isRounding: self.isRounding
-      });
-      ticks = temp.ticks;
-    } else {
-      ticks = self.values;
-    }
-
-    return ticks;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.translate = function translate(value) {
-    value = this._toTimeStamp(value);
-    var index = this.values.indexOf(value);
-
-    if (index === -1) {
-      if (isNumber(value) && value < this.values.length) {
-        index = value;
-      } else {
-        index = NaN;
-      }
-    }
-
-    return index;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.scale = function scale(value) {
-    var rangeMin = this.rangeMin();
-    var rangeMax = this.rangeMax();
-    var index = this.translate(value);
-    var percent;
-
-    if (this.values.length === 1 || isNaN(index)) {
-      // is index is NAN should not be set as 0
-      percent = index;
-    } else if (index > -1) {
-      percent = index / (this.values.length - 1);
-    } else {
-      percent = 0;
-    }
-
-    return rangeMin + percent * (rangeMax - rangeMin);
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.getText = function getText(value) {
-    var result = '';
-    var index = this.translate(value);
-
-    if (index > -1) {
-      result = this.values[index];
-    } else {
-      result = value;
-    }
-
-    var formatter = this.formatter;
-    result = parseInt(result, 10);
-    result = formatter ? formatter(result) : fecha.format(result, this.mask);
-    return result;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.getTicks = function getTicks() {
-    var self = this;
-    var ticks = this.ticks;
-    var rst = [];
-    each(ticks, function (tick) {
-      var obj;
-
-      if (isObject(tick)) {
-        obj = tick;
-      } else {
-        obj = {
-          text: isString(tick) ? tick : self.getText(tick),
-          value: self.scale(tick),
-          tickValue: tick // 用于坐标轴上文本动画时确定前后帧的对应关系
-
-        };
-      }
-
-      rst.push(obj);
-    });
-    return rst;
-  } // 将时间转换为时间戳
-  ;
-
-  _proto._toTimeStamp = function _toTimeStamp(value) {
-    return TimeUtil.toTimeStamp(value);
-  };
-
-  return TimeCategory;
-}(Category);
-
-Base.TimeCat = TimeCategory;
-module.exports = TimeCategory;
-
-/***/ }),
-/* 24 */
-/***/ (function(module, exports, __webpack_require__) {
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-/**
- * @fileOverview 使用度量，进行log转换
- * @author dxq613@gmail.com
- */
-var each = __webpack_require__(1);
-
-var Base = __webpack_require__(0);
-
-var Linear = __webpack_require__(4); // 计算log
-
-
-function log(a, b) {
-  if (a === 1) {
-    return 1;
-  }
-
-  return Math.log(b) / Math.log(a);
-}
-/**
- * 度量的log计算
- * @class Scale.Log
- */
-
-
-var Log =
-/*#__PURE__*/
-function (_Linear) {
-  _inheritsLoose(Log, _Linear);
-
-  function Log() {
-    return _Linear.apply(this, arguments) || this;
-  }
-
-  var _proto = Log.prototype;
-
-  _proto._initDefaultCfg = function _initDefaultCfg() {
-    _Linear.prototype._initDefaultCfg.call(this);
-
-    this.type = 'log';
     /**
      * @override
-     * log 的坐标点的个数控制在10个以下
-     * @type {Number}
      */
-
-    this.tickCount = 10;
-    /**
-     * 进行log计算的基数
-     * @type {Number}
-     */
-
-    this.base = 2; // 最小的tick，仅内部使用
-
-    this._minTick = null;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.calculateTicks = function calculateTicks() {
-    var self = this;
-    var base = self.base;
-    var minTick;
-
-    if (self.min < 0) {
-      throw new Error('The minimum value must be greater than zero!');
-    }
-
-    var maxTick = log(base, self.max);
-
-    if (self.min > 0) {
-      minTick = Math.floor(log(base, self.min));
-    } else {
-      var values = self.values;
-      var positiveMin = self.max; // 查找大于0的第一个值, 如果都小于0，默认为1
-
-      each(values, function (value) {
-        if (value > 0 && value < positiveMin) {
-          positiveMin = value;
+    Log.prototype.invert = function (value) {
+        var base = this.base;
+        var max = math_1.log(base, this.max);
+        var rangeMin = this.rangeMin();
+        var range = this.rangeMax() - rangeMin;
+        var min;
+        var positiveMin = this.positiveMin;
+        if (positiveMin) {
+            if (value === 0) {
+                return 0;
+            }
+            min = math_1.log(base, positiveMin / base);
+            var appendPercent = (1 / (max - min)) * range; // 0 到 positiveMin的占比
+            if (value < appendPercent) {
+                // 落到 0 - positiveMin 之间
+                return (value / appendPercent) * positiveMin;
+            }
         }
-      });
+        else {
+            min = math_1.log(base, this.min);
+        }
+        var percent = (value - rangeMin) / range;
+        var tmp = percent * (max - min) + min;
+        return Math.pow(base, tmp);
+    };
+    Log.prototype.initCfg = function () {
+        this.tickMethod = 'log';
+        this.base = 10;
+        this.tickCount = 6;
+        this.nice = true;
+    };
+    // 设置
+    Log.prototype.setDomain = function () {
+        _super.prototype.setDomain.call(this);
+        var min = this.min;
+        if (min < 0) {
+            throw new Error('When you use log scale, the minimum value must be greater than zero!');
+        }
+        if (min === 0) {
+            this.positiveMin = math_1.getLogPositiveMin(this.values, this.base, this.max);
+        }
+    };
+    // 根据当前值获取占比
+    Log.prototype.getScalePercent = function (value) {
+        var max = this.max;
+        var min = this.min;
+        if (max === min) {
+            return 0;
+        }
+        // 如果值小于等于0，则按照0处理
+        if (value <= 0) {
+            return 0;
+        }
+        var base = this.base;
+        var positiveMin = this.positiveMin;
+        // 如果min == 0, 则根据比0大的最小值，计算比例关系。这个最小值作为坐标轴上的第二个tick，第一个是0但是不显示
+        if (positiveMin) {
+            min = (positiveMin * 1) / base;
+        }
+        var percent;
+        // 如果数值小于次小值，那么就计算 value / 次小值 占整体的比例
+        if (value < positiveMin) {
+            percent = value / positiveMin / (math_1.log(base, max) - math_1.log(base, min));
+        }
+        else {
+            percent = (math_1.log(base, value) - math_1.log(base, min)) / (math_1.log(base, max) - math_1.log(base, min));
+        }
+        return percent;
+    };
+    return Log;
+}(base_1.default));
+exports.default = Log;
+//# sourceMappingURL=log.js.map
+}, function(modId) { var map = {"../util/math":1606535077176,"./base":1606535077174}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077176, function(require, module, exports) {
 
-      if (positiveMin === self.max) {
-        positiveMin = self.max / base;
-      }
-
-      if (positiveMin > 1) {
-        positiveMin = 1;
-      }
-
-      minTick = Math.floor(log(base, positiveMin));
-      self._minTick = minTick;
-      self.positiveMin = positiveMin;
-    }
-
-    var count = maxTick - minTick;
-    var tickCount = self.tickCount;
-    var avg = Math.ceil(count / tickCount);
-    var ticks = [];
-
-    for (var i = minTick; i < maxTick + avg; i = i + avg) {
-      ticks.push(Math.pow(base, i));
-    }
-
-    if (self.min === 0) {
-      ticks.unshift(0);
-    }
-
-    return ticks;
-  } // 获取度量计算时，value占的定义域百分比
-  ;
-
-  _proto._getScalePercent = function _getScalePercent(value) {
-    var max = this.max;
-    var min = this.min;
-
-    if (max === min) {
-      return 0;
-    } // 如果值小于等于0，则按照0处理
-
-
-    if (value <= 0) {
-      return 0;
-    }
-
-    var base = this.base;
-    var positiveMin = this.positiveMin; // 如果min == 0, 则根据比0大的最小值，计算比例关系。这个最小值作为坐标轴上的第二个tick，第一个是0但是不显示
-
-    if (positiveMin) {
-      min = positiveMin * 1 / base;
-    }
-
-    var percent; // 如果数值小于次小值，那么就计算 value / 次小值 占整体的比例
-
-    if (value < positiveMin) {
-      percent = value / positiveMin / (log(base, max) - log(base, min));
-    } else {
-      percent = (log(base, value) - log(base, min)) / (log(base, max) - log(base, min));
-    }
-
-    return percent;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.scale = function scale(value) {
-    var percent = this._getScalePercent(value);
-
-    var rangeMin = this.rangeMin();
-    var rangeMax = this.rangeMax();
-    return rangeMin + percent * (rangeMax - rangeMin);
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.invert = function invert(value) {
-    var base = this.base;
-    var max = log(base, this.max);
-    var rangeMin = this.rangeMin();
-    var range = this.rangeMax() - rangeMin;
-    var min;
-    var positiveMin = this.positiveMin;
-
-    if (positiveMin) {
-      if (value === 0) {
-        return 0;
-      }
-
-      min = log(base, positiveMin / base);
-      var appendPercent = 1 / (max - min) * range; // 0 到 positiveMin的占比
-
-      if (value < appendPercent) {
-        // 落到 0 - positiveMin 之间
-        return value / appendPercent * positiveMin;
-      }
-    } else {
-      min = log(base, this.min);
-    }
-
-    var percent = (value - rangeMin) / range;
-    var tmp = percent * (max - min) + min;
-    return Math.pow(base, tmp);
-  };
-
-  return Log;
-}(Linear);
-
-Base.Log = Log;
-module.exports = Log;
-
-/***/ }),
-/* 25 */
-/***/ (function(module, exports, __webpack_require__) {
-
-function _inheritsLoose(subClass, superClass) { subClass.prototype = Object.create(superClass.prototype); subClass.prototype.constructor = subClass; subClass.__proto__ = superClass; }
-
-/**
- * @fileOverview 使用pow进行度量计算
- * @author dxq613@gmail.com
- */
-var Base = __webpack_require__(0);
-
-var Linear = __webpack_require__(4); // 求以a为次幂，结果为b的基数，如 x^^a = b;求x
-
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.getLogPositiveMin = exports.log = exports.calBase = void 0;
+var util_1 = require("@antv/util");
+// 求以a为次幂，结果为b的基数，如 x^^a = b;求x
+// 虽然数学上 b 不支持负数，但是这里需要支持 负数
 function calBase(a, b) {
-  var e = Math.E;
-  var value = Math.pow(e, Math.log(b) / a); // 使用换底公式求底
-
-  return value;
+    var e = Math.E;
+    var value;
+    if (b >= 0) {
+        value = Math.pow(e, Math.log(b) / a); // 使用换底公式求底
+    }
+    else {
+        value = Math.pow(e, Math.log(-b) / a) * -1; // 使用换底公式求底
+    }
+    return value;
 }
+exports.calBase = calBase;
+function log(a, b) {
+    if (a === 1) {
+        return 1;
+    }
+    return Math.log(b) / Math.log(a);
+}
+exports.log = log;
+function getLogPositiveMin(values, base, max) {
+    if (util_1.isNil(max)) {
+        max = Math.max.apply(null, values);
+    }
+    var positiveMin = max;
+    util_1.each(values, function (value) {
+        if (value > 0 && value < positiveMin) {
+            positiveMin = value;
+        }
+    });
+    if (positiveMin === max) {
+        positiveMin = max / base;
+    }
+    if (positiveMin > 1) {
+        positiveMin = 1;
+    }
+    return positiveMin;
+}
+exports.getLogPositiveMin = getLogPositiveMin;
+//# sourceMappingURL=math.js.map
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077177, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var math_1 = require("../util/math");
+var base_1 = require("./base");
 /**
- * 度量的Pow计算
- * @class Scale.Log
+ * Pow 度量，处理非均匀分布
  */
-
-
-var Pow =
-/*#__PURE__*/
-function (_Linear) {
-  _inheritsLoose(Pow, _Linear);
-
-  function Pow() {
-    return _Linear.apply(this, arguments) || this;
-  }
-
-  var _proto = Pow.prototype;
-
-  _proto._initDefaultCfg = function _initDefaultCfg() {
-    _Linear.prototype._initDefaultCfg.call(this);
-
-    this.type = 'pow';
+var Pow = /** @class */ (function (_super) {
+    tslib_1.__extends(Pow, _super);
+    function Pow() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.type = 'pow';
+        return _this;
+    }
     /**
      * @override
-     * pow 的坐标点的个数控制在10个以下
-     * @type {Number}
      */
+    Pow.prototype.invert = function (value) {
+        var percent = this.getInvertPercent(value);
+        var exponent = this.exponent;
+        var max = math_1.calBase(exponent, this.max);
+        var min = math_1.calBase(exponent, this.min);
+        var tmp = percent * (max - min) + min;
+        var factor = tmp >= 0 ? 1 : -1;
+        return Math.pow(tmp, exponent) * factor;
+    };
+    Pow.prototype.initCfg = function () {
+        this.tickMethod = 'pow';
+        this.exponent = 2;
+        this.tickCount = 5;
+        this.nice = true;
+    };
+    // 获取度量计算时，value占的定义域百分比
+    Pow.prototype.getScalePercent = function (value) {
+        var max = this.max;
+        var min = this.min;
+        if (max === min) {
+            return 0;
+        }
+        var exponent = this.exponent;
+        var percent = (math_1.calBase(exponent, value) - math_1.calBase(exponent, min)) / (math_1.calBase(exponent, max) - math_1.calBase(exponent, min));
+        return percent;
+    };
+    return Pow;
+}(base_1.default));
+exports.default = Pow;
+//# sourceMappingURL=pow.js.map
+}, function(modId) { var map = {"../util/math":1606535077176,"./base":1606535077174}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077178, function(require, module, exports) {
 
-    this.tickCount = 10;
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var util_1 = require("@antv/util");
+var time_1 = require("../util/time");
+var linear_1 = require("./linear");
+/**
+ * 时间度量
+ * @class
+ */
+var Time = /** @class */ (function (_super) {
+    tslib_1.__extends(Time, _super);
+    function Time() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.type = 'time';
+        return _this;
+    }
     /**
-     * 进行pow计算的基数
-     * @type {Number}
+     * @override
      */
+    Time.prototype.getText = function (value, index) {
+        var numberValue = this.translate(value);
+        var formatter = this.formatter;
+        return formatter ? formatter(numberValue, index) : time_1.timeFormat(numberValue, this.mask);
+    };
+    /**
+     * @override
+     */
+    Time.prototype.scale = function (value) {
+        var v = value;
+        if (util_1.isString(v) || util_1.isDate(v)) {
+            v = this.translate(v);
+        }
+        return _super.prototype.scale.call(this, v);
+    };
+    /**
+     * 将时间转换成数字
+     * @override
+     */
+    Time.prototype.translate = function (v) {
+        return time_1.toTimeStamp(v);
+    };
+    Time.prototype.initCfg = function () {
+        this.tickMethod = 'time-pretty';
+        this.mask = 'YYYY-MM-DD';
+        this.tickCount = 7;
+        this.nice = false;
+    };
+    Time.prototype.setDomain = function () {
+        var values = this.values;
+        // 是否设置了 min, max，而不是直接取 this.min, this.max
+        var minConfig = this.getConfig('min');
+        var maxConfig = this.getConfig('max');
+        // 如果设置了 min,max 则转换成时间戳
+        if (!util_1.isNil(minConfig) || !util_1.isNumber(minConfig)) {
+            this.min = this.translate(this.min);
+        }
+        if (!util_1.isNil(maxConfig) || !util_1.isNumber(maxConfig)) {
+            this.max = this.translate(this.max);
+        }
+        // 没有设置 min, max 时
+        if (values && values.length) {
+            // 重新计算最大最小值
+            var timeStamps_1 = [];
+            var min_1 = Infinity; // 最小值
+            var secondMin_1 = min_1; // 次小值
+            var max_1 = 0;
+            // 使用一个循环，计算min,max,secondMin
+            util_1.each(values, function (v) {
+                var timeStamp = time_1.toTimeStamp(v);
+                if (isNaN(timeStamp)) {
+                    throw new TypeError("Invalid Time: " + v + " in time scale!");
+                }
+                if (min_1 > timeStamp) {
+                    secondMin_1 = min_1;
+                    min_1 = timeStamp;
+                }
+                else if (secondMin_1 > timeStamp) {
+                    secondMin_1 = timeStamp;
+                }
+                if (max_1 < timeStamp) {
+                    max_1 = timeStamp;
+                }
+                timeStamps_1.push(timeStamp);
+            });
+            // 存在多个值时，设置最小间距
+            if (values.length > 1) {
+                this.minTickInterval = secondMin_1 - min_1;
+            }
+            if (util_1.isNil(minConfig)) {
+                this.min = min_1;
+            }
+            if (util_1.isNil(maxConfig)) {
+                this.max = max_1;
+            }
+        }
+    };
+    return Time;
+}(linear_1.default));
+exports.default = Time;
+//# sourceMappingURL=time.js.map
+}, function(modId) { var map = {"../util/time":1606535077171,"./linear":1606535077173}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077179, function(require, module, exports) {
 
-    this.exponent = 2;
-  }
-  /**
-   * @override
-   */
-  ;
-
-  _proto.calculateTicks = function calculateTicks() {
-    var self = this;
-    var exponent = self.exponent;
-    var min;
-    var max = Math.ceil(calBase(exponent, self.max));
-
-    if (self.min >= 0) {
-      min = Math.floor(calBase(exponent, self.min));
-    } else {
-      min = 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var util_1 = require("@antv/util");
+var base_1 = require("./base");
+/**
+ * 分段度量
+ */
+var Quantize = /** @class */ (function (_super) {
+    tslib_1.__extends(Quantize, _super);
+    function Quantize() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.type = 'quantize';
+        return _this;
     }
+    Quantize.prototype.invert = function (value) {
+        var ticks = this.ticks;
+        var length = ticks.length;
+        var percent = this.getInvertPercent(value);
+        var minIndex = Math.floor(percent * (length - 1));
+        // 最后一个
+        if (minIndex >= length - 1) {
+            return util_1.last(ticks);
+        }
+        // 超出左边界， 则取第一个
+        if (minIndex < 0) {
+            return util_1.head(ticks);
+        }
+        var minTick = ticks[minIndex];
+        var nextTick = ticks[minIndex + 1];
+        // 比当前值小的 tick 在度量上的占比
+        var minIndexPercent = minIndex / (length - 1);
+        var maxIndexPercent = (minIndex + 1) / (length - 1);
+        return minTick + (percent - minIndexPercent) / (maxIndexPercent - minIndexPercent) * (nextTick - minTick);
+    };
+    Quantize.prototype.initCfg = function () {
+        this.tickMethod = 'r-pretty';
+        this.tickCount = 5;
+        this.nice = true;
+    };
+    Quantize.prototype.calculateTicks = function () {
+        var ticks = _super.prototype.calculateTicks.call(this);
+        if (!this.nice) { // 如果 nice = false ,补充 min, max
+            if (util_1.last(ticks) !== this.max) {
+                ticks.push(this.max);
+            }
+            if (util_1.head(ticks) !== this.min) {
+                ticks.unshift(this.min);
+            }
+        }
+        return ticks;
+    };
+    // 计算当前值在刻度中的占比
+    Quantize.prototype.getScalePercent = function (value) {
+        var ticks = this.ticks;
+        // 超出左边界
+        if (value < util_1.head(ticks)) {
+            return 0;
+        }
+        // 超出右边界
+        if (value > util_1.last(ticks)) {
+            return 1;
+        }
+        var minIndex = 0;
+        util_1.each(ticks, function (tick, index) {
+            if (value >= tick) {
+                minIndex = index;
+            }
+            else {
+                return false;
+            }
+        });
+        return minIndex / (ticks.length - 1);
+    };
+    return Quantize;
+}(base_1.default));
+exports.default = Quantize;
+//# sourceMappingURL=quantize.js.map
+}, function(modId) { var map = {"./base":1606535077174}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077180, function(require, module, exports) {
 
-    if (min > max) {
-      var tmp = max;
-      max = min;
-      min = tmp;
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var quantize_1 = require("./quantize");
+var Quantile = /** @class */ (function (_super) {
+    tslib_1.__extends(Quantile, _super);
+    function Quantile() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.type = 'quantile';
+        return _this;
     }
+    Quantile.prototype.initCfg = function () {
+        this.tickMethod = 'quantile';
+        this.tickCount = 5;
+        this.nice = true;
+    };
+    return Quantile;
+}(quantize_1.default));
+exports.default = Quantile;
+//# sourceMappingURL=quantile.js.map
+}, function(modId) { var map = {"./quantize":1606535077179}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077181, function(require, module, exports) {
 
-    var count = max - min;
-    var tickCount = self.tickCount;
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.registerScale = exports.getScale = exports.Scale = void 0;
+var base_1 = require("./base");
+exports.Scale = base_1.default;
+var map = {};
+function getClass(key) {
+    return map[key];
+}
+exports.getScale = getClass;
+function registerClass(key, cls) {
+    if (getClass(key)) {
+        throw new Error("type '" + key + "' existed.");
+    }
+    map[key] = cls;
+}
+exports.registerScale = registerClass;
+//# sourceMappingURL=factory.js.map
+}, function(modId) { var map = {"./base":1606535077167}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077182, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var tslib_1 = require("tslib");
+var util_1 = require("@antv/util");
+var base_1 = require("../base");
+/**
+ * identity scale原则上是定义域和值域一致，scale/invert方法也是一致的
+ * 参考R的实现：https://github.com/r-lib/scales/blob/master/R/pal-identity.r
+ * 参考d3的实现（做了下转型）：https://github.com/d3/d3-scale/blob/master/src/identity.js
+ */
+var Identity = /** @class */ (function (_super) {
+    tslib_1.__extends(Identity, _super);
+    function Identity() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.type = 'identity';
+        _this.isIdentity = true;
+        return _this;
+    }
+    Identity.prototype.calculateTicks = function () {
+        return this.values;
+    };
+    Identity.prototype.scale = function (value) {
+        // 如果传入的值不等于 identity 的值，则直接返回，用于一维图时的 dodge
+        if (this.values[0] !== value && util_1.isNumber(value)) {
+            return value;
+        }
+        return this.range[0];
+    };
+    Identity.prototype.invert = function (value) {
+        var range = this.range;
+        if (value < range[0] || value > range[1]) {
+            return NaN;
+        }
+        return this.values[0];
+    };
+    return Identity;
+}(base_1.default));
+exports.default = Identity;
+//# sourceMappingURL=index.js.map
+}, function(modId) { var map = {"../base":1606535077167}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077183, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.registerTickMethod = exports.getTickMethod = void 0;
+var cat_1 = require("./cat");
+var d3_linear_1 = require("./d3-linear");
+var linear_1 = require("./linear");
+var log_1 = require("./log");
+var pow_1 = require("./pow");
+var quantile_1 = require("./quantile");
+var r_prettry_1 = require("./r-prettry");
+var register_1 = require("./register");
+Object.defineProperty(exports, "getTickMethod", { enumerable: true, get: function () { return register_1.getTickMethod; } });
+Object.defineProperty(exports, "registerTickMethod", { enumerable: true, get: function () { return register_1.registerTickMethod; } });
+var time_1 = require("./time");
+var time_cat_1 = require("./time-cat");
+var time_pretty_1 = require("./time-pretty");
+register_1.registerTickMethod('cat', cat_1.default);
+register_1.registerTickMethod('time-cat', time_cat_1.default);
+register_1.registerTickMethod('wilkinson-extended', linear_1.default);
+register_1.registerTickMethod('r-pretty', r_prettry_1.default);
+register_1.registerTickMethod('time', time_1.default);
+register_1.registerTickMethod('time-pretty', time_pretty_1.default);
+register_1.registerTickMethod('log', log_1.default);
+register_1.registerTickMethod('pow', pow_1.default);
+register_1.registerTickMethod('quantile', quantile_1.default);
+register_1.registerTickMethod('d3-linear', d3_linear_1.default);
+//# sourceMappingURL=index.js.map
+}, function(modId) { var map = {"./cat":1606535077184,"./d3-linear":1606535077186,"./linear":1606535077190,"./log":1606535077191,"./pow":1606535077192,"./quantile":1606535077194,"./r-prettry":1606535077195,"./register":1606535077168,"./time":1606535077196,"./time-cat":1606535077197,"./time-pretty":1606535077198}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077184, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("@antv/util");
+var extended_1 = require("../util/extended");
+/**
+ * 计算分类 ticks
+ * @param cfg 度量的配置项
+ * @returns 计算后的 ticks
+ */
+function calculateCatTicks(cfg) {
+    var values = cfg.values, tickInterval = cfg.tickInterval, tickCount = cfg.tickCount;
+    var ticks = values;
+    if (util_1.isNumber(tickInterval)) {
+        return util_1.filter(ticks, function (__, i) { return i % tickInterval === 0; });
+    }
+    var min = cfg.min, max = cfg.max;
+    if (util_1.isNil(min)) {
+        min = 0;
+    }
+    if (util_1.isNil(max)) {
+        max = values.length - 1;
+    }
+    if (util_1.isNumber(tickCount) && tickCount < max - min) {
+        // 简单过滤，部分情况下小数的倍数也可以是整数
+        // tslint:disable-next-line: no-shadowed-variable
+        var ticks_1 = extended_1.default(min, max, tickCount, false, [1, 2, 5, 3, 4, 7, 6, 8, 9]).ticks;
+        var valid = util_1.filter(ticks_1, function (tick) { return tick >= min && tick <= max; });
+        return valid.map(function (index) { return values[index]; });
+    }
+    return values.slice(min, max + 1);
+}
+exports.default = calculateCatTicks;
+//# sourceMappingURL=cat.js.map
+}, function(modId) { var map = {"../util/extended":1606535077185}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077185, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.ALL_Q = exports.DEFAULT_Q = void 0;
+var util_1 = require("@antv/util");
+exports.DEFAULT_Q = [1, 5, 2, 2.5, 4, 3];
+exports.ALL_Q = [1, 5, 2, 2.5, 4, 3, 1.5, 7, 6, 8, 9];
+var eps = Number.EPSILON * 100;
+// https://stackoverflow.com/questions/4467539/javascript-modulo-gives-a-negative-result-for-negative-numbers
+function mod(n, m) {
+    return ((n % m) + m) % m;
+}
+function simplicity(q, Q, j, lmin, lmax, lstep) {
+    var n = util_1.size(Q);
+    var i = util_1.indexOf(Q, q);
+    var v = 0;
+    var m = mod(lmin, lstep);
+    if ((m < eps || lstep - m < eps) && lmin <= 0 && lmax >= 0) {
+        v = 1;
+    }
+    return 1 - i / (n - 1) - j + v;
+}
+function simplicityMax(q, Q, j) {
+    var n = util_1.size(Q);
+    var i = util_1.indexOf(Q, q);
+    var v = 1;
+    return 1 - i / (n - 1) - j + v;
+}
+function density(k, m, dmin, dmax, lmin, lmax) {
+    var r = (k - 1) / (lmax - lmin);
+    var rt = (m - 1) / (Math.max(lmax, dmax) - Math.min(dmin, lmin));
+    return 2 - Math.max(r / rt, rt / r);
+}
+function densityMax(k, m) {
+    if (k >= m) {
+        return 2 - (k - 1) / (m - 1);
+    }
+    return 1;
+}
+function coverage(dmin, dmax, lmin, lmax) {
+    var range = dmax - dmin;
+    return 1 - (0.5 * (Math.pow(dmax - lmax, 2) + Math.pow(dmin - lmin, 2))) / Math.pow(0.1 * range, 2);
+}
+function coverageMax(dmin, dmax, span) {
+    var range = dmax - dmin;
+    if (span > range) {
+        var half = (span - range) / 2;
+        return 1 - Math.pow(half, 2) / Math.pow(0.1 * range, 2);
+    }
+    return 1;
+}
+function legibility() {
+    return 1;
+}
+/**
+ * An Extension of Wilkinson's Algorithm for Position Tick Labels on Axes
+ * https://www.yuque.com/preview/yuque/0/2019/pdf/185317/1546999150858-45c3b9c2-4e86-4223-bf1a-8a732e8195ed.pdf
+ * @param dmin 最小值
+ * @param dmax 最大值
+ * @param m tick个数
+ * @param onlyLoose 是否允许扩展min、max，不绝对强制，例如[3, 97]
+ * @param Q nice numbers集合
+ * @param w 四个优化组件的权重
+ */
+function extended(dmin, dmax, m, onlyLoose, Q, w) {
+    if (m === void 0) { m = 5; }
+    if (onlyLoose === void 0) { onlyLoose = true; }
+    if (Q === void 0) { Q = exports.DEFAULT_Q; }
+    if (w === void 0) { w = [0.25, 0.2, 0.5, 0.05]; }
+    // 异常数据情况下，直接返回，防止 oom
+    if (typeof dmin !== 'number' || typeof dmax !== 'number') {
+        return {
+            min: 0,
+            max: 0,
+            ticks: [],
+        };
+    }
+    if (dmin === dmax || m === 1) {
+        return {
+            min: dmin,
+            max: dmax,
+            ticks: [dmin],
+        };
+    }
+    var best = {
+        score: -2,
+        lmin: 0,
+        lmax: 0,
+        lstep: 0,
+    };
+    var j = 1;
+    while (j < Infinity) {
+        for (var _i = 0, Q_1 = Q; _i < Q_1.length; _i++) {
+            var q = Q_1[_i];
+            var sm = simplicityMax(q, Q, j);
+            if (Number.isNaN(sm)) {
+                throw new Error('NaN');
+            }
+            if (w[0] * sm + w[1] + w[2] + w[3] < best.score) {
+                j = Infinity;
+                break;
+            }
+            var k = 2;
+            while (k < Infinity) {
+                var dm = densityMax(k, m);
+                if (w[0] * sm + w[1] + w[2] * dm + w[3] < best.score) {
+                    break;
+                }
+                var delta = (dmax - dmin) / (k + 1) / j / q;
+                var z = Math.ceil(Math.log10(delta));
+                while (z < Infinity) {
+                    var step = j * q * Math.pow(10, z);
+                    var cm = coverageMax(dmin, dmax, step * (k - 1));
+                    if (w[0] * sm + w[1] * cm + w[2] * dm + w[3] < best.score) {
+                        break;
+                    }
+                    var minStart = Math.floor(dmax / step) * j - (k - 1) * j;
+                    var maxStart = Math.ceil(dmin / step) * j;
+                    if (minStart > maxStart) {
+                        z = z + 1;
+                        continue;
+                    }
+                    for (var start = minStart; start <= maxStart; start = start + 1) {
+                        var lmin = start * (step / j);
+                        var lmax = lmin + step * (k - 1);
+                        var lstep = step;
+                        var s = simplicity(q, Q, j, lmin, lmax, lstep);
+                        var c = coverage(dmin, dmax, lmin, lmax);
+                        var g = density(k, m, dmin, dmax, lmin, lmax);
+                        var l = legibility();
+                        var score = w[0] * s + w[1] * c + w[2] * g + w[3] * l;
+                        if (score > best.score && (!onlyLoose || (lmin <= dmin && lmax >= dmax))) {
+                            best.lmin = lmin;
+                            best.lmax = lmax;
+                            best.lstep = lstep;
+                            best.score = score;
+                        }
+                    }
+                    z = z + 1;
+                }
+                k = k + 1;
+            }
+        }
+        j = j + 1;
+    }
+    // 步长为浮点数时处理精度
+    var toFixed = Number.isInteger(best.lstep) ? 0 : Math.ceil(Math.abs(Math.log10(best.lstep)));
+    var range = [];
+    for (var tick = best.lmin; tick <= best.lmax; tick += best.lstep) {
+        range.push(tick);
+    }
+    var ticks = toFixed ? util_1.map(range, function (x) { return Number.parseFloat(x.toFixed(toFixed)); }) : range;
+    return {
+        min: Math.min(dmin, util_1.head(ticks)),
+        max: Math.max(dmax, util_1.last(ticks)),
+        ticks: ticks,
+    };
+}
+exports.default = extended;
+//# sourceMappingURL=extended.js.map
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077186, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("@antv/util");
+var d3_linear_1 = require("../util/d3-linear");
+var interval_1 = require("../util/interval");
+var strict_limit_1 = require("../util/strict-limit");
+function d3LinearTickMethod(cfg) {
+    var min = cfg.min, max = cfg.max, tickInterval = cfg.tickInterval, minLimit = cfg.minLimit, maxLimit = cfg.maxLimit;
+    var ticks = d3_linear_1.default(cfg);
+    if (!util_1.isNil(minLimit) || !util_1.isNil(maxLimit)) {
+        return strict_limit_1.default(cfg, util_1.head(ticks), util_1.last(ticks));
+    }
+    if (tickInterval) {
+        return interval_1.default(min, max, tickInterval).ticks;
+    }
+    return ticks;
+}
+exports.default = d3LinearTickMethod;
+//# sourceMappingURL=d3-linear.js.map
+}, function(modId) { var map = {"../util/d3-linear":1606535077187,"../util/interval":1606535077188,"../util/strict-limit":1606535077189}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077187, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.D3Linear = void 0;
+function d3Linear(cfg) {
+    var min = cfg.min, max = cfg.max, nice = cfg.nice, tickCount = cfg.tickCount;
+    var linear = new D3Linear();
+    linear.domain([min, max]);
+    if (nice) {
+        linear.nice(tickCount);
+    }
+    return linear.ticks(tickCount);
+}
+exports.default = d3Linear;
+var DEFAULT_COUNT = 5;
+var e10 = Math.sqrt(50);
+var e5 = Math.sqrt(10);
+var e2 = Math.sqrt(2);
+// https://github.com/d3/d3-scale
+var D3Linear = /** @class */ (function () {
+    function D3Linear() {
+        this._domain = [0, 1];
+    }
+    D3Linear.prototype.domain = function (domain) {
+        if (domain) {
+            this._domain = Array.from(domain, Number);
+            return this;
+        }
+        return this._domain.slice();
+    };
+    D3Linear.prototype.nice = function (count) {
+        var _a, _b;
+        if (count === void 0) { count = DEFAULT_COUNT; }
+        var d = this._domain.slice();
+        var i0 = 0;
+        var i1 = this._domain.length - 1;
+        var start = this._domain[i0];
+        var stop = this._domain[i1];
+        var step;
+        if (stop < start) {
+            _a = [stop, start], start = _a[0], stop = _a[1];
+            _b = [i1, i0], i0 = _b[0], i1 = _b[1];
+        }
+        step = tickIncrement(start, stop, count);
+        if (step > 0) {
+            start = Math.floor(start / step) * step;
+            stop = Math.ceil(stop / step) * step;
+            step = tickIncrement(start, stop, count);
+        }
+        else if (step < 0) {
+            start = Math.ceil(start * step) / step;
+            stop = Math.floor(stop * step) / step;
+            step = tickIncrement(start, stop, count);
+        }
+        if (step > 0) {
+            d[i0] = Math.floor(start / step) * step;
+            d[i1] = Math.ceil(stop / step) * step;
+            this.domain(d);
+        }
+        else if (step < 0) {
+            d[i0] = Math.ceil(start * step) / step;
+            d[i1] = Math.floor(stop * step) / step;
+            this.domain(d);
+        }
+        return this;
+    };
+    D3Linear.prototype.ticks = function (count) {
+        if (count === void 0) { count = DEFAULT_COUNT; }
+        return d3ArrayTicks(this._domain[0], this._domain[this._domain.length - 1], count || DEFAULT_COUNT);
+    };
+    return D3Linear;
+}());
+exports.D3Linear = D3Linear;
+function d3ArrayTicks(start, stop, count) {
+    var reverse;
+    var i = -1;
+    var n;
+    var ticks;
+    var step;
+    (stop = +stop), (start = +start), (count = +count);
+    if (start === stop && count > 0) {
+        return [start];
+    }
+    // tslint:disable-next-line
+    if ((reverse = stop < start)) {
+        (n = start), (start = stop), (stop = n);
+    }
+    // tslint:disable-next-line
+    if ((step = tickIncrement(start, stop, count)) === 0 || !isFinite(step)) {
+        return [];
+    }
+    if (step > 0) {
+        start = Math.ceil(start / step);
+        stop = Math.floor(stop / step);
+        ticks = new Array((n = Math.ceil(stop - start + 1)));
+        while (++i < n) {
+            ticks[i] = (start + i) * step;
+        }
+    }
+    else {
+        start = Math.floor(start * step);
+        stop = Math.ceil(stop * step);
+        ticks = new Array((n = Math.ceil(start - stop + 1)));
+        while (++i < n) {
+            ticks[i] = (start - i) / step;
+        }
+    }
+    if (reverse) {
+        ticks.reverse();
+    }
+    return ticks;
+}
+function tickIncrement(start, stop, count) {
+    var step = (stop - start) / Math.max(0, count);
+    var power = Math.floor(Math.log(step) / Math.LN10);
+    var error = step / Math.pow(10, power);
+    return power >= 0
+        ? (error >= e10 ? 10 : error >= e5 ? 5 : error >= e2 ? 2 : 1) * Math.pow(10, power)
+        : -Math.pow(10, -power) / (error >= e10 ? 10 : error >= e5 ? 5 : error >= e2 ? 2 : 1);
+}
+//# sourceMappingURL=d3-linear.js.map
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077188, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("@antv/util");
+function snapMultiple(v, base, snapType) {
+    var div;
+    if (snapType === 'ceil') {
+        div = Math.ceil(v / base);
+    }
+    else if (snapType === 'floor') {
+        div = Math.floor(v / base);
+    }
+    else {
+        div = Math.round(v / base);
+    }
+    return div * base;
+}
+function intervalTicks(min, max, interval) {
+    // 变成 interval 的倍数
+    var minTick = snapMultiple(min, interval, 'floor');
+    var maxTick = snapMultiple(max, interval, 'ceil');
+    // 统一小数位数
+    minTick = util_1.fixedBase(minTick, interval);
+    maxTick = util_1.fixedBase(maxTick, interval);
+    var ticks = [];
+    for (var i = minTick; i <= maxTick; i = i + interval) {
+        var tickValue = util_1.fixedBase(i, interval); // 防止浮点数加法出现问题
+        ticks.push(tickValue);
+    }
+    return {
+        min: minTick,
+        max: maxTick,
+        ticks: ticks
+    };
+}
+exports.default = intervalTicks;
+//# sourceMappingURL=interval.js.map
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077189, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("@antv/util");
+/**
+ * 按照给定的 minLimit/maxLimit/tickCount 均匀计算出刻度 ticks
+ *
+ * @param cfg Scale 配置项
+ * @return ticks
+ */
+function strictLimit(cfg, defaultMin, defaultMax) {
+    var _a;
+    var minLimit = cfg.minLimit, maxLimit = cfg.maxLimit, min = cfg.min, max = cfg.max, _b = cfg.tickCount, tickCount = _b === void 0 ? 5 : _b;
+    var tickMin = util_1.isNil(minLimit) ? (util_1.isNil(defaultMin) ? min : defaultMin) : minLimit;
+    var tickMax = util_1.isNil(maxLimit) ? (util_1.isNil(defaultMax) ? max : defaultMax) : maxLimit;
+    if (tickMin > tickMax) {
+        _a = [tickMin, tickMax], tickMax = _a[0], tickMin = _a[1];
+    }
+    if (tickCount <= 2) {
+        return [tickMin, tickMax];
+    }
+    var step = (tickMax - tickMin) / (tickCount - 1);
+    var ticks = [];
+    for (var i = 0; i < tickCount; i++) {
+        ticks.push(tickMin + step * i);
+    }
+    return ticks;
+}
+exports.default = strictLimit;
+//# sourceMappingURL=strict-limit.js.map
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077190, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("@antv/util");
+var extended_1 = require("../util/extended");
+var interval_1 = require("../util/interval");
+var strict_limit_1 = require("../util/strict-limit");
+/**
+ * 计算线性的 ticks，使用 wilkinson extended 方法
+ * @param cfg 度量的配置项
+ * @returns 计算后的 ticks
+ */
+function linear(cfg) {
+    var min = cfg.min, max = cfg.max, tickCount = cfg.tickCount, nice = cfg.nice, tickInterval = cfg.tickInterval, minLimit = cfg.minLimit, maxLimit = cfg.maxLimit;
+    var ticks = extended_1.default(min, max, tickCount, nice).ticks;
+    if (!util_1.isNil(minLimit) || !util_1.isNil(maxLimit)) {
+        return strict_limit_1.default(cfg, util_1.head(ticks), util_1.last(ticks));
+    }
+    if (tickInterval) {
+        return interval_1.default(min, max, tickInterval).ticks;
+    }
+    return ticks;
+}
+exports.default = linear;
+//# sourceMappingURL=linear.js.map
+}, function(modId) { var map = {"../util/extended":1606535077185,"../util/interval":1606535077188,"../util/strict-limit":1606535077189}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077191, function(require, module, exports) {
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var math_1 = require("../util/math");
+/**
+ * 计算 log 的 ticks，考虑 min = 0 的场景
+ * @param cfg 度量的配置项
+ * @returns 计算后的 ticks
+ */
+function calculateLogTicks(cfg) {
+    var base = cfg.base, tickCount = cfg.tickCount, min = cfg.min, max = cfg.max, values = cfg.values;
+    var minTick;
+    var maxTick = math_1.log(base, max);
+    if (min > 0) {
+        minTick = Math.floor(math_1.log(base, min));
+    }
+    else {
+        var positiveMin = math_1.getLogPositiveMin(values, base, max);
+        minTick = Math.floor(math_1.log(base, positiveMin));
+    }
+    var count = maxTick - minTick;
     var avg = Math.ceil(count / tickCount);
     var ticks = [];
-
-    for (var i = min; i < max + avg; i = i + avg) {
-      ticks.push(Math.pow(i, exponent));
+    for (var i = minTick; i < maxTick + avg; i = i + avg) {
+        ticks.push(Math.pow(base, i));
     }
-
+    if (min <= 0) {
+        // 最小值 <= 0 时显示 0
+        ticks.unshift(0);
+    }
     return ticks;
-  } // 获取度量计算时，value占的定义域百分比
-  ;
+}
+exports.default = calculateLogTicks;
+//# sourceMappingURL=log.js.map
+}, function(modId) { var map = {"../util/math":1606535077176}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077192, function(require, module, exports) {
 
-  _proto._getScalePercent = function _getScalePercent(value) {
-    var max = this.max;
-    var min = this.min;
+Object.defineProperty(exports, "__esModule", { value: true });
+var math_1 = require("../util/math");
+var pretty_1 = require("../util/pretty");
+/**
+ * 计算 Pow 的 ticks
+ * @param cfg 度量的配置项
+ * @returns 计算后的 ticks
+ */
+function calculatePowTicks(cfg) {
+    var exponent = cfg.exponent, tickCount = cfg.tickCount;
+    var max = Math.ceil(math_1.calBase(exponent, cfg.max));
+    var min = Math.floor(math_1.calBase(exponent, cfg.min));
+    var ticks = pretty_1.default(min, max, tickCount).ticks;
+    return ticks.map(function (tick) {
+        var factor = tick >= 0 ? 1 : -1;
+        return Math.pow(tick, exponent) * factor;
+    });
+}
+exports.default = calculatePowTicks;
+//# sourceMappingURL=pow.js.map
+}, function(modId) { var map = {"../util/math":1606535077176,"../util/pretty":1606535077193}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077193, function(require, module, exports) {
 
-    if (max === min) {
-      return 0;
+Object.defineProperty(exports, "__esModule", { value: true });
+function pretty(min, max, n) {
+    if (n === void 0) { n = 5; }
+    var res = {
+        max: 0,
+        min: 0,
+        ticks: [],
+    };
+    if (min === max) {
+        return {
+            max: max,
+            min: min,
+            ticks: [min],
+        };
     }
+    /*
+      R pretty:
+      https://svn.r-project.org/R/trunk/src/appl/pretty.c
+      https://www.rdocumentation.org/packages/base/versions/3.5.2/topics/pretty
+      */
+    var h = 1.5; // high.u.bias
+    var h5 = 0.5 + 1.5 * h; // u5.bias
+    // 反正我也不会调参，跳过所有判断步骤
+    var d = max - min;
+    var c = d / n;
+    // 当d非常小的时候触发，但似乎没什么用
+    // const min_n = Math.floor(n / 3);
+    // const shrink_sml = Math.pow(2, 5);
+    // if (Math.log10(d) < -2) {
+    //   c = (_.max([ Math.abs(max), Math.abs(min) ]) * shrink_sml) / min_n;
+    // }
+    var base = Math.pow(10, Math.floor(Math.log10(c)));
+    var toFixed = base < 1 ? Math.ceil(Math.abs(Math.log10(base))) : 0;
+    var unit = base;
+    if (2 * base - c < h * (c - unit)) {
+        unit = 2 * base;
+        if (5 * base - c < h5 * (c - unit)) {
+            unit = 5 * base;
+            if (10 * base - c < h * (c - unit)) {
+                unit = 10 * base;
+            }
+        }
+    }
+    var nu = Math.ceil(max / unit);
+    var ns = Math.floor(min / unit);
+    res.max = Math.max(nu * unit, max);
+    res.min = Math.min(ns * unit, min);
+    var x = Number.parseFloat((ns * unit).toFixed(toFixed));
+    while (x < max) {
+        res.ticks.push(x);
+        x += unit;
+        if (toFixed) {
+            x = Number.parseFloat(x.toFixed(toFixed));
+        }
+    }
+    res.ticks.push(x);
+    return res;
+}
+exports.default = pretty;
+//# sourceMappingURL=pretty.js.map
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077194, function(require, module, exports) {
 
-    var exponent = this.exponent;
-    var percent = (calBase(exponent, value) - calBase(exponent, min)) / (calBase(exponent, max) - calBase(exponent, min));
-    return percent;
-  }
-  /**
-   * @override
-   */
-  ;
+Object.defineProperty(exports, "__esModule", { value: true });
+/**
+ * 计算几分位 https://github.com/simple-statistics/simple-statistics/blob/master/src/quantile_sorted.js
+ * @param x  数组
+ * @param p  百分比
+ */
+function quantileSorted(x, p) {
+    var idx = x.length * p;
+    /*if (x.length === 0) { // 当前场景这些条件不可能命中
+      throw new Error('quantile requires at least one value.');
+    } else if (p < 0 || p > 1) {
+      throw new Error('quantiles must be between 0 and 1');
+    } else */
+    if (p === 1) {
+        // If p is 1, directly return the last element
+        return x[x.length - 1];
+    }
+    else if (p === 0) {
+        // If p is 0, directly return the first element
+        return x[0];
+    }
+    else if (idx % 1 !== 0) {
+        // If p is not integer, return the next element in array
+        return x[Math.ceil(idx) - 1];
+    }
+    else if (x.length % 2 === 0) {
+        // If the list has even-length, we'll take the average of this number
+        // and the next value, if there is one
+        return (x[idx - 1] + x[idx]) / 2;
+    }
+    else {
+        // Finally, in the simple case of an integer value
+        // with an odd-length list, return the x value at the index.
+        return x[idx];
+    }
+}
+function calculateTicks(cfg) {
+    var tickCount = cfg.tickCount, values = cfg.values;
+    if (!values || !values.length) {
+        return [];
+    }
+    var sorted = values.slice().sort(function (a, b) {
+        return a - b;
+    });
+    var ticks = [];
+    for (var i = 0; i < tickCount; i++) {
+        var p = i / (tickCount - 1);
+        ticks.push(quantileSorted(sorted, p));
+    }
+    return ticks;
+}
+exports.default = calculateTicks;
+//# sourceMappingURL=quantile.js.map
+}, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077195, function(require, module, exports) {
 
-  _proto.scale = function scale(value) {
-    var percent = this._getScalePercent(value);
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("@antv/util");
+var interval_1 = require("../util/interval");
+var pretty_1 = require("../util/pretty");
+var strict_limit_1 = require("../util/strict-limit");
+/**
+ * 计算线性的 ticks，使用 R's pretty 方法
+ * @param cfg 度量的配置项
+ * @returns 计算后的 ticks
+ */
+function linearPretty(cfg) {
+    var min = cfg.min, max = cfg.max, tickCount = cfg.tickCount, tickInterval = cfg.tickInterval, minLimit = cfg.minLimit, maxLimit = cfg.maxLimit;
+    var ticks = pretty_1.default(min, max, tickCount).ticks;
+    if (!util_1.isNil(minLimit) || !util_1.isNil(maxLimit)) {
+        return strict_limit_1.default(cfg, util_1.head(ticks), util_1.last(ticks));
+    }
+    if (tickInterval) {
+        return interval_1.default(min, max, tickInterval).ticks;
+    }
+    return ticks;
+}
+exports.default = linearPretty;
+//# sourceMappingURL=r-prettry.js.map
+}, function(modId) { var map = {"../util/interval":1606535077188,"../util/pretty":1606535077193,"../util/strict-limit":1606535077189}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077196, function(require, module, exports) {
 
-    var rangeMin = this.rangeMin();
-    var rangeMax = this.rangeMax();
-    return rangeMin + percent * (rangeMax - rangeMin);
-  }
-  /**
-   * @override
-   */
-  ;
+Object.defineProperty(exports, "__esModule", { value: true });
+var time_1 = require("../util/time");
+function calculateTimeTicks(cfg) {
+    var min = cfg.min, max = cfg.max, minTickInterval = cfg.minTickInterval;
+    var tickInterval = cfg.tickInterval;
+    var tickCount = cfg.tickCount;
+    // 指定 tickInterval 后 tickCount 不生效，需要重新计算
+    if (tickInterval) {
+        tickCount = Math.ceil((max - min) / tickInterval);
+    }
+    else {
+        tickInterval = time_1.getTickInterval(min, max, tickCount)[1];
+        var count = (max - min) / tickInterval;
+        var ratio = count / tickCount;
+        if (ratio > 1) {
+            tickInterval = tickInterval * Math.ceil(ratio);
+        }
+        // 如果设置了最小间距，则使用最小间距
+        if (minTickInterval && tickInterval < minTickInterval) {
+            tickInterval = minTickInterval;
+        }
+    }
+    var ticks = [];
+    for (var i = min; i < max + tickInterval; i += tickInterval) {
+        ticks.push(i);
+    }
+    return ticks;
+}
+exports.default = calculateTimeTicks;
+//# sourceMappingURL=time.js.map
+}, function(modId) { var map = {"../util/time":1606535077171}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077197, function(require, module, exports) {
 
-  _proto.invert = function invert(value) {
-    var percent = (value - this.rangeMin()) / (this.rangeMax() - this.rangeMin());
-    var exponent = this.exponent;
-    var max = calBase(exponent, this.max);
-    var min = calBase(exponent, this.min);
-    var tmp = percent * (max - min) + min;
-    return Math.pow(tmp, exponent);
-  };
+Object.defineProperty(exports, "__esModule", { value: true });
+var util_1 = require("@antv/util");
+var cat_1 = require("./cat");
+/**
+ * 计算时间分类的 ticks, 保头，保尾
+ * @param cfg 度量的配置项
+ * @returns 计算后的 ticks
+ */
+function calculateTimeCatTicks(cfg) {
+    var ticks = cat_1.default(cfg);
+    var lastValue = util_1.last(cfg.values);
+    if (lastValue !== util_1.last(ticks)) {
+        ticks.push(lastValue);
+    }
+    return ticks;
+}
+exports.default = calculateTimeCatTicks;
+//# sourceMappingURL=time-cat.js.map
+}, function(modId) { var map = {"./cat":1606535077184}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1606535077198, function(require, module, exports) {
 
-  return Pow;
-}(Linear);
-
-Base.Pow = Pow;
-module.exports = Pow;
-
-/***/ })
-/******/ ]);
-});
-//# sourceMappingURL=scale.js.map
-}, function(modId) {var map = {}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1605424195668);
+Object.defineProperty(exports, "__esModule", { value: true });
+var time_1 = require("../util/time");
+function getYear(date) {
+    return new Date(date).getFullYear();
+}
+function createYear(year) {
+    return new Date(year, 0, 1).getTime();
+}
+function getMonth(date) {
+    return new Date(date).getMonth();
+}
+function diffMonth(min, max) {
+    var minYear = getYear(min);
+    var maxYear = getYear(max);
+    var minMonth = getMonth(min);
+    var maxMonth = getMonth(max);
+    return (maxYear - minYear) * 12 + ((maxMonth - minMonth) % 12);
+}
+function creatMonth(year, month) {
+    return new Date(year, month, 1).getTime();
+}
+function diffDay(min, max) {
+    return Math.ceil((max - min) / time_1.DAY);
+}
+function diffHour(min, max) {
+    return Math.ceil((max - min) / time_1.HOUR);
+}
+function diffMinus(min, max) {
+    return Math.ceil((max - min) / (60 * 1000));
+}
+/**
+ * 计算 time 的 ticks，对 month, year 进行 pretty 处理
+ * @param cfg 度量的配置项
+ * @returns 计算后的 ticks
+ */
+function timePretty(cfg) {
+    var min = cfg.min, max = cfg.max, minTickInterval = cfg.minTickInterval, tickCount = cfg.tickCount;
+    var tickInterval = cfg.tickInterval;
+    var ticks = [];
+    // 指定 tickInterval 后 tickCount 不生效，需要重新计算
+    if (!tickInterval) {
+        tickInterval = (max - min) / tickCount;
+        // 如果设置了最小间距，则使用最小间距
+        if (minTickInterval && tickInterval < minTickInterval) {
+            tickInterval = minTickInterval;
+        }
+    }
+    var minYear = getYear(min);
+    // 如果间距大于 1 年，则将开始日期从整年开始
+    if (tickInterval > time_1.YEAR) {
+        var maxYear = getYear(max);
+        var yearInterval = Math.ceil(tickInterval / time_1.YEAR);
+        for (var i = minYear; i <= maxYear + yearInterval; i = i + yearInterval) {
+            ticks.push(createYear(i));
+        }
+    }
+    else if (tickInterval > time_1.MONTH) {
+        // 大于月时
+        var monthInterval = Math.ceil(tickInterval / time_1.MONTH);
+        var mmMoth = getMonth(min);
+        var dMonths = diffMonth(min, max);
+        for (var i = 0; i <= dMonths + monthInterval; i = i + monthInterval) {
+            ticks.push(creatMonth(minYear, i + mmMoth));
+        }
+    }
+    else if (tickInterval > time_1.DAY) {
+        // 大于天
+        var date = new Date(min);
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var mday = date.getDate();
+        var day = Math.ceil(tickInterval / time_1.DAY);
+        var ddays = diffDay(min, max);
+        for (var i = 0; i < ddays + day; i = i + day) {
+            ticks.push(new Date(year, month, mday + i).getTime());
+        }
+    }
+    else if (tickInterval > time_1.HOUR) {
+        // 大于小时
+        var date = new Date(min);
+        var year = date.getFullYear();
+        var month = date.getMonth();
+        var day = date.getDate();
+        var hour = date.getHours();
+        var hours = Math.ceil(tickInterval / time_1.HOUR);
+        var dHours = diffHour(min, max);
+        for (var i = 0; i <= dHours + hours; i = i + hours) {
+            ticks.push(new Date(year, month, day, hour + i).getTime());
+        }
+    }
+    else if (tickInterval > time_1.MINUTE) {
+        // 大于分钟
+        var dMinus = diffMinus(min, max);
+        var minutes = Math.ceil(tickInterval / time_1.MINUTE);
+        for (var i = 0; i <= dMinus + minutes; i = i + minutes) {
+            ticks.push(min + i * time_1.MINUTE);
+        }
+    }
+    else {
+        // 小于分钟
+        var interval = tickInterval;
+        if (interval < time_1.SECOND) {
+            interval = time_1.SECOND;
+        }
+        var minSecond = Math.floor(min / time_1.SECOND) * time_1.SECOND;
+        var dSeconds = Math.ceil((max - min) / time_1.SECOND);
+        var seconds = Math.ceil(interval / time_1.SECOND);
+        for (var i = 0; i < dSeconds + seconds; i = i + seconds) {
+            ticks.push(minSecond + i * time_1.SECOND);
+        }
+    }
+    // 最好是能从算法能解决这个问题，但是如果指定了 tickInterval，计算 ticks，也只能这么算，所以
+    // 打印警告提示
+    if (ticks.length >= 512) {
+        console.warn("Notice: current ticks length(" + ticks.length + ") >= 512, may cause performance issues, even out of memory. Because of the configure \"tickInterval\"(in milliseconds, current is " + tickInterval + ") is too small, increase the value to solve the problem!");
+    }
+    return ticks;
+}
+exports.default = timePretty;
+//# sourceMappingURL=time-pretty.js.map
+}, function(modId) { var map = {"../util/time":1606535077171}; return __REQUIRE__(map[modId], modId); })
+return __REQUIRE__(1606535077166);
 })()
 //# sourceMappingURL=index.js.map

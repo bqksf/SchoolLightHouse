@@ -11,7 +11,8 @@ Page({
         mindStatus: 0,
         currentWeekNum: 0,
         dayOfTheWeek: 0,
-        trueWeekNum: 0
+        trueWeekNum: 0,
+        stringifyScheduleData: null,// 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
     },
     onLoad() {
         //今天星期几
@@ -20,14 +21,18 @@ Page({
         dayOfTheWeek = dayOfTheWeek == 0 ? 7 : dayOfTheWeek;
 
         const { schedule } = app.globalData.studyData;
+        
         const weekNum = app.globalData.weekNum;
         this.setData({
             currentWeekNum: weekNum,
             dayOfTheWeek: dayOfTheWeek,
-            trueWeekNum: weekNum
+            trueWeekNum: weekNum,
+            // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
+            stringifyScheduleData: JSON.stringify(schedule)
         });
         if (schedule) {
-            this.initData(schedule, weekNum);
+            // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
+            this.initData(JSON.parse(this.data.stringifyScheduleData), weekNum);
         } else {
             //TODO 无数据提示
         }
@@ -35,8 +40,9 @@ Page({
     tapLeftButton() {
         let { currentWeekNum } = this.data;
         currentWeekNum > 1 && currentWeekNum--;
-        const { schedule } = app.globalData.studyData;
-        this.initData(JSON.parse(schedule), currentWeekNum);
+        // const { schedule } = app.globalData.studyData;
+        // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
+        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
         this.setData({
             currentWeekNum: currentWeekNum
         });
@@ -44,8 +50,9 @@ Page({
     tapRightButton() {
         let { currentWeekNum } = this.data;
         currentWeekNum > 0 && currentWeekNum++;
-        const { schedule } = app.globalData.studyData;
-        this.initData(JSON.parse(schedule), currentWeekNum);
+        // const { schedule } = app.globalData.studyData;
+        // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
+        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
         this.setData({
             currentWeekNum: currentWeekNum
         });
@@ -72,7 +79,7 @@ Page({
     },
     remindChange() {
         //TODO 考试提醒
-        showErrorModal('此功能将在3月中旬开放，上课前会在AI未来校园公众号提醒你～');
+        showErrorModal('此功能即将开放，开放后会在高校灯塔公众号提醒你～');
     },
     initData(data, weekNum) {
         let scheduleArr = data.schedule;

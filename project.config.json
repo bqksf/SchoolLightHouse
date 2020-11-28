@@ -10,7 +10,6 @@
     "es6": true,
     "enhance": true,
     "postcss": true,
-    "preloadBackgroundData": false,
     "minified": true,
     "newFeature": true,
     "coverView": true,
@@ -18,11 +17,10 @@
     "autoAudits": false,
     "showShadowRootInWxmlPanel": true,
     "scopeDataCheck": false,
-    "uglifyFileName": true,
+    "uglifyFileName": false,
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
     "useMultiFrameRuntime": false,
     "useApiHook": true,
     "babelSetting": {
@@ -30,31 +28,46 @@
       "disablePlugins": [],
       "outputPath": ""
     },
+    "bundle": false,
     "useIsolateContext": true,
-    "useCompilerModule": true,
+    "useCompilerModule": false,
     "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
     "minifyWXSS": true
   },
-  "libVersion": "2.10.4",
+  "libVersion": "2.12.2",
   "appid": "wxf203d0e6cfbed41a",
   "projectname": "PacketSchool",
   "simulatorType": "wechat",
   "simulatorPluginLibVersion": {},
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
-    "search": {
-      "list": []
-    },
-    "conversation": {
+    "plugin": {
       "list": []
     },
     "game": {
       "list": []
     },
-    "miniprogram": {
+    "gamePlugin": {
       "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/mine/esInfo/esInfo",
+          "pathName": "pages/mine/esInfo/esInfo",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/register/register",
+          "pathName": "pages/register/register",
+          "query": "",
+          "scene": null
+        }
+      ]
     }
   }
 }
