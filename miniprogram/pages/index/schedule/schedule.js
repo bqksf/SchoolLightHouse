@@ -90,6 +90,8 @@ Page({
             for (let b = 0; b < daySceArr.length; b++) {
                 const timeSceArr = daySceArr[b];
                 let noNum = 0;
+                //2020年11月29日 tuip123 记录要删除的位置
+                let timeTemp=0
                 for (let c = 0; c < timeSceArr.length; c++) {
                     const schedule = timeSceArr[c];
                     //看是否含本周
@@ -97,10 +99,12 @@ Page({
                     if (weeks_arr.indexOf(weekNum) == -1) {
                         //不含就去掉
                         noNum++;
+                        //2020年11月29日 tuip123 记录要删除的位置
+                        timeTemp=c
                     }
                 }
                 //不含就去掉
-                scheduleArr[a][b].splice(0, noNum);
+                scheduleArr[a][b].splice(timeTemp, noNum);
             }
         }
         //再优化一下
@@ -111,7 +115,8 @@ Page({
                 //空数组改成name为空格的字典
                 if (timeSceArr.length == 0) {
                     scheduleArr[a][b] = { 'name': ' ' }
-                } else {
+                } 
+                else {
                     //非空数组，改成数组中的第一节课，并且把课的name限制在12个字内
                     timeSceArr[0].name = timeSceArr[0].name.substr(0, 12)//切掉12个字后面的内容
                     scheduleArr[a][b] = timeSceArr[0]
