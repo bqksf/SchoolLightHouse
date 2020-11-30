@@ -1,27 +1,33 @@
 var app = getApp();
-import { showErrorModal } from '../../../utils/index.js';
+import {
+    showErrorModal
+} from '../../../utils/index.js';
 
 Page({
     data: {
         dialogTitle: "",
         dialogShow: false,
         dialogContent: "",
-        dialogButtons: [{ text: '确定' }],
+        dialogButtons: [{
+            text: '确定'
+        }],
         scheduleArr: [],
         mindStatus: 0,
         currentWeekNum: 0,
         dayOfTheWeek: 0,
         trueWeekNum: 0,
-        stringifyScheduleData: null,// 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
+        stringifyScheduleData: null, // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
     },
     onLoad() {
         //今天星期几
         const nowDate = new Date();
-        let dayOfTheWeek = nowDate.getDay();//获取当前星期X(0-6,0代表星期天)
+        let dayOfTheWeek = nowDate.getDay(); //获取当前星期X(0-6,0代表星期天)
         dayOfTheWeek = dayOfTheWeek == 0 ? 7 : dayOfTheWeek;
 
-        const { schedule } = app.globalData.studyData;
-        
+        const {
+            schedule
+        } = app.globalData.studyData;
+
         const weekNum = app.globalData.weekNum;
         this.setData({
             currentWeekNum: weekNum,
@@ -38,7 +44,9 @@ Page({
         }
     },
     tapLeftButton() {
-        let { currentWeekNum } = this.data;
+        let {
+            currentWeekNum
+        } = this.data;
         currentWeekNum > 1 && currentWeekNum--;
         // const { schedule } = app.globalData.studyData;
         // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
@@ -48,7 +56,9 @@ Page({
         });
     },
     tapRightButton() {
-        let { currentWeekNum } = this.data;
+        let {
+            currentWeekNum
+        } = this.data;
         currentWeekNum > 0 && currentWeekNum++;
         // const { schedule } = app.globalData.studyData;
         // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
@@ -57,18 +67,25 @@ Page({
             currentWeekNum: currentWeekNum
         });
     },
-    tapOneSchedule(e){
+    tapOneSchedule(e) {
         const schedule = e.currentTarget.dataset.schedule;
         if (schedule.name == ' ') {
             //没有课
             return;
         }
-        const {name,place,teacher,section,time,weeks_text} = schedule;
-        let content = "课程名："+name+"\n教室："+place+"\n老师："+teacher+"\n节数："+section+"\n时间："+time+"\n周数："+weeks_text;
+        const {
+            name,
+            place,
+            teacher,
+            section,
+            time,
+            weeks_text
+        } = schedule;
+        let content = "课程名：" + name + "\n教室：" + place + "\n老师：" + teacher + "\n节数：" + section + "\n时间：" + time + "\n周数：" + weeks_text;
         this.setData({
             dialogTitle: "课程信息",
             dialogShow: true,
-            dialogContent: content,  
+            dialogContent: content,
         });
     },
     tapIcon() {
@@ -91,16 +108,21 @@ Page({
                 const timeSceArr = daySceArr[b];
                 let noNum = 0;
                 //2020年11月29日 tuip123 记录要删除的位置
-                let timeTemp=0
+                let timeTemp = 0
                 for (let c = 0; c < timeSceArr.length; c++) {
                     const schedule = timeSceArr[c];
                     //看是否含本周
-                    let { weeks_arr } = schedule;
+                    let {
+                        weeks_arr
+                    } = schedule;
                     if (weeks_arr.indexOf(weekNum) == -1) {
                         //不含就去掉
                         noNum++;
                         //2020年11月29日 tuip123 记录要删除的位置
-                        timeTemp=c
+                        //2020年11月30日 tuip123 只有在第一次才记录，之后都在第一次的位置往后删
+                        if (noNum == 1) {
+                            timeTemp = c
+                        }
                     }
                 }
                 //不含就去掉
@@ -114,11 +136,12 @@ Page({
                 const timeSceArr = daySceArr[b];
                 //空数组改成name为空格的字典
                 if (timeSceArr.length == 0) {
-                    scheduleArr[a][b] = { 'name': ' ' }
-                } 
-                else {
+                    scheduleArr[a][b] = {
+                        'name': ' '
+                    }
+                } else {
                     //非空数组，改成数组中的第一节课，并且把课的name限制在12个字内
-                    timeSceArr[0].name = timeSceArr[0].name.substr(0, 12)//切掉12个字后面的内容
+                    timeSceArr[0].name = timeSceArr[0].name.substr(0, 12) //切掉12个字后面的内容
                     scheduleArr[a][b] = timeSceArr[0]
                 }
             }
