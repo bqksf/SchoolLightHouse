@@ -46,23 +46,21 @@ Page({
         this.remindChange();
     },
     async remindChange() {
-        //TODO 考试提醒
         //showErrorModal('此功能即将开放，考试前会在高校灯塔公众号提醒你～');
+        wx.showLoading({
+          title: '正在设置',
+        })
         const getUnionid = await wx.cloud.callFunction({
             name: "getUnionid"
         })
         const _uniconid = getUnionid.result
         if (_uniconid.length > 0) {
+            wx.hideLoading({})
             if (this.data.mindStatus) {
                 wx.showModal({
                     title: '成功',
                     content: '你已经开启提醒服务，请注意“高校灯塔”的消息推送哦',
                     showCancel: false,
-                    success(res) {
-                        if (res.confirm) {
-                            console.log('用户点击确定')
-                        }
-                    }
                 })
                 try {
                     await db.collection('studyData').where({
@@ -80,11 +78,6 @@ Page({
                     title: '成功',
                     content: '你已经取消提醒',
                     showCancel: false,
-                    success(res) {
-                        if (res.confirm) {
-                            console.log('用户点击确定')
-                        }
-                    }
                 })
                 try {
                     await db.collection('studyData').where({
@@ -100,7 +93,7 @@ Page({
 
             }
         } else {
-            console.log("没有关注");
+            wx.hideLoading({})
             wx.showModal({
                 title: '提示',
                 content: '由于小程序限制，发布考试提醒需要依赖“高校灯塔”公众号推送，关注后能获取更完整的服务哦',
@@ -114,7 +107,6 @@ Page({
                 }
             })
         }
-
     },
     initData(data) {
         const dataKeysArr = Object.keys(data);

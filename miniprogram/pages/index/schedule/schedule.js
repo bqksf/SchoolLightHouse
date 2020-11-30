@@ -2,7 +2,9 @@ var app = getApp();
 import {
     showErrorModal
 } from '../../../utils/index.js';
-
+let db = wx.cloud.database({
+    env: 'release-5gt6h0dtd3a72b90'
+});
 Page({
     data: {
         dialogTitle: "",
@@ -18,7 +20,7 @@ Page({
         trueWeekNum: 0,
         stringifyScheduleData: null, // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
     },
-    onLoad() {
+    async onLoad() {
         //今天星期几
         const nowDate = new Date();
         let dayOfTheWeek = nowDate.getDay(); //获取当前星期X(0-6,0代表星期天)
@@ -41,6 +43,20 @@ Page({
             this.initData(JSON.parse(this.data.stringifyScheduleData), weekNum);
         } else {
             //TODO 无数据提示
+        }
+        this.setData({
+            mindStatus: await this.isNeedScheduleRemind()
+        })
+    },
+    async isNeedScheduleRemind() {
+        try {
+            const userInfoRes = await db.collection('studyData').where({
+                _openid: app.globalData._openid,
+            }).get();
+            return userInfoRes.data[0].needScheduleRemind
+        } catch (e) {
+            showErrorModal("获取提醒状态失败", e)
+            return false
         }
     },
     tapLeftButton() {
@@ -94,9 +110,66 @@ Page({
         });
         this.remindChange();
     },
-    remindChange() {
-        //TODO 考试提醒
-        showErrorModal('此功能即将开放，开放后会在高校灯塔公众号提醒你～');
+    async remindChange() {
+        wx.showLoading({
+            title: '正在设置',
+        })
+        const getUnionid = await wx.cloud.callFunction({
+            name: "getUnionid"
+        })
+        const _uniconid = getUnionid.result
+        if (_uniconid.length > 0) {
+            wx.hideLoading({})
+            if (this.data.mindStatus) {
+                wx.showModal({
+                    title: '成功',
+                    content: '你已经开启提醒服务，请注意“高校灯塔”的消息推送哦',
+                    showCancel: false,
+                })
+                try {
+                    await db.collection('studyData').where({
+                        _openid: app.globalData._openid,
+                    }).update({
+                        data: {
+                            needScheduleRemind: true
+                        }
+                    });
+                } catch (e) {
+                    showErrorModal('设置提醒失败', e);
+                }
+            } else {
+                wx.showModal({
+                    title: '成功',
+                    content: '你已经取消提醒',
+                    showCancel: false,
+                })
+                try {
+                    await db.collection('studyData').where({
+                        _openid: app.globalData._openid,
+                    }).update({
+                        data: {
+                            needneedScheduleRemindExamRemind: false
+                        }
+                    });
+                } catch (e) {
+                    showErrorModal('取消提醒失败', e);
+                }
+            }
+        } else {
+            wx.hideLoading({})
+            wx.showModal({
+                title: '提示',
+                content: '由于小程序限制，发布课程提醒需要依赖“高校灯塔”公众号推送，关注后能获取更完整的服务哦',
+                confirmText: '去关注',
+                success(res) {
+                    if (res.confirm) {
+                        console.log('用户点击确定')
+                    } else if (res.cancel) {
+                        console.log('用户点击取消')
+                    }
+                }
+            })
+        }
     },
     initData(data, weekNum) {
         let scheduleArr = data.schedule;
@@ -123,10 +196,13 @@ Page({
                         if (noNum == 1) {
                             timeTemp = c
                         }
+
                     }
+
                 }
                 //不含就去掉
                 scheduleArr[a][b].splice(timeTemp, noNum);
+
             }
         }
         //再优化一下
