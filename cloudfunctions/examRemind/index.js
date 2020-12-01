@@ -1,27 +1,27 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 const got = require('got')
-cloud.init()
+cloud.init({
+  env: 'release-5gt6h0dtd3a72b90'
+})
 const db = cloud.database()
 // 云函数入口函数
 exports.main = async (event, context) => {
-  //TODO! 1.判断时间是否到需要提醒范围 2.发送模板提醒
+  //TODO! 2.发送模板提醒 3.定时触发器
   var d = new Date()
   var remindTime = d.getHours() + 1
   //获取所有需要提醒的内容
   const temp = await db.collection('examRemindList').where({}).get()
   const examRemindList = temp.data
-  
   for (let e in examRemindList) {
-    console.log(examRemindList[e]._id);
-    //用完就删
+    //判断时间
     if (examRemindList[e].examtime.split(':')[0] == remindTime) {
-      console.log("todo:发送提醒消息")
+      console.log("TODO:发送提醒消息")
+      //用完就删
       await db.collection("examRemindList").where({
         _id:examRemindList[e]._id
       }).remove()
     }
-
   }
   // await got.post('https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=ACCESS_TOKEN',{
   //   json:{
