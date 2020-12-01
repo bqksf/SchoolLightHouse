@@ -14,12 +14,13 @@ exports.main = async (event, context) => {
   const temp = await db.collection('examRemindList').where({}).get()
   const examRemindList = temp.data
   for (let e in examRemindList) {
+    let exam=examRemindList[e]
     //判断时间
-    if (examRemindList[e].examtime.split(':')[0] == remindTime) {
+    if (exam.examtime.split(':')[0] == remindTime) {
       console.log("TODO:发送提醒消息")
       //用完就删
       await db.collection("examRemindList").where({
-        _id:examRemindList[e]._id
+        _id:exam._id
       }).remove()
     }
   }
