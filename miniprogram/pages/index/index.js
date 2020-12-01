@@ -72,7 +72,7 @@ Page({
     },
     async initData2(startTime) {
         // 计算第几周
-        const weekNum = getWhichWeek(startTime)+1;
+        const weekNum = getWhichWeek(startTime);
         //TEST let weekNum = 20;
         this.setData({
             weekNum: weekNum
