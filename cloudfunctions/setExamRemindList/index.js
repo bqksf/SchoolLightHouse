@@ -1,7 +1,9 @@
 // 云函数入口文件
 const cloud = require('wx-server-sdk')
 
-cloud.init()
+cloud.init({
+  env: 'release-5gt6h0dtd3a72b90'
+})
 const db = cloud.database()
 const log = cloud.logger()
 const MAX_LIMIT = 100
@@ -11,16 +13,16 @@ exports.main = async (event, context) => {
   const _ = db.command
   try {
     const a=await db.collection('examRemindList').where({
-      exam: _.exists(true)
+      examtime: _.exists(true)
     }).remove()
   } catch (e) {
     console.error(e)
   }
   //获取当前日期
   var d = new Date();
-  var today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDay()
-  console.log(today)
+  var today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
   try {
+    //获取所有 需要提醒的用户 的个人信息
     // 先取出集合记录总数
     const countResult = await db.collection('studyData').count()
     const total = countResult.total
@@ -35,6 +37,7 @@ exports.main = async (event, context) => {
       }).get()
       studyDataResp.push(promise)
     }
+    
     //遍历学习信息数组，获取考试信息
     for (let a in studyDataResp[0].data) {
       let studyData=studyDataResp[0].data[a]
@@ -44,7 +47,7 @@ exports.main = async (event, context) => {
       }).get()
       let {_openidGZH}=temp.data[0]
       //判断公众号id，只有存在（关注了公众号）才进行后续判断
-      if(_openidGZH.length>0){
+      if(_openidGZH&&_openidGZH.length>0){
         let examTime=studyData.examTime
         let dataKeysArr = Object.keys(examTime)
         let yearTitle = dataKeysArr[0];
@@ -64,6 +67,7 @@ exports.main = async (event, context) => {
           }
         }
       }
+      
     }
   } catch (e) {
     log.error({
