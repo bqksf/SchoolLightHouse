@@ -1,4 +1,6 @@
-import { showErrorModal } from '../../utils/index.js';
+import {
+    showErrorModal
+} from '../../utils/index.js';
 
 let app = getApp();
 let db = wx.cloud.database({
@@ -9,14 +11,16 @@ Page({
     data: {
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         registerPage: 1,
-        items: [
-            { name: 'gzcsxy', value: '华南理工大学广州学院', checked: 'true' },
-        ],
+        items: [{
+            name: 'gzcsxy',
+            value: '华南理工大学广州学院',
+            checked: 'true'
+        }, ],
         schoolCode: 'gzcsxy',
         stuID: "",
         stuPassword: ""
     },
-    onLoad(){
+    onLoad() {
         // 已注册就跳到绑定页面
         if (!app.globalData.firstlogin) {
             this.setData({
@@ -35,7 +39,10 @@ Page({
             if (hour == 23 || hour <= 7) {
                 throw '23:00～07:00因教务系统关闭，请换个时间再来绑定！';
             }
-            const { stuID, stuPassword } = this.data;
+            const {
+                stuID,
+                stuPassword
+            } = this.data;
             //验证输入的内容
             if (!(stuID || stuPassword)) {
                 //是否为空
@@ -57,7 +64,7 @@ Page({
             wx.removeStorageSync('studyData');
             wx.hideLoading();
             wx.reLaunch({
-              url: '/pages/index/index',
+                url: '/pages/index/index',
             });
         } catch (e) {
             showErrorModal('绑定失败', e);
@@ -98,8 +105,32 @@ Page({
                 throw "你已经注册，请不要重复注册！";
             }
             // 数据库插入user
-            const { avatarUrl, gender, nickName } = e.detail.userInfo;
-            const { rawData } = e.detail;
+            const {
+                avatarUrl,
+                gender,
+                nickName
+            } = e.detail.userInfo;
+            const {
+                rawData
+            } = e.detail;
+            //获取unionid
+            const unionidResp = await wx.cloud.callFunction({
+                name: 'getUnionid'
+            })
+            var _unionid = unionidResp.result
+            var _openidGZH = undefined
+            //找openidGZH，有就记录下来
+            if (_unionid&&_unionid.length > 0) {
+               const _openidGZHResp= await db.collection('userGZH').where({
+                _unionid
+              }).get()
+                _openidGZH=_openidGZHResp.data[0]._openid
+            }
+            //找不到就将这两个参数设置为null
+            else{
+                _unionid=null
+                _openidGZH=null
+            }
             await db.collection('user').add({
                 data: {
                     avatarUrl: avatarUrl,
@@ -107,7 +138,9 @@ Page({
                     name: nickName,
                     rawData: rawData,
                     registerTime: new Date(),
-                    schoolCode: this.data.schoolCode
+                    schoolCode: this.data.schoolCode,
+                    _openidGZH,
+                    _unionid
                 }
             });
             // 切换显示成绑定页面
