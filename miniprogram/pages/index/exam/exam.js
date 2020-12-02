@@ -53,8 +53,30 @@ Page({
         const getUnionid = await wx.cloud.callFunction({
             name: "getUnionid"
         })
-        const _uniconid = getUnionid.result
-        if (_uniconid.length > 0) {
+        const _unionid = getUnionid.result
+         //只有存在_unionid（关注公众号后）
+        if (_unionid.length > 0) {
+            //通过unionid查询openidGZH
+            const openidGZHResp= await db.collection('userGZH').where({
+                _unionid
+            }).get()
+            const _openidGZH=openidGZHResp.data[0]._openid
+            //查询user表里有无该对象
+            const usertemp= await db.collection('user').where({
+                _unionid,
+                _openidGZH
+            }).get()
+            //如果没有就更新进去
+            if(usertemp.data.length==0){
+                await db.collection('user').where({
+                    _openid:app.globalData._openid
+                }).update({
+                    data:{
+                        _unionid,
+                        _openidGZH
+                    }
+                })
+            }
             wx.hideLoading({})
             if (this.data.mindStatus) {
                 wx.showModal({
