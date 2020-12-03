@@ -40,7 +40,6 @@ exports.main = async (event, context) => {
       }).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
       studyDataRespArr.push(promise)
     }
-
     // 遍历promise数组
     for (let i in studyDataRespArr) {
       // 对于每一个promise，它data里面有MAX_LIMIT个对象
@@ -51,7 +50,6 @@ exports.main = async (event, context) => {
         const studyData = promise.data[s]
         //课程表
         const day_schedule = studyData.schedule.schedule[dayOfTheWeek - 1]
-
         //通过openid找公众号openid和学校代码（用于找学期开始时间）
         const { _openid } = studyData
         const userResp = await db.collection('user').where({

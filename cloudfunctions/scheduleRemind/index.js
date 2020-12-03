@@ -7,7 +7,7 @@ const db = cloud.database()
 const log = cloud.logger()
 const appidMiniprogram = 'wxf203d0e6cfbed41a'
 const appidGZH = 'wx3df92dead7bcd174'
-
+const MAX_LIMIT = 100
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -20,7 +20,7 @@ exports.main = async (event, context) => {
     // 计算需分几次取
     const batchTimes = Math.ceil(total / 100)
     // 承载所有读操作的 promise 的数组 
-    const examRemindListRespArr = []
+    const scheduleRemindListRespArr = []
     // 获取所有数据
     for (let i = 0; i < batchTimes; i++) {
       const promise = await db.collection('scheduleRemindList').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
@@ -29,7 +29,7 @@ exports.main = async (event, context) => {
     // 遍历promise数组
     for (let i in scheduleRemindListRespArr) {
       // 对于每一个promise，它data里面有MAX_LIMIT个对象
-      const promise = examRemindListRespArr[i];
+      const promise = scheduleRemindListRespArr[i];
       // 遍历promise的data，有MAX_LIMIT个考试信息对象
       for (let s in promise.data) {
         // 对于每一个对象，就是课程提醒信息了
@@ -37,10 +37,10 @@ exports.main = async (event, context) => {
         const timetemp = schedule.time.split(':')
         //hourtemp 开始的小时
         //minutetemp 开始的分钟+60
-        const hourtemp = timetemp[0]
+        const hourtemp =  parseInt(timetemp[0])
         const minutetemp = parseInt(timetemp[1].split(' ')[0]) + 60
         //判断时间
-        if (hourtemp == remindTime) {
+        if (hourtemp === remindTime) {
           await cloud.openapi.uniformMessage.send({
             touser: schedule._openidGZH,
             mpTemplateMsg: {
