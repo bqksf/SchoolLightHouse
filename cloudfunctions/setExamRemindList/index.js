@@ -19,10 +19,11 @@ exports.main = async (event, context) => {
     }).remove()
 
     // 获取当前日期
-    var d = new Date();
-    var dt = ''
-    if ((dt + d.getDate()).length==1) {dt = '0'}
-    var today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + dt + d.getDate()
+    const date = new Date();
+    let dt = ''
+    if ((dt + date.getDate()).length === 1) { dt = '0' }
+    const today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + dt + date.getDate()
+
     // 获取所有 需要提醒的用户 的 考试信息，添加到提醒列表数据库
     // 先取出集合记录总数
     const countResult = await db.collection('studyData').where({
