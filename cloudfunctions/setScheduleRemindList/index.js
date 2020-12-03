@@ -7,100 +7,118 @@ cloud.init({
 const db = cloud.database()
 const log = cloud.logger()
 const MAX_LIMIT = 100
+
 // 云函数入口函数
 exports.main = async (event, context) => {
-  //清空列表
-  const _ = db.command
+
   try {
-    const a = await db.collection('scheduleRemindList').where({
+    // 清空数据库列表
+    const _ = db.command
+    await db.collection('scheduleRemindList').where({
       lessontime: _.exists(true)
     }).remove()
-  } catch (e) {
-    console.error(e)
-  }
 
 
-  //今天星期几
-  const nowDate = new Date();
-  let dayOfTheWeek = nowDate.getDay(); //获取当前星期X(0-6,0代表星期天)
-  dayOfTheWeek = dayOfTheWeek == 0 ? 7 : dayOfTheWeek;
+    // 今天星期几
+    const nowDate = new Date();
+    let dayOfTheWeek = nowDate.getDay(); //获取当前星期X(0-6,0代表星期天)
+    dayOfTheWeek = dayOfTheWeek == 0 ? 7 : dayOfTheWeek;
 
-  try {
-    //获取所有 需要提醒的用户 的个人信息
-    //先取出集合记录总数
-    const countResult = await db.collection('studyData').count()
+    // 获取所有 需要提醒的用户 的 考试信息，添加到提醒列表数据库
+    // 先取出集合记录总数
+    const countResult = await db.collection('studyData').where({
+      needScheduleRemind: true
+    }).count()
     const total = countResult.total
     // 计算需分几次取
     const batchTimes = Math.ceil(total / 100)
     // 承载所有读操作的 promise 的数组 
-    const studyDataResp = []
-    //获取所有数据
+    const studyDataRespArr = []
+    // 获取所有数据
     for (let i = 0; i < batchTimes; i++) {
-      const promise = await db.collection('studyData').skip(i * MAX_LIMIT).limit(MAX_LIMIT).where({
+      const promise = await db.collection('studyData').where({
         needScheduleRemind: true
-      }).get()
-      studyDataResp.push(promise)
+      }).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
+      studyDataRespArr.push(promise)
     }
 
-    //遍历学习数据
-    for (let s in studyDataResp[0].data) {
-      let studyData = studyDataResp[0].data[s]
-      //课程表
-      let day_schedule = studyData.schedule.schedule[dayOfTheWeek - 1]
+    // 遍历promise数组
+    for (let i in studyDataRespArr) {
+      // 对于每一个promise，它data里面有MAX_LIMIT个对象
+      const promise = studyDataRespArr[i];
+      // 遍历promise的data，有MAX_LIMIT个学习信息对象
+      for (let s in promise.data) {
+        // 对于每一个对象，就是学习信息了
+        const studyData = promise.data[s]
+        //课程表
+        const day_schedule = studyData.schedule.schedule[dayOfTheWeek - 1]
 
-      //通过openid找公众号openid和学校代码（用于找学期开始时间）
-      let _openid = studyData._openid
-      let user = await db.collection('user').where({
-        _openid
-      }).get()
-      //获取到的学校代码和公众号openid
-      let {
-        schoolCode,
-        _openidGZH
-      } = user.data[0]
-      //获取到学期开始时间
-      let schoolTemp = await db.collection('school').where({
-        code: schoolCode
-      }).get()
-      let {
-        startTime
-      } = schoolTemp.data[0]
-      //计算第几周
-      let weekNum = getWhichWeek(startTime)
-      //判断课程是否再本周
-      for (let d in day_schedule) {
-        let section_schedule = day_schedule[d]
-        for (let s in section_schedule) {
-          let schedule = section_schedule[s]
-          if (schedule['weeks_arr'].indexOf(weekNum) != -1) {
-            let {
-              name,
-              place,
-              time,
-              teacher
-            } = schedule
-
-            await db.collection('scheduleRemindList').add({
-              data: {
-                _openidGZH,
-                name,
-                place,
-                time,
-                teacher
+        //通过openid找公众号openid和学校代码（用于找学期开始时间）
+        const { _openid } = studyData
+        const userResp = await db.collection('user').where({
+          _openid
+        }).get()
+        //获取到的学校代码和公众号openid
+        const {
+          schoolCode,
+          _openidGZH
+        } = userResp.data[0]
+        // 判断公众号id，只有存在（关注了公众号）才进行后续判断
+        if (_openidGZH && _openidGZH.length > 0) {
+          //获取到学期开始时间
+          const schoolResp = await db.collection('school').where({
+            code: schoolCode
+          }).get()
+          const {
+            startTime
+          } = schoolResp.data[0]
+          //计算第几周
+          const weekNum = getWhichWeek(startTime)
+          //判断课程是否再本周
+          for (let d in day_schedule) {
+            const section_schedule = day_schedule[d]
+            for (let s in section_schedule) {
+              // 对于每一个课程信息 判断时间 添加到提醒列表数据库
+              const schedule = section_schedule[s]
+              if (schedule['weeks_arr'].indexOf(weekNum) != -1) {
+                const {
+                  name,
+                  place,
+                  time,
+                  teacher
+                } = schedule
+                await db.collection('scheduleRemindList').add({
+                  data: {
+                    _openidGZH,
+                    name,
+                    place,
+                    time,
+                    teacher
+                  }
+                })
               }
-            })
+            }
           }
+        } else {
+          // 取关了公众号，关闭用户的提醒设置
+          await db.collection('studyData').doc(studyData._id).update({
+            data: {
+              needScheduleRemind: false
+            }
+          });
         }
       }
     }
   } catch (e) {
     log.error({
-      message: '查询studyData数据库失败：',
-      data: e.toString(),
-      _openid: OPENID
+      message: '设置课程提醒列表失败：',
+      data: e.toString()
     });
+    return false;
   }
+  return true;
 }
+
 //根据开始时间计算第几周
 function getWhichWeek(startTime) {
   //哪一周

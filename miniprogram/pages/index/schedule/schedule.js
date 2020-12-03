@@ -114,83 +114,89 @@ Page({
         wx.showLoading({
             title: '正在设置',
         })
-        const getUnionid = await wx.cloud.callFunction({
-            name: "getUnionid"
-        })
-        const _unionid = getUnionid.result
-        //只有存在_unionid（关注公众号后）
-        if (_unionid.length > 0) {
-            //通过unionid查询openidGZH
-            const openidGZHResp= await db.collection('userGZH').where({
-                _unionid
-            }).get()
-            const _openidGZH=openidGZHResp.data[0]._openid
-            //查询user表里有无该对象
-            const usertemp= await db.collection('user').where({
-                _unionid,
-                _openidGZH
-            }).get()
-            //如果没有就更新进去
-            if(usertemp.data.length==0){
-                await db.collection('user').where({
-                    _openid:app.globalData._openid
-                }).update({
-                    data:{
-                        _unionid,
-                        _openidGZH
-                    }
-                })
-            }
-            wx.hideLoading({})
-            if (this.data.mindStatus) {
-                wx.showModal({
-                    title: '成功',
-                    content: '你已经开启提醒服务，请注意“高校灯塔”的消息推送哦',
-                    showCancel: false,
-                })
-                try {
-                    await db.collection('studyData').where({
-                        _openid: app.globalData._openid,
+        try {
+            const getUnionid = await wx.cloud.callFunction({
+                name: "getUnionid"
+            })
+            const _unionid = getUnionid.result
+            //只有存在_unionid（关注公众号后）
+            if (_unionid.length > 0) {
+                //通过unionid查询openidGZH
+                const openidGZHResp = await db.collection('userGZH').where({
+                    _unionid
+                }).get()
+                const _openidGZH = openidGZHResp.data[0]._openid
+                //查询user表里有无该对象
+                const usertemp = await db.collection('user').where({
+                    _unionid,
+                    _openidGZH
+                }).get()
+                //如果没有就更新进去
+                if (usertemp.data.length === 0) {
+                    await db.collection('user').where({
+                        _openid: app.globalData._openid
                     }).update({
                         data: {
-                            needScheduleRemind: true
+                            _unionid,
+                            _openidGZH
                         }
-                    });
-                } catch (e) {
-                    showErrorModal('设置提醒失败', e);
+                    })
+                }
+                if (this.data.mindStatus) {
+                    try {
+                        await db.collection('studyData').where({
+                            _openid: app.globalData._openid,
+                        }).update({
+                            data: {
+                                needScheduleRemind: true
+                            }
+                        });
+                        wx.hideLoading();
+                        wx.showModal({
+                            title: '成功',
+                            content: '你已经开启提醒服务，请注意“高校灯塔”的消息推送哦',
+                            showCancel: false,
+                        });
+                    } catch (e) {
+                        showErrorModal('设置提醒失败', e);
+                    }
+                } else {
+                    try {
+                        await db.collection('studyData').where({
+                            _openid: app.globalData._openid,
+                        }).update({
+                            data: {
+                                needScheduleRemind: false
+                            }
+                        });
+                        wx.hideLoading();
+                        wx.showModal({
+                            title: '成功',
+                            content: '你已经取消提醒',
+                            showCancel: false,
+                        });
+                    } catch (e) {
+                        showErrorModal('取消提醒失败', e);
+                    }
                 }
             } else {
+                wx.hideLoading();
                 wx.showModal({
-                    title: '成功',
-                    content: '你已经取消提醒',
-                    showCancel: false,
-                })
-                try {
-                    await db.collection('studyData').where({
-                        _openid: app.globalData._openid,
-                    }).update({
-                        data: {
-                            needScheduleRemind: false
+                    title: '提示',
+                    content: '由于小程序限制，发布课程提醒需要依赖“高校灯塔”公众号推送，关注后能获取更完整的服务哦',
+                    confirmText: '去关注',
+                    success(res) {
+                        if (res.confirm) {
+                            console.log('用户点击确定')
+                        } else if (res.cancel) {
+                            console.log('用户点击取消')
                         }
-                    });
-                } catch (e) {
-                    showErrorModal('取消提醒失败', e);
-                }
-            }
-        } else {
-            wx.hideLoading({})
-            wx.showModal({
-                title: '提示',
-                content: '由于小程序限制，发布课程提醒需要依赖“高校灯塔”公众号推送，关注后能获取更完整的服务哦',
-                confirmText: '去关注',
-                success(res) {
-                    if (res.confirm) {
-                        console.log('用户点击确定')
-                    } else if (res.cancel) {
-                        console.log('用户点击取消')
                     }
-                }
-            })
+                })
+            }
+        } catch (e) {
+            wx.hideLoading();
+            showErrorModal('提醒功能出错', e);
         }
     },
     initData(data, weekNum) {

@@ -15,7 +15,7 @@ Page({
             name: 'gzcsxy',
             value: '华南理工大学广州学院',
             checked: 'true'
-        }, ],
+        },],
         schoolCode: 'gzcsxy',
         stuID: "",
         stuPassword: ""
@@ -117,19 +117,19 @@ Page({
             const unionidResp = await wx.cloud.callFunction({
                 name: 'getUnionid'
             })
-            var _unionid = unionidResp.result
-            var _openidGZH = undefined
+            let _unionid = unionidResp.result
+            let _openidGZH = undefined
             //找openidGZH，有就记录下来
-            if (_unionid&&_unionid.length > 0) {
-               const _openidGZHResp= await db.collection('userGZH').where({
-                _unionid
-              }).get()
-                _openidGZH=_openidGZHResp.data[0]._openid
+            if (_unionid && _unionid.length > 0) {
+                const _openidGZHResp = await db.collection('userGZH').where({
+                    _unionid
+                }).get()
+                _openidGZH = _openidGZHResp.data[0]._openid
             }
             //找不到就将这两个参数设置为null
-            else{
-                _unionid=null
-                _openidGZH=null
+            else {
+                _unionid = null
+                _openidGZH = null
             }
             await db.collection('user').add({
                 data: {
