@@ -14,8 +14,13 @@ exports.main = async (event, context) => {
   const examRemindList = temp.data
   for (let e in examRemindList) {
     let exam=examRemindList[e]
+    let timetemp=exam.examtime.split(':')
+    //hourtemp 开始的小时
+    //minutetemp 开始的分钟+60
+    let hourtemp=timetemp[0]
+    let minutetemp=parseInt(timetemp[1].split('-')[0])+60
     //判断时间
-    if (exam.examtime.split(':')[0] == remindTime) {
+    if (hourtemp == remindTime) {
       await cloud.openapi.uniformMessage.send({
         touser: exam._openidGZH,
         mpTemplateMsg: {
@@ -24,7 +29,7 @@ exports.main = async (event, context) => {
           url: '',
           data: {
             "first": {
-              "value": "考试即将开始",
+              "value": "考试将在"+minutetemp+"分钟后开始",
               "color": "#173177"
             },
             "keyword1": {
@@ -36,7 +41,7 @@ exports.main = async (event, context) => {
               "color": "#173177"
             },
             "remark": {
-              "value": "请注意带好纸笔，不要迟到",
+              "value": exam.location,
               "color": "#173177"
             }
           },
@@ -50,6 +55,6 @@ exports.main = async (event, context) => {
       await db.collection("examRemindList").where({
         _id:exam._id
       }).remove()
-    }
+     }
   }
 }

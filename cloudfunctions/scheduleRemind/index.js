@@ -13,8 +13,13 @@ exports.main = async (event, context) => {
   const scheduleRemindList = temp.data
   for (let s in scheduleRemindList) {
     let schedule = scheduleRemindList[s]
-    if (schedule.time.split(':')[0] == remindTime) {
-      console.log("TODO:发送提醒消息")
+    let timetemp=schedule.time.split(':')
+    //hourtemp 开始的小时
+    //minutetemp 开始的分钟+60
+    let hourtemp=timetemp[0]
+    let minutetemp=parseInt(timetemp[1].split(' ')[0])+60
+    //判断时间
+    if (hourtemp == remindTime) {
       await cloud.openapi.uniformMessage.send({
         touser:schedule._openidGZH,
         mpTemplateMsg: {
@@ -23,7 +28,7 @@ exports.main = async (event, context) => {
           url: '',
           data:{
             "first": {
-              "value": "课程即将开始",
+              "value": "课程将在"+minutetemp+"后开始",
               "color": "#173177"
             },
             "keyword1": {
@@ -35,7 +40,7 @@ exports.main = async (event, context) => {
               "color": "#173177"
             },
             "remark": {
-              "value": "上课地点："+schedule.place+"不要迟到",
+              "value": schedule.place,
               "color": "#173177"
             }
           },

@@ -55,9 +55,7 @@ exports.main = async (event, context) => {
       }).get()
       //获取到的学校代码和公众号openid
       let {
-        schoolCode
-      } = user.data[0]
-      let {
+        schoolCode,
         _openidGZH
       } = user.data[0]
       //获取到学期开始时间
@@ -81,7 +79,7 @@ exports.main = async (event, context) => {
               time,
               teacher
             } = schedule
-            //TODO 5.添加数据库（openid ，课程）
+
             await db.collection('scheduleRemindList').add({
               data: {
                 _openidGZH,

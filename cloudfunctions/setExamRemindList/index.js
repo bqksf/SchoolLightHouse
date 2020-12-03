@@ -61,7 +61,8 @@ exports.main = async (event, context) => {
                 _openidGZH,
                 examName:exam.lesson_name,
                 examDay:exam.day,
-                examtime:exam.time
+                examtime:exam.time,
+                location:exam.location
               }
             })
           }
