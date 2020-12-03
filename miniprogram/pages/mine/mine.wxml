@@ -9,7 +9,7 @@
             </view>
         </view>
     </view>
-    <view class="question">
+    <!-- <view class="question">
         <view class="weui-flex">
             <view class="weui-flex__item">
                 <view class="question-tip">
@@ -30,7 +30,7 @@
                 </view>
             </view>
         </view>
-    </view>
+    </view> -->
     <view class="page__bd">
         <view class="weui-cells weui-cells_after-title">
             <navigator class="weui-cell weui-cell_access" hoverClass="weui-cell_active" url="{{navigateUrl}}">
@@ -60,7 +60,7 @@
         <view class="card-style">
             <view class="tip">
                 <image src="../../images/message-square.png" class="icon-info"></image>
-                <view class="notice">华广交流群，添加客服微信：skye889900，邀请大家进入，可获取最新消息，反馈建议，交流使用体验。</view>
+                <view class="notice">华广交流群，添加客服微信：{{kefuWechat}}，邀请大家进入，可获取最新消息，反馈建议，交流使用体验。</view>
             </view>
         </view>
     </view>

@@ -7,20 +7,22 @@ Page({
             name: "未注册",
         },
         navigateTitle: "教务系统",
-        navigateUrl: "../mine/esInfo/esInfo"
+        navigateUrl: "../mine/esInfo/esInfo",
+        kefuWechat: ''
     },
     onShow() {
         !app.globalData.firstlogin && (this.getStudentInfo());
         this.setData({
-            navigateTitle: app.globalData.isNoBind === true || app.globalData.firstlogin ? '未绑定教务系统':'教务系统',
-            navigateUrl: app.globalData.isNoBind === true || app.globalData.firstlogin ? '/pages/register/register':'../mine/esInfo/esInfo',
+            navigateTitle: app.globalData.isNoBind === true || app.globalData.firstlogin ? '未绑定教务系统' : '教务系统',
+            navigateUrl: app.globalData.isNoBind === true || app.globalData.firstlogin ? '/pages/register/register' : '../mine/esInfo/esInfo',
+            kefuWechat: app.globalData.kefuWechat ? app.globalData.kefuWechat : 'skye889900'
         });
     },
     getStudentInfo() {
         // 绑定后的返回我的界面来不及读取global，会造成空值
         this.setData({
             studentInfo: {
-                image: app.globalData.userInfo.avatarUrl ||  "/images/user.png",
+                image: app.globalData.userInfo.avatarUrl || "/images/user.png",
                 name: app.globalData.userInfo.name || "绑定成功"
             }
         });

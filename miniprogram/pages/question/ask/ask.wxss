@@ -1,4 +1,0 @@
-button:not([size='mini']) {
-    width: 80% !important;
-    margin-top: 50rpx;
-}

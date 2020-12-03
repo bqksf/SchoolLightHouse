@@ -1,18 +1,13 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/question/question",
-    "pages/question/search/search",
     "pages/mine/mine",
-    "pages/question/moreanswer/moreanswer",
-    "pages/question/answer/answer",
     "pages/index/score/score",
     "pages/mine/about/about",
     "pages/mine/update/update",
     "pages/register/privacy/privacy",
     "pages/index/exam/exam",
     "pages/index/schedule/schedule",
-    "pages/question/ask/ask",
     "pages/register/register",
     "pages/mine/esInfo/esInfo"
   ],
@@ -34,12 +29,6 @@
         "text": "学习",
         "iconPath": "images/learn.png",
         "selectedIconPath": "images/learn-on.png"
-      },
-      {
-        "pagePath": "pages/question/question",
-        "text": "问问",
-        "iconPath": "images/compass.png",
-        "selectedIconPath": "images/compass-on.png"
       },
       {
         "pagePath": "pages/mine/mine",

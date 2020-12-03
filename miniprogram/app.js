@@ -11,12 +11,14 @@ App({
 		weekNum: 0,
 		_openid: null,
 		userInfo: {},
-		isNoBind: false
+		isNoBind: false,
+		kefuWechat: null
 	},
 	async onLaunch() {
 		this.cloudInit();
 		await this.get_openid();
 		await this.getUserInfo();
+		await this.getKefuWechat();
 		this.okCallBack();
 	},
 	async get_openid() {
@@ -39,6 +41,19 @@ App({
 		}
 		catch (e) {
 			showErrorModal('获取OPENID失败', e);
+		}
+	},
+	async getKefuWechat() {
+		try {
+			const kefuWechatResp = await db.collection('configGZH').where({
+				key: 'kefuWechat'
+			}).get();
+			const kefuWechat = kefuWechatResp.data[0].value;
+			this.globalData.kefuWechat = kefuWechat;
+			console.log('获取到客服微信：' + this.globalData.kefuWechat);
+		}
+		catch (e) {
+			console.log('获取微信客服失败：', e.toString());
 		}
 	},
 	cloudInit() {
