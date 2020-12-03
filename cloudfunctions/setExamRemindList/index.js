@@ -20,8 +20,9 @@ exports.main = async (event, context) => {
 
     // 获取当前日期
     var d = new Date();
-    var today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate()
-
+    var dt = ''
+    if ((dt + d.getDate()).length==1) {dt = '0'}
+    var today = d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + dt + d.getDate()
     // 获取所有 需要提醒的用户 的 考试信息，添加到提醒列表数据库
     // 先取出集合记录总数
     const countResult = await db.collection('studyData').where({
@@ -48,15 +49,21 @@ exports.main = async (event, context) => {
       for (let a in promise.data) {
         // 对于每一个对象，就是学习信息了
         const studyData = promise.data[a]
-        const { _openid } = studyData
+        const {
+          _openid
+        } = studyData
         const userResp = await db.collection('user').where({
           _openid
         }).get()
-        const { _openidGZH } = userResp.data[0]
+        const {
+          _openidGZH
+        } = userResp.data[0]
         // 判断公众号id，只有存在（关注了公众号）才进行后续判断
         if (_openidGZH && _openidGZH.length > 0) {
           // 获取所有考试信息
-          const { examTime } = studyData
+          const {
+            examTime
+          } = studyData
           const dataKeysArr = Object.keys(examTime)
           const yearTitle = dataKeysArr[0];
           const sectionExamArr = examTime[yearTitle];
