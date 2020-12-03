@@ -49,7 +49,7 @@ exports.main = async (event, context) => {
               url: '',
               data: {
                 "first": {
-                  "value": "课程将在" + minutetemp + "后开始",
+                  "value": "课程将在" + minutetemp + "分钟后开始",
                   "color": "#173177"
                 },
                 "keyword1": {
