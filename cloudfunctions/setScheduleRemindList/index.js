@@ -18,11 +18,11 @@ exports.main = async (event, context) => {
       time: _.exists(true)
     }).remove()
 
-
     // 今天星期几
     const nowDate = new Date();
     let dayOfTheWeek = nowDate.getDay(); //获取当前星期X(0-6,0代表星期天)
-    dayOfTheWeek = dayOfTheWeek == 0 ? 7 : dayOfTheWeek;
+    dayOfTheWeek=dayOfTheWeek+1
+    console.log(dayOfTheWeek);
     // 获取所有 需要提醒的用户 的 考试信息，添加到提醒列表数据库
     // 先取出集合记录总数
     const countResult = await db.collection('studyData').where({
@@ -40,7 +40,6 @@ exports.main = async (event, context) => {
       }).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
       studyDataRespArr.push(promise)
     }
-
     // 遍历promise数组
     for (let i in studyDataRespArr) {
       // 对于每一个promise，它data里面有MAX_LIMIT个对象
@@ -51,7 +50,6 @@ exports.main = async (event, context) => {
         const studyData = promise.data[s]
         //课程表
         const day_schedule = studyData.schedule.schedule[dayOfTheWeek - 1]
-
         //通过openid找公众号openid和学校代码（用于找学期开始时间）
         const { _openid } = studyData
         const userResp = await db.collection('user').where({
@@ -86,6 +84,7 @@ exports.main = async (event, context) => {
                   time,
                   teacher
                 } = schedule
+                console.log("tuip123");
                 await db.collection('scheduleRemindList').add({
                   data: {
                     _openidGZH,

@@ -5,15 +5,23 @@ cloud.init({
 })
 const db = cloud.database()
 const log = cloud.logger()
+const got = require('got');
 const appidMiniprogram = 'wxf203d0e6cfbed41a'
 const appidGZH = 'wx3df92dead7bcd174'
-
+const MAX_LIMIT = 100
 // 云函数入口函数
 exports.main = async (event, context) => {
   try {
     // 获取当前事件
     const date = new Date()
-    const remindTime = date.getHours() + 1
+    //+8解决时区问题
+    const remindTime = date.getHours() + 1 +8
+    console.log('提醒时间：' + remindTime+'到'+(remindTime+1));
+    //获取access_token
+    const configGZHResp = await db.collection('configGZH').where({
+      key: 'access_token'
+    }).get();
+    const access_token = configGZHResp.data[0].value;
     // 获取所有需要提醒的内容
     const countResult = await db.collection('examRemindList').count()
     const total = countResult.total
@@ -37,47 +45,49 @@ exports.main = async (event, context) => {
         const timetemp = exam.examtime.split(':')
         // hourtemp 开始的小时
         // minutetemp 开始的分钟+60
-        const hourtemp = timetemp[0]
+        const hourtemp = parseInt(timetemp[0])
         const minutetemp = parseInt(timetemp[1].split('-')[0]) + 60
         // 判断时间
-        if (hourtemp == remindTime) {
-          await cloud.openapi.uniformMessage.send({
-            touser: exam._openidGZH,
-            mpTemplateMsg: {
-              appid: appidGZH,
-              templateId: 'vaiyMl11zeD9l-nhBXPhxrZ2sbv9aD4Hb6ePed59ZT8',
-              url: '',
-              data: {
-                "first": {
-                  "value": "考试将在" + minutetemp + "分钟后开始",
-                  "color": "#173177"
-                },
-                "keyword1": {
-                  "value": exam.examName,
-                  "color": "#173177"
-                },
-                "keyword2": {
-                  "value": exam.examtime,
-                  "color": "#173177"
-                },
-                "remark": {
-                  "value": exam.location,
-                  "color": "#173177"
-                }
+        if (hourtemp === remindTime) {
+          let url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + access_token
+          let datajson = {
+            "touser": exam._openidGZH,
+            "template_id": 'vaiyMl11zeD9l-nhBXPhxrZ2sbv9aD4Hb6ePed59ZT8',
+            "url": '',
+            "data": {
+              "first": {
+                "value": "考试将在" + minutetemp + "分钟后开始",
+                "color": "#173177"
               },
-              miniprogram: {
-                appid: appidMiniprogram,
-                page: 'pages/index/index'
+              "keyword1": {
+                "value": exam.examName,
+                "color": "#173177"
+              },
+              "keyword2": {
+                "value": exam.examtime,
+                "color": "#173177"
+              },
+              "remark": {
+                "value": exam.location,
+                "color": "#173177"
               }
-            }
+            },
+            miniprogram: {
+                    appid: appidMiniprogram,
+                    page: 'pages/index/index'
+                  }
+          }
+         let httpResp= await got.post(url, {
+            json: datajson,
+            responseType: 'json'
           })
+          console.log(httpResp.body);
           // 用完就删
           await db.collection("examRemindList").doc(exam._id).remove()
         }
       }
     }
-  }
-  catch (e) {
+  } catch (e) {
     log.error({
       message: '发送考试提醒失败：',
       data: e.toString()
