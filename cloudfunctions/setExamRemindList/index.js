@@ -17,13 +17,12 @@ exports.main = async (event, context) => {
     await db.collection('examRemindList').where({
       examtime: _.exists(true)
     }).remove()
-
     // 获取当前日期
     const date = new Date();
     let dt = ''
-    if ((dt + date.getDate()).length === 1) { dt = '0' }
-    const today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + dt + date.getDate()
-
+    if ((dt + (date.getDate() + 1)).length === 1) {dt = '0'}
+    const today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + dt + (date.getDate()  + 1)
+    console.log(today);
     // 获取所有 需要提醒的用户 的 考试信息，添加到提醒列表数据库
     // 先取出集合记录总数
     const countResult = await db.collection('studyData').where({
@@ -41,7 +40,6 @@ exports.main = async (event, context) => {
       }).skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
       studyDataRespArr.push(promise)
     }
-
     // 遍历promise数组
     for (let i in studyDataRespArr) {
       // 对于每一个promise，它data里面有MAX_LIMIT个对象
@@ -71,7 +69,7 @@ exports.main = async (event, context) => {
           for (let e in sectionExamArr) {
             // 对于每一个考试信息 判断时间 添加到提醒列表数据库
             const exam = sectionExamArr[e]
-            if (exam.day == today) {
+            if (exam.day === today) {
               await db.collection('examRemindList').add({
                 data: {
                   _openidGZH,
