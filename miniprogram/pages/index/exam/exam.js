@@ -39,12 +39,6 @@ Page({
             return false
         }
     },
-    tapIcon() {
-        this.setData({
-            mindStatus: !this.data.mindStatus
-        });
-        this.remindChange();
-    },
     async remindChange() {
         wx.showLoading({
             title: '正在设置',
@@ -60,7 +54,12 @@ Page({
                 const openidGZHResp = await db.collection('userGZH').where({
                     _unionid
                 }).get()
-                const _openidGZH = openidGZHResp.data[0]._openid
+                if (openidGZHResp.data.length === 0) {
+                    // 2020.12.3 kang 处理马上取关了公众号，但小程序unionid还有缓存的时候
+                    this.showSubscribeModal();
+                    return;
+                }
+                const _openidGZH = openidGZHResp.data[0]._openid;
                 //查询user表里有无该对象
                 const usertemp = await db.collection('user').where({
                     _unionid,
@@ -77,7 +76,7 @@ Page({
                         }
                     })
                 }
-                if (this.data.mindStatus) {
+                if (!this.data.mindStatus) {
                     try {
                         await db.collection('studyData').where({
                             _openid: app.globalData._openid,
@@ -85,6 +84,9 @@ Page({
                             data: {
                                 needExamRemind: true
                             }
+                        });
+                        this.setData({
+                            mindStatus: !this.data.mindStatus
                         });
                         wx.hideLoading();
                         wx.showModal({
@@ -104,6 +106,10 @@ Page({
                                 needExamRemind: false
                             }
                         });
+                        this.setData({
+                            mindStatus: !this.data.mindStatus
+                        });
+                        wx.hideLoading();
                         wx.showModal({
                             title: '成功',
                             content: '你已经取消提醒',
@@ -115,24 +121,30 @@ Page({
 
                 }
             } else {
-                wx.hideLoading();
-                wx.showModal({
-                    title: '提示',
-                    content: '由于小程序限制，发布考试提醒需要依赖“高校灯塔”公众号推送，关注后能获取更完整的服务哦',
-                    confirmText: '去关注',
-                    success(res) {
-                        if (res.confirm) {
-                            console.log('用户点击确定')
-                        } else if (res.cancel) {
-                            console.log('用户点击取消')
-                        }
-                    }
-                })
+                this.showSubscribeModal();
             }
         } catch (e) {
             wx.hideLoading();
             showErrorModal('提醒功能出错', e);
         }
+    },
+    showSubscribeModal() {
+        wx.hideLoading();
+        wx.showModal({
+            title: '提示',
+            content: '由于小程序限制，发布考试提醒需要依赖“高校灯塔”公众号推送，关注后能获取更完整的服务哦',
+            confirmText: '去关注',
+            success(res) {
+                if (res.confirm) {
+                    console.log('用户点击确定')
+                    wx.navigateTo({
+                        url: '/pages/subscribeGZH/subscribeGZH'
+                    });
+                } else if (res.cancel) {
+                    console.log('用户点击取消')
+                }
+            }
+        })
     },
     initData(data) {
         const dataKeysArr = Object.keys(data);

@@ -10,9 +10,6 @@ cloud.init({
 const db = cloud.database()
 const log = cloud.logger()
 
-//Token:bug123
-//EncodingAESKey:U8nGeCnqNDKhwBZzOprgevZf7M7j0VqcSTWYa3aPSni
-
 const wechatConfig = {
     Token: 'bug123',
     EncodingAESKey: 'U8nGeCnqNDKhwBZzOprgevZf7M7j0VqcSTWYa3aPSni',
@@ -54,12 +51,8 @@ exports.main = async (event, context) => {
                 switch (Event) {
                     case 'subscribe':
                         // 关注公众号
-                        // 用openid拿unionid
-                        let url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + access_token + '&openid=' + fromOpenid + '&lang=zh_CN';
-                        let httpResp = await got(url);
-                        httpResp = JSON.parse(httpResp.body);
-                        const unionid = httpResp.unionid || null;
                         // 把两个id都保存到数据库
+                        const unionid = await getUnionid(access_token, fromOpenid);
                         await db.collection('userGZH').add({
                             data: {
                                 _openid: fromOpenid,
@@ -71,7 +64,7 @@ exports.main = async (event, context) => {
                         const userResp = await db.collection('user').where({
                             _unionid: unionid
                         }).get();
-                        const user = userResp.data;
+                        const user = userResp.data[0];
                         if (user.length !== 0) {
                             // 有这个小程序用户，更新openidGZH属性
                             await db.collection('user').doc(user._id).update({
@@ -81,15 +74,25 @@ exports.main = async (event, context) => {
                             });
                         }
                         // 发送关注消息
-                        return txtMsg(fromOpenid, '感谢关注，您现在可以使用小程序的课程提醒、考试提醒等功能了^_^\n快去试试把！');
+                        return txtMsg(fromOpenid, '感谢关注，您现在可以使用小程序的课程提醒、考试提醒等功能了^_^\n快去试试吧～\n<a data-miniprogram-appid="wxf203d0e6cfbed41a" data-miniprogram-path="pages/index/index">点我跳转到小程序</a>');
                         break;
 
                     case 'unsubscribe':
                         // 取关公众号
                         // 根据openid在数据库里删除掉记录
-                        await db.collection('userGZH').where({
+                        const userResp2 = await db.collection('userGZH').where({
                             _openid: fromOpenid
-                        }).remove();
+                        }).get();
+                        const user2 = userResp2.data[0];
+                        await db.collection('userGZH').doc(user2._id).remove();
+                        // 修改小程序用户里的openidGZH为null
+                        await db.collection('user').where({
+                            _unionid: user2._unionid
+                        }).update({
+                            data: {
+                                _openidGZH: null
+                            }
+                        });
                         break;
 
                     case 'CLICK':
@@ -106,13 +109,13 @@ exports.main = async (event, context) => {
                                 break;
 
                             default:
-                                throw '其他按钮';
+                                console.log('其他按钮');
                                 break;
                         }
                         break;
 
                     default:
-                        throw '其他Event事件';
+                        console.log('其他Event事件');
                         break;
                 }
                 break;
@@ -126,12 +129,13 @@ exports.main = async (event, context) => {
                         break;
 
                     default:
+                        console.log('其他文字');
                         break;
                 }
                 break;
 
             default:
-                throw '其他MsgType事件';
+                console.log('其他MsgType事件');
                 break;
         }
     }
@@ -139,6 +143,14 @@ exports.main = async (event, context) => {
         log.error({ message: '公众号处理云函数出错：', data: e.toString() });
     }
     return '';// 无论如何都要求返回一个空串，不然微信会重试3次
+}
+
+async function getUnionid(access_token, fromOpenid) {
+    // 用openid拿unionid
+    let url = 'https://api.weixin.qq.com/cgi-bin/user/info?access_token=' + access_token + '&openid=' + fromOpenid + '&lang=zh_CN';
+    let httpResp = await got(url);
+    httpResp = JSON.parse(httpResp.body);
+    return httpResp.unionid || null;
 }
 
 async function getAccessToken() {

@@ -6,16 +6,20 @@
         </view>
         <view class="weui-msg__text-area">
             <view class="weui-msg__desc">
+                <view class="update-title">v1.3-2020-12-04</view>
+                <view>完成上课提醒和考试提醒</view>
+            </view>
+            <view class="weui-msg__desc">
                 <view class="update-title">v1.2</view>
-                <view>优化界面UI bug，新增：考试查询和课程表查询功能，清除了所有绑定数据，请小伙伴们重新绑定一下～</view>
+                <view>完成考试查询和课程表查询</view>
             </view>
             <view class="weui-msg__desc">
                 <view class="update-title">v1.1</view>
-                <view>成绩改为倒序，优化ui界面</view>
+                <view>成绩查询改为倒序，优化界面</view>
             </view>
             <view class="weui-msg__desc">
                 <view class="update-title">v1.0</view>
-                <view>完成学习和绑定界面，已开放：当前课表，成绩查询和统计</view>
+                <view>完成学习和账号绑定界面，当前课表，成绩查询和统计</view>
             </view>
         </view>
     </view>
