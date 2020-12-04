@@ -21,8 +21,8 @@ exports.main = async (event, context) => {
     // 今天星期几
     const nowDate = new Date();
     let dayOfTheWeek = nowDate.getDay(); //获取当前星期X(0-6,0代表星期天)
-    dayOfTheWeek=dayOfTheWeek+1
-    console.log(dayOfTheWeek);
+    dayOfTheWeek=dayOfTheWeek/*+1*/
+    console.log('今天星期'+dayOfTheWeek);
     // 获取所有 需要提醒的用户 的 考试信息，添加到提醒列表数据库
     // 先取出集合记录总数
     const countResult = await db.collection('studyData').where({
@@ -84,7 +84,6 @@ exports.main = async (event, context) => {
                   time,
                   teacher
                 } = schedule
-                console.log("tuip123");
                 await db.collection('scheduleRemindList').add({
                   data: {
                     _openidGZH,
