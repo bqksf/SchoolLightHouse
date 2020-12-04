@@ -104,6 +104,8 @@ Page({
                                 needExamRemind: false
                             }
                         });
+                        //2020年12月4日 tuip123 发现以前遗漏
+                        wx.hideLoading();
                         wx.showModal({
                             title: '成功',
                             content: '你已经取消提醒',
