@@ -21,6 +21,7 @@ exports.main = async (event, context) => {
     const configGZHResp = await db.collection('configGZH').where({
       key: 'access_token'
     }).get();
+    const access_token = configGZHResp.data[0].value;
     // 获取所有需要提醒的内容
     const countResult = await db.collection('scheduleRemindList').count()
     const total = countResult.total

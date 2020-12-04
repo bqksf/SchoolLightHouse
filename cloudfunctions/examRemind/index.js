@@ -49,41 +49,62 @@ exports.main = async (event, context) => {
         const minutetemp = parseInt(timetemp[1].split('-')[0]) + 60
         // 判断时间
         if (hourtemp === remindTime) {
-          let url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + access_token
-          let datajson = {
-            "touser": exam._openidGZH,
-            "template_id": 'vaiyMl11zeD9l-nhBXPhxrZ2sbv9aD4Hb6ePed59ZT8',
-            "url": '',
-            "data": {
-              "first": {
-                "value": "考试将在" + minutetemp + "分钟后开始",
-                "color": "#173177"
+        //   let url = 'https://api.weixin.qq.com/cgi-bin/message/template/send?access_token=' + access_token
+        //   let datajson = {
+        //     "touser": exam._openidGZH,
+        //     "template_id": 'vaiyMl11zeD9l-nhBXPhxrZ2sbv9aD4Hb6ePed59ZT8',
+        //     "url": '',
+        //     "data": {
+        //       "first": {
+        //         "value": "考试将在" + minutetemp + "分钟后开始",
+        //         "color": "#173177"
+        //       },
+        //       "keyword1": {
+        //         "value": exam.examName,
+        //         "color": "#173177"
+        //       },
+        //       "keyword2": {
+        //         "value": exam.examtime,
+        //         "color": "#173177"
+        //       },
+        //       "remark": {
+        //         "value": exam.location,
+        //         "color": "#173177"
+        //       }
+        //     },
+        //     miniprogram: {
+        //             appid: appidMiniprogram,
+        //             page: 'pages/index/index'
+        //           }
+        //   }
+        //  let httpResp= await got.post(url, {
+        //     json: datajson,
+        //     responseType: 'json'
+        //   })
+        //   console.log(httpResp.body);
+          const res = await cloud.openapi.subscribeMessage.send({
+            touser:exam._openidGZH,
+            //page:'pages/index/index',
+            data: {
+              first: {
+                value: "考试将在" + minutetemp + "分钟后开始"
               },
-              "keyword1": {
-                "value": exam.examName,
-                "color": "#173177"
+              keyword1: {
+                value: exam.examName
               },
-              "keyword2": {
-                "value": exam.examtime,
-                "color": "#173177"
+              keyword2: {
+                value: exam.examtime
               },
-              "remark": {
-                "value": exam.location,
-                "color": "#173177"
+              remark: {
+                value: exam.location
               }
             },
-            miniprogram: {
-                    appid: appidMiniprogram,
-                    page: 'pages/index/index'
-                  }
-          }
-         let httpResp= await got.post(url, {
-            json: datajson,
-            responseType: 'json'
+            templateId:'vaiyMl11zeD9l-nhBXPhxrZ2sbv9aD4Hb6ePed59ZT8',
           })
-          console.log(httpResp.body);
+          console.log(res);
+          
           // 用完就删
-          await db.collection("examRemindList").doc(exam._id).remove()
+          //await db.collection("examRemindList").doc(exam._id).remove()
         }
       }
     }
