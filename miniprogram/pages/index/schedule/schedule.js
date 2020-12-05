@@ -119,6 +119,12 @@ Page({
                 const openidGZHResp = await db.collection('userGZH').where({
                     _unionid
                 }).get()
+                if (app.globalData.userInfo.isOldUser) {
+                    //2020年12月5日 tuip123 判断是不是老用户
+                    this.showOldUserModel()
+                    wx.hideLoading();
+                    return;
+                } else 
                 if (openidGZHResp.data.length === 0) {
                     // 2020.12.3 kang 处理马上取关了公众号，但小程序unionid还有缓存的时候
                     this.showSubscribeModal();
@@ -209,6 +215,13 @@ Page({
                 }
             }
         })
+    },
+    showOldUserModel() {
+        wx.showModal({
+            title: '提示',
+            content: '检测到您是老用户，请先在 "高校灯塔" 公众号回复 "1" 才能正常使用提醒功能噢~',
+            showCancel: false
+        });
     },
     initData(data, weekNum) {
         let scheduleArr = data.schedule;

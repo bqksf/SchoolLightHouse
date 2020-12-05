@@ -119,20 +119,47 @@ Page({
             })
             let _unionid = unionidResp.result
             let _openidGZH = undefined
+            let isOldUser=false
             //找openidGZH，有就记录下来
             if (_unionid && _unionid.length > 0) {
                 const _openidGZHResp = await db.collection('userGZH').where({
                     _unionid
                 }).get()
-                _openidGZH = _openidGZHResp.data[0]._openid
+                //2020年12月5日 tuip123 老用户的判别
+                try{
+                    _openidGZH = _openidGZHResp.data[0]._openid}
+                catch(e){
+                    _unionid=null
+                    _openidGZH=null
+                    isOldUser=true
+                }
             }
             //找不到就将这两个参数设置为null
             else {
                 _unionid = null
                 _openidGZH = null
             }
-            await db.collection('user').add({
-                data: {
+            let userdata
+            if(isOldUser){
+                wx.showModal({
+                    title: '提示',
+                    content:'检测到您是老用户，请先在 "高校灯塔" 公众号回复 "1" 才能正常使用部分功能噢~',
+                    showCancel: false
+                });
+                userdata={
+                    avatarUrl: avatarUrl,
+                    gender: gender,
+                    name: nickName,
+                    rawData: rawData,
+                    registerTime: new Date(),
+                    schoolCode: this.data.schoolCode,
+                    _openidGZH,
+                    _unionid,
+                    isOldUser
+                }
+            }
+            else {
+                userdata={
                     avatarUrl: avatarUrl,
                     gender: gender,
                     name: nickName,
@@ -142,6 +169,9 @@ Page({
                     _openidGZH,
                     _unionid
                 }
+            }
+            await db.collection('user').add({
+                data:userdata
             });
             // 切换显示成绑定页面
             this.setData({

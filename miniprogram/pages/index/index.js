@@ -1,5 +1,10 @@
-import { getWhichWeek } from "../../utils/study-date.js";
-import { showErrorModal, isObjEmpty } from '../../utils/index.js';
+import {
+    getWhichWeek
+} from "../../utils/study-date.js";
+import {
+    showErrorModal,
+    isObjEmpty
+} from '../../utils/index.js';
 
 let app = getApp();
 let db = wx.cloud.database({
@@ -27,7 +32,11 @@ Page({
         //针对第一次进入页面
         if (!app.globalData._openid || isObjEmpty(app.globalData.userInfo)) {
             app.userInfoReadyCallback = res => { // app.js异步回调方法，获取不到数据时使用
-                const { _openid, firstlogin, userInfo } = res;
+                const {
+                    _openid,
+                    firstlogin,
+                    userInfo
+                } = res;
                 if (!firstlogin) {
                     this.initData(_openid, userInfo);
                 } else {
@@ -53,11 +62,15 @@ Page({
             });
             // 获取本学期开始时间
             try {
-                const { schoolCode } = userInfo;
+                const {
+                    schoolCode
+                } = userInfo;
                 const schoolResp = await db.collection('school').where({
                     code: schoolCode
                 }).get();
-                const { startTime } = schoolResp.data[0];
+                const {
+                    startTime
+                } = schoolResp.data[0];
                 console.log('学期开始时间：' + startTime);
                 await this.initData2(startTime);
             } catch (e) {
@@ -112,7 +125,9 @@ Page({
             if (studyData.status === 'error') {
                 throw studyData.msg + studyData.data;
             }
-            let { data } = studyData;
+            let {
+                data
+            } = studyData;
             // 设置全局变量
             app.globalData.studyData = data;
             // 设置缓存
@@ -150,6 +165,13 @@ Page({
                 notice: '暂时没有通知',
                 isRefresh: false
             });
+            //2020年12月5日 tuip123 老用户设置公告
+            if (app.globalData.userInfo.isOldUser) {
+                this.setData({
+                    notice:'检测到您是老用户，请先在 "高校灯塔" 公众号回复 "1" 才能正常使用提醒功能噢~'
+                })
+                return;
+            }
         } catch (e) {
             showErrorModal('获取学习信息失败', e);
             this.setData({
@@ -197,7 +219,7 @@ Page({
         });
         //今天星期几
         const nowDate = new Date();
-        let dayOfTheWeek = nowDate.getDay();//获取当前星期X(0-6,0代表星期天)
+        let dayOfTheWeek = nowDate.getDay(); //获取当前星期X(0-6,0代表星期天)
         dayOfTheWeek = dayOfTheWeek == 0 ? 7 : dayOfTheWeek;
         //dayOfTheWeek = 3;
         //今日所有课程
@@ -240,9 +262,9 @@ Page({
     handleScoreData(score) {
         let yearAndSectionObj = {};
         const dataKeysArr = Object.keys(score);
-        dataKeysArr.forEach(year => {//有几年
+        dataKeysArr.forEach(year => { //有几年
             let sectionArr = Object.keys(score[year]);
-            sectionArr.forEach(section => {//这一年有几学期
+            sectionArr.forEach(section => { //这一年有几学期
                 let sectionDataArr = score[year][section];
                 yearAndSectionObj[year + ' 第' + section + '学期'] = sectionDataArr;
             });
@@ -250,9 +272,9 @@ Page({
         //全部
         const allSectionKeysArr = Object.keys(yearAndSectionObj);
         let allSectionsArr = [];
-        allSectionKeysArr.forEach(allSectionKey => {//每学期的所有课
+        allSectionKeysArr.forEach(allSectionKey => { //每学期的所有课
             const sectionDataArr = yearAndSectionObj[allSectionKey];
-            allSectionsArr.push.apply(allSectionsArr, sectionDataArr);//合并数组
+            allSectionsArr.push.apply(allSectionsArr, sectionDataArr); //合并数组
         });
         const scoreNum = allSectionsArr.length;
         this.setData({
@@ -260,19 +282,19 @@ Page({
         })
     },
     tapSchoolCardButton() {
-        if (this.checkAllModalStatus()) {//全局弹窗控制
+        if (this.checkAllModalStatus()) { //全局弹窗控制
             this.showNotComplete();
             return;
         }
     },
     tapBookButton() {
-        if (this.checkAllModalStatus()) {//全局弹窗控制
+        if (this.checkAllModalStatus()) { //全局弹窗控制
             this.showNotComplete();
             return;
         }
     },
     tapScheduleButton() {
-        if (this.checkAllModalStatus()) {//全局弹窗控制
+        if (this.checkAllModalStatus()) { //全局弹窗控制
             if (!app.globalData.studyData.schedule) {
                 this.wxShowModal('暂无课程表数据，如有疑问请联系客服');
             } else {
@@ -287,7 +309,7 @@ Page({
         }
     },
     tapScoreButton() {
-        if (this.checkAllModalStatus()) {//全局弹窗控制
+        if (this.checkAllModalStatus()) { //全局弹窗控制
             if (!app.globalData.studyData.score) {
                 this.wxShowModal('学校可能暂时关闭了成绩查询接口，ps：此功能的目的不是为了第一时间查询成绩，而是对你的成绩做详细的数据分析，绘制出很多直观图表。');
             } else {
@@ -302,7 +324,7 @@ Page({
         }
     },
     tapExamButton() {
-        if (this.checkAllModalStatus()) {//全局弹窗控制
+        if (this.checkAllModalStatus()) { //全局弹窗控制
             if (!app.globalData.studyData.examTime) {
                 this.wxShowModal('暂无考试时间数据，如有疑问请联系客服');
             } else {
@@ -317,12 +339,12 @@ Page({
         }
     },
     tapQiangKeButton() {
-        if (this.checkAllModalStatus()) {//全局弹窗控制
+        if (this.checkAllModalStatus()) { //全局弹窗控制
             this.showNotComplete();
         }
     },
     tapPingJiaoButton() {
-        if (this.checkAllModalStatus()) {//全局弹窗控制
+        if (this.checkAllModalStatus()) { //全局弹窗控制
             this.showNotComplete();
         }
     },
@@ -342,6 +364,7 @@ Page({
             case 'passwordError':
                 this.wxShowModal('由于密码错误，无法获取数据，请先去资料页修改为您绑定的新密码');
                 return false;
+            
             case 'noBind':
                 wx.navigateTo({
                     url: '../register/register'
