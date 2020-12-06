@@ -168,7 +168,7 @@ Page({
             //2020年12月5日 tuip123 老用户设置公告
             if (app.globalData.userInfo.isOldUser) {
                 this.setData({
-                    notice:'检测到您是老用户，请先在 "高校灯塔" 公众号回复 "1" 才能正常使用提醒功能噢~'
+                    notice:'检测到您是老用户，请先在 "高校灯塔" 公众号回复 "1" 才能正常使用部分功能噢~'
                 })
                 return;
             }

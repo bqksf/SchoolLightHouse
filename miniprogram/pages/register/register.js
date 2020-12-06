@@ -129,7 +129,6 @@ Page({
                 try{
                     _openidGZH = _openidGZHResp.data[0]._openid}
                 catch(e){
-                    _unionid=null
                     _openidGZH=null
                     isOldUser=true
                 }
