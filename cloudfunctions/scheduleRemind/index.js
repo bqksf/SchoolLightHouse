@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
   try {
     const date = new Date()
     //+8解决时区问题
-    const remindTime = date.getHours() + 1+8
+    const remindTime = (date.getHours() + 1+8)%24
     console.log('提醒时间：' + remindTime+'到'+(remindTime+1));
     //获取access_token
     const configGZHResp = await db.collection('configGZH').where({

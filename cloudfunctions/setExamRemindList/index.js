@@ -21,7 +21,7 @@ exports.main = async (event, context) => {
     const date = new Date();
     let dt = ''
     if ((dt + (date.getDate() + 1)).length === 1) {dt = '0'}
-    const today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + dt + (date.getDate()  + 1)
+    let today = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + dt + (date.getDate()  + 1)
     console.log(today);
     // 获取所有 需要提醒的用户 的 考试信息，添加到提醒列表数据库
     // 先取出集合记录总数
@@ -67,6 +67,8 @@ exports.main = async (event, context) => {
           const yearTitle = dataKeysArr[0];
           const sectionExamArr = examTime[yearTitle];
           for (let e in sectionExamArr) {
+            
+            
             // 对于每一个考试信息 判断时间 添加到提醒列表数据库
             const exam = sectionExamArr[e]
             if (exam.day === today) {
@@ -76,7 +78,8 @@ exports.main = async (event, context) => {
                   examName: exam.lesson_name,
                   examDay: exam.day,
                   examtime: exam.time,
-                  location: exam.location
+                  location: exam.location,
+                  sit_id:exam.sit_id
                 }
               })
             }

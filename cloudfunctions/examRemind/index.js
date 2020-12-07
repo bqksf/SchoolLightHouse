@@ -15,7 +15,7 @@ exports.main = async (event, context) => {
     // 获取当前事件
     const date = new Date()
     //+8解决时区问题
-    const remindTime = date.getHours() + 1 +8
+    const remindTime = (date.getHours() + 1 +8)%24
     console.log('提醒时间：' + remindTime+'到'+(remindTime+1));
     //获取access_token
     const configGZHResp = await db.collection('configGZH').where({
@@ -68,7 +68,7 @@ exports.main = async (event, context) => {
                 "color": "#173177"
               },
               "remark": {
-                "value": exam.location,
+                "value": "教室："+exam.location+"座位号："+exam.sit_id,
                 "color": "#173177"
               }
             },
