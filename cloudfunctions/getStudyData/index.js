@@ -26,7 +26,8 @@ exports.main = async (event, context) => {
 
     // 有绑定
     studyData = studyData[0];
-    const { examTime, schedule, score, updateAt, needChangePassword, stuID, stuPassword } = studyData;
+    const { updateAt, needChangePassword, stuID, stuPassword } = studyData;
+    let { examTime, schedule, score } = studyData;
     // 检查密码是否已更改
     if (needChangePassword) {
       return returnRule.success({
@@ -36,12 +37,22 @@ exports.main = async (event, context) => {
     // 检查获取爬虫信息的时间，大于7天就重新获取（包括有账号密码，但是没有获取到数据的）
     if ((isObjEmpty(examTime) && isObjEmpty(schedule) && isObjEmpty(score)) || is7DaysLater(updateAt) || event.refresh) {
       // 获取爬虫数据
-      const data = await getPachongDataAndSafe(stuID, stuPassword, OPENID);
+      let data = await getPachongDataAndSafe(stuID, stuPassword, OPENID);
       if (!data) {
         // 密码错误
         return returnRule.success({
           needChangePassword: true
         });
+      }
+      // 2020.12.8 对象为空的时候返回给小程序为null就不会加载了
+      if (isObjEmpty(data.examTime)) {
+        data.examTime = null;
+      }
+      if (isObjEmpty(data.schedule)) {
+        data.schedule = null;
+      }
+      if (isObjEmpty(data.score)) {
+        data.score = null;
       }
       // 返回数据
       returnData = {
@@ -53,31 +64,17 @@ exports.main = async (event, context) => {
       return returnRule.success(returnData);
 
     } else {
-      // 小于7天
-      if ('error' in examTime || 'error' in schedule || 'error' in score) {
-        // 有错误，重新获取爬虫再返回
-        const data = await getPachongDataAndSafe(stuID, stuPassword, OPENID);
-        // 重新获取爬虫还是有错误
-        if ('error' in data.examTime || 'error' in data.schedule || 'error' in data.score) {
-          log.error({ message: '查询教务系统失败：', data: JSON.stringify(data), _openid: OPENID });
-          return returnRule.fail('查询教务系统失败', JSON.stringify(data));
-        }
-        if (!data) {
-          // 密码错误
-          return returnRule.success({
-            needChangePassword: true
-          });
-        }
-        // 返回数据
-        returnData = {
-          examTime: data.examTime,
-          schedule: data.schedule,
-          score: data.score,
-          needChangePassword: false
-        };
-        return returnRule.success(returnData);
+      // 小于7天，直接返回
+      // 2020.12.8 对象为空的时候返回给小程序为null就不会加载了
+      if (isObjEmpty(examTime)) {
+        examTime = null;
       }
-      // 没错误，直接返回
+      if (isObjEmpty(schedule)) {
+        schedule = null;
+      }
+      if (isObjEmpty(score)) {
+        score = null;
+      }
       returnData = {
         examTime: examTime,
         schedule: schedule,
@@ -124,6 +121,19 @@ async function getPachongDataAndSafe(stuID, stuPassword, OPENID) {
       log.error({ message: '更新为密码错误数据库失败：', data: e.toString(), _openid: OPENID });
     }
     return false;
+  }
+  // 2020.12.8 针对单项错误，传入空对象作为处理方案
+  if ('error' in data.examTime) {
+    log.warn({ message: '查询考试时间失败：', data: JSON.stringify(data), _openid: OPENID });
+    data.examTime = {};
+  }
+  if ('error' in data.schedule) {
+    log.warn({ message: '查询课程表失败：', data: JSON.stringify(data), _openid: OPENID });
+    data.schedule = {};
+  }
+  if ('error' in data.score) {
+    log.warn({ message: '查询考试成绩失败：', data: JSON.stringify(data), _openid: OPENID });
+    data.score = {};
   }
   try {
     await db.collection('studyData').where({
