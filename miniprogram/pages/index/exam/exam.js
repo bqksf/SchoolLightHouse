@@ -157,7 +157,16 @@ Page({
         wx.showModal({
             title: '提示',
             content: '检测到您是老用户，请先在 "高校灯塔" 公众号回复 "1" 才能正常使用提醒功能噢~',
-            showCancel: false
+            cancelText:'取消',
+            confirmText:'我已发送',
+            success(res){
+                if(res.confirm){
+                    app.getUserInfo();
+                    wx.reLaunch({
+                        url: '/pages/index/index',
+                    });
+                }
+            }
         });
     },
     initData(data) {
