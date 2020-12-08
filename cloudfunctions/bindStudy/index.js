@@ -28,17 +28,31 @@ exports.main = async (event, context) => {
   let url = 'https://service-lbinlxgu-1252070599.gz.apigw.tencentcs.com/release/getBindData?account=' + stuID + '&password=' + encodeURIComponent(stuPassword);
   let httpResp = await got(url);
   httpResp = JSON.parse(httpResp.body);
-  const { data } = httpResp;
+  let { data } = httpResp;
 
   if (httpResp.status === 'loginError') {
     // 登录失败
     log.error({ message: '添加学生所有信息数据库失败：', data: data.error.msg, _openid: OPENID });
     return returnRule.fail('登录教务系统失败', data.error.msg);
   }
-  if ('error' in data.examTime || 'error' in data.schedule || 'error' in data.score) {
+  if ('error' in data.examTime && 'error' in data.schedule && 'error' in data.score) {
     // 爬虫失败
+    // 2020.12.8 改为全部错误，不然新生是没有考试成绩的，就会直接考试失败了
     log.error({ message: '查询教务系统失败：', data: JSON.stringify(data), _openid: OPENID });
     return returnRule.fail('查询教务系统失败', JSON.stringify(data));
+  }
+  // 2020.12.8 针对单项错误，传入空对象作为处理方案
+  if ('error' in data.examTime) {
+    log.warn({ message: '查询考试时间失败：', data: JSON.stringify(data), _openid: OPENID });
+    data.examTime = {};
+  }
+  if ('error' in data.schedule) {
+    log.warn({ message: '查询课程表失败：', data: JSON.stringify(data), _openid: OPENID });
+    data.schedule = {};
+  }
+  if ('error' in data.score) {
+    log.warn({ message: '查询考试成绩失败：', data: JSON.stringify(data), _openid: OPENID });
+    data.score = {};
   }
 
   // 保存到数据库
