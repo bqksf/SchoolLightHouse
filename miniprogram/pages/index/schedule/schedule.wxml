@@ -1,15 +1,15 @@
 <wxs module="wxs">
-var showRemind = function(dayOfTheWeek,index,currentWeekNum,trueWeekNum) {
-    if(dayOfTheWeek-1 == index){
-        if(currentWeekNum == trueWeekNum){
-            return 'remind-color remind-font';
+    var showRemind = function (dayOfTheWeek, index, currentWeekNum, trueWeekNum) {
+        if (dayOfTheWeek - 1 == index) {
+            if (currentWeekNum == trueWeekNum) {
+                return 'remind-color remind-font';
+            }
+        } else {
+            return '' + trueWeekNum;
         }
-    }else{
-        return ''+trueWeekNum;
     }
-}
 
-module.exports.showRemind = showRemind;
+    module.exports.showRemind = showRemind;
 </wxs>
 <we-dialog title="{{dialogTitle}}" istrue="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
     <text>{{dialogContent}}</text>
@@ -20,8 +20,34 @@ module.exports.showRemind = showRemind;
             <button class="mini-button" type="default" bindtap="tapLeftButton">
                 <image class="choose-img" src="../../../images/chevron-left.png"></image>
             </button>
-            <view class="date-text">
-                第 {{currentWeekNum}} 周
+            <!-- <picker bindchange="clickcurrentWeekNum" value="{{currentWeekNum-1}}" range="{{pickerArray}}">
+                <view class="date-text">
+                    第 {{currentWeekNum}} 周
+                </view>
+            </picker> -->
+            <view class="date-text" bindtap="toggleDialog">
+                    第 {{currentWeekNum}} 周
+                </view>
+            <view class="free-dialog {{ pickerDialog ? 'free-dialog--show' : '' }}">
+                <view class="free-dialog__mask" bindtap="toggleDialog" />
+                <view class="free-dialog__container">
+                    <view style="padding: 5% 5% 15%;">
+                        <form bindsubmit='submit' bindreset="reset">
+                            <view bindtap='freetoBack' class="free-button free-dialog-reset">取消</view>
+                            <view bindtap='freeBack' class="free-button free-dialog-submit">确定</view>
+
+                            <radio-group class='free-radios' bindchange="radioChange">
+                                <label class="free-radio" bindtap="click" wx:for="{{items}}" wx:key="{{items}}"
+                                    data-id="{{index}}"
+                                    style="{{index==pickerid?'background:#48c23d;color:#fff;':'background:#fff;color:#000;'}}">
+                                    <radio value="{{item.name}}" name="{{item.value}}"></radio>
+                                    <label class="free-text">{{item.value}}</label>
+                                </label>
+                            </radio-group>
+                        </form>
+
+                    </view>
+                </view>
             </view>
             <button class="mini-button" type="default" bindtap="tapRightButton">
                 <image class="choose-img" src="../../../images/chevron-right.png"></image>
@@ -59,8 +85,10 @@ module.exports.showRemind = showRemind;
             </view>
         </div>
         <view class="table-contents">
-            <view class="weui-flex flex-col {{wxs.showRemind(dayOfTheWeek,index,currentWeekNum,trueWeekNum)}}" wx:for="{{scheduleArr}}" wx:key="index">
-                <view class="table-content " wx:for="{{item}}" wx:key="index" data-schedule="{{item}}" bindtap="tapOneSchedule">
+            <view class="weui-flex flex-col {{wxs.showRemind(dayOfTheWeek,index,currentWeekNum,trueWeekNum)}}"
+                wx:for="{{scheduleArr}}" wx:key="index">
+                <view class="table-content " wx:for="{{item}}" wx:key="index" data-schedule="{{item}}"
+                    bindtap="tapOneSchedule">
                     <text>{{item.name}}\n{{item.place}}</text>
                 </view>
             </view>

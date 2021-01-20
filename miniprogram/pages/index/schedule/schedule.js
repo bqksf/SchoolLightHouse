@@ -19,6 +19,93 @@ Page({
         dayOfTheWeek: 0,
         trueWeekNum: 0,
         stringifyScheduleData: null, // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
+        //2021年1月20日 tuip123 picker
+        pickerDialog: false,
+        pickervalue: '0',
+        pickervaluetemp: '',
+        pickerid: 0,
+        items: [
+            {
+                name: '1',
+                value: 'week1'
+            },
+            {
+                name: '2',
+                value: 'week2'
+            },
+            {
+                name: '3',
+                value: 'week3'
+            },
+            {
+                name: '4',
+                value: 'week4'
+            },
+            {
+                name: '5',
+                value: 'week5'
+            },
+            {
+                name: '6',
+                value: 'week6'
+            },
+            {
+                name: '7',
+                value: 'week7'
+            },
+            {
+                name: '8',
+                value: 'week8'
+            },
+            {
+                name: '9',
+                value: 'week9'
+            },
+            {
+                name: '10',
+                value: 'week10'
+            },
+            {
+                name: '11',
+                value: 'week11'
+            },
+            {
+                name: '12',
+                value: 'week12'
+            },
+            {
+                name: '13',
+                value: 'week13'
+            },
+            {
+                name: '14',
+                value: 'week14'
+            },
+            {
+                name: '15',
+                value: 'week15'
+            },
+            {
+                name: '16',
+                value: 'week16'
+            },
+            {
+                name: '17',
+                value: 'week17'
+            },
+            {
+                name: '18',
+                value: 'week18'
+            },
+            {
+                name: '19',
+                value: 'week19'
+            },
+            {
+                name: '20',
+                value: 'week20'
+            },
+        ]
     },
     async onLoad() {
         //今天星期几
@@ -32,6 +119,7 @@ Page({
 
         const weekNum = app.globalData.weekNum;
         this.setData({
+            pickerid:weekNum-1,
             currentWeekNum: weekNum,
             dayOfTheWeek: dayOfTheWeek,
             trueWeekNum: weekNum,
@@ -124,7 +212,7 @@ Page({
                     this.showOldUserModel()
                     wx.hideLoading();
                     return;
-                } else 
+                } else
                 if (openidGZHResp.data.length === 0) {
                     // 2020.12.3 kang 处理马上取关了公众号，但小程序unionid还有缓存的时候
                     this.showSubscribeModal();
@@ -220,10 +308,10 @@ Page({
         wx.showModal({
             title: '提示',
             content: '检测到您是老用户，请先在 "高校灯塔" 公众号回复 "1" 才能正常使用提醒功能噢~',
-            cancelText:'取消',
-            confirmText:'我已发送',
-            success(res){
-                if(res.confirm){
+            cancelText: '取消',
+            confirmText: '我已发送',
+            success(res) {
+                if (res.confirm) {
                     app.getUserInfo();
                     wx.reLaunch({
                         url: '/pages/index/index',
@@ -232,6 +320,53 @@ Page({
             }
         });
     },
+    //2021年1月20日 tuip123 点击周数按钮 唤起一个picker
+    //TODO 暂时先做成这个样子，正在研究自定义picker样式怎么做
+    clickcurrentWeekNum(e) {
+        let currentWeekNum = parseInt(e.detail.value) + 1;
+        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
+        this.setData({
+            currentWeekNum: currentWeekNum
+        });
+    },
+    click: function (e) {
+        let pickerid = e.currentTarget.dataset.id
+        this.setData({
+            pickerid: pickerid
+        })
+    },
+    radioChange: function (e) {
+        this.setData({
+            pickervaluetemp: e.detail.value
+        })
+    },
+    toggleDialog() {
+        this.setData({
+            pickerDialog: !this.data.pickerDialog
+        });
+    },
+    freeBack: function () {
+        if (this.data.pickervalue != this.data.pickervaluetemp) {
+            this.setData({
+                pickervalue: this.data.pickervaluetemp
+            })
+        }
+        this.setData({
+            pickerDialog: !this.data.pickerDialog
+        })
+        console.log(parseInt(this.data.pickervalue));
+        let currentWeekNum=parseInt(this.data.pickervalue)
+        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
+        this.setData(
+            {currentWeekNum : currentWeekNum}
+        )
+    },
+    freetoBack: function () {
+        this.setData({
+            pickerDialog: !this.data.pickerDialog
+        })
+    },
+
     initData(data, weekNum) {
         let scheduleArr = data.schedule;
         //周六日先不要了
