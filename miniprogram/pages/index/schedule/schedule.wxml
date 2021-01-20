@@ -9,7 +9,7 @@
         }
     }
 
-    function classHeight(section){
+    function classHeight(section) {
         switch (section) {
             case 1:
                 return 'class-height-one';
@@ -22,7 +22,7 @@
         }
     }
 
-    function classColor(color){
+    function classColor(color) {
         switch (color) {
             case 'green':
                 return 'class-color-green';
@@ -48,7 +48,7 @@
 </we-dialog>
 <view class="page">
     <view class="pg-head">
-        <div class="date-title">
+        <view class="date-title">
             <!-- <button class="mini-button" type="default" bindtap="tapLeftButton">
                 <image class="choose-img" src="../../../images/chevron-left.png"></image>
             </button> -->
@@ -58,8 +58,9 @@
                 </view>
             </picker> -->
             <view class="date-text" bindtap="toggleDialog">
-                第 {{currentWeekNum}} 周<image class="choose-img" src="../../../images/appstore.png"></image>
-                </view>
+                第 {{currentWeekNum}} 周
+                <image class="choose-img" src="../../../images/appstore.png"></image>
+            </view>
             <view class="free-dialog {{ pickerDialog ? 'free-dialog--show' : '' }}">
                 <view class="free-dialog__mask" bindtap="toggleDialog" />
                 <view class="free-dialog__container">
@@ -69,7 +70,7 @@
                             <view bindtap='freeBack' class="free-button free-dialog-submit">确定</view>
 
                             <radio-group class='free-radios' bindchange="radioChange">
-                                <label class="free-radio" bindtap="click" wx:for="{{items}}" wx:key="{{items}}"
+                                <label class="free-radio" bindtap="click" wx:for="{{items}}" wx:key="items"
                                     data-id="{{index}}"
                                     style="{{index==pickerid?'background:#48c23d;color:#fff;':'background:#fff;color:#000;'}}">
                                     <radio value="{{item.name}}" name="{{item.value}}"></radio>
@@ -84,19 +85,21 @@
             <!-- <button class="mini-button" type="default" bindtap="tapRightButton">
                 <image class="choose-img" src="../../../images/chevron-right.png"></image>
             </button> -->
-            
-        </div>
-        <div class="chart-icon">
+
+        </view>
+        <view class="chart-icon">
             <button plain bindtap="remindChange" wx:if="{{!mindStatus}}" style="width: 100%;">上课提醒 ｜ 关</button>
             <button type="primary" bindtap="remindChange" style="width: 100%;" wx:else>上课提醒 ｜ 开</button>
-        </div>
+        </view>
     </view>
     <view class="pg-content">
-        <div class="table-titles">
+        <view class="table-titles">
             <view class="weui-flex">
                 <view class="num-time" style="height:0"></view>
                 <view class="weui-flex__item" wx:for="{{dayArr}}" wx:key="index">
-                    <view class="table-title {{wxs.showRemind(dayOfTheWeek,index,currentWeekNum,trueWeekNum)}}">{{item.day}}<view class="title-date">{{item.date}}</view></view>
+                    <view class="table-title {{wxs.showRemind(dayOfTheWeek,index,currentWeekNum,trueWeekNum)}}">
+                        {{item.day}}<view class="title-date">{{item.date}}</view>
+                    </view>
                 </view>
                 <!-- <view class="weui-flex__item">
                     <view class="table-title">六</view>
@@ -105,16 +108,102 @@
                     <view class="table-title">日</view>
                 </view> -->
             </view>
-        </div>
+        </view>
         <view class="table-contents">
-            <view class="weui-flex flex-col {{wxs.showRemind(dayOfTheWeek,index,currentWeekNum,trueWeekNum)}}"
-                wx:for="{{scheduleArr}}" wx:key="index">
-                <view class="table-content " wx:for="{{item}}" wx:key="index" data-schedule="{{item}}"
-                    bindtap="tapOneSchedule">
-                    <text>{{item.name}}\n{{item.place}}</text>
+            <view class="weui-flex">
+                <view class=" flex-col classess-num-time">
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                    <view class="num-time">
+                        <view class="class-num">1</view>
+                        <view class="class-time">
+                            8:40
+                            9:25
+                        </view>
+                    </view>
+                </view>
+                <view class="weui-flex__item flex-col " wx:for="{{scheduleArr}}" wx:key="index">
+                    <view class="table-content {{wxs.classHeight(item.section)}} {{wxs.classColor(item.color)}}"
+                        wx:for="{{item}}" wx:key="index" data-schedule="{{item}}" bindtap="tapOneSchedule">
+                        <text>{{item.name}}\n{{item.place}}</text>
+                    </view>
                 </view>
             </view>
-        </view>
         </view>
     </view>
 </view>
