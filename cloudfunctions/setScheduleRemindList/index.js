@@ -64,13 +64,19 @@ exports.main = async (event, context) => {
         } = userResp.data[0]
         // 判断公众号id，只有存在（关注了公众号）才进行后续判断
         if (_openidGZH && _openidGZH.length > 0) {
-          //获取到学期开始时间
+          //获取到学期开始时间和放假时间
           const schoolResp = await db.collection('school').where({
             code: schoolCode
           }).get()
           const {
-            startTime
+            startTime,isHoliday
           } = schoolResp.data[0]
+
+          //如果放假则跳过该学生
+          if(isHoliday){
+            console.log("对于"+schoolCode+"已放假")
+            continue;
+          }
           //计算第几周
           const weekNum = getWhichWeek(startTime)
           //判断课程是否再本周
