@@ -1,5 +1,5 @@
 <wxs module="wxs">
-    var showRemind = function (dayOfTheWeek, index, currentWeekNum, trueWeekNum) {
+    function showRemind(dayOfTheWeek, index, currentWeekNum, trueWeekNum) {
         if (dayOfTheWeek - 1 == index) {
             if (currentWeekNum == trueWeekNum) {
                 return 'remind-color remind-font';
@@ -9,7 +9,39 @@
         }
     }
 
+    function classHeight(section){
+        switch (section) {
+            case 1:
+                return 'class-height-one';
+            case 2:
+                return 'class-height-two';
+            case 3:
+                return 'class-height-three';
+            case 4:
+                return 'class-height-four';
+        }
+    }
+
+    function classColor(color){
+        switch (color) {
+            case 'green':
+                return 'class-color-green';
+            case 'blue':
+                return 'class-color-blue';
+            case 'purple':
+                return 'class-color-purple';
+            case 'red':
+                return 'class-color-red';
+            case 'yellow':
+                return 'class-color-yellow';
+            default:
+                return '';
+        }
+    }
+
     module.exports.showRemind = showRemind;
+    module.exports.classHeight = classHeight;
+    module.exports.classColor = classColor;
 </wxs>
 <we-dialog title="{{dialogTitle}}" istrue="{{dialogShow}}" bindbuttontap="tapDialogButton" buttons="{{dialogButtons}}">
     <text>{{dialogContent}}</text>
@@ -17,16 +49,16 @@
 <view class="page">
     <view class="pg-head">
         <div class="date-title">
-            <button class="mini-button" type="default" bindtap="tapLeftButton">
+            <!-- <button class="mini-button" type="default" bindtap="tapLeftButton">
                 <image class="choose-img" src="../../../images/chevron-left.png"></image>
-            </button>
+            </button> -->
             <!-- <picker bindchange="clickcurrentWeekNum" value="{{currentWeekNum-1}}" range="{{pickerArray}}">
                 <view class="date-text">
                     第 {{currentWeekNum}} 周
                 </view>
             </picker> -->
             <view class="date-text" bindtap="toggleDialog">
-                    第 {{currentWeekNum}} 周
+                第 {{currentWeekNum}} 周<image class="choose-img" src="../../../images/appstore.png"></image>
                 </view>
             <view class="free-dialog {{ pickerDialog ? 'free-dialog--show' : '' }}">
                 <view class="free-dialog__mask" bindtap="toggleDialog" />
@@ -49,9 +81,10 @@
                     </view>
                 </view>
             </view>
-            <button class="mini-button" type="default" bindtap="tapRightButton">
+            <!-- <button class="mini-button" type="default" bindtap="tapRightButton">
                 <image class="choose-img" src="../../../images/chevron-right.png"></image>
-            </button>
+            </button> -->
+            
         </div>
         <div class="chart-icon">
             <button plain bindtap="remindChange" wx:if="{{!mindStatus}}" style="width: 100%;">上课提醒 ｜ 关</button>
@@ -61,20 +94,9 @@
     <view class="pg-content">
         <div class="table-titles">
             <view class="weui-flex">
-                <view class="weui-flex__item">
-                    <view class="table-title">一</view>
-                </view>
-                <view class="weui-flex__item">
-                    <view class="table-title">二</view>
-                </view>
-                <view class="weui-flex__item">
-                    <view class="table-title">三</view>
-                </view>
-                <view class="weui-flex__item">
-                    <view class="table-title">四</view>
-                </view>
-                <view class="weui-flex__item">
-                    <view class="table-title">五</view>
+                <view class="num-time" style="height:0"></view>
+                <view class="weui-flex__item" wx:for="{{dayArr}}" wx:key="index">
+                    <view class="table-title {{wxs.showRemind(dayOfTheWeek,index,currentWeekNum,trueWeekNum)}}">{{item.day}}<view class="title-date">{{item.date}}</view></view>
                 </view>
                 <!-- <view class="weui-flex__item">
                     <view class="table-title">六</view>
@@ -92,6 +114,7 @@
                     <text>{{item.name}}\n{{item.place}}</text>
                 </view>
             </view>
+        </view>
         </view>
     </view>
 </view>

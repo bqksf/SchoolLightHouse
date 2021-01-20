@@ -11,17 +11,13 @@ page{
 
 .date-text{
     margin: 0 20rpx;
+
 }
 
 .choose-img{
-    width: 50rpx;
-    height: 50rpx;
-}
-
-.table-contents{
-    display: flex;
-    justify-content: space-around;
-    height: calc(100% - 10px - 2.3em - 10rpx);
+    width: 35rpx;
+    height: 35rpx;
+    margin-left: 20rpx;
 }
 
 .pg-head{
@@ -36,7 +32,7 @@ page{
 .date-title{
     display: flex;
     align-items: center;
-    font-size: 40rpx;
+    font-size: 50rpx;
     font-weight: 500;
     /* padding-left: 15rpx; */
 }
@@ -62,26 +58,84 @@ button:not([size='mini']) {
 }
 
 .table-title{
-    margin: 5px;
-    padding: 0 10px;
+    margin: 10rpx;
+    padding: 0 20rpx;
     text-align: center;
-    height: 2.3em;
-    line-height: 2.3em;
+    /* height: 2.3em; */
+    /* line-height: 2.3em; */
+    line-height: 35rpx;
     color: #171a20;
     font-size: 30rpx;
 }
 
+.title-date{
+    font-size: 20rpx;
+    color: #666;
+}
+
 .table-content{
     text-align: center;
-    font-size: 27rpx;
-    width: 140rpx;
-    height: 100px;
+    font-size: 25rpx;
+    height: 226rpx;
+    box-sizing: border-box;
+    padding: 5rpx;
+    /* background-color: #f1f1ff; */
+    border-radius: 15rpx;
+    margin: 0 10rpx 10rpx 10rpx;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+}
+
+.class-height-one{
+    height: 108rpx;
+}
+
+.class-height-two{
+    height: 226rpx;
+}
+
+.class-height-three{
+    height: 344rpx;
+}
+
+.class-height-four{
+    height: 462rpx;
+}
+
+.class-color-green{
+    background-color: #e1faf6;
+    color: #59a5af;
+    box-shadow: 0 0 10rpx #eee;
+}
+
+.class-color-blue{
+    background-color: #e9f1fe;
+    color: #7293f2;
+    box-shadow: 0 0 10rpx #eee;
+}
+
+.class-color-purple{
+    background-color: #e6f4ff;
+    color: #56aeee;
+    box-shadow: 0 0 10rpx #eee;
+}
+
+.class-color-red{
+    background-color: #fceeee;
+    color: #eb5c77;
+    box-shadow: 0 0 10rpx #eee;
+}
+
+.class-color-yellow{
+    background-color: #fbf7c8;
+    color: #c4aa3b;
+    box-shadow: 0 0 10rpx #eee;
 }
 
 .flex-col{
     color: #666;
     flex-direction: column;
-    justify-content: space-around;
 }  
 
 button {
@@ -160,3 +214,30 @@ button {
     text-align: center;
     display: inline-block;
    }
+
+/* .remind-font{
+    color: #171a20;
+    font-weight: 450;
+} */
+
+
+.num-time{
+    width: 60rpx;
+    margin-bottom: 10rpx;
+    margin-right: 10rpx;
+    height: 108rpx; 
+}
+
+.class-num{
+    text-align: center;
+    color: #171a20;
+    font-size: 30rpx;
+}
+
+.class-time{
+    color: #666;
+    text-align: center;
+    font-size: 25rpx;
+    line-height: 30rpx;
+}
+

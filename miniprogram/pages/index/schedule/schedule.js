@@ -14,6 +14,7 @@ Page({
             text: '确定'
         }],
         scheduleArr: [],
+        dayArr:[],
         mindStatus: 0,
         currentWeekNum: 0,
         dayOfTheWeek: 0,
@@ -108,6 +109,8 @@ Page({
         ]
     },
     async onLoad() {
+        //创建星期几和日期数组
+        this.createDay();
         //今天星期几
         const nowDate = new Date();
         let dayOfTheWeek = nowDate.getDay(); //获取当前星期X(0-6,0代表星期天)
@@ -135,6 +138,31 @@ Page({
         this.setData({
             mindStatus: await this.isNeedScheduleRemind()
         })
+    },
+    createDay(){
+        let monday = {
+            day:'周一',
+            date:'1/19'
+        }
+        let tuesday = {
+            day:'周二',
+            date:'1/19'
+        }
+        let wednesday = {
+            day:'周三',
+            date:'1/19'
+        }
+        let thursday = {
+            day:'周四',
+            date:'1/19'
+        }
+        let firday = {
+            day:'周五',
+            date:'1/19'
+        }
+        this.setData({
+            dayArr: [monday,tuesday,wednesday,thursday,firday]
+        });
     },
     async isNeedScheduleRemind() {
         try {
