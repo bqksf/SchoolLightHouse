@@ -19,8 +19,10 @@ App({
 		await this.get_openid();
 		await this.getUserInfo();
 		await this.getKefuWechat();
+		await this.getSchoolInfo();
 		this.okCallBack();
 	},
+	
 	async get_openid() {
 		try {
 			let cache_openid = wx.getStorageSync('_openid') || false;
@@ -92,5 +94,17 @@ App({
 		if (this.userInfoReadyCallback) {
 			this.userInfoReadyCallback(res);
 		}
-	}
+	},
+	async getSchoolInfo(){
+		try{
+			const schoolInfoRes= await db.collection('school').where({
+				code:this.globalData.userInfo.schoolCode
+			}).get();
+			const schoolInfo=schoolInfoRes.data[0];
+			console.log('获取到学校数据：'+JSON.stringify(schoolInfo));
+			this.globalData.schoolInfo=schoolInfo;
+		}catch(e){
+			showErrorModal('获取学校信息失败',e);
+		}
+	},
 })
