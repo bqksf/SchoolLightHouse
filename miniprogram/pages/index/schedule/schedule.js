@@ -14,7 +14,7 @@ Page({
             text: '确定'
         }],
         scheduleArr: [],
-        dayArr:[],
+        dayArr: [],
         mindStatus: 0,
         currentWeekNum: 0,
         dayOfTheWeek: 0,
@@ -22,11 +22,8 @@ Page({
         stringifyScheduleData: null, // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
         //2021年1月20日 tuip123 picker
         pickerDialog: false,
-        pickervalue: '0',
-        pickervaluetemp: '',
         pickerid: 0,
-        items: [
-            {
+        items: [{
                 name: '1',
                 value: 'week1'
             },
@@ -109,8 +106,6 @@ Page({
         ]
     },
     async onLoad() {
-        //创建星期几和日期数组
-        this.createDay();
         //今天星期几
         const nowDate = new Date();
         let dayOfTheWeek = nowDate.getDay(); //获取当前星期X(0-6,0代表星期天)
@@ -119,11 +114,19 @@ Page({
         const {
             schedule
         } = app.globalData.studyData;
-
         const weekNum = app.globalData.weekNum;
+        //2021年1月21日 tuip123 判断是否为假日，假日则显示第一周
+        let pickerid, currentWeekNum;
+        if (this.isHoliday()) {
+            pickerid = 0;
+            currentWeekNum = 1;
+        } else {
+            pickerid = weekNum - 1;
+            currentWeekNum = weekNum;
+        }
         this.setData({
-            pickerid:weekNum-1,
-            currentWeekNum: weekNum,
+            pickerid: pickerid,
+            currentWeekNum: currentWeekNum,
             dayOfTheWeek: dayOfTheWeek,
             trueWeekNum: weekNum,
             // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
@@ -131,7 +134,10 @@ Page({
         });
         if (schedule) {
             // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
-            this.initData(JSON.parse(this.data.stringifyScheduleData), weekNum);
+            this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
+            
+            //2021年1月21日 tuip123 设置周属日期
+            this.setDayOfWeek(currentWeekNum);
         } else {
             //TODO 无数据提示
         }
@@ -139,31 +145,48 @@ Page({
             mindStatus: await this.isNeedScheduleRemind()
         })
     },
-    createDay(){
+
+    //2021年1月21日 tuip123 设置周属日期
+    setDayOfWeek(weekNum) {
+        weekNum=weekNum-1
+        let date = app.globalData.schoolInfo.startTime
+        let mon = weekNum * 7 + 1;
+        let tue = weekNum * 7 + 2;
+        let wed = weekNum * 7 + 3;
+        let thu = weekNum * 7 + 4;
+        let fri = weekNum * 7 + 5;
+
+        let mond = new Date(date.getTime() + 24 * 60 * 60 * 1000 * mon) //第k周的周一时间
+        let tued = new Date(date.getTime() + 24 * 60 * 60 * 1000 * tue)
+        let wedd = new Date(date.getTime() + 24 * 60 * 60 * 1000 * wed)
+        let thud = new Date(date.getTime() + 24 * 60 * 60 * 1000 * thu)
+        let frid = new Date(date.getTime() + 24 * 60 * 60 * 1000 * fri)
+
         let monday = {
-            day:'周一',
-            date:'1/19'
+            day: '周一',
+            date: (mond.getMonth()+1)+'/'+mond.getDate()
         }
         let tuesday = {
-            day:'周二',
-            date:'1/19'
+            day: '周二',
+            date: (tued.getMonth()+1)+'/'+tued.getDate()
         }
         let wednesday = {
-            day:'周三',
-            date:'1/19'
+            day: '周三',
+            date: (wedd.getMonth()+1)+'/'+wedd.getDate()
         }
         let thursday = {
-            day:'周四',
-            date:'1/19'
+            day: '周四',
+            date: (thud.getMonth()+1)+'/'+thud.getDate()
         }
         let firday = {
-            day:'周五',
-            date:'1/19'
+            day: '周五',
+            date: (frid.getMonth()+1)+'/'+frid.getDate()
         }
         this.setData({
-            dayArr: [monday,tuesday,wednesday,thursday,firday]
+            dayArr: [monday, tuesday, wednesday, thursday, firday]
         });
     },
+
     async isNeedScheduleRemind() {
         try {
             const userInfoRes = await db.collection('studyData').where({
@@ -348,15 +371,19 @@ Page({
             }
         });
     },
-    //2021年1月20日 tuip123 点击周数按钮 唤起一个picker
-    //TODO 暂时先做成这个样子，正在研究自定义picker样式怎么做
-    clickcurrentWeekNum(e) {
-        let currentWeekNum = parseInt(e.detail.value) + 1;
-        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
-        this.setData({
-            currentWeekNum: currentWeekNum
-        });
+    //2021年1月21日 tuip123 获取是否是假期时间
+    isHoliday() {
+        return app.globalData.schoolInfo.isHoliday;
     },
+
+    //2021年1月20日 tuip123 点击周数按钮 唤起一个picker
+    // clickcurrentWeekNum(e) {
+    //     let currentWeekNum = parseInt(e.detail.value) + 1;
+    //     this.setData({
+    //         currentWeekNum: currentWeekNum
+    //     });
+    //     this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
+    // },
     click: function (e) {
         let pickerid = e.currentTarget.dataset.id
         this.setData({
@@ -364,30 +391,18 @@ Page({
         })
     },
     radioChange: function (e) {
+        let currentWeekNum = parseInt(e.detail.value)
+        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
+        this.setDayOfWeek(currentWeekNum);
         this.setData({
-            pickervaluetemp: e.detail.value
+            currentWeekNum: currentWeekNum,
+            pickerDialog: !this.data.pickerDialog
         })
     },
     toggleDialog() {
         this.setData({
             pickerDialog: !this.data.pickerDialog
         });
-    },
-    freeBack: function () {
-        if (this.data.pickervalue != this.data.pickervaluetemp) {
-            this.setData({
-                pickervalue: this.data.pickervaluetemp
-            })
-        }
-        this.setData({
-            pickerDialog: !this.data.pickerDialog
-        })
-        console.log(parseInt(this.data.pickervalue));
-        let currentWeekNum=parseInt(this.data.pickervalue)
-        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
-        this.setData(
-            {currentWeekNum : currentWeekNum}
-        )
     },
     freetoBack: function () {
         this.setData({
@@ -420,13 +435,10 @@ Page({
                         if (noNum == 1) {
                             timeTemp = c
                         }
-
                     }
-
                 }
                 //不含就去掉
                 scheduleArr[a][b].splice(timeTemp, noNum);
-
             }
         }
         //再优化一下
@@ -449,7 +461,9 @@ Page({
         this.setData({
             scheduleArr: scheduleArr
         });
+
     },
+
     tapDialogButton() {
         this.setData({
             dialogShow: false,
