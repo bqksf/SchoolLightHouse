@@ -456,12 +456,30 @@ Page({
                     timeSceArr[0].name = timeSceArr[0].name.substr(0, 12) //切掉12个字后面的内容
                     scheduleArr[a][b] = timeSceArr[0]
                 }
+                
+                //2021年1月22日 tuip123 判断上节课的section，优化外观
+                if(b>0){
+                    if(scheduleArr[a][b-1].section==4&&scheduleArr[a][b].name==' ')
+                        {
+                            scheduleArr[a].splice(b,1)
+                            //2021年1月22日 tuip123 此处是因为splice后出现了降级现象，需要获取子数组里的0元素取代父数组中的位置
+                            if(scheduleArr[a][b][0])
+                            {
+                                scheduleArr[a][b]=scheduleArr[a][b][0]
+                            }
+                            else{
+                                scheduleArr[a][b] = {
+                                    'name': ' '
+                                }
+                            }
+                        }
+                }
             }
         }
         this.setData({
             scheduleArr: scheduleArr
         });
-
+        console.log(scheduleArr);
     },
 
     tapDialogButton() {
