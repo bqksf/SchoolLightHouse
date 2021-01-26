@@ -94,15 +94,14 @@
 
     <!-- 滑动界面 面板指示点“false” 自动播放“false” 滑动动画时长1000ms -->
     <swiper current="{{current}}" indicator-dots="{{false}}" autoplay="{{false}}" duration="1000" style="height:1500rpx" bindanimationfinish="swiperFinish">
-    <block wx:for="{{sitems}}" wx:key="index" wx:for-item="weekitem">
+    <block wx:for="{{swiperitems}}" wx:key="index" wx:for-item="weekitem">
     <swiper-item>
-    
         <view class="pg-content">
             <view class="table-titles">
                 <view class="weui-flex">
                     <view class="num-time" style="height:0"></view>
-                    <view class="weui-flex__item" wx:for="{{dayArr}}" wx:key="index">
-                        <view class="table-title {{wxs.showRemind(dayOfTheWeek,index,currentWeekNum,trueWeekNum)}}">
+                    <view class="weui-flex__item" wx:for="{{sitems[index]}}" wx:key="i">
+                        <view class="table-title {{wxs.showRemind(dayOfTheWeek,i,currentWeekNum,trueWeekNum)}}">
                             {{item.day}}<view class="title-date">{{item.date}}</view>
                         </view>
                     </view>

@@ -109,6 +109,7 @@ Page({
         //2021年1月22日 tuip123 swiper容器
         swiperitems:[],
         //2021年1月26日 微风 swiper数据内容
+        //2021年1月26日 tuip123 发现其实可以不用这个数组，秉承废物利用原则修改为存储周属日期的数组
         sitems:[],
     },
     async onLoad() {
@@ -138,10 +139,8 @@ Page({
             stringifyScheduleData: JSON.stringify(schedule)
         });
         if (schedule) {
-            
             this.setSwiper()
             console.log(this.data.sitems);
-
             // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
             this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
             //2021年1月21日 tuip123 设置周属日期
@@ -190,23 +189,64 @@ Page({
             day: '周五',
             date: (frid.getMonth()+1)+'/'+frid.getDate()
         }
-        this.setData({
-            dayArr: [monday, tuesday, wednesday, thursday, firday]
-        });
+        this.setData({dayArr: [monday, tuesday, wednesday, thursday, firday]}
+            
+        )
+    },
+    //2021年1月26日 tuip123 设置周属日期2 用于一次行生成20周的日期
+    setDayOfWeek2(weekNum) {
+        weekNum=weekNum-1
+        let date = app.globalData.schoolInfo.startTime
+        let mon = weekNum * 7 + 1;
+        let tue = weekNum * 7 + 2;
+        let wed = weekNum * 7 + 3;
+        let thu = weekNum * 7 + 4;
+        let fri = weekNum * 7 + 5;
+
+        let mond = new Date(date.getTime() + 24 * 60 * 60 * 1000 * mon) //第k周的周一时间
+        let tued = new Date(date.getTime() + 24 * 60 * 60 * 1000 * tue)
+        let wedd = new Date(date.getTime() + 24 * 60 * 60 * 1000 * wed)
+        let thud = new Date(date.getTime() + 24 * 60 * 60 * 1000 * thu)
+        let frid = new Date(date.getTime() + 24 * 60 * 60 * 1000 * fri)
+
+        let monday = {
+            day: '周一',
+            date: (mond.getMonth()+1)+'/'+mond.getDate()
+        }
+        let tuesday = {
+            day: '周二',
+            date: (tued.getMonth()+1)+'/'+tued.getDate()
+        }
+        let wednesday = {
+            day: '周三',
+            date: (wedd.getMonth()+1)+'/'+wedd.getDate()
+        }
+        let thursday = {
+            day: '周四',
+            date: (thud.getMonth()+1)+'/'+thud.getDate()
+        }
+        let firday = {
+            day: '周五',
+            date: (frid.getMonth()+1)+'/'+frid.getDate()
+        }
+        return [monday, tuesday, wednesday, thursday, firday]
     },
     //日期 swiper容器生成
     setSwiper(){
         //重复20周
         for(let i=1;i<21;i++){
-            let scheduleArr= this.swiper2(JSON.parse(this.data.stringifyScheduleData), i);
+            let scheduleArr= this.setSwiper2(JSON.parse(this.data.stringifyScheduleData), i);
             this.data.swiperitems.push(scheduleArr)
+            let dayArr=this.setDayOfWeek2(i);
+            this.data.sitems.push(dayArr)
         }
         //必须使用setData才能在页面渲染，不然显示值为空
         this.setData({
-            sitems: this.data.swiperitems
+            swiperitems: this.data.swiperitems,
+            sitems:this.data.sitems
         })
     },
-    swiper2(data, weekNum) {
+    setSwiper2(data, weekNum) {
         let scheduleArr = data.schedule;
         //周六日先不要了
         scheduleArr.splice(5, 2);
@@ -272,7 +312,6 @@ Page({
                 }
             }
         }
-        
         return scheduleArr
     },
 
