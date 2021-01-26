@@ -7,6 +7,8 @@ let db = wx.cloud.database({
 });
 Page({
     data: {
+        indexNum:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
+        current: 0,
         dialogTitle: "",
         dialogShow: false,
         dialogContent: "",
@@ -106,6 +108,8 @@ Page({
         ],
         //2021年1月22日 tuip123 swiper容器
         swiperitems:[],
+        //2021年1月26日 微风 swiper数据内容
+        sitems:[],
     },
     async onLoad() {
         //今天星期几
@@ -136,8 +140,8 @@ Page({
         if (schedule) {
             
             this.setSwiper()
-            console.log(this.data.swiperitems);
-            
+            console.log(this.data.sitems);
+
             // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
             this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
             //2021年1月21日 tuip123 设置周属日期
@@ -197,6 +201,10 @@ Page({
             let scheduleArr= this.swiper2(JSON.parse(this.data.stringifyScheduleData), i);
             this.data.swiperitems.push(scheduleArr)
         }
+        //必须使用setData才能在页面渲染，不然显示值为空
+        this.setData({
+            sitems: this.data.swiperitems
+        })
     },
     swiper2(data, weekNum) {
         let scheduleArr = data.schedule;
@@ -264,6 +272,7 @@ Page({
                 }
             }
         }
+        
         return scheduleArr
     },
 
@@ -457,14 +466,7 @@ Page({
         return app.globalData.schoolInfo.isHoliday;
     },
 
-    //2021年1月20日 tuip123 点击周数按钮 唤起一个picker
-    // clickcurrentWeekNum(e) {
-    //     let currentWeekNum = parseInt(e.detail.value) + 1;
-    //     this.setData({
-    //         currentWeekNum: currentWeekNum
-    //     });
-    //     this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
-    // },
+    
     click: function (e) {
         let pickerid = e.currentTarget.dataset.id
         this.setData({
@@ -520,6 +522,7 @@ Page({
                 }
                 //不含就去掉
                 scheduleArr[a][b].splice(timeTemp, noNum);
+
             }
         }
         //再优化一下
@@ -560,6 +563,14 @@ Page({
         this.setData({
             scheduleArr: scheduleArr
         });
+    },
+
+    //测试
+    swiperFinish(e){
+        console.log(e)
+        this.setData({
+            currentWeekNum: e.detail.current+1
+            })
     },
 
     tapDialogButton() {
