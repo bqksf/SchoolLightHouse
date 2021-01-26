@@ -479,7 +479,9 @@ Page({
         this.setDayOfWeek(currentWeekNum);
         this.setData({
             currentWeekNum: currentWeekNum,
-            pickerDialog: !this.data.pickerDialog
+            pickerDialog: !this.data.pickerDialog,
+            //2021年1月26日 微风 swiper跳转
+            current:e.detail.value-1
         })
     },
     toggleDialog() {
