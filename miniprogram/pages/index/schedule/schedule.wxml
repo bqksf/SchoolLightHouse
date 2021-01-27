@@ -93,29 +93,41 @@
 
 
     <!-- 滑动界面 面板指示点“false” 自动播放“false” 滑动动画时长1000ms -->
-    <swiper current="{{current}}" indicator-dots="{{false}}" autoplay="{{false}}" duration="1000" style="height:1500rpx" bindanimationfinish="swiperFinish">
-    <block wx:for="{{swiperitems}}" wx:key="index" wx:for-item="weekitem">
-    <swiper-item>
-        <view class="pg-content">
-            <view class="table-titles">
-                <view class="weui-flex">
-                    <view class="num-time" style="height:0"></view>
-                    <view class="weui-flex__item" wx:for="{{sitems[index]}}" wx:key="i">
-                        <view class="table-title {{wxs.showRemind(dayOfTheWeek,i,currentWeekNum,trueWeekNum)}}">
-                            {{item.day}}<view class="title-date">{{item.date}}</view>
-                        </view>
-                    </view>
-                    <!-- <view class="weui-flex__item">
+    <swiper current="{{current}}" indicator-dots="{{false}}" autoplay="{{false}}" duration="1000" style="height:1500rpx"
+        bindanimationfinish="swiperFinish">
+        <block wx:for="{{swiperitems}}" wx:key="index" wx:for-item="weekitem">
+            <swiper-item>
+                <view class="pg-content">
+                    <view class="table-titles">
+                        <view class="weui-flex">
+                            <view class="num-time" style="height:0"></view>
+                            <view class="weui-flex__item" wx:for="{{sitems[index]}}" wx:key="i">
+                                <view class="table-title {{wxs.showRemind(dayOfTheWeek,i,currentWeekNum,trueWeekNum)}}">
+                                    {{item.day}}<view class="title-date">{{item.date}}</view>
+                                </view>
+                            </view>
+                            <!-- <view class="weui-flex__item">
                         <view class="table-title">六</view>
                     </view>
                     <view class="weui-flex__item">
                         <view class="table-title">日</view>
                     </view> -->
-                </view>
-            </view>
-            <view class="table-contents">
-                <view class="weui-flex">
-                    <view class=" flex-col classess-num-time">
+                        </view>
+                    </view>
+                    <view class="table-contents">
+                        <view class="weui-flex">
+                            <view class=" flex-col classess-num-time">
+                                <block wx:for="{{timeTable}}" wx:key="index">
+                                    <view class="num-time">
+                                        <view class="class-num">{{index+1}}</view>
+                                        <view class="class-time">
+                                            {{item[0]}}
+                                            {{item[1]}}
+                                        </view>
+                                    </view>
+                                </block>
+                            </view>
+                            <!-- <view class=" flex-col classess-num-time">
                         <view class="num-time">
                             <view class="class-num">1</view>
                             <view class="class-time">
@@ -200,21 +212,23 @@
                                 21:30
                             </view>
                         </view>
-                    </view>
-                    <view class="weui-flex__item flex-col " wx:for="{{weekitem}}" wx:key="index" wx:for-item="item">
-                        <view class="table-content {{wxs.classHeight(item.section)}} {{wxs.classColor(item.color)}}"
-                            wx:for="{{item}}" wx:key="index" data-schedule="{{item}}" bindtap="tapOneSchedule">
-                            <text>{{item.name}}\n{{item.place}}</text>
+                    </view> -->
+                            <view class="weui-flex__item flex-col " wx:for="{{weekitem}}" wx:key="index"
+                                wx:for-item="item">
+                                <view
+                                    class="table-content {{wxs.classHeight(item.section)}} {{wxs.classColor(item.color)}}"
+                                    wx:for="{{item}}" wx:key="index" data-schedule="{{item}}" bindtap="tapOneSchedule">
+                                    <text>{{item.name}}\n{{item.place}}</text>
+                                </view>
+                            </view>
                         </view>
                     </view>
                 </view>
-            </view>
-        </view>
 
-   
-    </swiper-item>
 
-    </block>
+            </swiper-item>
+
+        </block>
 
     </swiper>
 </view>

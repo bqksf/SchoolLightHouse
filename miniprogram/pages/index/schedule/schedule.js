@@ -111,6 +111,8 @@ Page({
         //2021年1月26日 微风 swiper数据内容
         //2021年1月26日 tuip123 发现其实可以不用这个数组，秉承废物利用原则修改为存储周属日期的数组
         sitems:[],
+        //2021年1月27日 tuip123 timetable时间表
+        timeTable:[],
     },
     async onLoad() {
         //今天星期几
@@ -131,6 +133,7 @@ Page({
             currentWeekNum = weekNum;
         }
         this.setData({
+            timeTable:app.globalData.schoolInfo.timeList,
             pickerid: pickerid,
             currentWeekNum: currentWeekNum,
             dayOfTheWeek: dayOfTheWeek,
@@ -140,11 +143,6 @@ Page({
         });
         if (schedule) {
             this.setSwiper()
-            console.log(this.data.sitems);
-            // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
-            this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
-            //2021年1月21日 tuip123 设置周属日期
-            this.setDayOfWeek(currentWeekNum);
         } else {
             //TODO 无数据提示
         }
@@ -235,6 +233,7 @@ Page({
     setSwiper(){
         //重复20周
         for(let i=1;i<21;i++){
+            // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
             let scheduleArr= this.setSwiper2(JSON.parse(this.data.stringifyScheduleData), i);
             this.data.swiperitems.push(scheduleArr)
             let dayArr=this.setDayOfWeek2(i);
@@ -517,7 +516,6 @@ Page({
         this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
         this.setDayOfWeek(currentWeekNum);
         this.setData({
-            currentWeekNum: currentWeekNum,
             pickerDialog: !this.data.pickerDialog,
             //2021年1月26日 微风 swiper跳转
             current:e.detail.value-1
