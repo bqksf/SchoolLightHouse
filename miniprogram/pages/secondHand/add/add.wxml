@@ -1,0 +1,22 @@
+<!--miniprogram/pages/secondHand/add/add.wxml-->
+<button bindtap="pickPhoto">上传图片</button>
+<block wx:if="{{isUpload}}">
+<swiper indicator-dots="{{false}}" autoplay="{{false}}" style="height:500rpx">
+  <block wx:for="{{fileID}}" wx:key="i">
+    <swiper-item>
+      <image src="{{item}}"></image>
+    </swiper-item>
+  </block>
+</swiper>
+</block>
+<view class="weui-cells weui-cells_after-title">
+  <view class="weui-cell">
+    <view class="weui-cell__bd">
+      <textarea bindinput="formInputChange" data-field="message" class="weui-textarea" placeholder="请输入文本"
+        style="height: 3.3em"></textarea>
+    </view>
+  </view>
+</view>
+<button bindtap="submit">提交</button>
+<!-- 点击过提交后清空？ -->
+<button bindtap="cancel">取消</button>

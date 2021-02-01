@@ -1,0 +1,34 @@
+{
+  "condition": {
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "gamePlugin": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "name": "pages/subscribeGZH/subscribeGZH",
+          "pathName": "pages/subscribeGZH/subscribeGZH",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/register/register",
+          "pathName": "pages/register/register",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/secondHand/add/add",
+          "pathName": "pages/secondHand/add/add",
+          "scene": null
+        }
+      ]
+    }
+  }
+}
