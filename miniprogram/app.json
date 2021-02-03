@@ -1,47 +1,49 @@
 {
-    "pages": [
-        "pages/index/index",
-        "pages/mine/mine",
-        "pages/index/score/score",
-        "pages/mine/about/about",
-        "pages/mine/update/update",
-        "pages/register/privacy/privacy",
-        "pages/index/exam/exam",
-        "pages/index/schedule/schedule",
-        "pages/register/register",
-        "pages/mine/esInfo/esInfo",
-        "pages/subscribeGZH/subscribeGZH"
-    ],
-    "window": {
-        "backgroundTextStyle": "dark",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "高校灯塔",
-        "navigationBarTextStyle": "black",
-        "backgroundColor": "#f8f8f8"
-    },
-    "tabBar": {
-        "color": "#bfbfbf",
-        "backgroundColor": "#fff",
-        "borderStyle": "white",
-        "selectedColor": "#000",
-        "list": [
-            {
-                "pagePath": "pages/index/index",
-                "text": "学习",
-                "iconPath": "images/learn.png",
-                "selectedIconPath": "images/learn-on.png"
-            },
-            {
-                "pagePath": "pages/mine/mine",
-                "text": "我的",
-                "iconPath": "images/mine.png",
-                "selectedIconPath": "images/mine-on.png"
-            }
-        ]
-    },
-    "style": "v2",
-    "sitemapLocation": "sitemap.json",
-    "usingComponents": {
-        "we-dialog": "/components/dialog/dialog"
-    }
+  "pages": [
+    "pages/index/index",
+    "pages/mine/mine",
+    "pages/index/score/score",
+    "pages/mine/about/about",
+    "pages/mine/update/update",
+    "pages/register/privacy/privacy",
+    "pages/index/exam/exam",
+    "pages/index/schedule/schedule",
+    "pages/register/register",
+    "pages/mine/esInfo/esInfo",
+    "pages/subscribeGZH/subscribeGZH",
+    "pages/secondHand/add/add",
+    "pages/secondHand/detail/detail"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "高校灯塔",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f8f8f8"
+  },
+  "tabBar": {
+    "color": "#bfbfbf",
+    "backgroundColor": "#fff",
+    "borderStyle": "white",
+    "selectedColor": "#000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "学习",
+        "iconPath": "images/learn.png",
+        "selectedIconPath": "images/learn-on.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "images/mine.png",
+        "selectedIconPath": "images/mine-on.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "we-dialog": "/components/dialog/dialog"
+  }
 }

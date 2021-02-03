@@ -1,4 +1,5 @@
 {
+  "setting": {},
   "condition": {
     "plugin": {
       "list": []
@@ -26,6 +27,13 @@
         {
           "name": "pages/secondHand/add/add",
           "pathName": "pages/secondHand/add/add",
+          "query": "",
+          "scene": null
+        },
+        {
+          "name": "pages/secondHand/detail/detail",
+          "pathName": "pages/secondHand/detail/detail",
+          "query": "_id=28ee4e3e601a0ad3029d1fe733a17426",
           "scene": null
         }
       ]

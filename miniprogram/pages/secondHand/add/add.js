@@ -1,17 +1,19 @@
 // miniprogram/pages/secondHand/add/add.js
 Page({
   data: {
-    formData: {},
-    length: 0,
+    info:'',
+    infolength: 0,
     fileID: [],
     isUpload: false,
+    isSubmited: false,
   },
   async pickPhoto() {
-      await  wx.chooseImage({
-      count: 5,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],})
-      .then(async res=>{
+    await wx.chooseImage({
+        count: 5,
+        sizeType: ['compressed'],
+        sourceType: ['album', 'camera'],
+      })
+      .then(async res => {
         wx.showLoading({
           title: '上传中',
         })
@@ -23,18 +25,17 @@ Page({
           await wx.cloud.uploadFile({
             cloudPath,
             filePath,
-          }).then(res=>{
-              //保存fileID
-              this.data.fileID.push(res.fileID)
-              console.log(res);
+          }).then(res => {
+            //保存fileID
+            this.data.fileID.push(res.fileID)
           })
         }
         this.setData({
-          fileID:this.data.fileID,
-          isUpload:true
+          fileID: this.data.fileID,
+          isUpload: true
         })
         wx.hideLoading()
-      }).catch(e=>{
+      }).catch(e => {
         console.error('[上传文件] 失败：', e)
         wx.showToast({
           icon: 'none',
@@ -42,32 +43,59 @@ Page({
         })
       })
   },
-  formInputChange(e) {
-    const {
-      field
-    } = e.currentTarget.dataset
+  textareaInput(e) {
+    let info=e.detail.value
+    let infolength=info.length
     this.setData({
-      [`formData.${field}`]: e.detail.value,
+      info,
+      infolength
     })
-    this.setData({
-      length: this.data.formData.message.length
-    })
-    console.log(this.data.formData);
   },
-  async submit(){
+  async submit() {
     const db = wx.cloud.database()
-    await db.collection('secondHand').add({
-      data:{
-        info:this.data.formData.message,
-        fileID:this.data.fileID
-      }
-    }).then(res=>{
-      console.log('tuip123');
-      //TODO 返回上一页或者清空？
+    wx.showLoading({
+      title: '上传中',
     })
+    if (this.data.fileID.length == 0) {
+      wx.hideLoading()
+      wx.showToast({
+        icon: 'none',
+        title: '还未上传图片',
+      })
+    } else if (this.data.isSubmited) {
+      wx.hideLoading()
+      wx.showToast({
+        icon: 'none',
+        title: '本条信息已经上传',
+      })
+    } else {
+      await db.collection('secondHand').add({
+          data: {
+            info: this.data.info,
+            fileID: this.data.fileID
+          }
+        }).then(res => {
+          wx.hideLoading()
+          wx.showToast({
+            icon: 'none',
+            title: '上传成功',
+          })
+          this.setData({
+            isSubmited: true
+          })
+          //TODO 返回上一页或者清空?
+        })
+        .catch(e => {
+          console.error(e);
+          wx.hideLoading()
+          wx.showToast({
+            icon: 'none',
+            title: '上传失败',
+          })
+        })
+    }
   },
-  async cancel(){
-    
+  async cancel() {
     wx.showLoading({
       title: '删除中',
     })
@@ -80,11 +108,26 @@ Page({
         title: '取消图片上传',
       })
       this.setData({
-        isUpload:false,
-        fileID:[],
+        isUpload: false,
+        fileID: [],
+        formData: {}
       })
-    }).catch(error => {
+      //TODO 返回上一页
+    }).catch(e => {
+      console.error(e);
     })
+  },
+  async next() {
+    if (this.data.isSubmited) {
+      this.setData({
+        isUpload: false,
+        isSubmited: false,
+        fileID: [],
+        formData: {}
+      })
+    } else {
+      this.cancel()
+    }
   },
   onLoad() {},
 })
