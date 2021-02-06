@@ -1,0 +1,11 @@
+<!--miniprogram/pages/secondHand/secondHand/secondHand.wxml-->
+<view class='case-page'>
+  <view class='list'>
+    <view class="item" wx:for="{{goods}}" wx:key='i'>
+      <view bindtap='test' data-_id="{{item._id}}"> 
+        <image src='{{item.fileID}}' mode="widthFix"><!-- mode="widthFix" 可以做到不对齐--></image>
+        <text>{{item.info}}</text>
+      </view>
+    </view>
+  </view>
+</view>

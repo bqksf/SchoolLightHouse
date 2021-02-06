@@ -35,6 +35,12 @@
           "pathName": "pages/secondHand/detail/detail",
           "query": "_id=28ee4e3e601a0ad3029d1fe733a17426",
           "scene": null
+        },
+        {
+          "name": "pages/secondHand/secondHand/secondHand",
+          "pathName": "pages/secondHand/secondHand/secondHand",
+          "query": "",
+          "scene": null
         }
       ]
     }

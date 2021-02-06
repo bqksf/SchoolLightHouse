@@ -1,0 +1,17 @@
+/* miniprogram/pages/secondHand/secondHand/secondHand.wxss */
+.list {
+  column-count: 2;
+  column-gap: 0rpx;
+  margin: 10rpx;
+}
+
+.item {
+  background-color: red;
+  margin:0 20rpx 20rpx 20rpx;/* 改成仅20rpx能实现不对齐效果 */
+  break-inside: avoid;
+  box-sizing: border-box;
+}
+
+.item image {
+  width: 100%;
+}

@@ -93,7 +93,9 @@ Page({
     })
   },
   back() {
-    //TODO 返回到上级
+    wx.navigateBack({
+      delta: 0,
+    })
   },
   async onLoad(options) {
     wx.showLoading({

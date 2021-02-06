@@ -12,7 +12,8 @@
     "pages/mine/esInfo/esInfo",
     "pages/subscribeGZH/subscribeGZH",
     "pages/secondHand/add/add",
-    "pages/secondHand/detail/detail"
+    "pages/secondHand/detail/detail",
+    "pages/secondHand/secondHand/secondHand"
   ],
   "window": {
     "backgroundTextStyle": "dark",
