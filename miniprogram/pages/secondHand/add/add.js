@@ -107,23 +107,30 @@ Page({
     wx.showLoading({
       title: '删除中',
     })
-    await wx.cloud.deleteFile({
-      fileList: this.data.fileID
-    }).then(res => {
-      wx.hideLoading()
-      wx.showToast({
-        icon: 'none',
-        title: '取消图片上传',
+    //如果还没上传
+    if(!this.data.isSubmited){
+      await wx.cloud.deleteFile({
+        fileList: this.data.fileID
+      }).then(res => {
+        wx.hideLoading()
+        wx.showToast({
+          icon: 'none',
+          title: '取消图片上传',
+        })
+        this.setData({
+          isUpload: false,
+          fileID: [],
+          formData: {}
+        })
+        //TODO 返回上一页
+      }).catch(e => {
+        console.error(e);
       })
-      this.setData({
-        isUpload: false,
-        fileID: [],
-        formData: {}
-      })
-      //TODO 返回上一页
-    }).catch(e => {
-      console.error(e);
-    })
+    }
+    else//TODO 如果已经上传
+    {
+      
+    }
   },
   async next() {
     if (this.data.isSubmited) {

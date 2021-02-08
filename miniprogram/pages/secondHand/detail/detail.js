@@ -119,6 +119,7 @@ Page({
     wx.showLoading({
       title: '正在加载',
     })
+    console.log(options);
     let {
       _id
     } = options
@@ -126,7 +127,6 @@ Page({
         _id
       }).get()
       .then(res => {
-
         let {
           fileID,
           info,

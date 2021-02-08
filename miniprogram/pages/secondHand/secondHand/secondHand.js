@@ -17,8 +17,9 @@ goAdd(e){
 },
   goDetail(e) {
     let _id=e.currentTarget.dataset._id
+    console.log(_id);
     wx.navigateTo({
-      url: '/pages/secondHand/detail/detail?_id' +_id
+      url: '/pages/secondHand/detail/detail?_id=' +_id
     });
   },
   //进行选项修改操作后
