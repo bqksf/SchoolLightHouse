@@ -1,5 +1,23 @@
 <!--miniprogram/pages/secondHand/secondHand/secondHand.wxml-->
 <view class='case-page'>
+  <view class="tool_menu">
+    <view class="search_menu">
+      <input class="search_input" type="text" bindinput="getInputVal"></input>
+      <image class="search_img" src="../../../images/search.png" bindtap="search"></image>
+    </view>
+    <view>
+      <image class="type_menu_img" src="../../../images/type-menu.png" bindtap="showTypes"></image>
+    </view>
+  </view>
+
+  <view class="type_menu_page" wx:if="{{typeMenuOpen}}">
+    <view wx:for="{{type_items}}" wx:key="index">
+      <view class="typeitem">
+        <text>{{item}}</text>
+      </view>
+    </view>
+  </view>
+
   <view class='list'>
     <view class="item" wx:for="{{goods}}" wx:key='i'>
       <view bindtap='test' data-_id="{{item._id}}"> 
@@ -8,4 +26,5 @@
       </view>
     </view>
   </view>
+
 </view>

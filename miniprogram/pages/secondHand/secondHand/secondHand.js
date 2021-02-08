@@ -5,7 +5,10 @@ Page({
   data: {
     imgWidth: 0,
     imgHeight: 0,
-    goods: []
+    goods: [],
+    search_msg: "",
+    typeMenuOpen: false,
+    type_items:["科学","经济","名著","漫画","小说","数学","语言","计算机","机械","网络"],
   },
 
   test(e) {
@@ -41,4 +44,31 @@ Page({
       goods
     })
   },
+
+  getInputVal(e){
+    var value = e.detail.value
+    this.setData({
+      search_msg: value
+    })
+  },
+
+  showTypes(){
+    console.log("click typeMenu")
+    if(this.data.typeMenuOpen){
+      this.setData({
+        typeMenuOpen:false
+      })
+    }
+    else{
+      this.setData({
+        typeMenuOpen:true
+      })
+    }
+  },
+
+  search(){
+    console.log(this.data.search_msg)
+  }
 })
+
+
