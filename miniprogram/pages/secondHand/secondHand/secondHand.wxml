@@ -8,6 +8,9 @@
     <view>
       <image class="type_menu_img" src="../../../images/type-menu.png" bindtap="showTypes"></image>
     </view>
+    <view wx:if="{{admin}}" bindtap="goAdd">
+      +
+    </view>
   </view>
 
   <view class="type_menu_page" wx:if="{{typeMenuOpen}}">
@@ -20,7 +23,7 @@
 
   <view class='list'>
     <view class="item" wx:for="{{goods}}" wx:key='i'>
-      <view bindtap='test' data-_id="{{item._id}}"> 
+      <view bindtap='goDetail' data-_id="{{item._id}}"> 
         <image src='{{item.fileID}}' mode="widthFix"><!-- mode="widthFix" 可以做到不对齐--></image>
         <text>{{item.info}}</text>
       </view>

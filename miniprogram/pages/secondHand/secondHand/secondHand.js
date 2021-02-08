@@ -10,8 +10,12 @@ Page({
     typeMenuOpen: false,
     type_items:["科学","经济","名著","漫画","小说","数学","语言","计算机","机械","网络"],
   },
-
-  test(e) {
+goAdd(e){
+  wx.navigateTo({
+    url: '/pages/secondHand/add/add',
+  })
+},
+  goDetail(e) {
     let _id=e.currentTarget.dataset._id
     wx.navigateTo({
       url: '/pages/secondHand/detail/detail?_id' +_id
@@ -20,6 +24,9 @@ Page({
   //进行选项修改操作后
   async afterSet(){},
   async onLoad() {
+    wx.showLoading({
+      title: '正在加载',
+    })
     //此处代码实现了 获取集合中所有的内容 多线程
     const countResult = await db.collection('secondHand').count()
     const total=countResult.total
@@ -41,7 +48,10 @@ Page({
       }
     }
     this.setData({
-      goods
+      goods,
+      admin:true//TODO 通过用户信息设置admin
+    })
+    wx.hideLoading({
     })
   },
 

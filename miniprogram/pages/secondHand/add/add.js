@@ -1,11 +1,18 @@
 // miniprogram/pages/secondHand/add/add.js
 Page({
   data: {
+    typeArray: ['A', 'B', 'C', 'D'],
+    typeIndex:0,
     info:'',
     infolength: 0,
     fileID: [],
     isUpload: false,
     isSubmited: false,
+  },
+  bindPickerChange: function(e) {
+    this.setData({
+      typeIndex: e.detail.value
+    })
   },
   async pickPhoto() {
     await wx.chooseImage({
@@ -72,7 +79,8 @@ Page({
       await db.collection('secondHand').add({
           data: {
             info: this.data.info,
-            fileID: this.data.fileID
+            fileID: this.data.fileID,
+            type:this.data.typeArray[this.data.typeIndex]
           }
         }).then(res => {
           wx.hideLoading()

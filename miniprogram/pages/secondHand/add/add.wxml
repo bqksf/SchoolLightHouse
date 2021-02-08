@@ -16,6 +16,11 @@
     </view>
   </view>
 </view>
+<picker bindchange="bindPickerChange" value="{{typeIndex}}" range="{{typeArray}}">
+  <view class="picker">
+    类型：{{typeArray[typeIndex]}}
+  </view>
+</picker>
 <button bindtap="submit">提交</button>
 <button bindtap="next">清空并输入下一项</button>
 <!-- 点击过提交后清空？ -->
