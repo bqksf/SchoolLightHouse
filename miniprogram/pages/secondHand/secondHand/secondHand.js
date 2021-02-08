@@ -5,29 +5,18 @@ Page({
   data: {
     imgWidth: 0,
     imgHeight: 0,
-    goods: [],
-    search_msg: "",
-    typeMenuOpen: false,
-    type_items:["科学","经济","名著","漫画","小说","数学","语言","计算机","机械","网络"],
+    goods: []
   },
-goAdd(e){
-  wx.navigateTo({
-    url: '/pages/secondHand/add/add',
-  })
-},
-  goDetail(e) {
+
+  test(e) {
     let _id=e.currentTarget.dataset._id
-    console.log(_id);
     wx.navigateTo({
-      url: '/pages/secondHand/detail/detail?_id=' +_id
+      url: '/pages/secondHand/detail/detail?_id' +_id
     });
   },
   //进行选项修改操作后
   async afterSet(){},
   async onLoad() {
-    wx.showLoading({
-      title: '正在加载',
-    })
     //此处代码实现了 获取集合中所有的内容 多线程
     const countResult = await db.collection('secondHand').count()
     const total=countResult.total
@@ -49,37 +38,7 @@ goAdd(e){
       }
     }
     this.setData({
-      goods,
-      admin:true//TODO 通过用户信息设置admin
-    })
-    wx.hideLoading({
+      goods
     })
   },
-
-  getInputVal(e){
-    var value = e.detail.value
-    this.setData({
-      search_msg: value
-    })
-  },
-
-  showTypes(){
-    console.log("click typeMenu")
-    if(this.data.typeMenuOpen){
-      this.setData({
-        typeMenuOpen:false
-      })
-    }
-    else{
-      this.setData({
-        typeMenuOpen:true
-      })
-    }
-  },
-
-  search(){
-    console.log(this.data.search_msg)
-  }
 })
-
-

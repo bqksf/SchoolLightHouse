@@ -1,18 +1,11 @@
 // miniprogram/pages/secondHand/add/add.js
 Page({
   data: {
-    typeArray: ['A', 'B', 'C', 'D'],
-    typeIndex:0,
     info:'',
     infolength: 0,
     fileID: [],
     isUpload: false,
     isSubmited: false,
-  },
-  bindPickerChange: function(e) {
-    this.setData({
-      typeIndex: e.detail.value
-    })
   },
   async pickPhoto() {
     await wx.chooseImage({
@@ -79,8 +72,7 @@ Page({
       await db.collection('secondHand').add({
           data: {
             info: this.data.info,
-            fileID: this.data.fileID,
-            type:this.data.typeArray[this.data.typeIndex]
+            fileID: this.data.fileID
           }
         }).then(res => {
           wx.hideLoading()
@@ -107,30 +99,23 @@ Page({
     wx.showLoading({
       title: '删除中',
     })
-    //如果还没上传
-    if(!this.data.isSubmited){
-      await wx.cloud.deleteFile({
-        fileList: this.data.fileID
-      }).then(res => {
-        wx.hideLoading()
-        wx.showToast({
-          icon: 'none',
-          title: '取消图片上传',
-        })
-        this.setData({
-          isUpload: false,
-          fileID: [],
-          formData: {}
-        })
-        //TODO 返回上一页
-      }).catch(e => {
-        console.error(e);
+    await wx.cloud.deleteFile({
+      fileList: this.data.fileID
+    }).then(res => {
+      wx.hideLoading()
+      wx.showToast({
+        icon: 'none',
+        title: '取消图片上传',
       })
-    }
-    else//TODO 如果已经上传
-    {
-      
-    }
+      this.setData({
+        isUpload: false,
+        fileID: [],
+        formData: {}
+      })
+      //TODO 返回上一页
+    }).catch(e => {
+      console.error(e);
+    })
   },
   async next() {
     if (this.data.isSubmited) {

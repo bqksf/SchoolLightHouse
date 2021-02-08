@@ -5,21 +5,12 @@ Page({
     _id: '',
     fileID: [],
     info: '',
-    type: '',
-    typeArray: ['A', 'B', 'C', 'D'],
-    typeIndex: 0,
     admin: false,
     changemode: false,
   },
-  bindPickerChange(e) {
-    this.setData({
-      newType: this.data.typeArray[e.detail.value]
-    })
-  },
   async change() {
     this.setData({
-      changemode: true,
-      newType: this.data.type
+      changemode: true
     })
   },
   textareaInput(e) {
@@ -59,26 +50,24 @@ Page({
         title: '正在更新',
       })
       //更新数据库
-      if (newFileID.length > 0) {
+      if(newFileID.length>0){
         console.log('保存数据库');
         await db.collection('secondHand').where({
-          _id: this.data._id
+          _id:this.data._id
         }).update({
-          data: {
-            fileID: newFileID
+          data:{
+            fileID:newFileID
           }
-        }).then(async res => {
+        }).then(async res=>{
           //删除原有的fileID的文件
           await wx.cloud.deleteFile({
-            fileList: this.data.fileID
+            fileList:this.data.fileID
           })
           //修改fileID指示的文件
           this.setData({
-            fileID: newFileID
+            fileID:newFileID
           })
-        }).catch(e => {
-          console.error(e);
-        })
+        }).catch(e=>{console.error(e);})
       }
     }).catch(e => {
       console.error('[上传文件] 失败：', e)
@@ -90,9 +79,6 @@ Page({
     wx.hideLoading()
   },
   async changeInfo() {
-    wx.showLoading({
-      title: '正在保存',
-    })
     let {
       _id
     } = this.data
@@ -100,15 +86,11 @@ Page({
       _id
     }).update({
       data: {
-        info: this.data.info,
-        type: this.data.newType
+        info: this.data.info
       }
-    }).then(res => {
-      wx.hideLoading({})
-    }).catch(e => {
+    }).then(res => {}).catch(e => {
       console.error(e);
     })
-
   },
   back() {
     wx.navigateBack({
@@ -119,7 +101,6 @@ Page({
     wx.showLoading({
       title: '正在加载',
     })
-    console.log(options);
     let {
       _id
     } = options
@@ -129,14 +110,12 @@ Page({
       .then(res => {
         let {
           fileID,
-          info,
-          type
+          info
         } = res.data[0]
         this.setData({
           fileID,
           info,
-          _id,
-          type
+          _id
         })
       })
       .catch(e => {

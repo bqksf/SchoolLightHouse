@@ -1,82 +1,76 @@
 {
-  "description": "项目配置文件",
-  "packOptions": {
-    "ignore": []
-  },
-  "miniprogramRoot": "miniprogram/",
-  "cloudfunctionRoot": "cloudfunctions/",
-  "setting": {
-    "urlCheck": true,
-    "es6": true,
-    "enhance": true,
-    "postcss": true,
-    "preloadBackgroundData": false,
-    "minified": true,
-    "newFeature": true,
-    "coverView": true,
-    "nodeModules": true,
-    "autoAudits": false,
-    "showShadowRootInWxmlPanel": true,
-    "scopeDataCheck": false,
-    "uglifyFileName": false,
-    "checkInvalidKey": true,
-    "checkSiteMap": true,
-    "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
-    "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
+    "description": "项目配置文件",
+    "packOptions": {
+        "ignore": []
     },
-    "bundle": false,
-    "useIsolateContext": true,
-    "useCompilerModule": true,
-    "userConfirmedUseCompilerModuleSwitch": false,
-    "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
-    "minifyWXSS": true
-  },
-  "libVersion": "2.12.2",
-  "appid": "wxf203d0e6cfbed41a",
-  "projectname": "PacketSchool",
-  "simulatorType": "wechat",
-  "simulatorPluginLibVersion": {},
-  "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
-  "condition": {
-    "plugin": {
-      "list": []
-    },
-    "game": {
-      "list": []
-    },
-    "gamePlugin": {
-      "list": []
-    },
-    "miniprogram": {
-      "list": [
-        {
-          "name": "pages/subscribeGZH/subscribeGZH",
-          "pathName": "pages/subscribeGZH/subscribeGZH",
-          "query": "",
-          "scene": null
+    "miniprogramRoot": "miniprogram/",
+    "cloudfunctionRoot": "cloudfunctions/",
+    "setting": {
+        "urlCheck": true,
+        "es6": true,
+        "enhance": true,
+        "postcss": true,
+        "preloadBackgroundData": false,
+        "minified": true,
+        "newFeature": true,
+        "coverView": true,
+        "nodeModules": true,
+        "autoAudits": false,
+        "showShadowRootInWxmlPanel": true,
+        "scopeDataCheck": false,
+        "uglifyFileName": false,
+        "checkInvalidKey": true,
+        "checkSiteMap": true,
+        "uploadWithSourceMap": true,
+        "compileHotReLoad": false,
+        "useMultiFrameRuntime": true,
+        "useApiHook": true,
+        "useApiHostProcess": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
         },
-        {
-          "name": "pages/register/register",
-          "pathName": "pages/register/register",
-          "query": "",
-          "scene": null
+        "bundle": false,
+        "useIsolateContext": true,
+        "useCompilerModule": true,
+        "userConfirmedUseCompilerModuleSwitch": false,
+        "userConfirmedBundleSwitch": false,
+        "packNpmManually": false,
+        "packNpmRelationList": [],
+        "minifyWXSS": true
+    },
+    "libVersion": "2.12.2",
+    "appid": "wxf203d0e6cfbed41a",
+    "projectname": "PacketSchool",
+    "simulatorType": "wechat",
+    "simulatorPluginLibVersion": {},
+    "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
+    "condition": {
+        "plugin": {
+            "list": []
         },
-        {
-          "name": "pages/secondHand/secondHand/secondHand",
-          "pathName": "pages/secondHand/secondHand/secondHand",
-          "query": "",
-          "scene": null
+        "game": {
+            "list": []
+        },
+        "gamePlugin": {
+            "list": []
+        },
+        "miniprogram": {
+            "list": [
+                {
+                    "name": "pages/subscribeGZH/subscribeGZH",
+                    "pathName": "pages/subscribeGZH/subscribeGZH",
+                    "query": "",
+                    "scene": null
+                },
+                {
+                    "name": "pages/register/register",
+                    "pathName": "pages/register/register",
+                    "query": "",
+                    "scene": null
+                }
+            ]
         }
-      ]
     }
-  }
 }
