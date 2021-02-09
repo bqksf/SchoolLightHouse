@@ -54,15 +54,6 @@
                 <view class="weui-cell__bd">关于校园灯塔</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>
-
-            <!-- 留言 -->
-            <navigator class="weui-cell weui-cell_access" hoverClass="weui-cell_active" url="../mine/suggest/suggest">
-                <view class="weui-cell__hd">
-                    <image src="../../images/suggest.png" class="menu-logo"></image>
-                </view>
-                <view class="weui-cell__bd">留言与建议</view>
-                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
-            </navigator>
         </view>
     </view>
     <view class="tip-box">
