@@ -68,6 +68,10 @@ Page({
 
   search(){
     console.log(this.data.search_msg)
+  },
+
+  tap_item(e){
+    console.log(e.currentTarget.dataset.typename)
   }
 })
 

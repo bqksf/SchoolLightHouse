@@ -12,7 +12,7 @@
 
   <view class="type_menu_page" wx:if="{{typeMenuOpen}}">
     <view wx:for="{{type_items}}" wx:key="index">
-      <view class="typeitem">
+      <view class="typeitem" bindtap="tap_item" data-typename="{{item}}">
         <text>{{item}}</text>
       </view>
     </view>
