@@ -2,7 +2,7 @@
 const db = wx.cloud.database()
 Page({
   data: {
-    typeArray: ['A', 'B', 'C', 'D'],
+    typeArray: ["科学", "经济", "名著", "漫画", "小说", "数学", "语言", "计算机", "机械", "网络"],
     typeIndex: 0,
     info: '',
     infolength: 0,
@@ -111,57 +111,18 @@ Page({
         })
     }
   },
-  async cancel() {
+  async back() {
     wx.showLoading({
-      title: '删除中',
+      title: '正在返回',
     })
-    //如果还没上传
-    if (!this.data.isSubmited) {
-      await wx.cloud.deleteFile({
-        fileList: this.data.fileID
-      }).then(res => {
-        wx.hideLoading()
-        wx.showToast({
-          icon: 'none',
-          title: '取消图片上传',
-        })
-        this.setData({
-          isUpload: false,
-          fileID: [],
-          typeIndex: 0,
-          info: '',
-          infolength: 0,
-          submitedID: '',
-        })
-        //TODO 返回上一页
-      }).catch(e => {
-        console.error(e);
+    //删除上传的文件
+    await wx.cloud.deleteFile({
+      fileList: this.data.fileID
+    }).then(res => {
+      wx.navigateBack({
+        delta: 0,
       })
-    } else //TODO 如果已经上传
-    {
-      await wx.cloud.deleteFile({
-        fileList: this.data.fileID
-      }).then(async res => {
-        await db.collection('secondHand').doc(this.data.submitedID).remove()
-          .then(res => {
-            wx.hideLoading()
-            wx.showToast({
-              icon: 'none',
-              title: '取消图片上传',
-            })
-            this.setData({
-              isUpload: false,
-              isSubmited: false,
-              fileID: [],
-              typeIndex: 0,
-              info: '',
-              infolength: 0,
-              submitedID: '',
-            })
-          })
-      })
-
-    }
+    })
   },
   async next() {
     if (this.data.isSubmited) {
@@ -172,7 +133,19 @@ Page({
         formData: {}
       })
     } else {
-      this.cancel()
+      await wx.cloud.deleteFile({
+        fileList: this.data.fileID
+      }).then(res => {
+        this.setData({
+          isUpload: false,
+          isSubmited: false,
+          fileID: [],
+          typeIndex: 0,
+          info: '',
+          infolength: 0,
+          submitedID: '',
+        })
+      })
     }
   },
   onLoad() {},

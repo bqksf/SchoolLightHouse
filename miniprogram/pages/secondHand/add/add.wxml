@@ -12,7 +12,7 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="weui-cell__bd">
-      <textarea bindinput="textareaInput" data-field="message" class="weui-textarea" placeholder="请输入文本"></textarea>
+      <textarea bindinput="textareaInput" data-field="message" class="weui-textarea" placeholder="请输入文本" value="{{info}}"></textarea>
     </view>
   </view>
 </view>
@@ -22,6 +22,5 @@
   </view>
 </picker>
 <button bindtap="submit">提交</button>
-<button bindtap="next">清空并输入下一项</button>
-<!-- 点击过提交后清空？ -->
-<button bindtap="cancel">取消</button>
+<button bindtap="next">输入下一项</button>
+<button bindtap="back">返回</button>

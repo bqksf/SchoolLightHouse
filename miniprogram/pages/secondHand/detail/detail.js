@@ -6,7 +6,7 @@ Page({
     fileID: [],
     info: '',
     type: '',
-    typeArray: ['A', 'B', 'C', 'D'],
+    typeArray: ["科学", "经济", "名著", "漫画", "小说", "数学", "语言", "计算机", "机械", "网络"],
     typeIndex: 0,
     admin: false,
     changemode: false,

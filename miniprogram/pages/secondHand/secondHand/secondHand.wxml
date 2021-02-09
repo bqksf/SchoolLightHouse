@@ -22,7 +22,7 @@
   </view>
 
   <view class='list'>
-    <view class="item" wx:for="{{goods}}" wx:key='i'>
+    <view class="item" wx:for="{{showGoods}}" wx:key='i'>
       <view bindtap='goDetail' data-_id="{{item._id}}"> 
         <image src='{{item.fileID}}' mode="widthFix"><!-- mode="widthFix" 可以做到不对齐--></image>
         <text>{{item.info}}</text>
