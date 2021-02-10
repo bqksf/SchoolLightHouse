@@ -82,7 +82,33 @@ Page({
   },
 
   search() {
-    console.log(this.data.search_msg)
+    // lc
+    let val = this.data.search_msg
+    console.log("查询的内容：", val)
+    const db = wx.cloud.database();
+    const _ = db.command
+
+    db.collection('secondHand').where(_.or([{
+        info: db.RegExp({  //info属性筛选
+          regexp: '.*' + val,   
+          options: 'i',
+        })
+      },
+    //   {    //其他属性
+    //     address: db.RegExp({
+    //       regexp: '.*' + key,
+    //       options: 'i',
+    //     })
+    //   }
+    ])).get({
+      success: res => {
+        console.log(res)
+      },
+      fail: err => {
+        console.log(err)
+      }
+    })
+
   },
 
   tap_item(e) {
