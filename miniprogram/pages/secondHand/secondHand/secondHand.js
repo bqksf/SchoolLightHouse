@@ -5,11 +5,11 @@ Page({
   data: {
     imgWidth: 0,
     imgHeight: 0,
-    showGoods:[],
+    showGoods: [],
     allGoods: [],
     search_msg: "",
     typeMenuOpen: false,
-    type_items: ["科学", "经济", "名著", "漫画", "小说", "数学", "语言", "计算机", "机械", "网络",'A','B','C','D'],
+    type_items: ["科学", "经济", "名著", "漫画", "小说", "数学", "语言", "计算机", "机械", "网络", 'A', 'B', 'C', 'D'],
   },
   goAdd(e) {
     wx.navigateTo({
@@ -48,14 +48,14 @@ Page({
           info: goodTemp.info,
           _id: goodTemp._id,
           fileID: goodTemp.fileID[0],
-          type:goodTemp.type
+          type: goodTemp.type
         }
         goods.push(good)
       }
     }
     this.setData({
-      allGoods:goods,
-      showGoods:goods,
+      allGoods: goods,
+      showGoods: goods,
       admin: true //TODO 通过用户信息设置admin
     })
     wx.hideLoading({})
@@ -89,38 +89,52 @@ Page({
     const _ = db.command
 
     db.collection('secondHand').where(_.or([{
-        info: db.RegExp({  //info属性筛选
-          regexp: '.*' + val,   
+        info: db.RegExp({ //info属性筛选
+          regexp: '.*' + val,
           options: 'i',
         })
       },
-    //   {    //其他属性
-    //     address: db.RegExp({
-    //       regexp: '.*' + key,
-    //       options: 'i',
-    //     })
-    //   }
+      //   {    //其他属性
+      //     address: db.RegExp({
+      //       regexp: '.*' + key,
+      //       options: 'i',
+      //     })
+      //   }
     ])).get({
       success: res => {
-        console.log(res)
+        let goods = []
+        let dataTemp = res.data
+        for (let a in dataTemp) {
+          console.log(dataTemp[a]);
+          let goodTemp = dataTemp[a]
+          let good = {
+            info: goodTemp.info,
+            _id: goodTemp._id,
+            fileID: goodTemp.fileID[0],
+            type: goodTemp.type
+          }
+          goods.push(good)
+        }
+        this.setData({
+          showGoods:goods
+        })
       },
       fail: err => {
-        console.log(err)
+        console.error(err)
       }
     })
 
   },
 
   tap_item(e) {
-    let selectedType=e.currentTarget.dataset.typename
+    let selectedType = e.currentTarget.dataset.typename
     this.setData({
-      showGoods:[]
+      showGoods: []
     })
-    let allGoods=this.data.allGoods
-    let showGoods=[]
-    for(let a in allGoods)
-    {
-      if(allGoods[a].type===selectedType){
+    let allGoods = this.data.allGoods
+    let showGoods = []
+    for (let a in allGoods) {
+      if (allGoods[a].type === selectedType) {
         showGoods.push(allGoods[a])
       }
     }

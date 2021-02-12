@@ -115,14 +115,20 @@ Page({
     wx.showLoading({
       title: '正在返回',
     })
-    //删除上传的文件
-    await wx.cloud.deleteFile({
-      fileList: this.data.fileID
-    }).then(res => {
+    if (this.data.isSubmited) {
       wx.navigateBack({
         delta: 0,
       })
-    })
+    } else {
+      //删除上传的文件
+      await wx.cloud.deleteFile({
+        fileList: this.data.fileID
+      }).then(res => {
+        wx.navigateBack({
+          delta: 0,
+        })
+      })
+    }
   },
   async next() {
     if (this.data.isSubmited) {
