@@ -1,5 +1,6 @@
 // miniprogram/pages/secondHand/detail/detail.js
 const db = wx.cloud.database()
+let app = getApp()
 Page({
   data: {
     _id: '',
@@ -108,7 +109,26 @@ Page({
     }).catch(e => {
       console.error(e);
     })
-
+  },
+  async delete() {
+    console.log(this.data._id);
+    console.log(this.data.fileID);
+    wx.showLoading({
+      title: '正在删除',
+    })
+    await db.collection("secondHand").doc(this.data._id).remove().then(async res => {
+      await wx.cloud.deleteFile({
+        fileList: this.data.fileID
+      }).then(res => {
+        wx.hideLoading({})
+        wx.navigateBack({
+          delta: 0,
+        })
+      })
+    }).catch(err => {
+      wx.hideLoading({})
+      console.error(err);
+    })
   },
   back() {
     wx.navigateBack({
@@ -141,9 +161,8 @@ Page({
       .catch(e => {
         console.error(e);
       })
-    //TODO 根据用户数据设置管理员权限
     this.setData({
-      admin: true
+      admin: app.globalData.userInfo.secondHandAdmin
     })
     wx.hideLoading({})
   },

@@ -1,5 +1,6 @@
 // miniprogram/pages/secondHand/secondHand/secondHand.js
 const db = wx.cloud.database()
+let app = getApp()
 const MAX_LIMIT = 100
 Page({
   data: {
@@ -56,7 +57,7 @@ Page({
     this.setData({
       allGoods: goods,
       showGoods: goods,
-      admin: true //TODO 通过用户信息设置admin
+      admin: app.globalData.userInfo.secondHandAdmin
     })
     wx.hideLoading({})
   },

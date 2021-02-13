@@ -32,4 +32,5 @@
   <button bindtap="changeInfo">修改描述</button>
 </block>
 <button wx:if="{{admin&&!changemode}}" bindtap="change">修改</button>
+<button wx:if="{{admin}}" bindtap="delete">删除</button>
 <button bindtap="back">返回</button>
