@@ -33,3 +33,11 @@
     color: #171a20;
     font-size: 28rpx;
 }
+
+@media (prefers-color-scheme: dark) {
+
+    /* DarkMode 下的样式 start */
+    .update-title {
+        color: #a2a3a5;
+    }
+  }

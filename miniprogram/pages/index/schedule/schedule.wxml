@@ -59,18 +59,19 @@
             </picker> -->
             <view class="date-text" bindtap="toggleDialog">
                 第 {{currentWeekNum}} 周
-                <image class="choose-img" src="../../../images/appstore.png"></image>
+                <image class="choose-img" src="../../../images/appstore.png" wx:if="{{theme === 'light'}}"></image>
+                <image class="choose-img" src="../../../images/appstore-d.png" wx:else></image>
             </view>
             <view class="free-dialog {{ pickerDialog ? 'free-dialog--show' : '' }}">
                 <view class="free-dialog__mask" bindtap="toggleDialog" />
                 <view class="free-dialog__container">
-                    <view style="padding: 5% 5% 15%;">
+                    <view style="padding: 5% 5%;">
                         <form bindsubmit='submit' bindreset="reset">
-                            <view bindtap='freetoBack' class="free-button free-dialog-reset">取消</view>
+                            <view bindtap='freetoBack' class="free-button free-dialog-reset">关闭</view>
                             <radio-group class='free-radios' bindchange="radioChange">
-                                <label class="free-radio" bindtap="click" wx:for="{{items}}" wx:key="items"
+                                <label class="free-radio {{index==pickerid?'checked':'not-checked'}}" bindtap="click" wx:for="{{items}}" wx:key="items"
                                     data-id="{{index}}"
-                                    style="{{index==pickerid?'background:#48c23d;color:#fff;':'background:#fff;color:#000;'}}">
+                                    style="">
                                     <radio value="{{item.name}}" name="{{item.value}}"></radio>
                                     <label class="free-text">{{item.value}}</label>
                                 </label>
@@ -86,8 +87,8 @@
 
         </view>
         <view class="chart-icon">
-            <button plain bindtap="remindChange" wx:if="{{!mindStatus}}" style="width: 100%;">上课提醒 ｜ 关</button>
-            <button type="primary" bindtap="remindChange" style="width: 100%;" wx:else>上课提醒 ｜ 开</button>
+            <button plain bindtap="remindChange" wx:if="{{!mindStatus}}" style="width: 100%;">上课提醒已关闭</button>
+            <button type="primary" bindtap="remindChange" style="width: 100%;" wx:else>上课提醒已开启</button>
         </view>
     </view>
 

@@ -21,8 +21,8 @@ module.exports.showRemind2 = showRemind2;
     <view class="pg-head">
         <div class="date-title">{{yearTitle}}学年</div>
         <div class="chart-icon">
-            <button plain bindtap="remindChange" wx:if="{{!mindStatus}}">考试提醒 ｜ 关</button>
-            <button type="primary" bindtap="remindChange" wx:else>考试提醒 ｜ 开</button>
+            <button plain bindtap="remindChange" wx:if="{{!mindStatus}}">考试提醒已关闭</button>
+            <button type="primary" bindtap="remindChange" wx:else>考试提醒已开启</button>
         </div>
     </view>
     <view class="pg-content">

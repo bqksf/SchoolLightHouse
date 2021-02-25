@@ -194,6 +194,7 @@ function onInitBingChart(F2, config) {
 
 Page({
     data: {
+        theme: wx.getSystemInfoSync().theme,
         scoreArr: [],
         totalCredit: 0,
         totalPoint: 0,

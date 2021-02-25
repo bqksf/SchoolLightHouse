@@ -35,21 +35,24 @@
         <view class="weui-cells weui-cells_after-title">
             <navigator class="weui-cell weui-cell_access" hoverClass="weui-cell_active" url="{{navigateUrl}}">
                 <view class="weui-cell__hd">
-                    <image src="../../images/globe.png" class="menu-logo"></image>
+                    <image src="../../images/globe.png" class="menu-logo" wx:if="{{theme === 'light'}}"></image>
+                    <image src="../../images/globe-d.png" class="menu-logo" wx:else></image>
                 </view>
                 <view class="weui-cell__bd">{{navigateTitle}}</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>
             <navigator class="weui-cell weui-cell_access" hoverClass="weui-cell_active" url="../mine/update/update">
                 <view class="weui-cell__hd">
-                    <image src="../../images/qingdan.png" class="menu-logo"></image>
+                    <image src="../../images/qingdan.png" class="menu-logo" wx:if="{{theme === 'light'}}"></image>
+                    <image src="../../images/qingdan-d.png" class="menu-logo" wx:else></image>
                 </view>
                 <view class="weui-cell__bd">更新日志</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>
             <navigator class="weui-cell weui-cell_access" hoverClass="weui-cell_active" url="../mine/about/about">
                 <view class="weui-cell__hd">
-                    <image src="../../images/award.png" class="menu-logo"></image>
+                    <image src="../../images/award.png" class="menu-logo" wx:if="{{theme === 'light'}}"></image>
+                    <image src="../../images/award-d.png" class="menu-logo" wx:else></image>
                 </view>
                 <view class="weui-cell__bd">关于校园灯塔</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
@@ -57,9 +60,10 @@
             <!-- 留言 lc -->
             <navigator class="weui-cell weui-cell_access" hoverClass="weui-cell_active" url="../mine/suggest/suggest">
                 <view class="weui-cell__hd">
-                    <image src="../../images/suggest.png" class="menu-logo"></image>
+                    <image src="../../images/message-circle.png" class="menu-logo" wx:if="{{theme === 'light'}}"></image>
+                    <image src="../../images/message-circle-d.png" class="menu-logo" wx:else></image>
                 </view>
-                <view class="weui-cell__bd">留言与建议</view>
+                <view class="weui-cell__bd">留言建议</view>
                 <view class="weui-cell__ft weui-cell__ft_in-access"></view>
             </navigator>
         </view>

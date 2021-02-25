@@ -1,7 +1,8 @@
-<view class="page">
+<view class="page" data-weui-theme="{{theme}}">
     <view class="weui-msg">
         <view class="weui-msg__icon-area">
-            <image class="index-logo" src="/images/qingdan.png"></image>
+            <image class="index-logo" src="/images/qingdan.png" wx:if="{{theme === 'light'}}"></image>
+            <image class="index-logo" src="/images/qingdan-d.png" wx:else></image>
             <view class="index-desc">更新日志</view>
         </view>
         <view class="weui-msg__text-area">

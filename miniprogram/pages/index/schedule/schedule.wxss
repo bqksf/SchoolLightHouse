@@ -25,9 +25,10 @@ page{
     display: flex;
     justify-content: space-between;
     top: 0;
-    background-color: white;
     padding-bottom: 15rpx;
 }
+
+
 
 .date-title{
     display: flex;
@@ -38,7 +39,7 @@ page{
 }
 
 .chart-icon{
-    width: 300rpx;
+    width: 320rpx;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -72,6 +73,19 @@ button:not([size='mini']) {
     font-size: 20rpx;
     color: #666;
 }
+
+@media (prefers-color-scheme: dark) {
+
+    /* DarkMode 下的样式 start */
+    .title-date{
+      color: #a2a3a5;
+    }
+  
+    .table-title{
+      color: #f8f8f8;
+    }
+  
+  }
 
 .table-content{
     text-align: center;
@@ -179,25 +193,21 @@ button {
    /*模态框中的内容*/
    .free-button{
     display: inline-block;
-    width:50px;
+    width:100rpx;
     text-align: center;
-    font-size:20px;
+    font-size:40rpx;
     color:#707070;
     margin-bottom:20px;
-   }
-   .free-dialog-submit{
-    float: right;
-    color:#48c23d;
    }
    radio-group{
     margin:10rpx 0rpx;
    }
    radio-group>label{
-    width:22.5%;
+    width:23.8%;
     display: inline-block;
-    border:1px solid #ddd;
-    padding:10px 0px;
-    margin:0px 2px 2px;
+    border-radius: 20rpx;
+    padding:8rpx 0;
+    margin:0 4rpx 14rpx;
    }
    
    radio-group label radio{
@@ -205,10 +215,31 @@ button {
     z-index: 3;
     display: none;
    }
-   .checked{
-    background:#48c23d;
-    color:#fff;
+   .not-checked{
+    background:#eee;
+    color:#171a20;
    }
+   .checked{
+    background:#d0d1d2;
+    color:#171a20;
+   }
+   @media (prefers-color-scheme: dark) {
+
+    /* DarkMode 下的样式 start */
+    .free-dialog__container {
+        background-color: #000;
+    }
+    .not-checked{
+        background:#222;
+        color:#a2a3a5;
+       }
+       .checked{
+        background:#393c41;
+        color:#f8f8f8;
+       }
+  
+  }
+
    radio-group label .free-text{
     width:100%;
     text-align: center;
@@ -241,3 +272,15 @@ button {
     line-height: 30rpx;
 }
 
+@media (prefers-color-scheme: dark) {
+
+    /* DarkMode 下的样式 start */
+    .class-time{
+      color: #a2a3a5;
+    }
+  
+    .class-num{
+      color: #f8f8f8;
+    }
+  
+  }

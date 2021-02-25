@@ -19,17 +19,19 @@ module.exports.showFen = showFen;
                 <view class="choose-box">
                     <view class="choose-name">{{currentChoose}}</view>
                     <view class="choose-icon">
-                        <image class="choose-img" src="../../../images/down.png"></image>
+                        <image class="choose-img" src="../../../images/down.png" wx:if="{{theme === 'light'}}"></image>
+                        <image class="choose-img" src="../../../images/down-d.png" wx:else></image>
                     </view>
                 </view>
             </picker>
         </view>
         <div class="chart-icon">
             <button plain bindtap="tapIcon" wx:if="{{!showChart}}">
-                <image class="chart-img" src="../../../images/areachart.png" ></image>
+                <image class="chart-img" src="../../../images/areachart.png" wx:if="{{theme === 'light'}}"></image>
+                <image class="chart-img" src="../../../images/areachart-d.png" wx:else></image>
             </button>
             <button type="primary" bindtap="tapIcon" wx:else>
-                <image class="chart-img" src="../../../images/areachart-on.png" ></image>
+                <image class="chart-img" src="../../../images/areachart-on.png"></image>
             </button>
         </div>
     </view>
@@ -58,7 +60,7 @@ module.exports.showFen = showFen;
                         </view>
                     </view>
                     <view class="score-total">
-                        <font style="font-size: 40rpx;color:#171a20;">{{item.score}}</font>
+                        <font class="score-total-font">{{item.score}}</font>
                         {{wxs.showFen(item.score)}}
                     </view>
                 </view>

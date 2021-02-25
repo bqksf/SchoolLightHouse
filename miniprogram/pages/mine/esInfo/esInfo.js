@@ -8,7 +8,8 @@ let db = wx.cloud.database({
 Page({
     data: {
         stuID: "加载失败",
-        stuPassword: ""
+        stuPassword: "",
+        theme: wx.getSystemInfoSync().theme,
     },
     async onLoad() {
         try {

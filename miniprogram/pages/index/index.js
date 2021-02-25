@@ -379,7 +379,6 @@ Page({
         wx.showModal({
             title: "提示",
             content: content,
-            confirmColor: "#171a20",
             showCancel: !1
         });
     },

@@ -11,6 +11,14 @@
   border-radius: 30rpx;
 }
 
+@media (prefers-color-scheme: dark) {
+
+  /* DarkMode 下的样式 start */
+  .change-input{
+    background-color: #222;
+  }
+}
+
 button:not([size='mini']) {
   width: 80% !important;
 }

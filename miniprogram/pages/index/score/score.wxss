@@ -11,7 +11,6 @@ page{
     padding: 0 1%;
     position: sticky;
     top: 0;
-    background-color: white;
     padding-bottom: 15rpx;
 }
 
@@ -26,6 +25,8 @@ page{
     background-color: #d0d1d2;
 }
 
+
+
 .choose-box{
     display: flex;
     justify-content: space-between;
@@ -37,6 +38,19 @@ page{
     font-weight: 500;
     color: #171a20;
 }
+
+@media (prefers-color-scheme: dark) {
+    /* DarkMode 下的样式 start */
+  
+    .choose{
+        background:#222;
+    }
+    .choose-box {
+        color: #a2a3a5;
+    }
+  
+  }
+  
 
 .choose-name{
     width: 90%;
@@ -101,6 +115,16 @@ button:not([size='mini']) {
     color: #171a20;
     border-radius: 15rpx;
 }
+
+@media (prefers-color-scheme: dark) {
+    /* DarkMode 下的样式 start */
+  
+    .score-card{
+        background:#222;
+        color: #f8f8f8;
+    }
+  
+  }
   
 .score-name{
     font-size: 30rpx;
@@ -142,6 +166,30 @@ button:not([size='mini']) {
 .score-hover{
     background-color: #d0d1d2;
 }
+
+.score-total-font{
+    font-size: 40rpx;
+    color:#171a20;
+}
+
+@media (prefers-color-scheme: dark) {
+    /* DarkMode 下的样式 start */
+  
+    .score-total{
+        background:#222;
+        color: #eee;
+    }
+
+    .score-other-box{
+        font-size: 25rpx;
+        color: #a2a3a5;
+    }
+
+    .score-total-font{
+        color: #eee;
+    }
+  
+  }
 
 .title{
     display: flex;

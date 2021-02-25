@@ -7,6 +7,7 @@ let db = wx.cloud.database({
 });
 Page({
     data: {
+        theme: wx.getSystemInfoSync().theme,
         indexNum:[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19],
         current: 0,
         dialogTitle: "",
@@ -27,83 +28,83 @@ Page({
         pickerid: 0,
         items: [{
                 name: '1',
-                value: 'week1'
+                value: '1'
             },
             {
                 name: '2',
-                value: 'week2'
+                value: '2'
             },
             {
                 name: '3',
-                value: 'week3'
+                value: '3'
             },
             {
                 name: '4',
-                value: 'week4'
+                value: '4'
             },
             {
                 name: '5',
-                value: 'week5'
+                value: '5'
             },
             {
                 name: '6',
-                value: 'week6'
+                value: '6'
             },
             {
                 name: '7',
-                value: 'week7'
+                value: '7'
             },
             {
                 name: '8',
-                value: 'week8'
+                value: '8'
             },
             {
                 name: '9',
-                value: 'week9'
+                value: '9'
             },
             {
                 name: '10',
-                value: 'week10'
+                value: '10'
             },
             {
                 name: '11',
-                value: 'week11'
+                value: '11'
             },
             {
                 name: '12',
-                value: 'week12'
+                value: '12'
             },
             {
                 name: '13',
-                value: 'week13'
+                value: '13'
             },
             {
                 name: '14',
-                value: 'week14'
+                value: '14'
             },
             {
                 name: '15',
-                value: 'week15'
+                value: '15'
             },
             {
                 name: '16',
-                value: 'week16'
+                value: '16'
             },
             {
                 name: '17',
-                value: 'week17'
+                value: '17'
             },
             {
                 name: '18',
-                value: 'week18'
+                value: '18'
             },
             {
                 name: '19',
-                value: 'week19'
+                value: '19'
             },
             {
                 name: '20',
-                value: 'week20'
+                value: '20'
             },
         ],
         //2021年1月22日 tuip123 swiper容器

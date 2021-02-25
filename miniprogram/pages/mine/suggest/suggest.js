@@ -2,7 +2,7 @@
 Page({
 
     data: {
-
+      theme: wx.getSystemInfoSync().theme,
     },
     bindFormSubmit: function(e) {
         let msg = e.detail.value.msg  //留言内容
