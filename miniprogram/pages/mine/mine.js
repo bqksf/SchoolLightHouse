@@ -8,7 +8,8 @@ Page({
         },
         navigateTitle: "教务系统",
         navigateUrl: "../mine/esInfo/esInfo",
-        kefuWechat: ''
+        kefuWechat: '',
+        theme: wx.getSystemInfoSync().theme,
     },
     onShow() {
         !app.globalData.firstlogin && (this.getStudentInfo());

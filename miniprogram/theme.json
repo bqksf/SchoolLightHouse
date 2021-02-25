@@ -1,0 +1,30 @@
+{
+    "light": {
+      "navTextStyle": "black",
+      "navBackgroundColor": "#fff",
+      "backgroundColor": "#f8f8f8",
+      "backgroundTextStyle": "dark",
+      "tabFontColor":"#bfbfbf",
+      "tabSelectedColor":"#000",
+      "tabBgColor":"#f8f8f8",
+      "tabBorderStyle":"white",
+      "iconPath1": "images/learn.png",
+      "iconPath2": "images/mine.png",
+      "selectedIconPath1": "images/learn-on.png",
+      "selectedIconPath2": "images/mine-on.png"
+    },
+    "dark": {
+      "navTextStyle": "white",
+      "navBackgroundColor": "#000",
+      "backgroundColor": "#171a20",
+      "backgroundTextStyle": "light",
+      "tabFontColor":"#a2a3a5",
+      "tabSelectedColor":"#fff",
+      "tabBgColor":"#171a20",
+      "tabBorderStyle":"white",
+      "iconPath1": "images/learn-d.png",
+      "iconPath2": "images/mine-d.png",
+      "selectedIconPath1": "images/learn-d-on.png",
+      "selectedIconPath2": "images/mine-d-on.png"
+    }
+   }

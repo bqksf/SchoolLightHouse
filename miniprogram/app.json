@@ -16,30 +16,32 @@
         "pages/secondHand/secondHand/secondHand",
         "pages/mine/suggest/suggest"
     ],
+    "darkmode": true,
+    "themeLocation": "theme.json",
     "window": {
-        "backgroundTextStyle": "dark",
-        "navigationBarBackgroundColor": "#fff",
+        "backgroundTextStyle": "@backgroundTextStyle",
+        "navigationBarBackgroundColor": "@navBackgroundColor",
         "navigationBarTitleText": "高校灯塔",
-        "navigationBarTextStyle": "black",
-        "backgroundColor": "#f8f8f8"
+        "navigationBarTextStyle": "@navTextStyle",
+        "backgroundColor": "@backgroundColor"
     },
     "tabBar": {
-        "color": "#bfbfbf",
-        "backgroundColor": "#fff",
-        "borderStyle": "white",
-        "selectedColor": "#000",
+        "color": "@tabFontColor",
+        "backgroundColor": "@tabBgColor",
+        "borderStyle": "@tabBorderStyle",
+        "selectedColor": "@tabSelectedColor",
         "list": [
             {
                 "pagePath": "pages/index/index",
                 "text": "学习",
-                "iconPath": "images/learn.png",
-                "selectedIconPath": "images/learn-on.png"
+                "iconPath": "@iconPath1",
+                "selectedIconPath": "@selectedIconPath1"
             },
             {
                 "pagePath": "pages/mine/mine",
                 "text": "我的",
-                "iconPath": "images/mine.png",
-                "selectedIconPath": "images/mine-on.png"
+                "iconPath": "@iconPath2",
+                "selectedIconPath": "@selectedIconPath2"
             }
         ]
     },

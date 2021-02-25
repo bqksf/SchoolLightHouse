@@ -1,10 +1,25 @@
 @import "WeUI/weui.wxss";
 
+page {
+    background-color: #fff;
+}
+
 .card-style {
     margin: 10px 15px;
-    background: #f8f8f8;
+    background-color: #f8f8f8;
     color: #a2a3a5;
     border-radius: 15rpx;
+}
+
+@media (prefers-color-scheme: dark) {
+    /* DarkMode 下的样式 start */
+    page {
+        background-color: #000;
+    }
+    .card-style {
+        color: #5c5e62;
+        background-color: #171a20;
+    }
 }
 
 .weui-cells {
@@ -33,7 +48,7 @@ button[type='primary'] {
 
 button[type='default'][plain]{
     color: #171a20 !important;
-    border: 2px solid #eee !important;
+    border: 5rpx solid #eee !important;
     border-radius: 1000rpx;
 }
 
@@ -53,9 +68,37 @@ button[type='default']{
 
 button[plain]{
     color: #171a20 !important;
-    border: 3rpx solid #eee !important;
+    border: 5rpx solid #eee !important;
     border-radius: 100rpx !important;
 }
+
+@media (prefers-color-scheme: dark) {
+    /* DarkMode 下的样式 start */
+
+    button[type='default']{
+        color: #f8f8f8 !important;
+        border: 5rpx solid #222 !important;
+    }
+
+    button[type='default'][plain]{
+        color: #f8f8f8 !important;
+        border: 5rpx solid #222 !important;
+    }
+
+    .button-hover[type='default'] {
+        background-color: #444 !important;
+    }
+
+    .button-hover[plain]{
+        background-color: #444 !important;
+    }
+
+    button[plain]{
+        color: #f8f8f8 !important;
+        border: 5rpx solid #222 !important;
+    }
+}
+
 
 .weui-footer__text{
     font-size: 24rpx;

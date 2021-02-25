@@ -12,7 +12,7 @@ App({
 		_openid: null,
 		userInfo: {},
 		isNoBind: false,
-		kefuWechat: null
+		kefuWechat: null,
 	},
 	async onLaunch() {
 		this.cloudInit();
@@ -22,7 +22,6 @@ App({
 		await this.getSchoolInfo();
 		this.okCallBack();
 	},
-	
 	async get_openid() {
 		try {
 			let cache_openid = wx.getStorageSync('_openid') || false;

@@ -46,7 +46,8 @@
             <view class="weui-flex__item">
                 <view class="menu" hover-class="menu-hover" bindtap="tapScheduleButton">
                     <view class="menu-imgs">
-                        <image class="menu-img" src="../../images/layout.png"></image>
+                        <image class="menu-img" src="../../images/layout.png" wx:if="{{theme === 'light'}}"></image>
+                        <image class="menu-img" src="../../images/layout-d.png" wx:else></image>
                     </view>
                     课表
                     <view class="menu-tip">本周 {{weekClassNum}} 节</view>
@@ -55,7 +56,8 @@
             <view class="weui-flex__item">
                 <view class="menu" hover-class="menu-hover" bindtap="tapScoreButton">
                     <view class="menu-imgs">
-                        <image class="menu-img" src="../../images/clipboard.png"></image>
+                        <image class="menu-img" src="../../images/clipboard.png" wx:if="{{theme === 'light'}}"></image>
+                        <image class="menu-img" src="../../images/clipboard-d.png" wx:else></image>
                     </view>
                     成绩
                     <view class="menu-tip">已考 {{scoreNum}} 科</view>
@@ -64,7 +66,8 @@
             <view class="weui-flex__item">
                 <view class="menu" hover-class="menu-hover" bindtap="tapExamButton">
                     <view class="menu-imgs">
-                        <image class="menu-img" src="../../images/edit-.png"></image>
+                        <image class="menu-img" src="../../images/edit-.png" wx:if="{{theme === 'light'}}"></image>
+                        <image class="menu-img" src="../../images/edit-d.png" wx:else></image>
                     </view>
                     考试
                     <view class="menu-tip">总共 {{examNum}} 门</view>
@@ -75,7 +78,8 @@
             <view class="weui-flex__item">
                 <view class="menu" hover-class="menu-hover" bindtap="tapSchoolCardButton">
                     <view class="menu-imgs">
-                        <image class="menu-img" src="../../images/creditcard.png"></image>
+                        <image class="menu-img" src="../../images/creditcard.png" wx:if="{{theme === 'light'}}"></image>
+                        <image class="menu-img" src="../../images/creditcard-d.png" wx:else></image>
                     </view>
                     校卡
                     <view class="menu-tip">余额 0 元(未开放)</view>
@@ -84,7 +88,8 @@
             <view class="weui-flex__item">
                 <view class="menu" hover-class="menu-hover" bindtap="tapBookButton">
                     <view class="menu-imgs">
-                        <image class="menu-img" src="../../images/book.png"></image>
+                        <image class="menu-img" src="../../images/book.png" wx:if="{{theme === 'light'}}"></image>
+                        <image class="menu-img" src="../../images/book-d.png" wx:else></image>
                     </view>
                     图书
                     <view class="menu-tip">已借 {{bookNum}} 本(未开放)</view>
@@ -104,7 +109,8 @@
     </view>
     <view class="toolbox-button">
                 <button plain bindtap="tapShowToolsButton">
-                    <image class="tool-img" src="../../images/tool.png"></image>
+                    <image class="tool-img" src="../../images/tool.png" wx:if="{{theme === 'light'}}"></image>
+                    <image class="tool-img" src="../../images/tool-d.png" wx:else></image>
                     工具箱
                 </button>
     </view>
@@ -119,7 +125,8 @@
                 <view class="weui-flex__item">
                     <view class="menu" hover-class="menu-hover" bindtap="tapQiangKeButton">
                         <view class="menu-imgs">
-                            <image class="menu-img" src="../../images/motorbike.png"></image>
+                            <image class="menu-img" src="../../images/motorbike.png" wx:if="{{theme === 'light'}}"></image>
+                        <image class="menu-img" src="../../images/motorbike-d.png" wx:else></image>
                         </view>
                         抢课
                         <view class="menu-tip">体育/通选课</view>
@@ -128,7 +135,8 @@
                 <view class="weui-flex__item">
                     <view class="menu" hover-class="menu-hover" bindtap="tapPingJiaoButton">
                         <view class="menu-imgs">
-                            <image class="menu-img" src="../../images/commentcheckoutline.png"></image>
+                            <image class="menu-img" src="../../images/commentcheckoutline.png" wx:if="{{theme === 'light'}}"></image>
+                        <image class="menu-img" src="../../images/commentcheckoutline-d.png" wx:else></image>
                         </view>
                         评教
                         <view class="menu-tip">一键评价老师</view>

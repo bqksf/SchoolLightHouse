@@ -14,6 +14,7 @@ let db = wx.cloud.database({
 Page({
     data: {
         statusBarHeight: wx.getSystemInfoSync().statusBarHeight,
+        theme: wx.getSystemInfoSync().theme,
         noClass: true,
         showToolBox: true,
         notice: "暂时没有通知",
