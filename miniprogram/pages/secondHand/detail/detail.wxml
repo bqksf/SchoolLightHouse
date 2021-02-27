@@ -1,5 +1,5 @@
 <!--miniprogram/pages/secondHand/detail/detail.wxml-->
-<swiper indicator-dots="{{false}}" autoplay="{{false}}" style="height:500rpx">
+<swiper indicator-dots="{{true}}" indicator-color="rgba(96,96,96)" indicator-active-color="#0099FF" autoplay="{{false}}" style="height:500rpx">
   <block wx:for="{{fileID}}" wx:key="i">
     <swiper-item>
       <image src="{{item}}"></image>
@@ -14,6 +14,8 @@
       <block wx:if="{{!changemode}}">
         <view>{{info}}</view>
         <view>类型：{{type}}</view>
+        <view>价格：{{price}}</view>
+        <view>描述：{{describe}}</view>
       </block>
       <block wx:if="{{changemode}}">
         <textarea bindinput="textareaInput" data-field="message" class="weui-textarea" value="{{info}}"></textarea>

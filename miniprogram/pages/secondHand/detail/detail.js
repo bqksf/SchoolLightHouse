@@ -11,6 +11,8 @@ Page({
     typeIndex: 0,
     admin: false,
     changemode: false,
+    price: '',
+    describe: '',
   },
   bindPickerChange(e) {
     this.setData({
@@ -149,13 +151,17 @@ Page({
         let {
           fileID,
           info,
-          type
+          type,
+          price,
+          describe,
         } = res.data[0]
         this.setData({
           fileID,
           info,
           _id,
-          type
+          type,
+          price,
+          describe,
         })
       })
       .catch(e => {
