@@ -15,7 +15,8 @@
     "pages/secondHand/detail/detail",
     "pages/secondHand/secondHand/secondHand",
     "pages/mine/suggest/suggest",
-    "pages/secondHand/selectResults/selectResults"
+    "pages/secondHand/selectResults/selectResults",
+    "pages/secondHand/testpage/testpage"
   ],
   "darkmode": true,
   "themeLocation": "theme.json",
@@ -50,5 +51,8 @@
   "sitemapLocation": "sitemap.json",
   "usingComponents": {
     "we-dialog": "/components/dialog/dialog"
+  },
+  "useExtendedLib": {
+    "weui": true
   }
 }

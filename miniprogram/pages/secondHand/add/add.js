@@ -21,7 +21,7 @@ Page({
   async pickPhoto() {
     if (this.data.fileID.length < 5) {
       await wx.chooseImage({
-          count: 5,
+          count: 5-this.data.fileID.length,
           sizeType: ['compressed'],
           sourceType: ['album', 'camera'],
         })
@@ -47,7 +47,8 @@ Page({
             isUpload: true
           })
           wx.hideLoading()
-        }).catch(e => {
+        })
+        .catch(e => {
           console.error('[上传文件] 失败：', e)
           wx.showToast({
             icon: 'none',
