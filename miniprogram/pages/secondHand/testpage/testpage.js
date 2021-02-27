@@ -10,7 +10,7 @@ Page({
     })
   },
   chooseImage: function (e) {
-    var that = this;
+    const that = this;
     wx.chooseImage({
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
@@ -34,7 +34,7 @@ Page({
       let fileID = []
       for (let i = 0; i < files.tempFiles.length; i++) {
         let filePath = files.tempFilePaths[i]
-        let cloudPath = `secondHand/image-${Date.now()}-${Math.floor(Math.random(0, 1) * 1000)}${filePath.match(/\.[^.]+?$/)[0]}`
+        let cloudPath = `secondHand-t/image-${Date.now()}-${Math.floor(Math.random(0, 1) * 1000)}${filePath.match(/\.[^.]+?$/)[0]}`
         wx.cloud.uploadFile({
           cloudPath,
           filePath

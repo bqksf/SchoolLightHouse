@@ -1,5 +1,5 @@
 <!--miniprogram/pages/secondHand/add/add.wxml-->
-<button bindtap="pickPhoto">上传图片</button>
+<!-- <button bindtap="pickPhoto">上传图片</button>
 <block wx:if="{{isUpload}}">
   <swiper indicator-dots="{{false}}" autoplay="{{false}}" style="height:500rpx">
     <block wx:for="{{fileID}}" wx:key="i">
@@ -8,11 +8,20 @@
       </swiper-item>
     </block>
   </swiper>
-</block>
+</block> -->
+<view class="page__bd">
+  <mp-cells>
+    <mp-cell>
+      <mp-uploader title="图片上传" bindfail="uploadError" bindsuccess="uploadSuccess" binddelete="uploaddelete"
+        upload="{{uplaodFile}}" files="{{files}}" max-count="5"></mp-uploader>
+    </mp-cell>
+  </mp-cells>
+</view>
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="weui-cell__bd">
-      <textarea bindinput="infoInput" data-field="info" class="weui-textarea" placeholder="请输入文本" value="{{info}}"></textarea>
+      <textarea bindinput="infoInput" data-field="info" class="weui-textarea" placeholder="请输入文本"
+        value="{{info}}"></textarea>
     </view>
   </view>
 </view>
@@ -24,10 +33,10 @@
 <view class="weui-cells weui-cells_after-title">
   <view class="weui-cell">
     <view class="weui-cell__bd">
-      <textarea bindinput="priceInput" data-field="price" class="weui-textarea"  placeholder="请输入价格" value="{{price}}"></textarea>
+      <textarea bindinput="priceInput" data-field="price" class="weui-textarea" placeholder="请输入价格"
+        value="{{price}}"></textarea>
     </view>
   </view>
 </view>
 <button bindtap="submit">提交</button>
-<button bindtap="next">清空</button>
 <button bindtap="back">取消并返回</button>
