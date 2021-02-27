@@ -47,6 +47,11 @@
           "pathName": "pages/secondHand/selectResults/selectResults",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/secondHand/testpage/testpage",
+          "pathName": "pages/secondHand/testpage/testpage",
+          "scene": null
         }
       ]
     }
