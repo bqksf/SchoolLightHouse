@@ -162,7 +162,7 @@ Page({
         console.error(e);
       })
     this.setData({
-      admin: app.globalData.userInfo.secondHandAdmin
+      admin: app.globalData.userInfo.secondHandAdmin?true:false
     })
     wx.hideLoading({})
   },

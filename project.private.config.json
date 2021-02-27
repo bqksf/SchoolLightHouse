@@ -41,6 +41,12 @@
           "pathName": "pages/secondHand/secondHand/secondHand",
           "query": "",
           "scene": null
+        },
+        {
+          "name": "pages/secondHand/selectResults/selectResults",
+          "pathName": "pages/secondHand/selectResults/selectResults",
+          "query": "",
+          "scene": null
         }
       ]
     }

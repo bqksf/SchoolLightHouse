@@ -49,7 +49,8 @@ Page({
           info: goodTemp.info,
           _id: goodTemp._id,
           fileID: goodTemp.fileID[0],
-          type: goodTemp.type
+          type: goodTemp.type,
+          price:goodTemp.price
         }
         goods.push(good)
       }
@@ -57,7 +58,7 @@ Page({
     this.setData({
       allGoods: goods,
       showGoods: goods,
-      admin: app.globalData.userInfo.secondHandAdmin
+      admin: app.globalData.userInfo.secondHandAdmin?true:false
     })
     wx.hideLoading({})
   },
@@ -86,61 +87,68 @@ Page({
     // lc
     let val = this.data.search_msg
     console.log("查询的内容：", val)
-    const db = wx.cloud.database();
-    const _ = db.command
-
-    db.collection('secondHand').where(_.or([{
-        info: db.RegExp({ //info属性筛选
-          regexp: '.*' + val,
-          options: 'i',
-        })
-      },
-      //   {    //其他属性
-      //     address: db.RegExp({
-      //       regexp: '.*' + key,
-      //       options: 'i',
-      //     })
-      //   }
-    ])).get({
-      success: res => {
-        let goods = []
-        let dataTemp = res.data
-        for (let a in dataTemp) {
-          console.log(dataTemp[a]);
-          let goodTemp = dataTemp[a]
-          let good = {
-            info: goodTemp.info,
-            _id: goodTemp._id,
-            fileID: goodTemp.fileID[0],
-            type: goodTemp.type
-          }
-          goods.push(good)
-        }
-        this.setData({
-          showGoods:goods
-        })
-      },
-      fail: err => {
-        console.error(err)
-      }
+    wx.navigateTo({
+      url: '/pages/secondHand/selectResults/selectResults?val='+val,
     })
+    // const db = wx.cloud.database();
+    // const _ = db.command
+
+    // db.collection('secondHand').where(_.or([{
+    //     info: db.RegExp({ //info属性筛选
+    //       regexp: '.*' + val,
+    //       options: 'i',
+    //     })
+    //   },
+    //   //   {    //其他属性
+    //   //     address: db.RegExp({
+    //   //       regexp: '.*' + key,
+    //   //       options: 'i',
+    //   //     })
+    //   //   }
+    // ])).get({
+    //   success: res => {
+    //     let goods = []
+    //     let dataTemp = res.data
+    //     for (let a in dataTemp) {
+    //       console.log(dataTemp[a]);
+    //       let goodTemp = dataTemp[a]
+    //       let good = {
+    //         info: goodTemp.info,
+    //         _id: goodTemp._id,
+    //         fileID: goodTemp.fileID[0],
+    //         type: goodTemp.type
+    //       }
+    //       goods.push(good)
+    //     }
+    //     this.setData({
+    //       showGoods:goods
+    //     })
+    //   },
+    //   fail: err => {
+    //     console.error(err)
+    //   }
+    // })
 
   },
 
   tap_item(e) {
+    //跳转到新页面再搜索
     let selectedType = e.currentTarget.dataset.typename
-    this.setData({
-      showGoods: []
+    wx.navigateTo({
+      url: '/pages/secondHand/selectResults/selectResults?type='+selectedType,
     })
-    let allGoods = this.data.allGoods
-    let showGoods = []
-    for (let a in allGoods) {
-      if (allGoods[a].type === selectedType) {
-        showGoods.push(allGoods[a])
-      }
-    }
-    this.setData({
-      showGoods
-    })
+    // this.setData({
+    //   showGoods: []
+    // })
+    // let allGoods = this.data.allGoods
+    // let showGoods = []
+    // for (let a in allGoods) {
+    //   if (allGoods[a].type === selectedType) {
+    //     showGoods.push(allGoods[a])
+    //   }
+    // }
+    // this.setData({
+    //   showGoods
+    // })
   }
 })
