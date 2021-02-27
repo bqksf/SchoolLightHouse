@@ -36,6 +36,7 @@ page{
     font-size: 50rpx;
     font-weight: 500;
     /* padding-left: 15rpx; */
+    color: #000;
 }
 
 .chart-icon{
@@ -84,7 +85,10 @@ button:not([size='mini']) {
     .table-title{
       color: #f8f8f8;
     }
-  
+    
+    .date-title{
+        color: #fff;
+    }
   }
 
 .table-content{

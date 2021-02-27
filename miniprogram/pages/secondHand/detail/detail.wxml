@@ -1,14 +1,14 @@
 <!--miniprogram/pages/secondHand/detail/detail.wxml-->
 <swiper indicator-dots="{{false}}" autoplay="{{false}}" style="height:500rpx">
   <block wx:for="{{fileID}}" wx:key="i">
-    <swiper-item>
+    <swiper-item class="img-swiper-item">
       <image src="{{item}}"></image>
     </swiper-item>
   </block>
 </swiper>
 
 
-<view class="weui-cells weui-cells_after-title">
+<view class="content">
   <view class="weui-cell">
     <view class="weui-cell__bd">
       <block wx:if="{{!changemode}}">
@@ -27,10 +27,27 @@
   </view>
 </view>
 
-<block wx:if="{{changemode}}">
-  <button bindtap="changePhoto">重新上传图片</button>
-  <button bindtap="changeInfo">修改描述</button>
+<block wx:if="{{changemode}}" class="change-mode">
+  <view class="weui-form__opr-area buttons">
+    <button plain style="margin-bottom:15rpx" bindtap="changePhoto">
+      重新上传图片
+    </button>
+    <button type="primary" bindtap="changeInfo">
+      保存修改
+    </button>
+  </view>
 </block>
-<button wx:if="{{admin&&!changemode}}" bindtap="change">修改</button>
-<button wx:if="{{admin}}" bindtap="delete">删除</button>
-<button bindtap="back">返回</button>
+
+<block wx:else class="user-mode">
+  <view class="weui-form__opr-area buttons">
+    <button plain style="margin-bottom:15rpx" wx:if="{{admin&&!changemode}}" bindtap="change">
+      编辑
+    </button>
+    <button plain style="margin-bottom:15rpx" wx:if="{{admin}}" bindtap="delete">
+      删除
+    </button>
+    <button type="primary" bindtap="clickIWant">
+      我想要
+    </button>
+  </view>
+</block>

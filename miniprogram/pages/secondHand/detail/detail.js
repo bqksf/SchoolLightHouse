@@ -130,10 +130,12 @@ Page({
       console.error(err);
     })
   },
-  back() {
-    wx.navigateBack({
-      delta: 0,
-    })
+  clickIWant() {
+    wx.showModal({
+      title: "提示",
+      content: '添加客服微信号：xxxx进行购买',
+      showCancel: !1
+  });
   },
   async onLoad(options) {
     wx.showLoading({

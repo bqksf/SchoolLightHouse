@@ -9,9 +9,11 @@
       "tabBgColor":"#f8f8f8",
       "tabBorderStyle":"white",
       "iconPath1": "images/learn.png",
-      "iconPath2": "images/mine.png",
+      "iconPath2": "images/store.png",
+      "iconPath3": "images/mine.png",
       "selectedIconPath1": "images/learn-on.png",
-      "selectedIconPath2": "images/mine-on.png"
+      "selectedIconPath2": "images/store-on.png",
+      "selectedIconPath3": "images/mine-on.png"
     },
     "dark": {
       "navTextStyle": "white",
@@ -23,8 +25,10 @@
       "tabBgColor":"#171a20",
       "tabBorderStyle":"white",
       "iconPath1": "images/learn-d.png",
-      "iconPath2": "images/mine-d.png",
+      "iconPath2": "images/store-d.png",
+      "iconPath3": "images/mine-d.png",
       "selectedIconPath1": "images/learn-d-on.png",
-      "selectedIconPath2": "images/mine-d-on.png"
+      "selectedIconPath2": "images/store-d-on.png",
+      "selectedIconPath3": "images/mine-d-on.png"
     }
    }

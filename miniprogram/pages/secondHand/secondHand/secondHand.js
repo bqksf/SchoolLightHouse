@@ -4,6 +4,9 @@ let app = getApp()
 const MAX_LIMIT = 100
 Page({
   data: {
+    statusBarHeight: wx.getSystemInfoSync().statusBarHeight,
+    theme: wx.getSystemInfoSync().theme,
+    isShow: false,
     imgWidth: 0,
     imgHeight: 0,
     showGoods: [],
@@ -12,6 +15,18 @@ Page({
     typeMenuOpen: false,
     type_items: ["科学", "经济", "名著", "漫画", "小说", "数学", "语言", "计算机", "机械", "网络", 'A', 'B', 'C', 'D'],
   },
+  // 显示搜索蒙层
+  showMask() {
+    this.setData({
+      isShow: true
+    })
+  },
+  // 隐藏搜索蒙层
+  hideMask() {
+    this.setData({
+        isShow: false
+    })
+},
   goAdd(e) {
     wx.navigateTo({
       url: '/pages/secondHand/add/add',
@@ -24,7 +39,7 @@ Page({
     });
   },
   //进行选项修改操作后
-  async afterSet() {},
+  async afterSet() { },
   async onLoad() {
     wx.showLoading({
       title: '正在加载',
@@ -90,11 +105,11 @@ Page({
     const _ = db.command
 
     db.collection('secondHand').where(_.or([{
-        info: db.RegExp({ //info属性筛选
-          regexp: '.*' + val,
-          options: 'i',
-        })
-      },
+      info: db.RegExp({ //info属性筛选
+        regexp: '.*' + val,
+        options: 'i',
+      })
+    },
       //   {    //其他属性
       //     address: db.RegExp({
       //       regexp: '.*' + key,
@@ -117,7 +132,7 @@ Page({
           goods.push(good)
         }
         this.setData({
-          showGoods:goods
+          showGoods: goods
         })
       },
       fail: err => {
