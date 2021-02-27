@@ -12,18 +12,25 @@
   <view class="weui-cell">
     <view class="weui-cell__bd">
       <block wx:if="{{!changemode}}">
-        <view>{{info}}</view>
+        <view>简介：{{info}}</view>
         <view>类型：{{type}}</view>
         <view>价格：{{price}}</view>
         <view>描述：{{describe}}</view>
       </block>
       <block wx:if="{{changemode}}">
-        <textarea bindinput="textareaInput" data-field="message" class="weui-textarea" value="{{info}}"></textarea>
+        <view>简介：</view>
+        <textarea style="border:solid 1rpx; height:100rpx" bindinput="textareaInput" data-field="message" class="weui-textarea" value="{{info}}"></textarea>
         <picker bindchange="bindPickerChange" value="{{typeIndex}}" range="{{typeArray}}">
           <view class="picker">
             类型：{{newType}}
           </view>
         </picker>
+        <view>
+        <view>价格：</view>
+        <input class="priceInput" bindinput="changePrice" value="{{price}}" style="border:solid 1rpx;"/>
+        </view>
+        <view>描述：</view>
+        <textarea style="border:solid 1rpx; height:200rpx" bindinput="changeDescribe" class="weui-textarea" value="{{describe}}"></textarea>
       </block>
     </view>
   </view>
