@@ -6,6 +6,8 @@ Page({
     typeIndex: 0,
     info: '',
     infolength: 0,
+    price: '',
+    pricelenght: 0,
     fileID: [],
     isUpload: false,
     isSubmited: false,
@@ -58,12 +60,20 @@ Page({
       })
     }
   },
-  textareaInput(e) {
+  infoInput(e) {
     let info = e.detail.value
     let infolength = info.length
     this.setData({
       info,
       infolength
+    })
+  },
+  priceInput(e) {
+    let price = e.detail.value
+    let pricelenght = price.length
+    this.setData({
+      price,
+      pricelenght
     })
   },
   async submit() {
@@ -87,7 +97,8 @@ Page({
           data: {
             info: this.data.info,
             fileID: this.data.fileID,
-            type: this.data.typeArray[this.data.typeIndex]
+            type: this.data.typeArray[this.data.typeIndex],
+            price:this.data.price
           }
         }).then(res => {
           wx.hideLoading()
@@ -150,6 +161,8 @@ Page({
           info: '',
           infolength: 0,
           submitedID: '',
+          price: '',
+          pricelenght: 0,
         })
       })
     }

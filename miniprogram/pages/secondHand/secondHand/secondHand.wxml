@@ -5,8 +5,10 @@
       <view class="weui-flex__item">
         <view class="head-title">
           <span class="bigTitle">华广闲置</span>
-            <image class="upload-button-icon" src="../../../images/upload.png" wx:if="{{admin && theme === 'light'}}" bindtap="goAdd"/>
-            <image class="upload-button-icon" src="../../../images/upload-d.png" wx:if="{{admin && theme !== 'light'}}" bindtap="goAdd"/>
+          <image class="upload-button-icon" src="../../../images/upload.png" wx:if="{{admin && theme === 'light'}}"
+            bindtap="goAdd" />
+          <image class="upload-button-icon" src="../../../images/upload-d.png" wx:if="{{admin && theme !== 'light'}}"
+            bindtap="goAdd" />
         </view>
       </view>
     </view>
@@ -20,8 +22,8 @@
           auto-focus="{{isShow}}" focus="{{isShow}}" wx:else></input>
       </view>
       <view class="search-button">
-        <image class="search-button-icon" src="../../../images/menu.png" wx:if="{{theme === 'light'}}"/>
-        <image class="search-button-icon" src="../../../images/menu-d.png" wx:else/>
+        <image class="search-button-icon" src="../../../images/menu.png" wx:if="{{theme === 'light'}}" />
+        <image class="search-button-icon" src="../../../images/menu-d.png" wx:else />
         <text class="search-button-text" bindtap="showTypes">分类</text>
       </view>
     </view>
@@ -41,7 +43,8 @@
           <image src='{{item.fileID}}' mode="widthFix">
             <!-- mode="widthFix" 可以做到不对齐-->
           </image>
-          <text>{{item.info}}</text>
+          <text>{{item.info}}\n</text>
+          <text>{{item.price}}</text>
         </view>
       </view>
     </view>
