@@ -1,1 +1,17 @@
 /* miniprogram/pages/secondHand/detail/detail.wxss */
+.img-swiper-item{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+button:not([size='mini']) {
+    width: 80% !important;
+  }
+  
+  .buttons{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 80rpx !important;
+  }

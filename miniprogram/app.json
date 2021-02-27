@@ -27,32 +27,38 @@
     "navigationBarTextStyle": "@navTextStyle",
     "backgroundColor": "@backgroundColor"
   },
-  "tabBar": {
-    "color": "@tabFontColor",
-    "backgroundColor": "@tabBgColor",
-    "borderStyle": "@tabBorderStyle",
-    "selectedColor": "@tabSelectedColor",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "学习",
-        "iconPath": "@iconPath1",
-        "selectedIconPath": "@selectedIconPath1"
-      },
-      {
-        "pagePath": "pages/mine/mine",
-        "text": "我的",
-        "iconPath": "@iconPath2",
-        "selectedIconPath": "@selectedIconPath2"
-      }
-    ]
-  },
-  "style": "v2",
-  "sitemapLocation": "sitemap.json",
-  "usingComponents": {
-    "we-dialog": "/components/dialog/dialog"
-  },
-  "useExtendedLib": {
-    "weui": true
-  }
+    "tabBar": {
+        "color": "@tabFontColor",
+        "backgroundColor": "@tabBgColor",
+        "borderStyle": "@tabBorderStyle",
+        "selectedColor": "@tabSelectedColor",
+        "list": [
+            {
+                "pagePath": "pages/index/index",
+                "text": "学习",
+                "iconPath": "@iconPath1",
+                "selectedIconPath": "@selectedIconPath1"
+            },
+            {
+                "pagePath": "pages/secondHand/secondHand/secondHand",
+                "text": "闲置",
+                "iconPath": "@iconPath2",
+                "selectedIconPath": "@selectedIconPath2"
+            },
+            {
+                "pagePath": "pages/mine/mine",
+                "text": "我的",
+                "iconPath": "@iconPath3",
+                "selectedIconPath": "@selectedIconPath3"
+            }
+        ]
+    },
+    "style": "v2",
+    "sitemapLocation": "sitemap.json",
+    "usingComponents": {
+        "we-dialog": "/components/dialog/dialog"
+    },
+    "useExtendedLib": {
+      "weui": true
+    }
 }

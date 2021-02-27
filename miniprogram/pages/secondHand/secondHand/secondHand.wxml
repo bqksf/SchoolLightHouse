@@ -1,32 +1,51 @@
 <!--miniprogram/pages/secondHand/secondHand/secondHand.wxml-->
 <view class='case-page'>
-  <view class="tool_menu">
-    <view class="search_menu">
-      <input class="search_input" type="text" bindinput="getInputVal"></input>
-      <image class="search_img" src="../../../images/search.png" bindtap="search"></image>
+  <view class="pg-head" style="padding-top:{{statusBarHeight}}px">
+    <view class="weui-flex">
+      <view class="weui-flex__item">
+        <view class="head-title">
+          <span class="bigTitle">华广闲置</span>
+          <image class="upload-button-icon" src="../../../images/upload.png" wx:if="{{admin && theme === 'light'}}"
+            bindtap="goAdd" />
+          <image class="upload-button-icon" src="../../../images/upload-d.png" wx:if="{{admin && theme !== 'light'}}"
+            bindtap="goAdd" />
+        </view>
+      </view>
     </view>
-    <view>
-      <image class="type_menu_img" src="../../../images/type-menu.png" bindtap="showTypes"></image>
-    </view>
-    <view wx:if="{{admin}}" bindtap="goAdd">
-      +
-    </view>
-  </view>
-
-  <view class="type_menu_page" wx:if="{{typeMenuOpen}}">
-    <view wx:for="{{type_items}}" wx:key="index">
-      <view class="typeitem" bindtap="tap_item" data-typename="{{item}}">
-        <text>{{item}}</text>
+    <view class="search-wrapper">
+      <view class="search-input" bindtap="showMask">
+        <view class="input-tip" wx:if="{{isShow === false}}">
+          <image class="search-input-icon" src="../../../images/search.png" />
+          <text class="search-input-text">搜索</text>
+        </view>
+        <input class="search-input-show" type="text" bindinput="getInputVal" placeholder="搜索物品名称" bindconfirm="search"
+          auto-focus="{{isShow}}" focus="{{isShow}}" wx:else></input>
+      </view>
+      <view class="search-button">
+        <image class="search-button-icon" src="../../../images/menu.png" wx:if="{{theme === 'light'}}" />
+        <image class="search-button-icon" src="../../../images/menu-d.png" wx:else />
+        <text class="search-button-text" bindtap="showTypes">分类</text>
       </view>
     </view>
   </view>
+  <view class="card-flow" style="padding-top:calc({{statusBarHeight}}px + 160rpx)">
+    <view class="type_menu_page" wx:if="{{typeMenuOpen}}" style="height:calc({{statusBarHeight}}px + 1000rpx)">
+      <view wx:for="{{type_items}}" wx:key="index">
+        <view class="typeitem" bindtap="tap_item" data-typename="{{item}}">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
 
-  <view class='list'>
-    <view class="item" wx:for="{{showGoods}}" wx:key='i'>
-      <view bindtap='goDetail' data-_id="{{item._id}}"> 
-        <image src='{{item.fileID}}' mode="widthFix"><!-- mode="widthFix" 可以做到不对齐--></image>
-        <text>{{item.info}}\n</text>
-        <text>{{item.price}}</text>
+    <view class='list'>
+      <view class="item" wx:for="{{showGoods}}" wx:key='i'>
+        <view bindtap='goDetail' data-_id="{{item._id}}">
+          <image src='{{item.fileID}}' mode="widthFix">
+            <!-- mode="widthFix" 可以做到不对齐-->
+          </image>
+          <text>{{item.info}}\n</text>
+          <text>{{item.price}}</text>
+        </view>
       </view>
     </view>
   </view>
