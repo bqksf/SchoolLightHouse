@@ -4,7 +4,7 @@ let app = getApp()
 const MAX_LIMIT = 100
 Page({
   data: {
-    goods:[]
+    goods: []
   },
   goDetail(e) {
     let _id = e.currentTarget.dataset._id
@@ -18,7 +18,8 @@ Page({
     // })
 
     let {
-      type,val
+      type,
+      val
     } = options
     //如果是类型进入页面
     if (type != undefined) {
@@ -56,8 +57,8 @@ Page({
       })
     }
     //如果是搜索进入页面
-    if (val!= undefined){
-      this.search(val)
+    if (val != undefined) {
+      await this.search(val)
     }
     //如果结果为空
     if (this.data.goods.length == 0) {
@@ -68,10 +69,10 @@ Page({
     }
   },
   //搜索功能 lc 
-  search(val) {
+  async search(val) {
     // lc
     const _ = db.command
-    db.collection('secondHand').where(_.or([{
+    await db.collection('secondHand').where(_.or([{
         info: db.RegExp({ //info属性筛选
           regexp: '.*' + val,
           options: 'i',
@@ -83,27 +84,25 @@ Page({
       //       options: 'i',
       //     })
       //   }
-    ])).get({
-      success: res => {
-        let goods = []
-        let dataTemp = res.data
-        for (let a in dataTemp) {
-          let goodTemp = dataTemp[a]
-          let good = {
-            info: goodTemp.info,
-            _id: goodTemp._id,
-            fileID: goodTemp.fileID[0],
-            type: goodTemp.type
-          }
-          goods.push(good)
+    ])).get({})
+    .then(res => {
+      let goods = []
+      let dataTemp = res.data
+      for (let a in dataTemp) {
+        let goodTemp = dataTemp[a]
+        let good = {
+          info: goodTemp.info,
+          _id: goodTemp._id,
+          fileID: goodTemp.fileID[0],
+          type: goodTemp.type
         }
-        this.setData({
-          goods
-        })
-      },
-      fail: err => {
-        console.error(err)
+        goods.push(good)
       }
+      this.setData({
+        goods
+      })
+    }).catch(e => {
+      console.error(e);
     })
   },
 })
