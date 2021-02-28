@@ -13,7 +13,7 @@ Page({
     allGoods: [],
     search_msg: "",
     typeMenuOpen: false,
-    type_items: ["科学", "经济", "名著", "漫画", "小说", "数学", "语言", "计算机", "机械", "网络", 'A', 'B', 'C', 'D'],
+    type_items: [],
   },
   // 显示搜索蒙层
   showMask() {
@@ -70,10 +70,14 @@ Page({
         goods.push(good)
       }
     }
+    
+    const types=await db.collection('configGZH').get()
+
     this.setData({
       allGoods: goods,
       showGoods: goods,
-      admin: app.globalData.userInfo.secondHandAdmin?true:false
+      admin: app.globalData.userInfo.secondHandAdmin?true:false,
+      type_items:types.data[2].typeitems
     })
     wx.hideLoading({})
   },
@@ -165,5 +169,6 @@ Page({
     // this.setData({
     //   showGoods
     // })
-  }
+  },
+
 })
