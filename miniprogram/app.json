@@ -15,8 +15,7 @@
     "pages/secondHand/detail/detail",
     "pages/secondHand/secondHand/secondHand",
     "pages/mine/suggest/suggest",
-    "pages/secondHand/selectResults/selectResults",
-    "pages/secondHand/testpage/testpage"
+    "pages/secondHand/selectResults/selectResults"
   ],
   "darkmode": true,
   "themeLocation": "theme.json",

@@ -1,17 +1,49 @@
 /* miniprogram/pages/secondHand/detail/detail.wxss */
-.img-swiper-item{
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.img-swiper-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 button:not([size='mini']) {
-    width: 80% !important;
+  width: 80% !important;
+}
+
+.buttons {
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  margin-bottom: 0 !important;
+  padding-bottom: 80rpx !important;
+  background-color: #fff;
+  z-index: 999;
+}
+
+@media (prefers-color-scheme: dark) {
+
+  /* DarkMode 下的样式 start */
+  .buttons {
+    background-color: #000;
   }
-  
-  .buttons{
-    position: fixed;
-    width: 100%;
-    bottom: 0;
-    margin-bottom: 80rpx !important;
-  }
+
+}
+
+.good-price{
+  color: #ed4e3b;
+  font-weight: 450;
+  font-size: 38rpx;
+}
+
+.good-name{
+  font-weight: 450;
+  font-size: 36rpx;
+}
+
+.good-type{
+  color: #a2a3a5;
+  font-size: 30rpx;
+}
+
+.good-des{
+  margin-top: 10rpx;
+}

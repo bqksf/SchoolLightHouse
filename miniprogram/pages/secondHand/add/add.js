@@ -9,9 +9,12 @@ Page({
     price: '',
     pricelenght: 0,
     fileID: [],
-    files:[],
+    files: [],
     isSubmited: false,
     submitedID: '',
+    describe: '',
+    describelenght: 0,
+    theme: wx.getSystemInfoSync().theme,
   },
   //选择器
   bindPickerChange: function (e) {
@@ -19,7 +22,7 @@ Page({
       typeIndex: e.detail.value
     })
   },
-  //两个文本框的输入
+  //三个文本框的输入
   infoInput(e) {
     let info = e.detail.value
     let infolength = info.length
@@ -36,7 +39,17 @@ Page({
       pricelenght
     })
   },
-
+  describeInput(e) {
+    let describe = e.detail.value
+    let describelenght = describe.length
+    this.setData({
+      describe,
+      describelenght
+    })
+  },
+  priceMianYi() {
+    this.setData({ price: "可议" });
+  },
   async submit() {
     console.log(this.data);
     wx.showLoading({
@@ -49,35 +62,43 @@ Page({
         icon: 'none',
         title: '还未上传图片',
       })
-    } 
+    }
     else if (this.data.isSubmited) {
       wx.hideLoading()
       wx.showToast({
         icon: 'none',
         title: '本条信息已经上传',
       })
-    } 
+    }
     else {
+      console.log(this.data.describe);
       await db.collection('secondHand').add({
-          data: {
-            info: this.data.info,
-            fileID: this.data.fileID,
-            type: this.data.typeArray[this.data.typeIndex],
-            price: this.data.price
-          }
-        })
+        data: {
+          info: this.data.info,
+          fileID: this.data.fileID,
+          type: this.data.typeArray[this.data.typeIndex],
+          price: this.data.price,
+          describe: this.data.describe,
+          createAt: new Date()
+        }
+      })
         .then(res => {
           wx.hideLoading()
-          wx.showToast({
-            icon: 'none',
-            title: '上传成功',
-          })
           this.setData({
             submitedID: res._id,
             isSubmited: true
           })
-          wx.navigateBack({
-            delta: 0,
+          wx.showToast({
+            icon: 'success',
+            title: '上传成功',
+            duration: 1000,
+            success: function () {
+              setTimeout(function() {
+                wx.navigateBack({
+                  delta: 0,
+                })
+              }, 1000);
+            }
           })
         })
         .catch(e => {
@@ -90,23 +111,18 @@ Page({
         })
     }
   },
-
-  async back() {
+  async onUnload() {
     wx.showLoading({
       title: '正在返回',
     })
     if (this.data.isSubmited) {
-      wx.navigateBack({
-        delta: 0,
-      })
+      wx.hideLoading();
     } else {
       //删除上传的文件
       await wx.cloud.deleteFile({
         fileList: this.data.fileID
       }).then(res => {
-        wx.navigateBack({
-          delta: 0,
-        })
+        wx.hideLoading();
       })
     }
   },
@@ -146,14 +162,14 @@ Page({
   chooseImage: function (e) {
     var that = this;
     wx.chooseImage({
-        sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
-        sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
-        success: function (res) {
-            // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-            that.setData({
-                files: that.data.files.concat(res.tempFilePaths)
-            });
-        }
+      sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
+      sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
+      success: function (res) {
+        // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
+        that.setData({
+          files: that.data.files.concat(res.tempFilePaths)
+        });
+      }
     })
   },
   previewImage: function (e) {

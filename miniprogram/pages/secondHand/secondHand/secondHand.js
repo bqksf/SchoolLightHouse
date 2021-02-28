@@ -14,6 +14,7 @@ Page({
     search_msg: "",
     typeMenuOpen: false,
     type_items: [],
+    admin: false
   },
   // 显示搜索蒙层
   showMask() {
@@ -24,13 +25,26 @@ Page({
   // 隐藏搜索蒙层
   hideMask() {
     this.setData({
-        isShow: false
+      isShow: false
     })
-},
+  },
+  async onPullDownRefresh() {
+    wx.vibrateShort();
+    await this.onLoad();
+    wx.stopPullDownRefresh();
+  },
   goAdd(e) {
-    wx.navigateTo({
-      url: '/pages/secondHand/add/add',
-    })
+    if (this.data.admin) {
+      wx.navigateTo({
+        url: '/pages/secondHand/add/add',
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '您可以加客服xxxx来发布商品噢',
+        showCancel: false,
+      });
+    }
   },
   goDetail(e) {
     let _id = e.currentTarget.dataset._id
@@ -65,7 +79,7 @@ Page({
           _id: goodTemp._id,
           fileID: goodTemp.fileID[0],
           type: goodTemp.type,
-          price:goodTemp.price
+          price: goodTemp.price
         }
         goods.push(good)
       }
@@ -76,7 +90,7 @@ Page({
     this.setData({
       allGoods: goods,
       showGoods: goods,
-      admin: app.globalData.userInfo.secondHandAdmin?true:false,
+      admin: app.globalData.userInfo.secondHandAdmin ? true : false,
       type_items:types.data[2].typeitems
     })
     wx.hideLoading({})
@@ -107,7 +121,7 @@ Page({
     let val = this.data.search_msg
     console.log("查询的内容：", val)
     wx.navigateTo({
-      url: '/pages/secondHand/selectResults/selectResults?val='+val,
+      url: '/pages/secondHand/selectResults/selectResults?val=' + val,
     })
     // const db = wx.cloud.database();
     // const _ = db.command
@@ -154,7 +168,7 @@ Page({
     //跳转到新页面再搜索
     let selectedType = e.currentTarget.dataset.typename
     wx.navigateTo({
-      url: '/pages/secondHand/selectResults/selectResults?type='+selectedType,
+      url: '/pages/secondHand/selectResults/selectResults?type=' + selectedType,
     })
     // this.setData({
     //   showGoods: []

@@ -1,1 +1,14 @@
 /* miniprogram/pages/secondHand/add/add.wxss */
+
+button:not([size='mini']) {
+    width: 80% !important;
+  }
+  
+  .buttons {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    margin-bottom: 0 !important;
+    padding-bottom: 80rpx !important;
+    z-index: 999;
+  }

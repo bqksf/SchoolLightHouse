@@ -7,6 +7,10 @@
         </view>
         <view class="weui-msg__text-area">
             <view class="weui-msg__desc">
+                <view class="update-title">v1.4-2021-02-28</view>
+                <view>适配暗黑模式，重新设计课程表UI界面（支持左右滑动切换下一周），支持放假时查看下学期的课程，新增华广闲置，留言建议</view>
+            </view>
+            <view class="weui-msg__desc">
                 <view class="update-title">v1.3-2020-12-04</view>
                 <view>完成上课提醒和考试提醒</view>
             </view>

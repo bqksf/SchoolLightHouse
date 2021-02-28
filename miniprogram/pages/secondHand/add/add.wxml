@@ -9,34 +9,48 @@
     </block>
   </swiper>
 </block> -->
-<view class="page__bd">
+<view class="content" style="padding-bottom: 200rpx;" data-weui-theme="{{theme}}">
   <mp-cells>
     <mp-cell>
-      <mp-uploader title="图片上传" bindfail="uploadError" bindsuccess="uploadSuccess" binddelete="uploaddelete"
+      <mp-uploader title="商品图片" bindfail="uploadError" bindsuccess="uploadSuccess" binddelete="uploaddelete"
         upload="{{uplaodFile}}" files="{{files}}" max-count="5"></mp-uploader>
     </mp-cell>
   </mp-cells>
-</view>
-<view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell">
-    <view class="weui-cell__bd">
-      <textarea bindinput="infoInput" data-field="info" class="weui-textarea" placeholder="请输入文本"
-        value="{{info}}"></textarea>
+  <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <textarea bindinput="infoInput" data-field="info" class="weui-textarea" placeholder="请输入商品名称" value="{{info}}"
+          style="height:100rpx"></textarea>
+      </view>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <picker bindchange="bindPickerChange" value="{{typeIndex}}" range="{{typeArray}}">
+          <view class="picker">
+            商品类型：{{typeArray[typeIndex]}}
+          </view>
+        </picker>
+      </view>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <input bindinput="priceInput" data-field="price" class="weui-textarea" placeholder="请输入商品价格（单位：元）"
+          value="{{price}}" style="color:#ed4e3b"></input>
+      </view>
+      <view class="weui-cell__ft" bindtap="priceMianYi">
+        <view style="color:#3e6ae1">可议</view>
+      </view>
+    </view>
+    <view class="weui-cell">
+      <view class="weui-cell__bd">
+        <textarea bindinput="describeInput" data-field="describe" class="weui-textarea" placeholder="请输入商品描述"
+          value="{{describe}}"></textarea>
+      </view>
     </view>
   </view>
 </view>
-<picker bindchange="bindPickerChange" value="{{typeIndex}}" range="{{typeArray}}">
-  <view class="picker">
-    类型：{{typeArray[typeIndex]}}
-  </view>
-</picker>
-<view class="weui-cells weui-cells_after-title">
-  <view class="weui-cell">
-    <view class="weui-cell__bd">
-      <textarea bindinput="priceInput" data-field="price" class="weui-textarea" placeholder="请输入价格"
-        value="{{price}}"></textarea>
-    </view>
-  </view>
+<view class="weui-form__opr-area buttons">
+  <button type="primary" bindtap="submit">
+    发布
+  </button>
 </view>
-<button bindtap="submit">提交</button>
-<button bindtap="back">取消并返回</button>

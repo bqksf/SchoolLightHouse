@@ -122,7 +122,12 @@ Page({
         describe: this.data.describe
       }
     }).then(res => {
-      wx.hideLoading({})
+      wx.hideLoading();
+      let obj = { _id:this.data._id};
+      this.onLoad(obj);
+      this.setData({
+        changemode:false
+      })
     }).catch(e => {
       console.error(e);
     })
@@ -137,10 +142,19 @@ Page({
       await wx.cloud.deleteFile({
         fileList: this.data.fileID
       }).then(res => {
-        wx.hideLoading({})
-        wx.navigateBack({
-          delta: 0,
-        })
+        wx.hideLoading();
+        wx.showToast({
+            icon: 'success',
+            title: '删除成功',
+            duration: 1000,
+            success: function () {
+              setTimeout(function() {
+                wx.navigateBack({
+                  delta: 0,
+                })
+              }, 1000);
+            }
+          })
       })
     }).catch(err => {
       wx.hideLoading({})

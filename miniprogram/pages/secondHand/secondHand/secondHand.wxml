@@ -5,9 +5,9 @@
       <view class="weui-flex__item">
         <view class="head-title">
           <span class="bigTitle">华广闲置</span>
-          <image class="upload-button-icon" src="../../../images/upload.png" wx:if="{{admin && theme === 'light'}}"
+          <image class="upload-button-icon" src="../../../images/upload.png" wx:if="{{theme === 'light'}}"
             bindtap="goAdd" />
-          <image class="upload-button-icon" src="../../../images/upload-d.png" wx:if="{{admin && theme !== 'light'}}"
+          <image class="upload-button-icon" src="../../../images/upload-d.png" wx:else
             bindtap="goAdd" />
         </view>
       </view>
@@ -43,8 +43,8 @@
           <image src='{{item.fileID}}' mode="widthFix">
             <!-- mode="widthFix" 可以做到不对齐-->
           </image>
-          <text>{{item.info}}\n</text>
-          <text>{{item.price}}</text>
+          <view class="good-title">{{item.info}}</view>
+          <view class="price">¥ {{item.price}}</view>
         </view>
       </view>
     </view>

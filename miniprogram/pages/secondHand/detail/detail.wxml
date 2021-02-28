@@ -1,5 +1,5 @@
 <!--miniprogram/pages/secondHand/detail/detail.wxml-->
-<swiper indicator-dots="{{true}}" indicator-color="rgba(96,96,96)" indicator-active-color="#0099FF" autoplay="{{false}}" style="height:500rpx">
+<swiper indicator-dots="{{true}}" autoplay="{{false}}" style="height:500rpx">
   <block wx:for="{{fileID}}" wx:key="i">
     <swiper-item class="img-swiper-item">
       <image src="{{item}}"></image>
@@ -9,25 +9,25 @@
 
 
 <view class="content">
-  <view class="weui-cell">
+  <view class="weui-cell" style="{{changemode||admin ? 'padding-bottom: 296rpx;' : 'padding-bottom: 180rpx;'}}">
     <view class="weui-cell__bd">
       <block wx:if="{{!changemode}}">
-        <view>简介：{{info}}</view>
-        <view>类型：{{type}}</view>
-        <view>价格：{{price}}</view>
-        <view>描述：{{describe}}</view>
+        <view class="good-price">¥ {{price}}</view>
+        <view class="good-name">{{info}}</view>
+        <view class="good-type">{{type}}</view>
+        <view class="good-des">{{describe}}</view>
       </block>
       <block wx:if="{{changemode}}">
-        <view>简介：</view>
+        <view>商品名称：</view>
         <textarea style="border:solid 1rpx; height:100rpx" bindinput="textareaInput" data-field="message" class="weui-textarea" value="{{info}}"></textarea>
         <picker bindchange="bindPickerChange" value="{{typeIndex}}" range="{{typeArray}}">
           <view class="picker">
-            类型：{{newType}}
+            商品类型：{{newType}}
           </view>
         </picker>
         <view>
         <view>价格：</view>
-        <input class="priceInput" bindinput="changePrice" value="{{price}}" style="border:solid 1rpx;"/>
+        <input class="priceInput" bindinput="changePrice" value="{{price}}" style="border:solid 1rpx;color:#ed4e3b"/>
         </view>
         <view>描述：</view>
         <textarea style="border:solid 1rpx; height:200rpx" bindinput="changeDescribe" class="weui-textarea" value="{{describe}}"></textarea>
@@ -49,12 +49,14 @@
 
 <block wx:else class="user-mode">
   <view class="weui-form__opr-area buttons">
-    <button plain style="margin-bottom:15rpx" wx:if="{{admin&&!changemode}}" bindtap="change">
+    <view class="weui-flex" style="margin:0 64rpx">
+    <button plain size="mini" style="margin-bottom:15rpx;width:45%;" wx:if="{{admin&&!changemode}}" bindtap="change">
       编辑
     </button>
-    <button plain style="margin-bottom:15rpx" wx:if="{{admin}}" bindtap="delete">
+    <button plain size="mini" class="button-warn" style="margin-bottom:15rpx;width:45%;" wx:if="{{admin}}" bindtap="delete">
       删除
     </button>
+  </view>
     <button type="primary" bindtap="clickIWant">
       我想要
     </button>

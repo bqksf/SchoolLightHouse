@@ -131,7 +131,6 @@ Page({
             } = studyData;
             // 设置全局变量
             app.globalData.studyData = data;
-            console.log(data)
             // 设置缓存
             if (needSetStorage) {
                 studyData.addStorTime = nowTime;

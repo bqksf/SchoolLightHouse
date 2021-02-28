@@ -121,7 +121,7 @@
 }
 
 .item {
-  margin: 0 15rpx 15rpx 15rpx;
+  margin: 0 15rpx 25rpx 15rpx;
   /* 改成仅20rpx能实现不对齐效果 */
   break-inside: avoid;
   box-sizing: border-box;
@@ -200,4 +200,19 @@
   width: 38rpx;
   height: 38rpx;
   margin-left: 20rpx;
+}
+
+.good-title{
+  width: 100%;
+  overflow:hidden; 
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.price{
+  color: #ed4e3b;
+  width: 100%;
+  overflow:hidden; 
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

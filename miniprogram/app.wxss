@@ -29,6 +29,11 @@ page {
     font-size: 30rpx;
 }
 
+.button-warn{
+    background-color: #ed4e3b !important;
+    color: #fff !important;
+}
+
 button {
     padding: 9px 24px !important;
     font-size: 35rpx !important;
@@ -50,13 +55,13 @@ button[type='primary'] {
 }
 
 button[type='default'][plain]{
-    color: #171a20 !important;
+    /* color: #171a20 !important; */
     border: 5rpx solid #eee !important;
     border-radius: 1000rpx;
 }
 
 button[type='default']{
-    color: #171a20 !important;
+    /* color: #171a20 !important; */
     background-color: #eee !important;
     border-radius: 1000rpx;
 }
@@ -70,7 +75,7 @@ button[type='default']{
 }
 
 button[plain]{
-    color: #171a20 !important;
+    /* color: #171a20 !important; */
     border: 5rpx solid #eee !important;
     border-radius: 100rpx !important;
 }
