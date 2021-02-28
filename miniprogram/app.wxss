@@ -8,7 +8,7 @@ page {
     margin: 10px 15px;
     background-color: #f8f8f8;
     color: #a2a3a5;
-    border-radius: 15rpx;
+    border-radius: 20rpx;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,7 +18,10 @@ page {
     }
     .card-style {
         color: #5c5e62;
-        background-color: #171a20;
+        background-color: #222;
+    }
+    .weui-msg{
+        background-color:#000;
     }
 }
 
