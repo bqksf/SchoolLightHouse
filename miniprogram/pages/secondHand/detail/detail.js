@@ -33,6 +33,19 @@ Page({
       infolength
     })
   },
+  changePrice(e){
+    let newprice=e.detail.value
+    this.setData({
+      price:newprice
+    })
+  },
+  changeDescribe(e){
+    let newdescribe=e.detail.value
+    this.setData({
+      describe:newdescribe
+    })
+  },
+
   async changePhoto() {
     await wx.chooseImage({
       count: 5,
@@ -104,7 +117,9 @@ Page({
     }).update({
       data: {
         info: this.data.info,
-        type: this.data.newType
+        type: this.data.newType,
+        price: this.data.price,
+        describe: this.data.describe
       }
     }).then(res => {
       wx.hideLoading({})
