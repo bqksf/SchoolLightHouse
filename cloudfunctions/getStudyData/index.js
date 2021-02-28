@@ -8,6 +8,7 @@ cloud.init({
 })
 const db = cloud.database()
 const log = cloud.logger()
+let getPachongErrorMsg = ""
 
 // 云函数入口函数
 exports.main = async (event, context) => {
@@ -39,10 +40,47 @@ exports.main = async (event, context) => {
       // 获取爬虫数据
       let data = await getPachongDataAndSafe(stuID, stuPassword, OPENID);
       if (!data) {
-        // 密码错误
-        return returnRule.success({
-          needChangePassword: true
-        });
+        // 爬虫返回的错误提示处理
+        switch (getPachongErrorMsg) {
+          case 'password':
+            // 密码错误
+            return returnRule.success({
+              needChangePassword: true
+            });
+            break;
+          case 'notRegister':
+            // 学籍提示未注册，一般在还没开学的时候
+            // 如果有旧内容，就正常返回，然后在小程序公告提示未开学
+            if (isObjEmpty(examTime) && isObjEmpty(schedule) && isObjEmpty(score)) {
+              // 没有旧内容，直接提示未开学错误
+              return returnRule.fail('notRegister',"您还没在新学期注册或学校未开学，教务系统无法获取最新信息。请开学时在教务处注册后再刷新重试。");
+            } else {
+              // 2020.12.8 对象为空的时候返回给小程序为null就不会加载了
+              if (isObjEmpty(examTime)) {
+                examTime = null;
+              }
+              if (isObjEmpty(schedule)) {
+                schedule = null;
+              }
+              if (isObjEmpty(score)) {
+                score = null;
+              }
+              returnData = {
+                examTime: examTime,
+                schedule: schedule,
+                score: score,
+                needChangePassword: false,
+                notRegister: true
+              };
+              return returnRule.success(returnData);
+            }
+            break;
+          default:
+            // 其他错误，直接throw到小程序里提示
+            throw getPachongErrorMsg;
+            break;
+        }
+
       }
       // 2020.12.8 对象为空的时候返回给小程序为null就不会加载了
       if (isObjEmpty(data.examTime)) {
@@ -120,6 +158,17 @@ async function getPachongDataAndSafe(stuID, stuPassword, OPENID) {
     } catch (e) {
       log.error({ message: '更新为密码错误数据库失败：', data: e.toString(), _openid: OPENID });
     }
+    getPachongErrorMsg = "password";
+    return false;
+  }
+  if (httpResp.status === 'loginError' && data.error.msg.includes('您还未注册，请到学院或教务管理部门进行注册。')) {
+    // 开学前会提示未注册
+    getPachongErrorMsg = "notRegister";
+    return false;
+  }
+  if (httpResp.status === 'loginError') {
+    // 其他登陆错误
+    getPachongErrorMsg = data.error.msg;
     return false;
   }
   // 2020.12.8 针对单项错误，传入空对象作为处理方案

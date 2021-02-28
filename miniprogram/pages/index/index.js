@@ -131,6 +131,7 @@ Page({
             } = studyData;
             // 设置全局变量
             app.globalData.studyData = data;
+            console.log(data)
             // 设置缓存
             if (needSetStorage) {
                 studyData.addStorTime = nowTime;
@@ -161,11 +162,18 @@ Page({
                 //有考试数据
                 this.handleExamData(data.examTime);
             }
-            // TODO 服务器公告
-            this.setData({
-                notice: '暂时没有通知',
-                isRefresh: false
-            });
+            // 可以放置提示在这个公告，未来可以加上服务器公告TODO
+            if (data.hasOwnProperty('notRegister')) {
+                this.setData({
+                    notice: '您还没在新学期注册或学校未开学，教务系统无法获取最新信息。目前为您展示旧数据，请开学时在教务处注册后再下拉刷新获取最新数据。',
+                    isRefresh: false
+                });
+            }else{
+                this.setData({
+                    notice: '暂时没有通知',
+                    isRefresh: false
+                });
+            }
             //2020年12月5日 tuip123 老用户设置公告
             if (app.globalData.userInfo.isOldUser) {
                 this.setData({
@@ -282,12 +290,12 @@ Page({
             scoreNum: scoreNum
         })
     },
-    tapSchoolCardButton() {
-        if (this.checkAllModalStatus()) { //全局弹窗控制
-            this.showNotComplete();
-            return;
-        }
-    },
+    // tapSchoolCardButton() {
+    //     if (this.checkAllModalStatus()) { //全局弹窗控制
+    //         this.showNotComplete();
+    //         return;
+    //     }
+    // },
     tapBookButton() {
         if (this.checkAllModalStatus()) { //全局弹窗控制
             this.showNotComplete();

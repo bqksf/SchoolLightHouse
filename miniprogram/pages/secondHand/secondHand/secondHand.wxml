@@ -29,7 +29,7 @@
     </view>
   </view>
   <view class="card-flow" style="padding-top:calc({{statusBarHeight}}px + 160rpx)">
-    <view class="type_menu_page" wx:if="{{typeMenuOpen}}" style="height:calc({{statusBarHeight}}px + 1000rpx)">
+    <view class="type_menu_page" wx:if="{{typeMenuOpen}}" style="height:calc(100vh - {{statusBarHeight}}px - 160rpx">
       <view wx:for="{{type_items}}" wx:key="index">
         <view class="typeitem" bindtap="tap_item" data-typename="{{item}}">
           <text>{{item}}</text>

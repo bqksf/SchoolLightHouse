@@ -18,11 +18,11 @@
     "dark": {
       "navTextStyle": "white",
       "navBackgroundColor": "#000",
-      "backgroundColor": "#171a20",
+      "backgroundColor": "#222",
       "backgroundTextStyle": "light",
       "tabFontColor":"#a2a3a5",
       "tabSelectedColor":"#fff",
-      "tabBgColor":"#171a20",
+      "tabBgColor":"#222",
       "tabBorderStyle":"white",
       "iconPath1": "images/learn-d.png",
       "iconPath2": "images/store-d.png",
