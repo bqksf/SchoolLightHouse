@@ -40,7 +40,7 @@ Page({
       })
     } else {
       wx.showModal({
-        title: '提示',
+        title: '发布商品',
         content: '您可以加客服xxxx来发布商品噢',
         showCancel: false,
       });
@@ -90,7 +90,7 @@ Page({
     this.setData({
       allGoods: goods,
       showGoods: goods,
-      admin: app.globalData.userInfo.secondHandAdmin ? true : false,
+      admin: !app.globalData.firstlogin && app.globalData.userInfo.secondHandAdmin ? true : false,
       type_items:types.data[2].typeitems
     })
     wx.hideLoading({})

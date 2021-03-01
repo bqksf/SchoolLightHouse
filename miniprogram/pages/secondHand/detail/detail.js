@@ -13,6 +13,7 @@ Page({
     changemode: false,
     price: '',
     describe: '',
+    admin: false
   },
   bindPickerChange(e) {
     this.setData({
@@ -200,7 +201,7 @@ Page({
       })
       const types=await db.collection('configGZH').get()
     this.setData({
-      admin: app.globalData.userInfo.secondHandAdmin?true:false,
+      admin: !app.globalData.firstlogin && app.globalData.userInfo.secondHandAdmin ? true : false,
       typeArray:types.data[2].typeitems
     })
     wx.hideLoading({})

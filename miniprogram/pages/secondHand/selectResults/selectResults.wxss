@@ -27,3 +27,15 @@
 .price{
   color: #ed4e3b;
 }
+
+.empty-img{
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  margin-top: 80rpx;
+}
+
+.empty-text{
+  text-align: center;
+  color: #a2a3a5;
+}

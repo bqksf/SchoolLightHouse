@@ -19,7 +19,7 @@ App({
 		await this.get_openid();
 		await this.getUserInfo();
 		await this.getKefuWechat();
-		await this.getSchoolInfo();
+		if (!this.globalData.firstlogin) await this.getSchoolInfo();
 		this.okCallBack();
 	},
 	async get_openid() {

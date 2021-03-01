@@ -1,4 +1,10 @@
-<view class='list'>
+<view class="empty" wx:if="{{goods.length === 0}}">
+  <view class="empty-img">
+    <image src="../../../images/emptyimg.png"></image>
+  </view>
+  <view class="empty-text">暂时没有宝贝上架噢！</view>
+</view>
+<view class='list' wx:else>
   <view class="item" wx:for="{{goods}}" wx:key='i'>
     <view bindtap='goDetail' data-_id="{{item._id}}">
       <image src='{{item.fileID}}' mode="widthFix">
