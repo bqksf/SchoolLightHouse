@@ -507,10 +507,10 @@ Page({
 
     
     click: function (e) {
-        let pickerid = e.currentTarget.dataset.id
-        this.setData({
-            pickerid: pickerid
-        })
+        // let pickerid = e.currentTarget.dataset.id
+        // this.setData({
+        //     pickerid: pickerid
+        // })
     },
     radioChange: function (e) {
         let currentWeekNum = parseInt(e.detail.value)
@@ -609,7 +609,8 @@ Page({
     swiperFinish(e){
         console.log(e)
         this.setData({
-            currentWeekNum: e.detail.current+1
+            currentWeekNum: e.detail.current+1,
+            pickerid:e.detail.current
             })
     },
 
