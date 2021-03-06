@@ -165,7 +165,7 @@ Page({
   clickIWant() {
     wx.showModal({
       title: "提示",
-      content: '添加客服微信号：xxxx进行购买',
+      content: '添加微信客服进行购买：lu6950056',
       showCancel: !1
   });
   },

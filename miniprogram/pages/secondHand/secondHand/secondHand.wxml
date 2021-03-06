@@ -1,13 +1,14 @@
 <!--miniprogram/pages/secondHand/secondHand/secondHand.wxml-->
 <view class='case-page'>
+  <view class="flow-upload">
+    <image class="upload-button-icon" src="../../../images/zhifeiji.png"  bindtap="goAdd" />
+  </view>
   <view class="pg-head" style="padding-top:{{statusBarHeight}}px">
     <view class="weui-flex">
       <view class="weui-flex__item">
         <view class="head-title">
           <span class="bigTitle">华广闲置</span>
-          <image class="upload-button-icon" src="../../../images/upload.png" wx:if="{{theme === 'light'}}"
-            bindtap="goAdd" />
-          <image class="upload-button-icon" src="../../../images/upload-d.png" wx:else bindtap="goAdd" />
+
         </view>
       </view>
     </view>
@@ -27,7 +28,7 @@
       </view>
     </view>
   </view>
-  <view class="card-flow" style="padding-top:calc({{statusBarHeight}}px + 160rpx)">
+  <view class="card-flow" style="padding-top:calc({{statusBarHeight}}px + 170rpx)">
     <view class="type_menu_page" wx:if="{{typeMenuOpen}}" style="height:calc(100vh - {{statusBarHeight}}px - 160rpx">
       <view wx:for="{{type_items}}" wx:key="index">
         <view class="typeitem" bindtap="tap_item" data-typename="{{item}}">

@@ -50,10 +50,10 @@
 <block wx:else class="user-mode">
   <view class="weui-form__opr-area buttons">
     <view class="weui-flex" style="margin:0 64rpx">
-    <button plain size="mini" style="margin-bottom:15rpx;width:45%;" wx:if="{{admin&&!changemode}}" bindtap="change">
+    <button plain size="mini" style="margin-bottom:15rpx;width:45%;line-height: 40rpx;height: 80rpx;" wx:if="{{admin&&!changemode}}" bindtap="change">
       编辑
     </button>
-    <button plain size="mini" class="button-warn" style="margin-bottom:15rpx;width:45%;" wx:if="{{admin}}" bindtap="delete">
+    <button plain size="mini" class="button-warn" style="margin-bottom:15rpx;width:45%;line-height: 40rpx;height: 80rpx;" wx:if="{{admin}}" bindtap="delete">
       删除
     </button>
   </view>

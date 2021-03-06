@@ -41,7 +41,7 @@ Page({
     } else {
       wx.showModal({
         title: '发布商品',
-        content: '您可以加客服xxxx来发布商品噢',
+        content: '添加微信客服进行闲置投稿：lu6950056',
         showCancel: false,
       });
     }

@@ -1,9 +1,9 @@
 /* miniprogram/pages/secondHand/secondHand/secondHand.wxss */
 
-.pg-head{
+.pg-head {
   position: fixed;
   z-index: 999;
-  background-color: #fff;
+  background-color: #FAE64F;
 }
 
 .head-title {
@@ -22,7 +22,7 @@
 @media (prefers-color-scheme: dark) {
 
   /* DarkMode 下的样式 start */
-  .pg-head{
+  .pg-head {
     background-color: #222;
   }
 
@@ -68,7 +68,7 @@
   margin-left: 10rpx;
 }
 
-.search-input-icon{
+.search-input-icon {
   width: 30rpx;
   height: 30rpx;
   line-height: 60rpx;
@@ -92,12 +92,12 @@
   vertical-align: middle;
 }
 
-.search-input-wrapper{
+.search-input-wrapper {
   position: relative;
   margin-top: 140rpx;
 }
 
-.search-input-show{
+.search-input-show {
   height: 60rpx;
   color: #171a20;
 }
@@ -168,8 +168,8 @@
   background-color: #fff;
   padding-top: 10rpx;
   box-shadow: 0 1rpx 10rpx #eee;
-  overflow-y:scroll;
-  overflow-x:hidden;
+  overflow-y: scroll;
+  overflow-x: hidden;
 }
 
 
@@ -189,42 +189,64 @@
   .type_menu_page {
     background: #222;
   }
-  
+
   .typeitem {
     color: #f8f8f8;
   }
 
 }
 
-.upload-button-icon{
-  width: 38rpx;
-  height: 38rpx;
-  margin-left: 20rpx;
+.flow-upload {
+  bottom: 30rpx;
+  right: 30rpx;
+  position: fixed;
+  background-color: #6a5acd; /*stable-blue*/
+  border-radius: 100rpx;
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 2rpx 2rpx 30rpx #eee;
 }
 
-.good-title{
+@media (prefers-color-scheme: dark) {
+
+  /* DarkMode 下的样式 start */
+  .flow-upload {
+    background: #222;
+  }
+
+}
+
+.upload-button-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+
+.good-title {
   width: 100%;
-  overflow:hidden; 
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.price{
+.price {
   color: #ed4e3b;
   width: 100%;
-  overflow:hidden; 
+  overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
 }
 
-.empty-img{
+.empty-img {
   width: 100vw;
   display: flex;
   justify-content: center;
   margin-top: 80rpx;
 }
 
-.empty-text{
+.empty-text {
   text-align: center;
   color: #a2a3a5;
 }
