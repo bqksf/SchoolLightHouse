@@ -2,7 +2,7 @@
 const db = wx.cloud.database()
 Page({
   data: {
-    typeArray: ["科学", "经济", "名著", "漫画", "小说", "数学", "语言", "计算机", "机械", "网络"],
+    typeArray: [],
     typeIndex: 0,
     info: '',
     infolength: 0,
@@ -154,9 +154,11 @@ Page({
     //   })
     // }
   },
-  onLoad() {
+  async onLoad() {
+    const types=await db.collection('configGZH').get();
     this.setData({
-      uplaodFile: this.uplaodFile.bind(this)
+      uplaodFile: this.uplaodFile.bind(this),
+      typeArray:types.data[2].typeitems
     })
   },
   chooseImage: function (e) {
