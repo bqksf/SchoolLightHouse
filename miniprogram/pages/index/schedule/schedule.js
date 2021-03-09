@@ -20,6 +20,7 @@ Page({
         dayArr: [],
         mindStatus: 0,
         currentWeekNum: 0,
+        swiperWeekNum:0,
         dayOfTheWeek: 0,
         trueWeekNum: 0,
         stringifyScheduleData: null, // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
@@ -125,19 +126,22 @@ Page({
         } = app.globalData.studyData;
         const weekNum = app.globalData.weekNum;
         //2021年1月21日 tuip123 判断是否为假日，假日则显示第一周
-        let pickerid, currentWeekNum;
+        let pickerid, currentWeekNum,swiperWeekNum;
         if (this.isHoliday()) {
             pickerid = 0;
             currentWeekNum = 1;
+            swiperWeekNum=0
         } else {
             pickerid = weekNum - 1;
             currentWeekNum = weekNum;
+            swiperWeekNum=weekNum-1
         }
         this.setData({
             timeTable:app.globalData.schoolInfo.timeList,
             pickerid,
             currentWeekNum,
             dayOfTheWeek,
+            swiperWeekNum,
             trueWeekNum: weekNum,
             // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
             stringifyScheduleData: JSON.stringify(schedule)
@@ -514,12 +518,13 @@ Page({
     },
     radioChange: function (e) {
         let currentWeekNum = parseInt(e.detail.value)
-        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
-        this.setDayOfWeek(currentWeekNum);
+        //this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
+        //this.setDayOfWeek(currentWeekNum);
         this.setData({
             pickerDialog: !this.data.pickerDialog,
             //2021年1月26日 微风 swiper跳转
-            current:e.detail.value-1
+            current:e.detail.value-1,
+            swiperWeekNum:e.detail.value-1
         })
     },
     toggleDialog() {

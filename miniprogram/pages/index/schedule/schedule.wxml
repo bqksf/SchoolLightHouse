@@ -94,7 +94,7 @@
 
 
     <!-- 滑动界面 面板指示点“false” 自动播放“false” 滑动动画时长1000ms -->
-    <swiper current="{{currentWeekNum}}" indicator-dots="{{false}}" autoplay="{{false}}" duration="1000" style="height:1500rpx"
+    <swiper current="{{swiperWeekNum}}" indicator-dots="{{false}}" autoplay="{{false}}" duration="1000" style="height:1500rpx"
         bindanimationfinish="swiperFinish" >
         <block wx:for="{{swiperitems}}" wx:key="index" wx:for-item="weekitem">
             <swiper-item>
