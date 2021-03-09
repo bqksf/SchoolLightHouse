@@ -33,7 +33,7 @@
         {
           "name": "pages/secondHand/detail/detail",
           "pathName": "pages/secondHand/detail/detail",
-          "query": "_id=28ee4e3e601a0ad3029d1fe733a17426",
+          "query": "_id=28ee4e3e604763c509bf09da7db189cd",
           "scene": null
         },
         {
@@ -51,6 +51,7 @@
         {
           "name": "pages/secondHand/testpage/testpage",
           "pathName": "pages/secondHand/testpage/testpage",
+          "query": "",
           "scene": null
         }
       ]
