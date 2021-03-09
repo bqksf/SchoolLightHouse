@@ -135,9 +135,9 @@ Page({
         }
         this.setData({
             timeTable:app.globalData.schoolInfo.timeList,
-            pickerid: pickerid,
-            currentWeekNum: currentWeekNum,
-            dayOfTheWeek: dayOfTheWeek,
+            pickerid,
+            currentWeekNum,
+            dayOfTheWeek,
             trueWeekNum: weekNum,
             // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
             stringifyScheduleData: JSON.stringify(schedule)
