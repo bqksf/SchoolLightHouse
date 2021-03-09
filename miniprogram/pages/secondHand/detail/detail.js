@@ -34,16 +34,16 @@ Page({
       infolength
     })
   },
-  changePrice(e){
-    let newprice=e.detail.value
+  changePrice(e) {
+    let newprice = e.detail.value
     this.setData({
-      price:newprice
+      price: newprice
     })
   },
-  changeDescribe(e){
-    let newdescribe=e.detail.value
+  changeDescribe(e) {
+    let newdescribe = e.detail.value
     this.setData({
-      describe:newdescribe
+      describe: newdescribe
     })
   },
 
@@ -124,10 +124,10 @@ Page({
       }
     }).then(res => {
       wx.hideLoading();
-      let obj = { _id:this.data._id};
+      let obj = { _id: this.data._id };
       this.onLoad(obj);
       this.setData({
-        changemode:false
+        changemode: false
       })
     }).catch(e => {
       console.error(e);
@@ -145,17 +145,17 @@ Page({
       }).then(res => {
         wx.hideLoading();
         wx.showToast({
-            icon: 'success',
-            title: '删除成功',
-            duration: 1000,
-            success: function () {
-              setTimeout(function() {
-                wx.navigateBack({
-                  delta: 0,
-                })
-              }, 1000);
-            }
-          })
+          icon: 'success',
+          title: '删除成功',
+          duration: 1000,
+          success: function () {
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 0,
+              })
+            }, 1000);
+          }
+        })
       })
     }).catch(err => {
       wx.hideLoading({})
@@ -166,8 +166,16 @@ Page({
     wx.showModal({
       title: "提示",
       content: '添加微信客服进行购买：lu6950056',
-      showCancel: !1
-  });
+      confirmText:'复制',
+      cancelText:'取消'
+    }).then(res => {
+      if (res.confirm) {
+        wx.setClipboardData({
+          data: 'lu6950056',
+        })
+      } else if (res.cancel) {
+      }
+    })
   },
   async onLoad(options) {
     wx.showLoading({
@@ -177,8 +185,8 @@ Page({
       _id
     } = options
     await db.collection('secondHand').where({
-        _id
-      }).get()
+      _id
+    }).get()
       .then(res => {
         let {
           fileID,
@@ -199,10 +207,10 @@ Page({
       .catch(e => {
         console.error(e);
       })
-      const types=await db.collection('configGZH').get()
+    const types = await db.collection('configGZH').get()
     this.setData({
       admin: !app.globalData.firstlogin && app.globalData.userInfo.secondHandAdmin ? true : false,
-      typeArray:types.data[2].typeitems
+      typeArray: types.data[2].typeitems
     })
     wx.hideLoading({})
   },
