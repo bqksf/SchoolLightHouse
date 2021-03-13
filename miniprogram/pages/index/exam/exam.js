@@ -48,20 +48,15 @@ Page({
                 name: "getUnionid"
             })
             const _unionid = getUnionid.result
-            //只有存在_unionid（关注公众号后）
-            if (_unionid.length > 0) {
+            
                 //通过unionid查询openidGZH
                 const openidGZHResp = await db.collection('userGZH').where({
                     _unionid
                 }).get()
-                if (app.globalData.userInfo.isOldUser) {
-                    //2020年12月5日 tuip123 判断是不是老用户
-                    this.showOldUserModel()
-                    wx.hideLoading();
-                    return;
-                } else 
+                
                 if (openidGZHResp.data.length === 0) {
                     // 2020.12.3 kang 处理马上取关了公众号，但小程序unionid还有缓存的时候
+                    // 2020.3.13 同时处理没关注公众号的用户
                     this.showSubscribeModal();
                     return;
                 }
@@ -126,10 +121,7 @@ Page({
                     }
 
                 }
-            } else {
-
-                this.showSubscribeModal();
-            }
+            
         } catch (e) {
             wx.hideLoading();
             showErrorModal('提醒功能出错', e);
