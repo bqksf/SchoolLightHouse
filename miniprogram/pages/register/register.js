@@ -104,7 +104,7 @@ Page({
                 // 已经注册
                 throw "你已经注册，请不要重复注册！";
             }
-            数据库插入user
+            //数据库插入user
             const {
                 avatarUrl,
                 gender,
