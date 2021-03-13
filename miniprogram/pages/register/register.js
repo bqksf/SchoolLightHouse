@@ -104,7 +104,7 @@ Page({
                 // 已经注册
                 throw "你已经注册，请不要重复注册！";
             }
-            // 数据库插入user
+            数据库插入user
             const {
                 avatarUrl,
                 gender,
@@ -118,61 +118,38 @@ Page({
                 name: 'getUnionid'
             })
             let _unionid = unionidResp.result
-            let _openidGZH = undefined
-            let isOldUser=false
-            //找openidGZH，有就记录下来
-            if (_unionid && _unionid.length > 0) {
-                const _openidGZHResp = await db.collection('userGZH').where({
-                    _unionid
-                }).get()
-                //2020年12月5日 tuip123 老用户的判别
-                try{
-                    _openidGZH = _openidGZHResp.data[0]._openid}
-                catch(e){
-                    _openidGZH=null
-                    isOldUser=true
-                }
+            const _openidGZHResp = await db.collection('userGZH').where({
+                _unionid
+            }).get()
+            let _openidGZH=null
+            if(_openidGZHResp.data.length===0){
+                //无法获取GZH的openid判断为没关注公众号
+                // wx.showModal({
+                //     title: '提示',
+                //     content:'您还未关注公众号',
+                //     showCancel: false
+                // });
             }
-            //找不到就将这两个参数设置为null
-            else {
-                _unionid = null
-                _openidGZH = null
+            else{
+                //已经关注公众号的用户
+                _openidGZH = _openidGZHResp.data[0]._openid
             }
-            let userdata
-            if(isOldUser){
-                wx.showModal({
-                    title: '提示',
-                    content:'检测到您是老用户，请先在 "高校灯塔" 公众号回复 "1" 才能正常使用部分功能噢~',
-                    showCancel: false
-                });
-                userdata={
-                    avatarUrl: avatarUrl,
-                    gender: gender,
-                    name: nickName,
-                    rawData: rawData,
-                    registerTime: new Date(),
-                    schoolCode: this.data.schoolCode,
-                    _openidGZH,
-                    _unionid,
-                    isOldUser
-                }
+
+            let userdata={
+                avatarUrl: avatarUrl,
+                gender: gender,
+                name: nickName,
+                rawData: rawData,
+                registerTime: new Date(),
+                schoolCode: this.data.schoolCode,
+                _openidGZH,
+                _unionid
             }
-            else {
-                userdata={
-                    avatarUrl: avatarUrl,
-                    gender: gender,
-                    name: nickName,
-                    rawData: rawData,
-                    registerTime: new Date(),
-                    schoolCode: this.data.schoolCode,
-                    _openidGZH,
-                    _unionid
-                }
-            }
+            console.log(userdata);
             await db.collection('user').add({
                 data:userdata
             });
-            // 切换显示成绑定页面
+            //切换显示成绑定页面
             this.setData({
                 registerPage: 2
             });
