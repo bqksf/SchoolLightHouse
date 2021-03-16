@@ -239,7 +239,7 @@ Page({
         //重复20周
         for(let i=1;i<21;i++){
             // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
-            let scheduleArr= this.setSwiper2(JSON.parse(this.data.stringifyScheduleData), i);
+           let scheduleArr= this.setSwiper2(JSON.parse(this.data.stringifyScheduleData), i);
             this.data.swiperitems.push(scheduleArr)
             let dayArr=this.setDayOfWeek2(i);
             this.data.sitems.push(dayArr)
@@ -254,31 +254,26 @@ Page({
         let scheduleArr = data.schedule;
         //周六日先不要了
         scheduleArr.splice(5, 2);
+        //遍历周课表获取日课表
         for (let a = 0; a < scheduleArr.length; a++) {
             const daySceArr = scheduleArr[a];
+            //遍历日课表获取节课表
             for (let b = 0; b < daySceArr.length; b++) {
                 const timeSceArr = daySceArr[b];
-                let noNum = 0;
-                //2020年11月29日 tuip123 记录要删除的位置
-                let timeTemp = 0
+                //遍历节课表获取每节课的所有课程
                 for (let c = 0; c < timeSceArr.length; c++) {
                     const schedule = timeSceArr[c];
-                    //看是否含本周
+                    //获取课程时间数组
                     let {
                         weeks_arr
-                    } = schedule;
-                    if (weeks_arr.indexOf(weekNum) == -1) {
+                    } = schedule;              
+                    //===-1意味 这个课程的时间数组中 不存在本周
+                    if (weeks_arr.indexOf(weekNum) === -1) {
                         //不含就去掉
-                        noNum++;
-                        //2020年11月29日 tuip123 记录要删除的位置
-                        //2020年11月30日 tuip123 只有在第一次才记录，之后都在第一次的位置往后删
-                        if (noNum == 1) {
-                            timeTemp = c
-                        }
+                        scheduleArr[a][b].splice(c,1)
                     }
                 }
-                //不含就去掉
-                scheduleArr[a][b].splice(timeTemp, noNum);
+                
             }
         }
         //再优化一下
@@ -330,30 +325,6 @@ Page({
             showErrorModal("获取提醒状态失败", e)
             return false
         }
-    },
-    tapLeftButton() {
-        let {
-            currentWeekNum
-        } = this.data;
-        currentWeekNum > 1 && currentWeekNum--;
-        // const { schedule } = app.globalData.studyData;
-        // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
-        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
-        this.setData({
-            currentWeekNum: currentWeekNum
-        });
-    },
-    tapRightButton() {
-        let {
-            currentWeekNum
-        } = this.data;
-        currentWeekNum > 0 && currentWeekNum++;
-        // const { schedule } = app.globalData.studyData;
-        // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
-        this.initData(JSON.parse(this.data.stringifyScheduleData), currentWeekNum);
-        this.setData({
-            currentWeekNum: currentWeekNum
-        });
     },
     tapOneSchedule(e) {
         const schedule = e.currentTarget.dataset.schedule;
@@ -530,79 +501,7 @@ Page({
         })
     },
 
-    initData(data, weekNum) {
-        let scheduleArr = data.schedule;
-        //周六日先不要了
-        scheduleArr.splice(5, 2);
-        for (let a = 0; a < scheduleArr.length; a++) {
-            const daySceArr = scheduleArr[a];
-            for (let b = 0; b < daySceArr.length; b++) {
-                const timeSceArr = daySceArr[b];
-                let noNum = 0;
-                //2020年11月29日 tuip123 记录要删除的位置
-                let timeTemp = 0
-                for (let c = 0; c < timeSceArr.length; c++) {
-                    const schedule = timeSceArr[c];
-                    //看是否含本周
-                    let {
-                        weeks_arr
-                    } = schedule;
-                    if (weeks_arr.indexOf(weekNum) == -1) {
-                        //不含就去掉
-                        noNum++;
-                        //2020年11月29日 tuip123 记录要删除的位置
-                        //2020年11月30日 tuip123 只有在第一次才记录，之后都在第一次的位置往后删
-                        if (noNum == 1) {
-                            timeTemp = c
-                        }
-                    }
-                }
-                //不含就去掉
-                scheduleArr[a][b].splice(timeTemp, noNum);
-
-            }
-        }
-        //再优化一下
-        for (let a = 0; a < scheduleArr.length; a++) {
-            const daySceArr = scheduleArr[a];
-            for (let b = 0; b < daySceArr.length; b++) {
-                const timeSceArr = daySceArr[b];
-                //空数组改成name为空格的字典
-                if (timeSceArr.length == 0) {
-                    scheduleArr[a][b] = {
-                        'name': ' '
-                    }
-                } else {
-                    //非空数组，改成数组中的第一节课，并且把课的name限制在12个字内
-                    timeSceArr[0].name = timeSceArr[0].name.substr(0, 12) //切掉12个字后面的内容
-                    scheduleArr[a][b] = timeSceArr[0]
-                }
-
-                //2021年1月22日 tuip123 判断上节课的section，优化外观
-                if(b>0){
-                    if(scheduleArr[a][b-1].section==4&&scheduleArr[a][b].name==' ')
-                        {
-                            scheduleArr[a].splice(b,1)
-                            //2021年1月22日 tuip123 此处是因为splice后出现了降级现象，需要获取子数组里的0元素取代父数组中的位置 可见console.log(scheduleArr[a][b]);
-                            if(scheduleArr[a][b][0])
-                            {
-                                scheduleArr[a][b]=scheduleArr[a][b][0]
-                            }
-                            else{
-                                scheduleArr[a][b] = {
-                                    'name': ' '
-                                }
-                            }
-                        }
-                }
-            }
-        }
-        this.setData({
-            scheduleArr: scheduleArr
-        });
-    },
-
-    //测试
+    //swiper结束后修改周数据
     swiperFinish(e){
         console.log(e)
         this.setData({
