@@ -36,10 +36,10 @@
     </swiper-item>
   </block>
 </swiper> -->
-<block wx:for="{{fileID}}" style="{{changemode||admin ? 'padding-bottom: 196rpx;' : 'padding-bottom: 90rpx;'}}">
+<view wx:for="{{fileID}}" style="{{changemode||admin ? 'padding-bottom: 196rpx;' : 'padding-bottom: 90rpx;'}}">
   <image src="{{item}}" mode="widthFix"></image>
 
-</block>
+</view>
 
 <block wx:if="{{changemode}}" class="change-mode">
   <view class="weui-form__opr-area buttons">
