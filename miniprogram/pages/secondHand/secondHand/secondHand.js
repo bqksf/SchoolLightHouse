@@ -1,7 +1,7 @@
 // miniprogram/pages/secondHand/secondHand/secondHand.js
 const db = wx.cloud.database()
 let app = getApp()
-const MAX_LIMIT = 100
+const MAX_LIMIT = 20
 Page({
   data: {
     statusBarHeight: wx.getSystemInfoSync().statusBarHeight,
@@ -61,13 +61,13 @@ Page({
     //此处代码实现了 获取集合中所有的内容 多线程
     const countResult = await db.collection('secondHand').count()
     const total = countResult.total
-    const batchTimes = Math.ceil(total / 100)
+    const batchTimes = Math.ceil(total / MAX_LIMIT)
     const tasks = []
     for (let i = 0; i < batchTimes; i++) {
       const promise = db.collection('secondHand').skip(i * MAX_LIMIT).limit(MAX_LIMIT).get()
       tasks.push(promise)
     }
-
+    
     //此处将获取到的tasks 进行二步转换 适配goods
     let goods = []
     for (let a = 0; a < batchTimes; a++) {
@@ -84,7 +84,6 @@ Page({
         goods.push(good)
       }
     }
-    
     const types=await db.collection('configGZH').get()
 
     this.setData({
