@@ -237,6 +237,7 @@ Page({
     //日期 swiper容器生成
     setSwiper(){
         //重复20周
+
         for(let i=1;i<21;i++){
             // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
            let scheduleArr= this.setSwiper2(JSON.parse(this.data.stringifyScheduleData), i);
@@ -244,6 +245,14 @@ Page({
             let dayArr=this.setDayOfWeek2(i);
             this.data.sitems.push(dayArr)
         }
+
+        // let i=4
+        //     // 2020.11.24，会有莫名其妙的bug，必须用json字符串化再解码回来才行，可能是因为数组中周六周日是空数组，并且打印log出来不显示
+        //    let scheduleArr= this.setSwiper2(JSON.parse(this.data.stringifyScheduleData), i);
+        //     this.data.swiperitems.push(scheduleArr)
+        //     let dayArr=this.setDayOfWeek2(i);
+        //     this.data.sitems.push(dayArr)
+        
         //必须使用setData才能在页面渲染，不然显示值为空
         this.setData({
             swiperitems: this.data.swiperitems,
@@ -251,67 +260,78 @@ Page({
         })
     },
     setSwiper2(data, weekNum) {
+        let returns=[];
         let scheduleArr = data.schedule;
         //周六日先不要了
         scheduleArr.splice(5, 2);
         //遍历周课表获取日课表
         for (let a = 0; a < scheduleArr.length; a++) {
-            const daySceArr = scheduleArr[a];
+            let reday=[];
             //遍历日课表获取节课表
-            for (let b = 0; b < daySceArr.length; b++) {
-                const timeSceArr = daySceArr[b];
+            for (let b = 0; b < scheduleArr[a].length; b++) {
+                let retime={name:' ',section:0}
                 //遍历节课表获取每节课的所有课程
-                for (let c = 0; c < timeSceArr.length; c++) {
-                    const schedule = timeSceArr[c];
+                for (let c = 0; c < scheduleArr[a][b].length;c++) {
                     //获取课程时间数组
                     let {
-                        weeks_arr
-                    } = schedule;              
+                        weeks_arr,name
+                    } = scheduleArr[a][b][c];              
                     //===-1意味 这个课程的时间数组中 不存在本周
-                    if (weeks_arr.indexOf(weekNum) === -1) {
+                    if (weeks_arr.indexOf(weekNum) != -1) {
                         //不含就去掉
-                        scheduleArr[a][b].splice(c,1)
+                        retime=scheduleArr[a][b][c]
+                        // console.log("获取："+name+"在周数："+weekNum+"的周："+(a+1)+"的第："+(b+1)+"节");
+                        // console.log(retime);
+                        //scheduleArr[a][b].splice(c,1)
                     }
                 }
-                
+                reday.push(retime)
             }
+            returns.push(reday)
         }
+        console.log(returns);
+        // console.log(returns);
         //再优化一下
-        for (let a = 0; a < scheduleArr.length; a++) {
-            const daySceArr = scheduleArr[a];
-            for (let b = 0; b < daySceArr.length; b++) {
-                const timeSceArr = daySceArr[b];
+        for (let a = 0; a < returns.length; a++) {
+            
+            //从每一周的课表 获取每天的课表
+            for (let b = 0; b < returns[a].length; b++) {
+                
+               
                 //空数组改成name为空格的字典
-                if (timeSceArr.length == 0) {
-                    scheduleArr[a][b] = {
-                        'name': ' '
-                    }
-                } else {
-                    //非空数组，改成数组中的第一节课，并且把课的name限制在12个字内
-                    timeSceArr[0].name = timeSceArr[0].name.substr(0, 12) //切掉12个字后面的内容
-                    scheduleArr[a][b] = timeSceArr[0]
-                }
+                // if (timeSceArr.length == 0) {
+                //     // console.log('yes');
+                //     returns[a][b] = {
+                //         'name': ' '
+                //     }
+                // } 
+                // else {
+                //     //非空数组，改成数组中的第一节课，并且把课的name限制在12个字内
+                //     returns[a][b].name = returns[a][b].name.substr(0, 12) //切掉12个字后面的内容
+                //     returns[a][b] = timeSceArr[0]
+                // }
 
                 //2021年1月22日 tuip123 判断上节课的section，优化外观
                 if(b>0){
-                    if(scheduleArr[a][b-1].section==4&&scheduleArr[a][b].name==' ')
+                    if(returns[a][b-1].section==4&&returns[a][b].name==' ')
                         {
-                            scheduleArr[a].splice(b,1)
-                            //2021年1月22日 tuip123 此处是因为splice后出现了降级现象，需要获取子数组里的0元素取代父数组中的位置 可见console.log(scheduleArr[a][b]);
-                            if(scheduleArr[a][b][0])
-                            {
-                                scheduleArr[a][b]=scheduleArr[a][b][0]
-                            }
-                            else{
-                                scheduleArr[a][b] = {
-                                    'name': ' '
-                                }
-                            }
+                            returns[a].splice(b,1)
+                            //2021年1月22日 tuip123 此处是因为splice后出现了降级现象，需要获取子数组里的0元素取代父数组中的位置 可见console.log(returns[a][b]);
+                            // if(returns[a][b][0])
+                            // {
+                            //     returns[a][b]=returns[a][b][0]
+                            // }
+                            // else{
+                            //     returns[a][b] = {
+                            //         'name': ' '
+                            //     }
+                            // }
                         }
                 }
             }
         }
-        return scheduleArr
+
+        return returns
     },
 
 
