@@ -289,7 +289,6 @@ Page({
             }
             returns.push(reday)
         }
-        console.log(returns);
         // console.log(returns);
         //再优化一下
         for (let a = 0; a < returns.length; a++) {
